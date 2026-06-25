@@ -176,6 +176,19 @@
   .viewtitle{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.04em;font-size:13px;color:var(--muted2);margin:2px 0 14px;min-height:14px}
   .loadmore{display:block;width:100%;margin-top:10px;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--amber);font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-weight:600;font-size:13px;cursor:pointer;transition:all .14s}
   .loadmore:hover{background:var(--panel3);border-color:var(--amber)}
+  .hrbk{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+  @media(max-width:560px){.hrbk{grid-template-columns:repeat(2,1fr)}}
+  .hrbk-c{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 10px;text-align:center}
+  .hrbk-n{font-family:'Roboto Mono',monospace;font-weight:700;font-size:22px;color:var(--chalk);line-height:1.1}
+  .hrbk-l{font-family:'Roboto Mono',monospace;font-size:9.5px;letter-spacing:.04em;color:var(--muted2);margin-top:4px;text-transform:uppercase}
+  .hrcard{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-bottom:10px}
+  .hrcard.called{border-color:rgba(95,191,125,.4)}
+  .hrn{font-family:'Oswald',sans-serif;font-weight:600;font-size:17px}
+  .hrn small{color:var(--muted);font-weight:400;font-size:12px}
+  .hrm{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}
+  .hrflags{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--amber);margin-top:4px}
+  .hrright{text-align:right;flex:0 0 auto}
+  .hrpre{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);margin-top:5px;white-space:nowrap}
   .plat{font-family:'Roboto Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.06em;padding:2px 5px;border-radius:5px;border:1px solid var(--line);text-transform:uppercase;white-space:nowrap}
   .plat.adv{color:var(--green2);border-color:rgba(127,208,140,.45);background:rgba(127,208,140,.1)}
   .plat.dis{color:var(--red);border-color:rgba(226,96,79,.4);background:rgba(226,96,79,.08)}
@@ -200,8 +213,8 @@
   .prow.h{background:var(--panel2);border-top:none}
   .prow.h span{font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted2);text-align:center}
   .prow .slot{font-family:'Oswald',sans-serif;font-weight:700;font-size:16px;color:var(--amber);text-align:center}
-  .prow .pnm{font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .prow .pnm small{display:block;color:var(--muted);font-weight:400;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .prow .pnm{font-weight:600;font-size:13px;min-width:0}
+  .prow .pnm small{display:block;color:var(--muted);font-weight:400;font-size:10px;white-space:normal;line-height:1.4;margin-top:2px}
   .prow .pv{font-family:'Roboto Mono',monospace;text-align:center;color:var(--amber);font-weight:700;font-size:13px}
   .prow .pc{text-align:center}
   .prow .pend{justify-self:start;display:flex;flex-wrap:wrap;gap:4px;align-items:center}
@@ -272,6 +285,27 @@
   .gli .lk{flex:0 0 auto;min-width:46px;text-align:center}
   .gtip{background:linear-gradient(180deg,var(--panel2),var(--panel));border-left:3px solid var(--teal);border-radius:8px;padding:10px 14px;font-size:12.5px;color:var(--muted);margin:8px 0}
   .gtip b{color:var(--teal)}
+  .hrlist{display:flex;flex-direction:column;gap:14px;margin-top:8px}
+  .hritem .hk{display:block;font-family:'Oswald',sans-serif;font-weight:600;font-size:14.5px;color:var(--chalk);margin-bottom:3px;letter-spacing:.01em}
+  .hritem .hd{font-size:13px;color:var(--muted);line-height:1.65}
+  .hritem .hd b{color:var(--chalk)}
+  .vflags{list-style:none;padding:0;margin:10px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:7px 20px}
+  @media(max-width:560px){.vflags{grid-template-columns:1fr}}
+  .vflags li{font-size:12.5px;color:var(--muted);padding-left:20px;position:relative;line-height:1.5}
+  .vflags li::before{content:"🚩";position:absolute;left:0;font-size:11px}
+  .vflags li b{color:var(--chalk)}
+  .vscore{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:14px}
+  @media(max-width:560px){.vscore{grid-template-columns:1fr}}
+  .vsbox{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .vsbox h5{margin:0 0 7px;font-family:'Roboto Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber)}
+  .vsbox ul{list-style:none;padding:0;margin:0}
+  .vsbox li{font-size:12.5px;color:var(--muted);line-height:1.75}
+  .vsbox li b{color:var(--chalk)}
+  .vbands{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+  .vband{font-family:'Roboto Mono',monospace;font-size:12px;padding:8px 13px;border-radius:8px;border:1px solid var(--line);background:var(--panel2)}
+  .vband.lo{color:var(--muted2)}
+  .vband.mo{color:var(--amber);border-color:rgba(242,181,60,.4)}
+  .vband.hi{color:#ff8a6b;border-color:rgba(226,96,79,.45)}
   .mvs{padding:8px 14px;border-top:1px solid var(--line)}
   .mvsh{font-family:'Roboto Mono',monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px;display:flex;flex-wrap:wrap;gap:7px;align-items:center}
   .mvrow{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:8px;padding:3px 0}
@@ -310,7 +344,10 @@
   .sim .score{font-family:'Roboto Mono',monospace;font-weight:700;font-size:20px;color:var(--amber);text-shadow:0 0 12px var(--amber-glow)}
   .sim .sm{padding:10px 16px;border-bottom:1px solid var(--line)}
   .sim .sm:last-child{border-bottom:none}
-  .sim .smh{font-family:'Roboto Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px}
+  .sim .smh{font-family:'Roboto Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+  .sim .smh .simpick{color:var(--chalk);letter-spacing:.04em;display:flex;align-items:center;gap:6px}
+  .sim .smh .simpick b{color:var(--amber)}
+  .sim .srow.fav{background:rgba(242,181,60,.06);border-radius:6px;margin:0 -6px;padding-left:6px;padding-right:6px}
   .sim .srow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;font-size:12.5px;padding:3px 0}
   .sim .srow .lbl2{color:var(--chalk)}
   .sim .srow .mp{font-family:'Roboto Mono',monospace;color:var(--green2);font-weight:700;text-align:right}
@@ -323,18 +360,25 @@
   .vtier{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-size:13px;margin:18px 0 8px;display:flex;align-items:center;gap:10px}
   .vtier .vt1{color:#ff8a6b}.vtier .vt2{color:var(--amber)}.vtier .vt3{color:var(--muted2)}
   .vtier .rule{flex:1;height:1px;background:var(--line)}
-  .vrow{display:grid;grid-template-columns:54px 1.4fr 1.5fr 1.3fr;gap:12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 14px;margin-bottom:8px}
+  .vrow{display:grid;grid-template-columns:1fr;gap:13px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px}
   .vrow.t1{border-left:3px solid #e2604f}.vrow.t2{border-left:3px solid var(--amber)}.vrow.t3{border-left:3px solid var(--muted2)}
-  .vscore{font-family:'Roboto Mono',monospace;font-weight:700;font-size:20px;color:var(--chalk);text-align:center}
-  .vp .vn{font-family:'Oswald',sans-serif;font-weight:600;font-size:15px}
-  .vp .vm{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:2px}
-  .vp .vside{font-family:'Roboto Mono',monospace;font-size:10px;color:#ff8a6b;text-transform:uppercase;letter-spacing:.04em}
-  .vsplit{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted);line-height:1.55}
-  .vsplit b{color:var(--clay)}
-  .vtargets{display:flex;flex-direction:column;gap:3px}
-  .vtargets .vtg{font-size:11.5px;display:flex;gap:6px;align-items:center}
-  .vtargets .vtg .tn{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .vtargets .vtg .tv{font-family:'Roboto Mono',monospace;color:var(--amber);margin-left:auto}
+  @media(min-width:860px){.vrow{grid-template-columns:240px 1.25fr 1fr;align-items:start}}
+  .vhead{display:flex;gap:13px;align-items:flex-start}
+  .vscore{font-family:'Roboto Mono',monospace;font-weight:700;font-size:26px;color:var(--chalk);flex:0 0 auto;width:50px;text-align:center;line-height:1.1}
+  .vp .vn{font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;line-height:1.15}
+  .vp .vhand{color:var(--muted);font-size:12px;font-weight:400}
+  .vp .vm{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.45}
+  .vp .vside{font-family:'Roboto Mono',monospace;font-size:10px;color:#ff8a6b;text-transform:uppercase;letter-spacing:.05em;margin-top:4px;font-weight:700}
+  .vbh{font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted2);margin-bottom:5px}
+  .vsplits .vsl-row{margin-bottom:7px}
+  .vsl-tag{font-family:'Roboto Mono',monospace;font-size:10px;font-weight:700;color:var(--clay);letter-spacing:.04em;display:block;margin-bottom:2px}
+  .vsl-st{display:flex;flex-wrap:wrap;gap:3px 10px;font-family:'Roboto Mono',monospace;font-size:11px;color:var(--chalk)}
+  .vsl-st i{color:var(--muted2);font-style:normal;font-size:9px;letter-spacing:.03em}
+  .vsl-st .vsl-bf{color:var(--muted2)}
+  .vsl-na{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2)}
+  .vtargets .vtg{display:flex;gap:8px;align-items:baseline;padding:3px 0;font-size:12.5px}
+  .vtargets .vtg .tn{font-weight:600;line-height:1.3}
+  .vtargets .vtg .tv{font-family:'Roboto Mono',monospace;color:var(--amber);margin-left:auto;white-space:nowrap;font-size:11px}
 
   /* weather board */
   .wxsec{margin-bottom:8px}
@@ -359,6 +403,12 @@
   .tcard .tv{font-family:'Roboto Mono',monospace;font-weight:700;font-size:22px;color:var(--amber);line-height:1}
   .tcard .tl{font-family:'Roboto Mono',monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted2);margin-top:6px}
   .tcard .ts{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .tmrow{padding:9px 0;border-top:1px solid var(--line)}
+  .tmrow:first-of-type{border-top:none}
+  .tmname{font-family:'Oswald',sans-serif;font-weight:600;font-size:14px;color:var(--chalk);margin-bottom:5px}
+  .tmstats{display:flex;flex-wrap:wrap;gap:6px 16px}
+  .tmk{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2)}
+  .tmk b{color:var(--chalk);font-weight:700}
 
   /* alignment */
   .align-ctrls{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-bottom:16px}
@@ -447,6 +497,7 @@
 
   <div class="nav" id="nav">
     <button class="navbtn" data-view="slate">Slate</button>
+    <button class="navbtn" data-view="hr">✅</button>
     <div class="navgroup">
       <button class="navbtn drop">Picks ▾</button>
       <div class="navmenu">
@@ -474,6 +525,7 @@
       <button class="navbtn drop">More ▾</button>
       <div class="navmenu">
         <button data-view="trends">Trends</button>
+        <button data-view="hrguide">💣 How to Pick Homers</button>
         <button data-view="track">📊 Track &amp; Calibrate</button>
         <button data-view="guide">❓ Guide</button>
       </div>
@@ -517,6 +569,97 @@
     <div class="oddstable" id="oddsBoard"></div>
   </section>
 
+  <section id="hrView" class="hide">
+    <div class="sec-head"><h2>✅ Homers Today</h2><span class="tag" id="hrTag">fills in automatically as batters go deep</span><span class="rule"></span></div>
+    <div id="hrBoard"></div>
+  </section>
+
+  <section id="hrguideView" class="hide">
+    <div class="sec-head"><h2>💣 How to Pick Homers</h2><span class="tag">what to look for · straights &amp; parlays</span><span class="rule"></span></div>
+    <div class="guide">
+      <div class="gcard">
+        <h3>The big idea</h3>
+        <p>Home runs are <b>low-probability, high-variance</b> bets — even the very best spots are usually only <b>15–25%</b> to actually go deep, and most bats sit at 5–12%. You can't make a hitter homer; you can only <b>stack the conditions</b> that make it more likely, then bet when the model's number beats the book's. Think of it as repeatedly buying good <i>chances</i>, not predicting certainties.</p>
+      </div>
+
+      <div class="gcard">
+        <h3>Checklist for a strong straight (single) HR bet</h3>
+        <p>The more of these that line up on one hitter, the better the spot — Edge Board surfaces all of them:</p>
+        <div class="hrlist">
+          <div class="hritem"><span class="hk">🎯 Vulnerable pitcher</span><div class="hd">Target bats facing a high-vuln starter — especially <b>T1 / Prime Targets</b> on the Vulnerable tab. Read the pitcher's <b>vs-LHB / vs-RHB allowed</b> line: high <b>SLG, ISO, HR</b> against the batter's side is exactly what you want. A 🎯 <b>weak-spot</b> badge means that hitter specifically matches the side the pitcher gets hurt by.</div></div>
+          <div class="hritem"><span class="hk">⚖️ Platoon advantage</span><div class="hd">An <b>ADV</b> badge (lefty bat vs RHP, or righty vs LHP) is one of the most reliable HR signals. Downgrade or fade <b>DIS</b>.</div></div>
+          <div class="hritem"><span class="hk">🏟️ Park</span><div class="hd">Favor a <b>HR park ≥ ~1.10</b> (Coors, Cincinnati, Yankee Stadium, Great American). A pitcher's park can quietly add or erase a chunk of HR equity.</div></div>
+          <div class="hritem"><span class="hk">🌬️ Weather</span><div class="hd"><b>Wind blowing out</b> and <b>warm air (≈75°F+)</b> boost carry. The Weather tab flags HR-favorable games; a "Hitters +" chip is a green light, "Pitchers +" a caution.</div></div>
+          <div class="hritem"><span class="hk">🔥 Form &amp; power</span><div class="hd">A hot 🔥 L10 helps, but <b>don't overpay</b> for a heater. Underlying power (season <b>ISO / SLG</b>) is steadier than a 7-day streak.</div></div>
+          <div class="hritem"><span class="hk">⭐ Grade &amp; Edge Score</span><div class="hd">Lean on <b>A / A+</b> grades and high Edge Scores. ⭐ = the team's best bat that game, ⚡ = second, 💤 = the overlooked sleeper.</div></div>
+          <div class="hritem"><span class="hk">🔢 Lineup spot</span><div class="hd">Only bet <b>confirmed lineups</b>, and prefer hitters in the <b>top 5</b> — more plate appearances means more swings to hit one out.</div></div>
+          <div class="hritem"><span class="hk">💰 Value over the book</span><div class="hd">The single most important habit: compare the model's <b>HR %</b> to the book's <b>implied %</b> from the odds. Only fire when the model is clearly <b>above</b> implied — that's a <b>+EV</b> spot. A great matchup at a terrible price is still a bad bet.</div></div>
+        </div>
+      </div>
+
+      <div class="gcard">
+        <h3>Pitcher home-run vulnerability checklist</h3>
+        <p>Flip the lens and grade the <b>pitcher</b> instead of the hitter. Target starters showing multiple of these red flags — the more that stack, the more his bats become live HR plays (and his opponent's team total / run line gets interesting):</p>
+        <ul class="vflags">
+          <li><b>HR/9 above 1.3</b></li>
+          <li><b>Barrel rate allowed above 9%</b></li>
+          <li><b>Hard-hit rate allowed above 40%</b></li>
+          <li><b>Fly-ball rate above 40%</b></li>
+          <li><b>xSLG allowed above .450</b></li>
+          <li><b>Fastball velocity down 1+ mph</b></li>
+          <li><b>Facing a power-heavy lineup</b> (high ISO / barrel%)</li>
+          <li><b>Poor splits</b> vs the opponent's handedness</li>
+          <li><b>Hitter-friendly park</b></li>
+          <li><b>Warm weather / wind blowing out</b></li>
+        </ul>
+        <div class="vscore">
+          <div class="vsbox"><h5>+2 points each</h5><ul>
+            <li><b>HR/9 &gt; 1.4</b></li>
+            <li><b>Barrel% &gt; 9%</b></li>
+          </ul></div>
+          <div class="vsbox"><h5>+1 point each</h5><ul>
+            <li>Hard-hit% &gt; 40%</li>
+            <li>Fly-ball% &gt; 40%</li>
+            <li>xSLG &gt; .450</li>
+            <li>Velocity down 1+ mph</li>
+            <li>Opponent top-10 in ISO vs that hand</li>
+            <li>Favorable HR weather / park</li>
+          </ul></div>
+        </div>
+        <div class="vbands">
+          <span class="vband lo">0–2 · Low HR risk</span>
+          <span class="vband mo">3–5 · Moderate HR risk</span>
+          <span class="vband hi">6+ · High HR target</span>
+        </div>
+        <div class="gtip" style="margin-top:12px"><b>Best HR-prop &amp; team-total targets:</b> pitchers with high HR/9, high barrel% and hard-hit% allowed, a high fly-ball rate, facing power lineups in warm weather and hitter-friendly parks.</div>
+        <p style="margin-top:10px;font-size:12px;color:var(--muted2)">Where to find these in Edge Board: <b>HR/9</b>, <b>vs-LHB/RHB splits</b> (incl. SLG &amp; ISO allowed), <b>park</b>, <b>weather</b>, opponent <b>ISO</b>, and the built-in <b>vuln score (1–99)</b> on the Vulnerable tab already fold most of this in. The Statcast-only pieces — <b>barrel%, hard-hit%, xSLG, fastball velocity</b> — aren't in the free data feed; check those on Baseball Savant and use them as tie-breakers.</p>
+      </div>
+
+      <div class="gcard">
+        <h3>Building HR parlays (pairing) the right way</h3>
+        <div class="hrlist">
+          <div class="hritem"><span class="hk">Spread across games</span><div class="hd">Pair bats from <b>different games</b> when you can. It keeps legs more independent — one rainout, tough park, or shaky weather read won't sink the whole ticket.</div></div>
+          <div class="hritem"><span class="hk">Cap legs per game</span><div class="hd">Set the Parlay builder's <b>"max bats from any one game"</b> low (1–2). Two HRs off the same pitcher is positively correlated, which the book usually <i>doesn't</i> pay you fairly for.</div></div>
+          <div class="hritem"><span class="hk">Keep it short</span><div class="hd">Each leg multiplies the variance. <b>2–4 legs</b> is far more realistic than chasing a 6-leg HR moonshot. Longer = lottery ticket.</div></div>
+          <div class="hritem"><span class="hk">Anchor + upside</span><div class="hd">Build around one or two <b>high-conviction A-grade ⭐</b> anchors, then add a ⚡ or 💤 <b>sleeper</b> for the payout bump — not the other way around.</div></div>
+          <div class="hritem"><span class="hk">Stack the filters</span><div class="hd">In the builder, turn on <b>platoon ADV</b>, the <b>A–B grade band</b>, <b>4+ ERA</b> starters or <b>most-vulnerable</b> pitchers, and the <b>+EV</b> checkbox so every leg already clears the bar.</div></div>
+          <div class="hritem"><span class="hk">Same-game, on purpose only</span><div class="hd">If you <i>do</i> stack two bats off one bad pitcher, know you're making a correlation play — bigger upside, but bigger bust risk, and the price rarely reflects it.</div></div>
+        </div>
+      </div>
+
+      <div class="gcard">
+        <h3>Quick gut-checks before you submit</h3>
+        <div class="hrlist">
+          <div class="hritem"><span class="hk">✅ Lineup confirmed?</span><div class="hd">Never bet a HR prop before the lineup posts — a rest day kills it instantly.</div></div>
+          <div class="hritem"><span class="hk">✅ Model % &gt; implied %?</span><div class="hd">If not, pass. No edge, no bet.</div></div>
+          <div class="hritem"><span class="hk">✅ Three or more green signals?</span><div class="hd">Vuln pitcher + platoon ADV + good park/weather is the classic recipe.</div></div>
+          <div class="hritem"><span class="hk">✅ Is the price sane?</span><div class="hd">Shop books on the Odds tab — a few cents of HR odds is a lot of long-run EV.</div></div>
+        </div>
+      </div>
+
+      <div class="gtip">Reality check: HR betting is variance-heavy entertainment, not income. Even a perfectly-built 4-leg HR parlay usually wins a minority of the time — that's the math, not bad luck. Bet amounts you're fine losing, and use the <b>Track</b> tab to see whether your spots actually beat their implied odds over time. <b>21+ · not financial advice · if gambling stops being fun, call 1-800-GAMBLER.</b></div>
+    </div>
+  </section>
   <section id="alignView" class="hide">
     <div class="sec-head"><h2>Alignment Score</h2><span class="tag" id="alignTag">0–100 from 9 weighted factors</span><span class="rule"></span></div>
     <div class="align-ctrls">
@@ -535,7 +678,7 @@
   </section>
 
   <section id="simsView" class="hide">
-    <div class="sec-head"><h2>Game Simulations</h2><span class="tag">projected score, totals, moneyline &amp; run line</span><span class="rule"></span></div>
+    <div class="sec-head"><h2>Game Simulations</h2><span class="tag" id="simsTag">projected score, totals, moneyline &amp; run line</span><span class="rule"></span></div>
     <div class="sims" id="simsBoard"></div>
   </section>
 
@@ -585,12 +728,15 @@
         <select id="plPerGame"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
       <div class="pc"><label for="plCount"># parlays</label>
         <select id="plCount"><option>1</option><option>3</option><option selected>5</option><option>10</option><option>15</option><option>20</option></select></div>
-      <div class="pc" style="flex:1;min-width:240px"><label>Props — tap to mix &amp; match</label>
+      <div class="pc" style="flex:1;min-width:240px"><label>Props &amp; lines — tap to mix &amp; match</label>
         <div class="pl-markets" id="plMarkets">
           <button data-m="hr" class="active">Home Run</button>
           <button data-m="hits">1+ Hit</button>
           <button data-m="tb">2+ Bases</button>
           <button data-m="rbi">1+ RBI</button>
+          <button data-m="ml">Moneyline</button>
+          <button data-m="spread">Run Line</button>
+          <button data-m="total">Over/Under</button>
         </div></div>
       <div class="pc" style="flex:1;min-width:260px"><label>Filters — stack to narrow the pool</label>
         <div class="pl-markets" id="plFilters">
@@ -634,7 +780,7 @@
         <h4>✓ Align — Alignment Score</h4>
         <p>Every prop gets a <b>0–100 Alignment Score</b> from nine weighted factors: recent form (L5/10/15), home/away split, lefty/righty split, matchup vs the pitcher, advanced metrics, projection consensus, sportsbook line value, odds movement, and weather. The engine also returns a <b>confidence rating</b>, a <b>risk level</b>, and a <b>factor-agreement count</b> (how many signals back the over). Each card shows a plain-English summary and a checklist (✓ supports / ✕ against / – no data). Props where <b>80%+ of available factors align</b> are highlighted. Filter by market (HR, hits, RBIs, total bases, strikeouts) and sort by alignment or best value. Factors that need data you don't have (Statcast, odds) gracefully show "–" rather than guessing.</p>
         <h4>Sims</h4>
-        <p>Full-game simulations: a projected final score, <b>total (over/under)</b>, <b>moneyline</b> win %, and <b>run line</b> cover %. The run model blends each team's last-30-day offense, the opposing starter's ERA (weighted for ~5.5 innings, league-average bullpen after), and the park + weather run environment, then plays out the score distribution. Load odds and it shows the book line and your edge for each.</p>
+        <p>Full-game <b>Monte Carlo</b> simulations — each game is played out <b>10,000 times</b> with over-dispersed (negative-binomial) run distributions, then tallied into <b>moneyline</b>, <b>run line</b>, <b>over/under</b> probabilities, a projected score, and expected runs per team. Each pick is <b>graded A (most confident) → F</b>. The run projections are built first from <b>player stats</b> (lineup OPS + recent form), <b>team stats</b> (30-day R/G), and <b>pitcher stats</b> (starter ERA, an estimated FIP from K/BB/HR, and platoon splits weighted by the opposing lineup's handedness), plus the <b>bullpen</b> (team staff ERA), park, and weather. Doubleheaders are kept separate (Game 1 / Game 2). What's <i>not</i> modeled, due to no free data source: umpire tendencies, team defense (DRS/OAA), catcher framing, exact bullpen rest, and Statcast-only metrics (barrel%, xERA/SIERA). Load odds for book lines, edges, and sharper grades.</p>
         <h4>Vulnerable</h4>
         <p>Starters ranked by how exploitable they are, in tiers (prime / lean / marginal), with their vs-LHB/RHB splits and the <b>top bats to target</b> on their weaker side. Plus a "tough — fade" list of arms to avoid.</p>
         <h4>Weather</h4>
@@ -646,7 +792,7 @@
         <h4>Odds</h4>
         <p>A side-by-side comparison of <b>every US sportsbook</b> for a market, with the model's fair odds, the <b>de-vig</b> consensus, the best/worst price, and your <b>edge</b>. Sorted best-edge first. This is where you find soft prices. (Requires loading your odds key.)</p>
         <h4>Parlays</h4>
-        <p>Build optimized parlays from the model. Choose the <b>number of legs</b>, the <b>max bats from any one game</b> (keep this low — same-game legs are correlated), <b>how many parlays</b> to spit out, and which props — one type or several to <b>mix &amp; match</b>. Stack <b>filters</b> to narrow the pool: only platoon-advantage bats, only the A- to B- grade band, only hitters facing a <b>4+ ERA</b> starter, or only those facing the <b>most vulnerable</b> pitchers. With odds loaded it shows real book payouts and parlay edge; without, model fair odds. Legs are weighted toward the strongest model spots, with randomness so each run gives fresh combinations.</p>
+        <p>Build optimized parlays from the model. Choose the <b>number of legs</b>, the <b>max bats from any one game</b> (keep this low — same-game legs are correlated), <b>how many parlays</b> to spit out, and which markets — player props (HR, hits, bases, RBI) <b>plus game lines</b> (moneyline, run line, over/under), one type or several to <b>mix &amp; match</b>. Game-line legs take the model's favored side, and a parlay won't stack two game lines from the same game. Stack <b>filters</b> to narrow the pool: only platoon-advantage bats, only the A- to B- grade band, only hitters facing a <b>4+ ERA</b> starter, or only those facing the <b>most vulnerable</b> pitchers. With odds loaded it shows real book payouts and parlay edge; without, model fair odds. Legs are weighted toward the strongest model spots, with randomness so each run gives fresh combinations.</p>
         <h4>Teams</h4>
         <p>Browse any team in start-time order. See the <b>confirmed batting order 1–9</b> the moment it posts (full roster before that), each hitter's stats/projections/grade, and the starter's full profile including their vs-LHB/RHB splits.</p>
         <h4>Trends</h4>
@@ -683,8 +829,8 @@
           <div class="gli"><span class="lk"><span class="vuln vmin">TOUGH</span></span> Shutdown / tough starter to face</div>
           <div class="gli"><span class="lk" style="font-size:16px">🔥 / 🧊</span> Hitter hot / cold over the last 10 games</div>
           <div class="gli"><span class="lk" style="font-size:16px">🎯 / ⚠️</span> Pitcher sharp / struggling in last 3–5 starts</div>
-          <div class="gli"><span class="lk" style="font-size:16px">⭐ / ⚡</span> Best / second-best hitter on that team in that game</div>
-          <div class="gli"><span class="lk" style="font-size:16px">💣</span> Hit a home run today (live result)</div>
+          <div class="gli"><span class="lk" style="font-size:16px">⭐ / ⚡ / 💤</span> Best / second-best / sleeper hitter on that team in the game</div>
+          <div class="gli"><span class="lk" style="font-size:16px">💣</span> Hit a home run today (also fills the ✅ Homers tab)</div>
           <div class="gli"><span class="lk"><span class="wx hit">🔥 Hitters</span></span> Weather favors hitters (warm / wind out)</div>
           <div class="gli"><span class="lk"><span class="wx pit">🧊 Pitchers</span></span> Weather favors pitchers (cold / wind in)</div>
         </div>
@@ -787,35 +933,67 @@ function weightedPick(pool,weights){
   return pool.length-1;
 }
 const GRADE_BAND=new Set(["A-","B+","B","B-"]); // "A- through B-"
+function gameLegCandidate(g,gm,useBook){
+  if(!g.sim)return null;
+  const s=g.sim, gkey=g.away.short+"@"+g.home.short;
+  let prob,label,book=null,edge=null,sub;
+  if(gm==="ml"){
+    const favHome=s.pHome>=s.pAway;prob=Math.max(s.pHome,s.pAway);
+    sub=(favHome?g.home.short:g.away.short)+" ML";label="Moneyline";
+    if(useBook){const ml=mlConsensus(g);if(ml){book=favHome?ml.bestHome:ml.bestAway;if(ml.homeProb!=null)edge=prob-(favHome?ml.homeProb:1-ml.homeProb);}}
+  }else if(gm==="total"){
+    const tc=useBook?totalsConsensus(g):null;const tline=tc&&tc.point!=null?tc.point:Math.round(s.total*2)/2;
+    const pOver=simTotalOver(s,tline),over=pOver>=0.5;prob=over?pOver:1-pOver;
+    sub=(over?"Over ":"Under ")+tline.toFixed(1);label="Total";
+    if(tc){book=over?tc.bestOver:tc.bestUnder;if(tc.overProb!=null)edge=prob-(over?tc.overProb:1-tc.overProb);}
+  }else if(gm==="spread"){
+    const sc=useBook?spreadsConsensus(g):null;const hl=sc&&sc.homePoint!=null?sc.homePoint:(s.pHome>=s.pAway?-1.5:1.5);
+    const pHC=simHomeCover(s,hl),coverHome=pHC>=0.5;prob=Math.max(pHC,1-pHC);
+    sub=coverHome?`${g.home.short} ${hl>0?"+":""}${hl}`:`${g.away.short} ${-hl>0?"+":""}${-hl}`;label="Run line";
+    if(sc){book=coverHome?sc.bestHome:sc.bestAway;if(book!=null)edge=prob-impliedProb(book);}
+  }else return null;
+  if(!(prob>0)||prob<0.12||prob>0.985)return null;
+  return {id:g.gamePk+":"+gm,b:null,isGame:true,name:sub,team:"",game:gkey,mk:gm,label,line:null,prob,fair:fairAmerican(prob),book,edge};
+}
 function generateParlays(cfg){
   if(!MODEL||!MODEL.batters)return [];
   const useBook=ODDS_LOADED;
   const cands=[];
+  const playerMks=cfg.markets.filter(m=>PARLAY_MARKETS[m]);
+  const gameMks=cfg.markets.filter(m=>m==="ml"||m==="spread"||m==="total");
   MODEL.batters.forEach(b=>{
     if(cfg.fPlatoon&&!(b.platoon&&b.platoon.badge==="ADV"))return;
     if(cfg.fGrade&&!(b.grade&&GRADE_BAND.has(b.grade.letter)))return;
     if(cfg.fERA&&!(b.oppERA!=null&&b.oppERA>=4.0))return;
     if(cfg.fVuln&&!(b.oppVuln!=null&&b.oppVuln>=60))return;
-    cfg.markets.forEach(mk=>{
+    playerMks.forEach(mk=>{
       const c=legCandidate(b,mk,useBook);if(!c)return;
       if(cfg.onlyEV&&useBook){if(c.edge==null||c.edge<=0)return;}
       c.score=(useBook&&c.edge!=null)?c.edge:(c.prob-0.5);
       cands.push(c);
     });
   });
+  if(gameMks.length)(MODEL.games||[]).forEach(g=>gameMks.forEach(gm=>{
+    const c=gameLegCandidate(g,gm,useBook);if(!c)return;
+    if(cfg.onlyEV&&useBook){if(c.edge==null||c.edge<=0)return;}
+    c.score=(useBook&&c.edge!=null)?c.edge:(c.prob-0.5);
+    cands.push(c);
+  }));
   const out=[],seen=new Set();let attempts=0;
   const maxAtt=cfg.count*60;
   while(out.length<cfg.count&&attempts<maxAtt){
     attempts++;
     const pool=[...cands];
-    const picked=[],usedP=new Set(),perGame={};
+    const picked=[],usedP=new Set(),perGame={},gameLine=new Set();
     while(picked.length<cfg.legs&&pool.length){
       const weights=pool.map(c=>Math.exp((c.score||0)*6));
       const idx=weightedPick(pool,weights);
       const c=pool.splice(idx,1)[0];
-      if(usedP.has(c.b.id))continue;
+      const key=c.b?("p"+c.b.id):c.id;
+      if(usedP.has(key))continue;
+      if(c.isGame&&gameLine.has(c.game))continue; // at most one game-line leg per game
       if((perGame[c.game]||0)>=cfg.maxPerGame)continue;
-      picked.push(c);usedP.add(c.b.id);perGame[c.game]=(perGame[c.game]||0)+1;
+      picked.push(c);usedP.add(key);perGame[c.game]=(perGame[c.game]||0)+1;if(c.isGame)gameLine.add(c.game);
     }
     if(picked.length<cfg.legs)continue;
     const sig=picked.map(c=>c.id).sort().join("|");
@@ -870,6 +1048,7 @@ async function fetchSchedule(date){
   (data.dates||[]).forEach(d=>(d.games||[]).forEach(g=>{
     const h=g.teams?.home,a=g.teams?.away;if(!h?.team||!a?.team)return;
     games.push({gamePk:g.gamePk,time:g.gameDate,status:g.status?.detailedState||"",abstract:g.status?.abstractGameState||"",
+      dh:g.doubleHeader&&g.doubleHeader!=="N",gameNumber:g.gameNumber||1,
       venueId:g.venue?.id,venueName:g.venue?.name,
       home:{id:h.team.id,full:h.team.name,short:h.team.teamName||h.team.name,abbr:h.team.abbreviation,sp:h.probablePitcher?{id:h.probablePitcher.id,name:h.probablePitcher.fullName}:null},
       away:{id:a.team.id,full:a.team.name,short:a.team.teamName||a.team.name,abbr:a.team.abbreviation,sp:a.probablePitcher?{id:a.probablePitcher.id,name:a.probablePitcher.fullName}:null}});
@@ -878,6 +1057,15 @@ async function fetchSchedule(date){
 }
 async function fetchBoxscore(gamePk){
   try{return await getJSON(`${API}/game/${gamePk}/boxscore`);}catch(e){return null;}
+}
+async function fetchTeamPitch(season){
+  // team-level staff ERA as a bullpen/staff-quality proxy (one call; best-effort)
+  try{
+    const d=await getJSON(`${API}/teams/stats?stats=season&group=pitching&season=${season}&sportId=1`);
+    const map={}; const splits=(d.stats&&d.stats[0]&&d.stats[0].splits)||[];
+    splits.forEach(s=>{const id=s.team&&s.team.id, era=s.stat&&pnum(s.stat.era); if(id&&era>0)map[id]=era;});
+    return map;
+  }catch(e){return {};}
 }
 async function fetchRosterIds(teamId){
   const data=await getJSON(`${API}/teams/${teamId}/roster?rosterType=active`);
@@ -1028,8 +1216,8 @@ function fairAmerican(p){if(!(p>0&&p<1))return null;return p>=0.5?-Math.round(p/
 function amToDec(a){a=Number(a);if(!isFinite(a)||a===0)return null;return a>0?1+a/100:1+100/(-a);}
 function decToAm(d){if(!(d>1))return null;return d>=2?Math.round((d-1)*100):-Math.round(100/(d-1));}
 function formEmoji(b){const s=b.recentForm?.state;return s==="hot"?"🔥 ":s==="cold"?"🧊 ":"";}
-function rankEmoji(b){return b.teamStar?"⭐ ":b.teamBolt?"⚡ ":"";}
-function sideTxt(s){return s?`${s.hr} HR · ${s.avg??"—"}/${s.ops??"—"} · ${(s.kPct*100).toFixed(0)}% K`:"—";}
+function rankEmoji(b){return b.teamStar?"⭐ ":b.teamBolt?"⚡ ":b.teamSleeper?"💤 ":"";}
+function sideTxt(s){return s?`AVG ${s.avg??"—"} · SLG ${s.slg??"—"} · ISO ${fmt3(s.iso)} · OPS ${s.ops??"—"} · ${s.hr} HR · ${(s.kPct*100).toFixed(0)}% K`:"—";}
 function pitchSplitBlock(kobj){
   if(!kobj||!kobj.split)return "";
   const v=kobj.split;if(!v.vL&&!v.vR)return "";
@@ -1228,6 +1416,7 @@ function pitchSide(stat){
   if(bf<10&&pa<10)return null;
   const hr=Number(stat.homeRuns)||0, k=Number(stat.strikeOuts)||0, bb=Number(stat.baseOnBalls)||0;
   return {bf:bf||pa,pa:pa||bf,hr,avg:stat.avg,ops:stat.ops,obp:stat.obp,slg:stat.slg,
+    iso:(pnum(stat.slg)-pnum(stat.avg)),
     kPct:(pa||bf)>0?k/(pa||bf):0, bbPct:(pa||bf)>0?bb/(pa||bf):0, hrPerBF:(bf||pa)>0?hr/(bf||pa):0};
 }
 // which pitcher split applies to this batter (their effective batting side vs the pitcher)
@@ -1268,25 +1457,88 @@ function computeVuln(k,parkF,weather){
 function vulnPill(k){return (k&&k.vuln)?`<span class="vuln ${k.vuln.cls}" title="vulnerability ${k.vuln.score}/99 — higher = easier to hit">${k.vuln.label} ${k.vuln.score}</span>`:"";}
 function weakPill(b){return b.weakSpot?`<span class="weakspot" title="${b.weakSpot.side==='vl'?'LHB':'RHB'} — the pitcher's weaker side (${fmt3(b.weakSpot.ops)} OPS, ${b.weakSpot.hr} HR allowed)">🎯 WEAK SPOT</span>`:"";}
 function poissonPMF(lam,k){if(lam<=0)return k===0?1:0;return Math.exp(-lam)*Math.pow(lam,k)/fact(k);}
-function computeSim(g){
-  const parkF=g.parkF||1, wx=g.weather;
-  const HERA=(g._homeK&&g._homeK.cur.era!=null)?pnum(g._homeK.cur.era):LG.era; // home SP, faced by away
-  const AERA=(g._awayK&&g._awayK.cur.era!=null)?pnum(g._awayK.cur.era):LG.era; // away SP, faced by home
-  const allow=era=>Math.max(0.72,Math.min(1.4,(5.5*era+3.5*LG.era)/(9*LG.era)));
-  const off=tf=>(tf&&tf.rpg)?Math.max(0.65,Math.min(1.55,tf.rpg/LG.rg)):1.0;
-  const aOff=off(g._tfAway), hOff=off(g._tfHome);
-  const runEnv=Math.max(0.85,Math.min(1.2,(1+(parkF-1)*0.5)*(wx?wx.offMult:1)));
-  let lamA=LG.rg*aOff*allow(HERA)*runEnv;
-  let lamH=LG.rg*hOff*allow(AERA)*runEnv*1.03; // small home-field edge
-  lamA=Math.max(1.5,Math.min(8,lamA)); lamH=Math.max(1.5,Math.min(8,lamH));
-  const N=22, pa=[], ph=[];
-  for(let k=0;k<=N;k++){pa[k]=poissonPMF(lamA,k);ph[k]=poissonPMF(lamH,k);}
-  const margin={}; let pHW=0,pAW=0,pT=0;
-  for(let h=0;h<=N;h++)for(let a=0;a<=N;a++){const p=ph[h]*pa[a];const m=h-a;margin[m]=(margin[m]||0)+p;if(h>a)pHW+=p;else if(a>h)pAW+=p;else pT+=p;}
-  return {lamA,lamH,expAway:lamA,expHome:lamH,total:lamA+lamH,pHome:pHW+0.5*pT,pAway:pAW+0.5*pT,margin,
-    offData:{aOff,hOff,allowH:allow(HERA),allowA:allow(AERA),runEnv,tfA:!!g._tfAway,tfH:!!g._tfHome}};
+const clampR=(x,a,b)=>Math.max(a,Math.min(b,x));
+const LGP={era:4.10,hr9:1.10,whip:1.28,k9:8.6,ops:0.715};
+// team offense factor from the actual lineup (player stats) + team last-30 (team stats) + recent form
+function teamOffFactor(bats,tf){
+  let opsSum=0,opsN=0,dSum=0,dN=0;
+  (bats||[]).forEach(b=>{const o=pnum(b.cur&&b.cur.ops);if(o>0){opsSum+=o;opsN++;}
+    if(b.recentForm&&b.recentForm.l10&&b.recentForm.l10.pa>=12){dSum+=b.recentForm.delta;dN++;}});
+  const lineupOPS=opsN?opsSum/opsN:LGP.ops;
+  const opsFactor=Math.pow(Math.max(0.5,lineupOPS/LGP.ops),1.6);
+  const teamFactor=(tf&&tf.rpg)?clampR(tf.rpg/LG.rg,0.6,1.6):1.0;
+  const formMult=dN?(1+clampR(dSum/dN,-0.06,0.06)*1.5):1.0;
+  const off=(opsN?0.55*opsFactor+0.45*teamFactor:teamFactor)*formMult;
+  return clampR(off,0.6,1.65);
 }
-function simTotalOver(sim,line){return poissonOver(sim.total,line);}        // P(total > line)
+// run-prevention factor of a staff: SP (ERA + FIP + platoon-weighted vs the opposing lineup) over ~5.5 IP, then the bullpen
+function spPrevFactor(kobj,oppBats,bpFactor){
+  let spFactor=1.0;
+  if(kobj&&kobj.cur){
+    const era=pnum(kobj.cur.era)||LGP.era, whip=pnum(kobj.cur.whip)||LGP.whip,
+          hr9=kobj.cur.hr9!=null?kobj.cur.hr9:LGP.hr9, k9=kobj.cur.k9!=null?kobj.cur.k9:LGP.k9;
+    const eraFactor=clampR(era/LGP.era,0.55,1.7);
+    // FIP estimate: BB/9 inferred from WHIP vs league hits/9 (~8.5), then FIP = (13*HR9 + 3*BB9 - 2*K9)/9 + 3.1
+    const bb9=clampR(whip*9-8.5,0.5,6.0);
+    const fipEst=clampR((13*hr9+3*bb9-2*k9)/9+3.1,1.8,8.0);
+    const fipFactor=clampR(fipEst/LGP.era,0.55,1.7);
+    let platFactor=null;
+    if(kobj.split&&(kobj.split.vL||kobj.split.vR)&&oppBats&&oppBats.length){
+      let nL=0,nR=0;oppBats.forEach(b=>{const c=effectiveSide(b.bats,kobj.throws);if(c==="vl")nL++;else if(c==="vr")nR++;});
+      const vlO=kobj.split.vL?pnum(kobj.split.vL.ops):null, vrO=kobj.split.vR?pnum(kobj.split.vR.ops):null;
+      if((nL+nR)>0&&(vlO||vrO)){const wOPS=((nL*(vlO||vrO))+(nR*(vrO||vlO)))/(nL+nR);platFactor=clampR(wOPS/LGP.ops,0.6,1.6);}
+    }
+    spFactor=platFactor!=null?(0.42*eraFactor+0.30*fipFactor+0.28*platFactor):(0.58*eraFactor+0.42*fipFactor);
+  }
+  spFactor=clampR(spFactor,0.6,1.6);
+  const bpF=(bpFactor!=null&&isFinite(bpFactor))?clampR(bpFactor,0.7,1.4):1.0;
+  return (5.5*spFactor+3.5*bpF)/9;
+}
+// ---- Monte Carlo samplers ----
+function gaussRand(){let u=0,v=0;while(u===0)u=Math.random();while(v===0)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function gammaRand(shape){
+  if(shape<1)return gammaRand(shape+1)*Math.pow(Math.random(),1/shape);
+  const d=shape-1/3,c=1/Math.sqrt(9*d);
+  for(;;){let x,v;do{x=gaussRand();v=1+c*x;}while(v<=0);v=v*v*v;const u=Math.random();
+    if(u<1-0.0331*x*x*x*x)return d*v;
+    if(Math.log(u)<0.5*x*x+d*(1-v+Math.log(v)))return d*v;}
+}
+function poisRand(lam){
+  if(lam<=0)return 0;
+  if(lam<30){const L=Math.exp(-lam);let k=0,p=1;do{k++;p*=Math.random();}while(p>L);return k-1;}
+  return Math.max(0,Math.round(lam+Math.sqrt(lam)*gaussRand()));
+}
+function teamRunsSample(lam,phi){return poisRand(lam*(gammaRand(phi)/phi));} // Gamma-Poisson = negative binomial (over-dispersed like real runs)
+function bpFactorFrom(era){return (era>0)?clampR(era/LGP.era,0.7,1.4):1.0;}
+function computeSim(g,nSims){
+  const parkF=g.parkF||1, wx=g.weather;
+  const runEnv=clampR((1+(parkF-1)*0.5)*(wx?wx.offMult:1),0.85,1.2);
+  const offA=teamOffFactor(g._awayBat,g._tfAway), offH=teamOffFactor(g._homeBat,g._tfHome);
+  const prevH=spPrevFactor(g._homeK,g._awayBat,bpFactorFrom(g._bpHome)); // home staff faced by away bats
+  const prevA=spPrevFactor(g._awayK,g._homeBat,bpFactorFrom(g._bpAway));
+  let lamA=clampR(LG.rg*offA*prevH*runEnv,1.5,8);
+  let lamH=clampR(LG.rg*offH*prevA*runEnv*1.03,1.5,8); // small home-field edge
+  // --- Monte Carlo: 10,000 simulated games, runs ~ negative binomial (Gamma-Poisson), extra innings on ties ---
+  const N=nSims||10000, phi=4.0;
+  const totalHist={}, margin={}; let hw=0,aw=0,tsum=0;
+  for(let n=0;n<N;n++){
+    let ra=teamRunsSample(lamA,phi), rh=teamRunsSample(lamH,phi);
+    if(ra===rh){let x=0;while(ra===rh&&x<40){ra+=poisRand(lamA/9);rh+=poisRand(lamH/9);x++;}if(ra===rh)rh++;}
+    if(rh>ra)hw++;else aw++;
+    const tot=ra+rh,m=rh-ra;
+    totalHist[tot]=(totalHist[tot]||0)+1; margin[m]=(margin[m]||0)+1; tsum+=tot;
+  }
+  for(const k in totalHist)totalHist[k]/=N; for(const k in margin)margin[k]/=N;
+  return {lamA,lamH,expAway:lamA,expHome:lamH,total:lamA+lamH,avgTotal:tsum/N,pHome:hw/N,pAway:aw/N,totalHist,margin,N,nbPhi:phi,
+    offData:{offA,offH,prevH,prevA,runEnv,tfA:!!g._tfAway,tfH:!!g._tfHome,plA:!!(g._homeK&&g._homeK.split),plH:!!(g._awayK&&g._awayK.split),bpA:g._bpAway!=null,bpH:g._bpHome!=null}};
+}
+// confidence grade for a sim pick (reuses gradeMeta A+→F)
+function simPickGrade(prob,edge){
+  let s=50+(prob-0.5)*80;
+  if(edge!=null&&isFinite(edge))s+=edge*150;
+  return gradeMeta(clampR(s,1,99));
+}
+function simTotalOver(sim,line){if(sim&&sim.totalHist){let p=0;for(const k in sim.totalHist){if(Number(k)>line)p+=sim.totalHist[k];}return p;}return poissonOver(sim.total,line);}        // P(total > line)
 function simHomeCover(sim,homeLine){let p=0;for(const d in sim.margin){if(Number(d)>-homeLine)p+=sim.margin[d];}return p;}
 
 //------------------------------------------------------------------ orchestration
@@ -1444,9 +1696,11 @@ async function buildModel(date){
   const teamIdsAll=[...new Set(games.flatMap(g=>[g.home.id,g.away.id]))];
   const tform={};
   await pool(teamIdsAll,6,async tid=>{tform[tid]=teamFormObj(await fetchTeamRange(tid,start,end,season));});
+  const teamPitch=await fetchTeamPitch(season);
   setBar(0.98);
   games.forEach(g=>{
     g._tfAway=tform[g.away.id]; g._tfHome=tform[g.home.id];
+    g._bpAway=teamPitch[g.away.id]; g._bpHome=teamPitch[g.home.id];
     g.sim=computeSim(g);
     if(g._homeK)g._homeK._oppBats=g._awayBat; // home SP faces away batters
     if(g._awayK)g._awayK._oppBats=g._homeBat;
@@ -1460,11 +1714,12 @@ async function buildModel(date){
       b.escore=edgeScore(b);b.grade=gradeMeta(b.escore);
       const r=res[b.id];b.result=(live&&r&&r.bat)?r.bat:null;
     });
-    // ⭐ best / ⚡ second-best batter on each team in this game (by Edge Score)
+    // ⭐ best / ⚡ second-best / 💤 sleeper (third-best) batter on each team this game
     [g._awayBat,g._homeBat].forEach(bats=>{
       const ranked=[...bats].sort((a,b)=>b.escore-a.escore);
       if(ranked[0])ranked[0].teamStar=true;
       if(ranked[1])ranked[1].teamBolt=true;
+      if(ranked[2])ranked[2].teamSleeper=true;
     });
     if(g._awayK){g._awayK.result=findPitResult(g._box,g.away.sp?.id,live);}
     if(g._homeK){g._homeK.result=findPitResult(g._box,g.home.sp?.id,live);}
@@ -1474,10 +1729,10 @@ async function buildModel(date){
   setBar(1);
   const teams=[];
   games.forEach(g=>{
-    teams.push({id:g.away.id,abbr:g.away.abbr,short:g.away.short,full:g.away.full,conf:g.away._conf,home:false,
+    teams.push({id:g.away.id,key:g.gamePk+"_a",gamePk:g.gamePk,dh:g.dh,gameNumber:g.gameNumber,abbr:g.away.abbr,short:g.away.short,full:g.away.full,conf:g.away._conf,home:false,
       batters:g._awayBat,ownSP:g._awayK,oppAbbr:g.home.abbr,park:g.parkF,time:g.time,live:g.live,weather:g.weather,form:tform[g.away.id]||null,
       facing:g.home.sp?{name:g.home.sp.name,hand:g._homeK?g._homeK.throws:null}:null});
-    teams.push({id:g.home.id,abbr:g.home.abbr,short:g.home.short,full:g.home.full,conf:g.home._conf,home:true,
+    teams.push({id:g.home.id,key:g.gamePk+"_h",gamePk:g.gamePk,dh:g.dh,gameNumber:g.gameNumber,abbr:g.home.abbr,short:g.home.short,full:g.home.full,conf:g.home._conf,home:true,
       batters:g._homeBat,ownSP:g._homeK,oppAbbr:g.away.abbr,park:g.parkF,time:g.time,live:g.live,weather:g.weather,form:tform[g.home.id]||null,
       facing:g.away.sp?{name:g.away.sp.name,hand:g._awayK?g._awayK.throws:null}:null});
   });
@@ -1503,7 +1758,11 @@ async function loadOdds(){
     const events=await getJSON(`${ODDS_BASE}/events?apiKey=${key}&dateFormat=iso`);
     const findEvent=g=>{
       const hn=norm(g.home.full),an=norm(g.away.full);
-      return (events||[]).find(e=>norm(e.home_team)===hn&&norm(e.away_team)===an);
+      const matches=(events||[]).filter(e=>norm(e.home_team)===hn&&norm(e.away_team)===an);
+      if(matches.length<=1)return matches[0];
+      // doubleheader: pick the event whose start time is closest to this game's
+      const gt=new Date(g.time).getTime();
+      return matches.slice().sort((a,b)=>Math.abs(new Date(a.commence_time)-gt)-Math.abs(new Date(b.commence_time)-gt))[0];
     };
     const pairs=MODEL.games.map(g=>({g,ev:findEvent(g)})).filter(x=>x.ev);
     if(!pairs.length){setStatus("No matching odds events (slate may be too far out, or key region mismatch).","err");el("loadOdds").disabled=false;return;}
@@ -1778,29 +2037,45 @@ function renderSims(model){
   const wrap=el("simsBoard");wrap.innerHTML="";
   const games=model.games.filter(g=>g.sim);
   if(!games.length){wrap.innerHTML='<div class="empty"><b>No games</b>Load a slate first.</div>';return;}
+  el("simsTag")&&(el("simsTag").textContent=`projected score, totals, ML & run line — each pick graded A (most confident) → F`);
   const gs=[...games].sort((a,b)=>b.sim.total-a.sim.total);
   wrap.innerHTML=gs.map(g=>{
-    const s=g.sim, fav=s.pHome>=s.pAway?"home":"away";
+    const s=g.sim;
     const ml=ODDS_LOADED?mlConsensus(g):null;
-    const mlRow=`<div class="srow"><span class="lbl2">${g.away.short} ML</span><span class="mp">${Math.round(s.pAway*100)}% · ${amStr(fairAmerican(s.pAway))}</span><span class="bk">${ml&&ml.homeProb!=null?`${amStr(ml.bestAway)} ${edgeStr(s.pAway-(1-ml.homeProb))}`:"—"}</span></div>`+
-      `<div class="srow"><span class="lbl2">${g.home.short} ML</span><span class="mp">${Math.round(s.pHome*100)}% · ${amStr(fairAmerican(s.pHome))}</span><span class="bk">${ml&&ml.homeProb!=null?`${amStr(ml.bestHome)} ${edgeStr(s.pHome-ml.homeProb)}`:"—"}</span></div>`;
+    // --- moneyline pick + grade ---
+    const favIsHome=s.pHome>=s.pAway, favProb=Math.max(s.pHome,s.pAway);
+    const favDevig=ml&&ml.homeProb!=null?(favIsHome?ml.homeProb:1-ml.homeProb):null;
+    const mlGrade=simPickGrade(favProb,favDevig!=null?favProb-favDevig:null);
+    const mlPick=(favIsHome?g.home.short:g.away.short)+" ML";
+    const mlRow=`<div class="srow${favIsHome?"":" fav"}"><span class="lbl2">${g.away.short} ML</span><span class="mp">${Math.round(s.pAway*100)}% · ${amStr(fairAmerican(s.pAway))}</span><span class="bk">${ml&&ml.homeProb!=null?`${amStr(ml.bestAway)} ${edgeStr(s.pAway-(1-ml.homeProb))}`:"—"}</span></div>`+
+      `<div class="srow${favIsHome?" fav":""}"><span class="lbl2">${g.home.short} ML</span><span class="mp">${Math.round(s.pHome*100)}% · ${amStr(fairAmerican(s.pHome))}</span><span class="bk">${ml&&ml.homeProb!=null?`${amStr(ml.bestHome)} ${edgeStr(s.pHome-ml.homeProb)}`:"—"}</span></div>`;
+    // --- total pick + grade ---
     const tc=ODDS_LOADED?totalsConsensus(g):null;
     const tline=tc&&tc.point!=null?tc.point:Math.round(s.total*2)/2;
-    const pOver=simTotalOver(s,tline);
-    const totRow=`<div class="srow"><span class="lbl2">Over ${tline.toFixed(1)}</span><span class="mp">${Math.round(pOver*100)}%</span><span class="bk">${tc?`${amStr(tc.bestOver)} ${edgeStr(pOver-(tc.overProb!=null?tc.overProb:impliedProb(tc.bestOver)))}`:"fair "+amStr(fairAmerican(pOver))}</span></div>`+
-      `<div class="srow"><span class="lbl2">Under ${tline.toFixed(1)}</span><span class="mp">${Math.round((1-pOver)*100)}%</span><span class="bk">${tc&&tc.bestUnder!=null?`${amStr(tc.bestUnder)} ${edgeStr((1-pOver)-(tc.overProb!=null?1-tc.overProb:impliedProb(tc.bestUnder)))}`:"fair "+amStr(fairAmerican(1-pOver))}</span></div>`;
+    const pOver=simTotalOver(s,tline), overPick=pOver>=0.5, pTot=overPick?pOver:1-pOver;
+    const totDevig=tc&&tc.overProb!=null?(overPick?tc.overProb:1-tc.overProb):null;
+    const totGrade=simPickGrade(pTot,totDevig!=null?pTot-totDevig:null);
+    const totPick=(overPick?"Over ":"Under ")+tline.toFixed(1);
+    const totRow=`<div class="srow${overPick?" fav":""}"><span class="lbl2">Over ${tline.toFixed(1)}</span><span class="mp">${Math.round(pOver*100)}%</span><span class="bk">${tc?`${amStr(tc.bestOver)} ${edgeStr(pOver-(tc.overProb!=null?tc.overProb:impliedProb(tc.bestOver)))}`:"fair "+amStr(fairAmerican(pOver))}</span></div>`+
+      `<div class="srow${overPick?"":" fav"}"><span class="lbl2">Under ${tline.toFixed(1)}</span><span class="mp">${Math.round((1-pOver)*100)}%</span><span class="bk">${tc&&tc.bestUnder!=null?`${amStr(tc.bestUnder)} ${edgeStr((1-pOver)-(tc.overProb!=null?1-tc.overProb:impliedProb(tc.bestUnder)))}`:"fair "+amStr(fairAmerican(1-pOver))}</span></div>`;
+    // --- run line pick + grade ---
     const sc=ODDS_LOADED?spreadsConsensus(g):null;
-    const homeLine=sc&&sc.homePoint!=null?sc.homePoint:(fav==="home"?-1.5:1.5);
+    const homeLine=sc&&sc.homePoint!=null?sc.homePoint:(favIsHome?-1.5:1.5);
     const pHomeCover=simHomeCover(s,homeLine), pAwayCover=1-pHomeCover, awayLine=-homeLine;
-    const spRow=`<div class="srow"><span class="lbl2">${g.home.short} ${homeLine>0?"+":""}${homeLine}</span><span class="mp">${Math.round(pHomeCover*100)}%</span><span class="bk">${sc?`${amStr(sc.bestHome)} ${edgeStr(pHomeCover-impliedProb(sc.bestHome))}`:"fair "+amStr(fairAmerican(pHomeCover))}</span></div>`+
-      `<div class="srow"><span class="lbl2">${g.away.short} ${awayLine>0?"+":""}${awayLine}</span><span class="mp">${Math.round(pAwayCover*100)}%</span><span class="bk">${sc?`${amStr(sc.bestAway)} ${edgeStr(pAwayCover-impliedProb(sc.bestAway))}`:"fair "+amStr(fairAmerican(pAwayCover))}</span></div>`;
+    const coverHome=pHomeCover>=pAwayCover, pCover=Math.max(pHomeCover,pAwayCover);
+    const spPrice=sc?(coverHome?sc.bestHome:sc.bestAway):null;
+    const spGrade=simPickGrade(pCover,spPrice!=null?pCover-impliedProb(spPrice):null);
+    const spPick=coverHome?`${g.home.short} ${homeLine>0?"+":""}${homeLine}`:`${g.away.short} ${awayLine>0?"+":""}${awayLine}`;
+    const spRow=`<div class="srow${coverHome?" fav":""}"><span class="lbl2">${g.home.short} ${homeLine>0?"+":""}${homeLine}</span><span class="mp">${Math.round(pHomeCover*100)}%</span><span class="bk">${sc?`${amStr(sc.bestHome)} ${edgeStr(pHomeCover-impliedProb(sc.bestHome))}`:"fair "+amStr(fairAmerican(pHomeCover))}</span></div>`+
+      `<div class="srow${coverHome?"":" fav"}"><span class="lbl2">${g.away.short} ${awayLine>0?"+":""}${awayLine}</span><span class="mp">${Math.round(pAwayCover*100)}%</span><span class="bk">${sc?`${amStr(sc.bestAway)} ${edgeStr(pAwayCover-impliedProb(sc.bestAway))}`:"fair "+amStr(fairAmerican(pAwayCover))}</span></div>`;
+    const pickHdr=(label,pick,grade)=>`<div class="smh"><span>${label}</span><span class="simpick">PICK <b>${pick}</b> ${gbadge(grade)}</span></div>`;
     const noTF=!s.offData.tfA||!s.offData.tfH;
     return `<div class="sim">
-      <div class="sh"><div class="st">${g.away.short} @ ${g.home.short}</div><div class="score">${s.expAway.toFixed(1)}–${s.expHome.toFixed(1)}</div></div>
-      <div class="sm"><div class="smh">Moneyline ${ODDS_LOADED?"· model vs best book":"· model"}</div>${mlRow}</div>
-      <div class="sm"><div class="smh">Total — model proj ${s.total.toFixed(1)} runs</div>${totRow}</div>
-      <div class="sm"><div class="smh">Run line</div>${spRow}</div>
-      ${noTF?`<div class="note2">⚠ 30-day team form unavailable for one side — using league-average offense</div>`:""}
+      <div class="sh"><div class="st">${g.away.short} @ ${g.home.short}${g.dh?` <span style="color:var(--amber);font-size:11px">G${g.gameNumber}</span>`:""}</div><div class="score">${s.expAway.toFixed(1)}–${s.expHome.toFixed(1)}</div></div>
+      <div class="sm">${pickHdr("Moneyline",mlPick,mlGrade)}${mlRow}</div>
+      <div class="sm">${pickHdr(`Total · proj ${s.total.toFixed(1)}`,totPick,totGrade)}${totRow}</div>
+      <div class="sm">${pickHdr("Run line",spPick,spGrade)}${spRow}</div>
+      <div class="note2">${(s.N||0).toLocaleString()}-sim Monte Carlo (over-dispersed runs). Inputs: lineup OPS + 30-day R/G + starter ERA/FIP/platoon splits + bullpen ERA + park + weather. Grade = confidence (A best). Not modeled: umpire, defense/framing, exact bullpen rest. ${noTF?"⚠ 30-day form missing one side. ":""}${ODDS_LOADED?"":"Load odds for book lines & sharper grades."}</div>
     </div>`;
   }).join("");
 }
@@ -1811,21 +2086,31 @@ function vulnSideLabel(k){
   if(lo>=0.760&&ro>=0.760)return "both";
   if(!vr||lo>ro)return "LHB";if(!vl||ro>lo)return "RHB";return "both";
 }
+function vulnSplitLine(lbl,s){
+  if(!s)return `<div class="vsl-row"><span class="vsl-tag">${lbl}</span><span class="vsl-na">no data</span></div>`;
+  return `<div class="vsl-row"><span class="vsl-tag">${lbl}</span><span class="vsl-st">`+
+    `<span><i>AVG</i> ${s.avg??"—"}</span><span><i>SLG</i> ${s.slg??"—"}</span><span><i>ISO</i> ${fmt3(s.iso)}</span>`+
+    `<span><i>OPS</i> ${s.ops??"—"}</span><span><i>HR</i> ${s.hr}</span><span><i>K%</i> ${(s.kPct*100).toFixed(0)}</span><span class="vsl-bf">${s.bf} BF</span>`+
+    `</span></div>`;
+}
 function vulnRow(p){
   const side=vulnSideLabel(p)||"—";
   const vl=p.split&&p.split.vL,vr=p.split&&p.split.vR;
-  const splitTxt=`<div class="vsplit">vs LHB <b>${vl?vl.hr+" HR, "+(vl.ops??"—")+" OPS":"—"}</b><br>vs RHB <b>${vr?vr.hr+" HR, "+(vr.ops??"—")+" OPS":"—"}</b></div>`;
   const bats=p._oppBats||[];
   const wantCode=side==="LHB"?"vl":side==="RHB"?"vr":null;
   const pool=wantCode?bats.filter(b=>b.pSide&&b.pSide.code===wantCode):bats;
   const targets=[...(pool.length?pool:bats)].sort((a,b)=>b.proj.hr-a.proj.hr).slice(0,3);
-  const tg=targets.map(b=>`<div class="vtg"><span class="tn">${formEmoji(b)}${b.name}${weakPill(b)?" 🎯":""}</span><span class="tv">${b.proj.hr.toFixed(2)} xHR${b.statcast&&b.statcast.barrel?` · ${b.statcast.barrel.toFixed(0)}% brl`:""}</span></div>`).join("");
+  const tg=targets.map(b=>`<div class="vtg"><span class="tn">${rankEmoji(b)}${formEmoji(b)}${b.name}${weakPill(b)?" 🎯":""}</span><span class="tv">${b.proj.hr.toFixed(2)} xHR${b.statcast&&b.statcast.barrel?` · ${b.statcast.barrel.toFixed(0)}% brl`:""}</span></div>`).join("");
   const tcls=p.vuln.score>=62?1:p.vuln.score>=48?2:3;
   return `<div class="vrow t${tcls}">
-    <div class="vscore">${p.vuln.score}</div>
-    <div class="vp"><div class="vn">${p.name} (${p.throws||"?"})</div><div class="vm">vs ${p.vs} · ${p.cur.era??"—"} ERA · ${p.cur.hr9!=null?p.cur.hr9.toFixed(2)+" HR/9":""}${p.cur.k9?" · "+p.cur.k9.toFixed(1)+" K9":""}</div><div class="vside">vuln ${side}</div></div>
-    ${splitTxt}
-    <div class="vtargets">${tg||'<span style="color:var(--muted2);font-size:11px">targets n/a</span>'}</div>
+    <div class="vhead">
+      <div class="vscore">${p.vuln.score}</div>
+      <div class="vp"><div class="vn">${p.name} <span class="vhand">(${p.throws||"?"}HP)</span></div>
+        <div class="vm">vs ${p.vs} · ${p.cur.era??"—"} ERA · ${p.cur.hr9!=null?p.cur.hr9.toFixed(2)+" HR/9":""}${p.cur.k9?" · "+p.cur.k9.toFixed(1)+" K9":""}</div>
+        <div class="vside">VULN ${side}</div></div>
+    </div>
+    <div class="vsplits"><div class="vbh">Allows by batter side</div>${vulnSplitLine("vs LHB",vl)}${vulnSplitLine("vs RHB",vr)}</div>
+    <div class="vtargets"><div class="vbh">Top targets ${wantCode?`(${side})`:""}</div>${tg||'<span style="color:var(--muted2);font-size:11px">targets n/a</span>'}</div>
   </div>`;
 }
 function renderVuln(model){
@@ -1987,10 +2272,16 @@ function renderTrackStats(){
   if(all.roi!=null)cards.push(["+EV ROI",(all.roi>=0?"+":"")+(all.roi*100).toFixed(1)+"%",`flat 1u · ${all.evN} bets`]);
   sum.innerHTML=`<div class="tcards">${cards.map(c=>`<div class="tcard"><div class="tv">${c[1]}</div><div class="tl">${c[0]}</div><div class="ts">${c[2]}</div></div>`).join("")}</div>`;
   chart.innerHTML=`<div class="gcard" style="max-width:420px"><h4 style="margin-top:0">Calibration — predicted vs actual</h4>${calibrationSVG(all.buckets)}<p style="font-size:11.5px;margin:8px 0 0">Dots on the dashed line = well-calibrated. Above the line = the model is too pessimistic there; below = too confident. Dot size = sample.</p></div>`;
-  let rows=`<div class="row head"><span>Market</span><span style="text-align:right">N</span><span style="text-align:right">Hit</span><span style="text-align:right">Exp</span><span style="text-align:right">Brier</span><span style="text-align:right">ECE</span></div>`;
+  let rows="";
   TRACK_MK.concat(["hit2","tb3"]).forEach(mk=>{const s=trackStats(mk);if(!s)return;
-    rows+=`<div class="row"><div class="who"><span class="nm">${TRACK_LABEL[mk]}</span></div><div class="proj">${s.n}</div><div class="proj">${pct(s.hitRate)}</div><div class="proj" style="color:var(--muted)">${pct(s.expRate)}</div><div class="proj">${s.brier.toFixed(3)}</div><div class="proj">${pct(s.ece)}</div></div>`;});
-  tbl.innerHTML=`<div class="board" style="margin-top:6px">${rows}</div>`;
+    rows+=`<div class="tmrow"><div class="tmname">${TRACK_LABEL[mk]}</div><div class="tmstats">`+
+      `<span class="tmk">N <b>${s.n}</b></span>`+
+      `<span class="tmk">Hit rate <b>${pct(s.hitRate)}</b></span>`+
+      `<span class="tmk">Model exp <b>${pct(s.expRate)}</b></span>`+
+      `<span class="tmk">Brier <b>${s.brier.toFixed(3)}</b></span>`+
+      `<span class="tmk">ECE <b>${pct(s.ece)}</b></span>`+
+      `</div></div>`;});
+  tbl.innerHTML=rows?`<div class="gcard" style="padding:6px 16px 14px"><h4 style="margin:12px 0 6px">By market</h4>${rows}</div>`:"";
 }
 async function trackGradeAndRender(){
   const st=el("trackStatus");
@@ -2187,6 +2478,40 @@ function renderAlignment(){
     </div>`;
   }).join("");
 }
+function renderHomers(model){
+  const wrap=el("hrBoard");
+  const homers=[];
+  (model.games||[]).forEach(g=>[...(g._awayBat||[]),...(g._homeBat||[])].forEach(b=>{if(b.result&&b.result.hr>=1)homers.push(b);}));
+  el("hrTag").textContent=`${homers.length} home run${homers.length===1?"":"s"} today · updates as games go final`;
+  if(!homers.length){wrap.innerHTML='<div class="empty"><b>No home runs yet today</b>This board fills in automatically as batters go deep — reload the slate to refresh live results.</div>';return;}
+  homers.sort((a,b)=>(b.result.hr-a.result.hr)||(b.escore-a.escore));
+  const called=homers.filter(b=>b.grade&&/A/.test(b.grade.letter)).length;
+  let nStar=0,nBolt=0,nSleep=0,nOther=0;
+  homers.forEach(b=>{if(b.teamStar)nStar++;else if(b.teamBolt)nBolt++;else if(b.teamSleeper)nSleep++;else nOther++;});
+  const totalHR=homers.reduce((s,b)=>s+b.result.hr,0);
+  const breakdown=`<div class="hrbk">
+    <div class="hrbk-c"><div class="hrbk-n">⭐ ${nStar}</div><div class="hrbk-l">team-best went deep</div></div>
+    <div class="hrbk-c"><div class="hrbk-n">⚡ ${nBolt}</div><div class="hrbk-l">2nd-best homered</div></div>
+    <div class="hrbk-c"><div class="hrbk-n">💤 ${nSleep}</div><div class="hrbk-l">sleepers homered</div></div>
+    <div class="hrbk-c"><div class="hrbk-n">▫️ ${nOther}</div><div class="hrbk-l">others (unflagged)</div></div>
+  </div>`;
+  wrap.innerHTML=breakdown+
+  `<div class="gtip" style="margin-bottom:14px"><b>${called} of ${homers.length}</b> of today's homers came from bats the model graded A-/A/A+ pre-game${nStar+nBolt+nSleep>0?`, and <b>${nStar+nBolt+nSleep} of ${homers.length}</b> were a flagged ⭐/⚡/💤 pick`:""} — a quick gut-check on the matchup model. New to homer bets? See the <b>💣 How to Pick Homers</b> tab under <b>More</b>.</div>`+
+  homers.map(b=>{
+    const pre=Math.round(poissonOver(b.proj.hr,0.5)*100);
+    const isCalled=b.grade&&/A/.test(b.grade.letter);
+    const flags=[];
+    if(b.teamStar)flags.push("⭐ team best");else if(b.teamBolt)flags.push("⚡ 2nd best");else if(b.teamSleeper)flags.push("💤 sleeper");
+    if(b.weakSpot)flags.push("🎯 weak spot");
+    if(b.platoon&&b.platoon.badge==="ADV")flags.push("platoon ADV");
+    return `<div class="hrcard ${isCalled?'called':''}">
+      <div class="hrleft"><div class="hrn">💣 ${rankEmoji(b)}${b.name} <small>${b.team}</small></div>
+        <div class="hrm">${b.result.hr} HR · ${b.result.h||0}-for-${b.result.ab||0}${b.result.rbi?`, ${b.result.rbi} RBI`:""} · vs ${b.oppPitcher} · ${b.game}</div>
+        ${flags.length?`<div class="hrflags">${flags.join(" · ")}</div>`:""}</div>
+      <div class="hrright">${gbadge(b.grade)}<div class="hrpre">${pre}% pre-game · EDGE ${Math.round(b.escore)}</div></div>
+    </div>`;
+  }).join("");
+}
 function renderParlays(){
   const out=el("parlayOut");
   if(!MODEL||!MODEL.batters||!MODEL.batters.length){out.innerHTML='<div class="empty"><b>No slate loaded</b>Load a slate first.</div>';return;}
@@ -2205,7 +2530,10 @@ function renderParlays(){
     const edge=p.edge!=null?`<span class="${p.edge>0?'edgep':'edgen'}">edge ${p.edge>=0?'+':''}${Math.round(p.edge*100)}%</span>`:"";
     const legs=p.legs.map(l=>{
       const lo=(useBook&&l.book!=null)?amStr(l.book):(l.fair!=null?amStr(l.fair):"—");
-      return `<div class="pleg"><div class="pn">${formEmoji(l.b)}${l.name} ${platPill(l.b)} ${weakPill(l.b)}<small>${l.label} · ${l.team} · ${l.game} · ${gbadge(l.b.grade)}</small></div><div class="pp">${Math.round(l.prob*100)}%</div><div class="po">${lo}</div></div>`;
+      if(l.isGame){
+        return `<div class="pleg"><div class="pn">🎲 ${l.name}<small>${l.label} · ${l.game}</small></div><div class="pp">${Math.round(l.prob*100)}%</div><div class="po">${lo}</div></div>`;
+      }
+      return `<div class="pleg"><div class="pn">${rankEmoji(l.b)}${formEmoji(l.b)}${l.name} ${platPill(l.b)} ${weakPill(l.b)}<small>${l.label} · ${l.team} · ${l.game} · ${gbadge(l.b.grade)}</small></div><div class="pp">${Math.round(l.prob*100)}%</div><div class="po">${lo}</div></div>`;
     }).join("");
     return `<div class="pcard ${p.edge!=null&&p.edge>0?'ev':''}">
       <div class="pchead"><div class="lbl">Parlay ${i+1} · ${p.legs.length} legs · ${p.games} game${p.games>1?'s':''}</div>
@@ -2270,7 +2598,7 @@ function renderGames(model){
         <span class="mgrade">${gbadge(b.grade)}</span></div>`;};
     const div=document.createElement("div");div.className="game";
     div.innerHTML=`
-      <div class="gh"><div class="ghtop"><div class="teams">${g.away.short} @ ${g.home.short}</div>${lstat}</div>
+      <div class="gh"><div class="ghtop"><div class="teams">${g.away.short} @ ${g.home.short}${g.dh?` <span style="color:var(--amber);font-size:12px">· G${g.gameNumber}</span>`:""}</div>${lstat}</div>
         <div class="meta">${time}${g.venueName?(" · "+g.venueName):""} · <span class="pf">HR park ${g.parkF.toFixed(2)}</span>${g.live?" · LIVE/FINAL":""}</div>
         ${g.weather?`<div style="margin-top:6px">${wxChip(g.weather)}</div>`:""}</div>
       <div class="pitchers">${pit("Away",g.away.sp,g._awayK)}${pit("Home",g.home.sp,g._homeK)}</div>
@@ -2297,9 +2625,9 @@ function playerRow(b,conf){
     <span class="pend">${today}</span>
   </div>`;
 }
-function renderTeamDetail(id){
+function renderTeamDetail(key){
   const box=el("teamDetail");
-  const t=MODEL&&MODEL.teams?MODEL.teams.find(x=>x.id===id):null;
+  const t=MODEL&&MODEL.teams?MODEL.teams.find(x=>x.key===key):null;
   if(!t){box.innerHTML="";return;}
   const dt=new Date(t.time);const time=isNaN(dt)?"":dt.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
   const facing=t.facing?`facing <b>${t.facing.name}</b>${t.facing.hand?` (${t.facing.hand}HP)`:""}`:"facing TBD";
@@ -2318,7 +2646,7 @@ function renderTeamDetail(id){
   const teamForm=t.form?`<div style="margin-top:7px"><span class="formtag ${t.form.state==="hot"?"hot":t.form.state==="cold"?"cold":""}">L30: <b>${fmt3(t.form.ops)}</b> OPS · ${t.form.rpg.toFixed(2)} R/G · ${t.form.hr} HR${t.form.state!=="neutral"?" · "+(t.form.state==="hot"?"🔥 hot offense":"🧊 cold offense"):""}</span></div>`:"";
   box.innerHTML=`
     <div class="tdhead"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap">
-      <div><div class="tn">${t.full}</div><div class="tm">${t.home?"vs":"@"} <b>${t.oppAbbr}</b> · ${time} · ${facing} · HR park ${t.park.toFixed(2)}${t.live?" · LIVE/FINAL":""}</div>
+      <div><div class="tn">${t.full}${t.dh?` <span style="color:var(--amber);font-size:13px">· Game ${t.gameNumber}</span>`:""}</div><div class="tm">${t.home?"vs":"@"} <b>${t.oppAbbr}</b> · ${time} · ${facing} · HR park ${t.park.toFixed(2)}${t.live?" · LIVE/FINAL":""}</div>
       ${t.weather?`<div style="margin-top:7px">${wxChip(t.weather)}</div>`:""}${teamForm}</div>
       <div>${status}</div></div></div>
     <div class="tdsub">${t.conf?"Confirmed batting order (1–9)":"Active roster — best matchups first (lineup not posted)"}</div>
@@ -2329,13 +2657,13 @@ function renderTeamSelector(){
   const sel=el("teamSelect");
   if(!MODEL||!MODEL.teams||!MODEL.teams.length){sel.innerHTML="";el("teamDetail").innerHTML='<div class="empty"><b>No teams</b>Load a slate with games first.</div>';return;}
   const teams=[...MODEL.teams].sort((a,b)=>(new Date(a.time)-new Date(b.time))||a.abbr.localeCompare(b.abbr));
-  if(!TEAM_SEL||!teams.find(t=>t.id===TEAM_SEL)) TEAM_SEL=teams[0].id;
+  if(!TEAM_SEL||!teams.find(t=>t.key===TEAM_SEL)) TEAM_SEL=teams[0].key;
   sel.innerHTML="";
   teams.forEach(t=>{
     const dt=new Date(t.time);const tm=isNaN(dt)?"":dt.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
     const btn=document.createElement("button");
-    btn.dataset.team=t.id;btn.className=t.id===TEAM_SEL?"active":"";
-    btn.innerHTML=`${t.abbr} <small>${t.home?"vs":"@"} ${t.oppAbbr} · ${tm}</small>${t.conf?' <span style="color:var(--good)">●</span>':''}`;
+    btn.dataset.key=t.key;btn.className=t.key===TEAM_SEL?"active":"";
+    btn.innerHTML=`${t.abbr} <small>${t.home?"vs":"@"} ${t.oppAbbr} · ${tm}${t.dh?` · G${t.gameNumber}`:""}</small>${t.conf?' <span style="color:var(--good)">●</span>':''}`;
     sel.appendChild(btn);
   });
   renderTeamDetail(TEAM_SEL);
@@ -2362,6 +2690,8 @@ function setView(v){
   ["playsSection","boardSection","gamesSection"].forEach(s=>el(s).classList.toggle("hide",v!=="slate"||!haveGames));
   el("simsView").classList.toggle("hide",v!=="sims");
   el("alignView").classList.toggle("hide",v!=="align");
+  el("hrView").classList.toggle("hide",v!=="hr");
+  el("hrguideView").classList.toggle("hide",v!=="hrguide");
   el("propsView").classList.toggle("hide",v!=="props");
   el("oddsView").classList.toggle("hide",v!=="odds");
   el("parlayView").classList.toggle("hide",v!=="parlay");
@@ -2372,6 +2702,7 @@ function setView(v){
   el("trackView").classList.toggle("hide",v!=="track");
   el("guideView").classList.toggle("hide",v!=="guide");
   if(v==="sims"&&MODEL) renderSims(MODEL);
+  if(v==="hr"&&MODEL) renderHomers(MODEL);
   if(v==="align"&&MODEL) renderAlignment();
   if(v==="vuln"&&MODEL) renderVuln(MODEL);
   if(v==="wx"&&MODEL) renderWeather(MODEL);
@@ -2393,7 +2724,7 @@ function renderAll(model){
   const conf=model.games.filter(g=>g.away._conf&&g.home._conf).length;
   setStatus(`${model.games.length} games · ${model.batters.length} batters · ${conf} w/ confirmed lineups${ODDS_LOADED?" · odds live":""} · ${new Date().toLocaleTimeString()}`,"live");
   el("loadOdds").disabled=false;
-  el("footer").innerHTML=`Source: MLB Stats API (statsapi.mlb.com), season ${model.season} · weather via open-meteo.com${ODDS_LOADED?" · odds via the-odds-api.com (BetMGM, Caesars)":""}${STATCAST_OK?" · Statcast via baseballsavant.mlb.com":""}. Grade & Edge Score blend season log5 matchup + career BvP + platoon + recent form (L10) + pitcher vs-side HR + park + weather. Pitcher vulnerability (1–99, higher = easier to hit) weighs HR/9, WHIP, ERA, K/9, recent form, park & weather. Props tab = Poisson model probabilities + fair odds. Alignment Score (0–100) blends 9 weighted factors per prop with a confidence + risk read and factor-agreement count. Sims model full-game totals, moneyline &amp; run line from team form, starter ERA, park &amp; weather (independent-Poisson scoring — an approximation). Odds tab compares every US sportsbook with de-vig fair odds + model edge. Parlay tab builds correlated-aware parlays (legs assumed independent). 🎯 WEAK SPOT = batter facing the pitcher's weaker platoon side. 🔥/🧊 = hot/cold L10. ${STATCAST_OK?"":"Statcast shown only with a proxy/host (CORS). "}Not affiliated with MLB or any sportsbook. Analysis/entertainment only — not betting or financial advice.`;
+  el("footer").innerHTML=`Source: MLB Stats API (statsapi.mlb.com), season ${model.season} · weather via open-meteo.com${ODDS_LOADED?" · odds via the-odds-api.com (BetMGM, Caesars)":""}${STATCAST_OK?" · Statcast via baseballsavant.mlb.com":""}. Grade & Edge Score blend season log5 matchup + career BvP + platoon + recent form (L10) + pitcher vs-side HR + park + weather. Pitcher vulnerability (1–99, higher = easier to hit) weighs HR/9, WHIP, ERA, K/9, recent form, park & weather. Props tab = Poisson model probabilities + fair odds. Alignment Score (0–100) blends 9 weighted factors per prop with a confidence + risk read and factor-agreement count. Sims run a 10,000-game Monte Carlo (over-dispersed runs) for totals, moneyline &amp; run line from lineup, team form, starter ERA/FIP/platoon splits, bullpen, park &amp; weather. Odds tab compares every US sportsbook with de-vig fair odds + model edge. Parlay tab builds correlated-aware parlays (legs assumed independent). 🎯 WEAK SPOT = batter facing the pitcher's weaker platoon side. 🔥/🧊 = hot/cold L10. ${STATCAST_OK?"":"Statcast shown only with a proxy/host (CORS). "}Not affiliated with MLB or any sportsbook. Analysis/entertainment only — not betting or financial advice.`;
   setView(VIEW);
 }
 
@@ -2406,7 +2737,7 @@ async function run(){
   finally{el("run").disabled=false;setTimeout(()=>setBar(0),600);}
 }
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
-const VIEW_TITLE={slate:"Today's Slate",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
+const VIEW_TITLE={slate:"Today's Slate",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
   document.querySelectorAll("#nav .navgroup").forEach(g=>g.classList.toggle("active",[...g.querySelectorAll("[data-view]")].some(b=>b.dataset.view===v)));
@@ -2443,7 +2774,7 @@ el("plGen").addEventListener("click",()=>renderParlays());
 el("oddsTabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;ODDS_BOARD_MARKET=t.dataset.o;[...el("oddsTabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderOddsBoard(MODEL);});
 el("propTabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;PROP_MARKET=t.dataset.p;[...el("propTabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderProps(MODEL);});
 el("trendSearch").addEventListener("input",e=>{TREND_Q=e.target.value;renderTrends();});
-el("teamSelect").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;TEAM_SEL=Number(b.dataset.team);renderTeamSelector();});
+el("teamSelect").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;TEAM_SEL=b.dataset.key;renderTeamSelector();});
 el("run").addEventListener("click",run);
 el("loadOdds").addEventListener("click",loadOdds);
 (function(){const d=new Date();el("date").value=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;run();})();
