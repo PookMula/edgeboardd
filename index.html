@@ -440,7 +440,62 @@
   .bbsub{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:2px;line-height:1.4}
   .bbev{flex:0 0 auto;font-family:'Roboto Mono',monospace;font-size:12.5px;font-weight:700;text-align:right;white-space:nowrap}
   .bbev.pos{color:var(--good)}.bbev.neg{color:#e2604f}
+  .bbwhy{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:5px;line-height:1.5;border-top:1px dashed var(--line);padding-top:5px}
+  .bbwhy b{color:var(--amber)}
   .corrflag{color:#e2604f}.corrok{color:var(--muted2)}
+  .homer-wrap{max-width:760px;margin:0 auto}
+  .homer-chat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;min-height:300px;max-height:62vh;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+  .hmsg{display:flex;gap:9px;align-items:flex-start}
+  .hmsg.user{justify-content:flex-end}
+  .hmsg .havatar{flex:0 0 auto;font-size:20px;line-height:1.4}
+  .hbubble{padding:11px 14px;border-radius:13px;font-size:13.5px;line-height:1.6;max-width:84%}
+  .hmsg.bot .hbubble{background:var(--panel2);border:1px solid var(--line);border-top-left-radius:4px}
+  .hmsg.user .hbubble{background:rgba(242,181,60,.14);border:1px solid rgba(242,181,60,.3);color:var(--chalk);border-top-right-radius:4px}
+  .hbubble b{color:var(--chalk)}
+  .hbubble .hmuted{color:var(--muted2)}
+  .hbubble .hint{display:block;margin-top:6px;font-size:11.5px;color:var(--muted2);line-height:1.5}
+  .typing{color:var(--muted2);font-style:italic}
+  .homer-chips{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+  .homer-chips button{font-family:'Roboto Mono',monospace;font-size:11.5px;background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:20px;padding:7px 13px;cursor:pointer}
+  .homer-chips button:hover{border-color:var(--amber);color:var(--chalk)}
+  .homer-input{display:flex;gap:8px}
+  .homer-input input{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--chalk);padding:11px 14px;font-size:14px;font-family:inherit}
+  .homer-input input:focus{outline:none;border-color:var(--amber)}
+  .homer-input button{background:var(--amber);color:#1a1a1a;border:none;border-radius:10px;padding:0 20px;font-weight:700;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:.03em}
+  .homer-llm{margin-top:12px;font-size:12px;color:var(--muted)}
+  .homer-llm label{display:flex;align-items:center;gap:7px;cursor:pointer}
+  .homer-llm input[type=password]{width:100%;margin-top:8px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--chalk);padding:9px 12px;font-family:'Roboto Mono',monospace;font-size:12px}
+  .brief{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:14px}
+  .bhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-bottom:1px solid var(--line);padding-bottom:9px}
+  .bteams{font-family:'Oswald',sans-serif;font-weight:600;font-size:18px;color:var(--chalk)}
+  .bteams .bat{color:var(--muted2);font-weight:400}
+  .bteams .bdh{color:var(--amber);font-size:12px}
+  .btime{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2);white-space:nowrap}
+  .bconf{color:var(--good)}.bproj{color:var(--amber)}
+  .bsub{font-family:'Roboto Mono',monospace;font-size:11px;letter-spacing:.05em;color:var(--muted2);text-transform:uppercase;margin:9px 0}
+  .bsub b{color:var(--chalk)}
+  .bweather{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-bottom:12px}
+  .bweather .bwh{font-family:'Roboto Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px}
+  .bweather .bwrow{font-family:'Roboto Mono',monospace;font-size:12px;color:var(--muted);display:flex;gap:8px;line-height:1.7}
+  .bweather .bwrow span{min-width:48px}.bweather .bwrow b{color:var(--chalk)}
+  .bweather .hrctx{color:var(--good)!important}
+  .bnarr p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:0 0 11px}
+  .bnarr p b{color:var(--chalk)}
+  .bnarr .bmuted{color:var(--muted2);font-style:italic}
+  .bfoot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:9px;font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2)}
+  .bfoot .bupd{margin-left:auto}
+  .baibtn{font-family:'Roboto Mono',monospace;font-size:10.5px;background:var(--panel3);border:1px solid var(--line);color:var(--amber);border-radius:7px;padding:5px 10px;cursor:pointer}
+  .baibtn:hover{border-color:var(--amber)}
+  .baibtn:disabled{opacity:.5}
+  .hrproj{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;background:linear-gradient(135deg,rgba(242,181,60,.10),var(--panel));border:1px solid rgba(242,181,60,.3);border-radius:14px;padding:14px 18px;margin-bottom:16px}
+  .hrproj-main{display:flex;align-items:center;gap:14px}
+  .hrproj-num{font-family:'Oswald',sans-serif;font-weight:700;font-size:42px;line-height:1;color:var(--amber)}
+  .hrproj-lbl{font-family:'Roboto Mono',monospace;font-size:12.5px;color:var(--chalk);line-height:1.4;text-transform:uppercase;letter-spacing:.03em}
+  .hrproj-lbl span{color:var(--muted2);text-transform:none;letter-spacing:0;font-size:11px}
+  .hrproj-top{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted);text-align:right;line-height:1.7}
+  .hrproj-top span{display:block;color:var(--muted2);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase}
+  .hrproj-top b{color:var(--chalk)}
+  @media(max-width:560px){.hrproj{justify-content:center}.hrproj-top{text-align:center;width:100%}}
 
   /* alignment */
   .align-ctrls{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-bottom:16px}
@@ -530,6 +585,7 @@
   <div class="nav" id="nav">
     <button class="navbtn" data-view="slate">Slate</button>
     <button class="navbtn" data-view="best">🏆</button>
+    <button class="navbtn" data-view="homer">🤖</button>
     <button class="navbtn" data-view="hr">✅</button>
     <div class="navgroup">
       <button class="navbtn drop">Picks ▾</button>
@@ -558,6 +614,7 @@
       <button class="navbtn drop">More ▾</button>
       <div class="navmenu">
         <button data-view="trends">Trends</button>
+        <button data-view="brief">📝 Game Briefings</button>
         <button data-view="hrguide">💣 How to Pick Homers</button>
         <button data-view="track">📊 Track &amp; Calibrate</button>
         <button data-view="guide">❓ Guide</button>
@@ -567,6 +624,7 @@
   <div class="viewtitle" id="viewTitle"></div>
 
   <section id="playsSection" class="hide">
+    <div id="slateHRProj"></div>
     <div class="sec-head"><h2>Best Plays</h2><span class="tag">top matchup grades across the slate</span><span class="rule"></span></div>
     <div class="plays" id="plays"></div>
   </section>
@@ -605,6 +663,35 @@
   <section id="bestView" class="hide">
     <div class="sec-head"><h2>🏆 Best Bets</h2><span class="tag" id="bestTag">Edge Board Master Score — the whole slate, ranked</span><span class="rule"></span></div>
     <div id="bestBoard"></div>
+  </section>
+
+  <section id="briefView" class="hide">
+    <div class="sec-head"><h2>📝 Game Briefings</h2><span class="tag">auto-written analyst notes — sharper once lineups post</span><span class="rule"></span></div>
+    <div id="briefBoard"></div>
+  </section>
+
+  <section id="homerView" class="hide">
+    <div class="sec-head"><h2>🤖 Homer AI</h2><span class="tag">your home-run assistant — reads the model &amp; answers</span><span class="rule"></span></div>
+    <div class="homer-wrap">
+      <div id="homerChat" class="homer-chat"></div>
+      <div class="homer-chips" id="homerChips">
+        <button data-q="Today's best HR bets">🔥 Best HR bets</button>
+        <button data-q="Build a 3-leg HR parlay">🎲 3-leg HR parlay</button>
+        <button data-q="Best HR park today">🏟️ Best HR parks</button>
+        <button data-q="Most vulnerable pitchers">🎯 Vulnerable arms</button>
+        <button data-q="How many home runs are projected today">💥 HRs projected today</button>
+        <button data-q="Who should I fade">❌ Who to fade</button>
+      </div>
+      <div class="homer-input">
+        <input type="text" id="homerInput" placeholder="Ask about today's homers… (e.g. ‘best bets’, ‘parlay’, a player name)" autocomplete="off" />
+        <button id="homerSendBtn">Send</button>
+      </div>
+      <div class="homer-llm">
+        <label><input type="checkbox" id="homerLLM" /> Free-form mode — use my own Claude API key</label>
+        <input type="password" id="homerKey" placeholder="sk-ant-… (optional, stays in your browser)" autocomplete="off" style="display:none" />
+        <div class="hint" id="homerLLMHint" style="display:none">Routes your question + today's HR data to Claude (Haiku) for open-ended answers. Your key is used in-browser only and never stored or sent anywhere but Anthropic. Costs apply to your key.</div>
+      </div>
+    </div>
   </section>
 
   <section id="hrView" class="hide">
@@ -905,8 +992,8 @@
         <div class="glist">
           <div class="gli"><span class="lk" style="color:var(--good)">LIVE</span> <b>EV% engine, HR-Environment score, Lineup-Strength score, Consensus rating, Edge Board Master Score</b> (1–100 with ⭐/🔥/✅/⚠️ tiers) and the <b>🏆 Best Bets</b> board, plus <b>parlay correlation</b> scoring — all shipped and ranking the slate now.</div>
           <div class="gli"><span class="lk" style="color:var(--amber)">NEXT</span> <b>CLV tracking, sharp-money / line-movement &amp; steam, market-shopping optimizer, best-bets expansion, risk/unit-sizing, model-performance center, air-density weather upgrade</b> — all buildable from odds history + current feeds; on deck.</div>
-          <div class="gli"><span class="lk" style="color:var(--muted2)">PARTIAL</span> <b>Bullpen fatigue</b> (can tally recent appearances from box scores, but pitch-count rest is rough), <b>injury/lineup alerts</b> (lineup-change detection only — no injury feed), <b>live dashboard</b> (needs live polling).</div>
-          <div class="gli"><span class="lk" style="color:#e2604f">BLOCKED</span> <b>Statcast expansion</b> (barrel%, xSLG, xwOBA), <b>pitcher arsenal / pitch-type splits</b>, <b>umpire tendencies</b>, and <b>public betting %</b> — no free, browser-accessible data source. These need a hosted backend or a paid feed; until then they're intentionally left out of the Master Score rather than estimated.</div>
+          <div class="gli"><span class="lk" style="color:var(--amber)">PARTIAL</span> <b>HR Pitch-Matchup engine</b> — the full pitch-type scoring engine (pitch-mix advantage, barrel/hard-hit/EV/launch-angle matchups, pitcher HR-by-pitch, form, park, weather → 0–100 with 🔥/✅/⚠️/❌ tiers + plain-English why) is <b>built and live in Best Bets → HR plays</b>. It runs a labeled <b>approximation</b> from season vs-hand SLG/ISO splits today; it auto-upgrades to exact pitch-type numbers the moment real Statcast arsenal data is supplied via a host/proxy. Also partial: <b>bullpen fatigue</b> (recent appearances only), <b>injury/lineup alerts</b> (change-detection only), <b>live dashboard</b> (needs live polling).</div>
+          <div class="gli"><span class="lk" style="color:#e2604f">BLOCKED</span> <b>Raw Statcast feeds</b> (per-pitch barrel%, xSLG, xwOBA, pitch-type usage/whiff), <b>umpire tendencies</b>, and <b>public betting %</b> — no free, browser-accessible data source. These need a hosted backend or a paid feed; until then the HR-matchup engine uses its approximation and the Master Score leaves the missing pieces out rather than estimating them.</div>
         </div>
       </div>
 
@@ -1778,6 +1865,8 @@ async function buildModel(date){
     g._lsAway=lineupStrengthScore(g._awayBat,g._tfAway,g.away._conf);
     g._lsHome=lineupStrengthScore(g._homeBat,g._tfHome,g.home._conf);
     [...g._awayBat,...g._homeBat].forEach(b=>{b._hrEnv=g._hrEnv;});
+    g._awayBat.forEach(b=>{b.hrMatch=hrMatchScore(b,g,g._homeK);}); // away bats face home SP
+    g._homeBat.forEach(b=>{b.hrMatch=hrMatchScore(b,g,g._awayK);});
     if(g._awayK){g._awayK.result=findPitResult(g._box,g.away.sp?.id,live);}
     if(g._homeK){g._homeK.result=findPitResult(g._box,g.home.sp?.id,live);}
     g.live=live;
@@ -1950,12 +2039,14 @@ function collectPlays(model){
       let book=null,edge=null,ev=null;
       if(useBook){const be=bestEdgeForMarket(b,M.om,mean);if(be){book=be.over;edge=be.edge;ev=evPct(prob,be.over);}}
       const con=propConsensus(b,mk,ev,hrEnv);
-      const master=blendScore([
+      const comps=[
         {v:b.escore/99,w:0.30},
         {v:(b.oppVuln!=null?b.oppVuln/99:(b.platoon&&b.platoon.badge==="ADV"?0.62:b.weakSpot?0.7:0.45)),w:0.20},
         {v:ev!=null?clampR((ev+0.05)/0.25,0,1):null,w:0.30},
         {v:mk==="hr"?(hrEnv!=null?hrEnv/100:null):(b.recentForm?clampR(0.5+b.recentForm.delta*3,0,1):null),w:0.20},
-      ]);
+      ];
+      if(mk==="hr"&&b.hrMatch)comps.push({v:b.hrMatch.score/100,w:0.20});
+      const master=blendScore(comps);
       plays.push({type:"prop",b,mk,label:M.label,name:b.name,team:b.team,game:b.game,prob,book,edge,ev,master:master==null?0:master,con});
     });
   });
@@ -2002,6 +2093,61 @@ function correlatedTrueProb(legs,naive){
   const minP=Math.min(...legs.map(l=>l.prob));
   return clampR(naive+(minP-naive)*corr*0.5,0,1);
 }
+// ===================== HR PITCH-MATCHUP ENGINE (#11/#12) =====================
+// Full engine runs on real pitch-type data (pitcher arsenal + batter-by-pitch) when available via a Statcast
+// host/proxy; otherwise a clearly-labeled approximation runs on the season splits we can fetch today.
+const PITCH_NAME={FF:"four-seam",FA:"fastball",SI:"sinker",FT:"two-seam",FC:"cutter",SL:"slider",ST:"sweeper",CU:"curveball",KC:"knuckle-curve",CS:"slow curve",CH:"changeup",FS:"splitter",SV:"slurve",SC:"screwball",EP:"eephus",KN:"knuckleball"};
+function pitchName(c){return PITCH_NAME[c]||c;}
+function nz(v,lo,hi){if(v==null||!isFinite(v))return null;return clampR((v-lo)/(hi-lo),0,1);}
+function avgDefined(pairs){let sw=0,acc=0;pairs.forEach(([v,w])=>{if(v!=null&&isFinite(v)){acc+=v*w;sw+=w;}});return sw?acc/sw:null;}
+function laHRScore(la){if(la==null||!isFinite(la))return null;return clampR(Math.exp(-Math.pow((la-15)/12,2)),0,1);} // HR launch angle peaks ~15°
+function hrMatchTier(s){return s>=90?{e:"🔥",t:"Elite HR Target",cls:"hm-elite"}:s>=80?{e:"✅",t:"Strong HR Target",cls:"hm-strong"}:s>=70?{e:"⚠️",t:"Moderate HR Target",cls:"hm-mod"}:{e:"❌",t:"Avoid",cls:"hm-avoid"};}
+function hrMatchWhy(contrib,batter,pitcher){
+  if(!contrib||!contrib.length)return "";
+  const top=contrib.slice(0,2).filter(c=>c.bPow>=0.55);
+  if(!top.length)return `${batter} doesn't profile especially well against ${pitcher}'s main pitches.`;
+  const list=top.map(c=>`${pitchName(c.type)} (${Math.round(c.usage*100)}%)`).join(" and ");
+  return `${batter} rates highly because ${pitcher} leans on ${list}, pitch ${top.length>1?"types":"type"} where ${batter} owns strong SLG, ISO, barrel% and hard-hit% marks.`;
+}
+function hrPitchMatchup(arsenal,byType,ctx){
+  ctx=ctx||{};
+  let wsum=0,danger=0;const contrib=[];
+  ((arsenal&&arsenal.pitches)||[]).forEach(p=>{
+    const b=byType&&byType[p.type];if(!b)return;const u=p.usage||0;if(u<=0)return;
+    const bPow=avgDefined([[nz(b.iso,.100,.280),0.28],[nz(b.barrel,.04,.16),0.24],[nz(b.hardhit,.30,.52),0.20],[nz(b.ev,86,94),0.16],[laHRScore(b.la),0.12]]);
+    const pVuln=avgDefined([[nz(p.slgAllowed,.350,.520),0.40],[nz(p.isoAllowed,.120,.260),0.30],[nz(p.barrelAllowed,.05,.13),0.18],[nz(p.hrAllowed,.01,.06),0.12]]);
+    if(bPow==null&&pVuln==null)return;
+    const d=0.6*(bPow!=null?bPow:0.5)+0.4*(pVuln!=null?pVuln:0.5);
+    danger+=u*d;wsum+=u;contrib.push({type:p.type,usage:u,d,bPow:bPow!=null?bPow:0.5});
+  });
+  if(wsum<=0)return null;
+  const mix=danger/wsum;
+  const score=Math.round(clampR(avgDefined([[mix,0.55],[ctx.parkF!=null?nz(ctx.parkF,.85,1.40):null,0.15],[ctx.hrEnv!=null?ctx.hrEnv/100:null,0.15],[ctx.formDelta!=null?clampR(0.5+ctx.formDelta*3,0,1):null,0.15]])*100,1,100));
+  contrib.sort((a,b)=>b.usage*b.d-a.usage*a.d);
+  return {score,tier:hrMatchTier(score),mix,contrib,why:hrMatchWhy(contrib,ctx.batter||"This hitter",ctx.pitcher||"the pitcher"),approx:false};
+}
+function hrMatchApprox(b,g,pitcher){
+  let pVuln=null,ps=null,sideLbl="";
+  if(pitcher){
+    const code=effectiveSide(b.bats,pitcher.throws);sideLbl=code==="vl"?"LHB":"RHB";
+    ps=pitcher.split?(code==="vl"?pitcher.split.vL:pitcher.split.vR):null;
+    if(ps){const iso=ps.iso!=null?ps.iso:(pnum(ps.slg)-pnum(ps.avg));pVuln=avgDefined([[nz(pnum(ps.slg),.350,.520),0.5],[nz(iso,.120,.260),0.3],[nz(ps.hrPerBF,.01,.06),0.2]]);}
+    if(pVuln==null&&pitcher.cur&&pitcher.cur.hr9!=null)pVuln=nz(pitcher.cur.hr9,.6,1.8);
+  }
+  const bIso=pnum(b.cur&&b.cur.iso),bSlg=pnum(b.cur&&b.cur.slg);
+  const bPow=avgDefined([[nz(bIso,.100,.280),0.5],[nz(bSlg,.380,.560),0.3],[b.statcast&&b.statcast.barrel!=null?nz(b.statcast.barrel/100,.04,.16):null,0.2]]);
+  const matchup=0.6*(bPow!=null?bPow:0.5)+0.4*(pVuln!=null?pVuln:0.5);
+  const score=Math.round(clampR(avgDefined([[matchup,0.50],[nz(g.parkF,.85,1.40),0.18],[g._hrEnv!=null?g._hrEnv/100:null,0.17],[b.recentForm?clampR(0.5+b.recentForm.delta*3,0,1):null,0.15]])*100,1,100));
+  const why=`${b.name} vs ${b.oppPitcher}: ${ps?`allows ${ps.slg||"—"} SLG / ${fmt3(ps.iso!=null?ps.iso:(pnum(ps.slg)-pnum(ps.avg)))} ISO to ${sideLbl}`:(pitcher&&pitcher.cur?`${pitcher.cur.hr9!=null?pitcher.cur.hr9.toFixed(2):"—"} HR/9`:"limited pitcher data")}; ${b.name} carries ${b.cur&&b.cur.iso?b.cur.iso:"—"} ISO. Park ${(g.parkF||1).toFixed(2)} · ${hrEnvLabel(g._hrEnv||50)}. (Approx — exact pitch-type Statcast needs a host/proxy.)`;
+  return {score,tier:hrMatchTier(score),why,approx:true};
+}
+function hrMatchScore(b,g,pitcher){
+  if(pitcher&&pitcher._arsenal&&b._pitchData){
+    const full=hrPitchMatchup(pitcher._arsenal,b._pitchData,{parkF:g.parkF,hrEnv:g._hrEnv,formDelta:b.recentForm?b.recentForm.delta:null,batter:b.name,pitcher:b.oppPitcher});
+    if(full)return full;
+  }
+  return hrMatchApprox(b,g,pitcher);
+}
 
 //------------------------------------------------------------------ render
 const MARKETS={hr:{u:"HR",dec:2},hits:{u:"H",dec:2},tb:{u:"TB",dec:2},rbi:{u:"RBI",dec:2},sb:{u:"SB",dec:2},k:{u:"K",dec:1}};
@@ -2022,6 +2168,27 @@ function pitResultChip(p){
   return `<span class="today live">TODAY ${p.result.k} K · ${p.result.ip||0} IP</span>`;
 }
 
+function slateHRProjection(model){
+  let total=0;const perGame=[];
+  (model.games||[]).forEach(g=>{
+    let gh=0;[...(g._awayBat||[]),...(g._homeBat||[])].forEach(b=>{gh+=(b.proj&&b.proj.hr)||0;});
+    total+=gh;perGame.push({short:`${g.away.short}@${g.home.short}`,dh:g.dh,gNum:g.gameNumber,hrs:gh,env:g._hrEnv});
+  });
+  perGame.sort((a,b)=>b.hrs-a.hrs);
+  const lo=Math.max(0,Math.round(total-Math.sqrt(total))),hi=Math.round(total+Math.sqrt(total));
+  return {total,perGame,games:(model.games||[]).length,lo,hi};
+}
+function gameProjHR(g){let h=0;[...(g._awayBat||[]),...(g._homeBat||[])].forEach(b=>{h+=(b.proj&&b.proj.hr)||0;});return h;}
+function renderSlateHRProj(model){
+  const box=el("slateHRProj");if(!box)return;
+  if(!model||!model.games||!model.games.length){box.innerHTML="";return;}
+  const s=slateHRProjection(model);
+  const top=s.perGame.slice(0,3).map(p=>`${p.short}${p.dh?" G"+p.gNum:""} <b>${p.hrs.toFixed(1)}</b>`).join(" · ");
+  box.innerHTML=`<div class="hrproj">
+    <div class="hrproj-main"><div class="hrproj-num">${s.total.toFixed(1)}</div><div class="hrproj-lbl">home runs projected today<br><span>across ${s.games} game${s.games>1?"s":""} · likely range ${s.lo}–${s.hi}</span></div></div>
+    <div class="hrproj-top"><span>Most HR-likely</span>${top}</div>
+  </div>`;
+}
 function renderPlays(model){
   const wrap=el("plays");wrap.innerHTML="";
   const list=[...model.batters].sort((a,b)=>b.escore-a.escore).slice(0,12);
@@ -2744,20 +2911,260 @@ function renderAlignment(){
     </div>`;
   }).join("");
 }
-function bbPlayRow(p){
+function bbPlayRow(p,withWhy){
   const tier=masterTier(p.master);
   const evtxt=p.ev!=null?`${p.ev>=0?"+":""}${(p.ev*100).toFixed(1)}% EV`:(p.edge!=null?`${p.edge>=0?"+":""}${(p.edge*100).toFixed(1)}% edge`:"no odds");
   const bk=p.book!=null?" · "+amStr(p.book):"";
+  const why=(withWhy&&p.b&&p.b.hrMatch)?`<div class="bbwhy"><b>${p.b.hrMatch.tier.e} ${p.b.hrMatch.score} HR-matchup</b> — ${p.b.hrMatch.why}</div>`:"";
   return `<div class="bbrow">
     <div class="bbscore ${tier.cls}"><span>${tier.e}</span><b>${p.master}</b></div>
     <div class="bbmid"><div class="bbn">${p.type==="line"?"🎲 ":(p.b?rankEmoji(p.b):"")}${p.name} <span class="bbmk">${p.label}</span></div>
-      <div class="bbsub">${p.type==="prop"?p.team+" · ":""}${p.game} · ${Math.round(p.prob*100)}% model${bk} · ${p.con.agree}/${p.con.total} agree</div></div>
+      <div class="bbsub">${p.type==="prop"?p.team+" · ":""}${p.game} · ${Math.round(p.prob*100)}% model${bk} · ${p.con.agree}/${p.con.total} agree</div>${why}</div>
     <div class="bbev ${p.ev!=null?(p.ev>=0?"pos":"neg"):""}">${evtxt}</div>
   </div>`;
 }
-function bbSection(title,sub,arr,emptyMsg){
+function bbSection(title,sub,arr,emptyMsg,withWhy){
   if(!arr.length)return `<div class="bbsec"><div class="bbsh"><h3>${title}</h3><span>${sub}</span></div><div class="empty" style="margin:0">${emptyMsg||"Nothing qualifies yet."}</div></div>`;
-  return `<div class="bbsec"><div class="bbsh"><h3>${title}</h3><span>${sub}</span></div>${arr.map(bbPlayRow).join("")}</div>`;
+  return `<div class="bbsec"><div class="bbsh"><h3>${title}</h3><span>${sub}</span></div>${arr.map(p=>bbPlayRow(p,withWhy)).join("")}</div>`;
+}
+// ===================== HOMER AI — HR assistant over the model's numbers =====================
+let HOMER_MSGS=[];
+function escHtml(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]||c));}
+function homerHRPlays(model){return collectPlays(model).filter(p=>p.type==="prop"&&p.mk==="hr").sort((a,b)=>(b.master-a.master)||(b.prob-a.prob));}
+function homerFmtPlay(p){
+  const hm=p.b.hrMatch;
+  const ev=p.ev!=null?` · ${p.ev>=0?"+":""}${(p.ev*100).toFixed(1)}% EV`:(p.book!=null?` · ${amStr(p.book)}`:"");
+  return `<b>${p.name}</b> <span class="hmuted">(${p.team})</span> — ${Math.round(p.prob*100)}% HR${ev}${hm?` · ${hm.tier.e} ${hm.score} matchup`:""}`;
+}
+function homerHelp(){
+  return `I'm <b>Homer</b> 🤖 — I read Edge Board's model and talk homers. Try:<br><br>`+
+    `• "<b>best HR bets</b>" — today's top home-run looks<br>`+
+    `• "<b>build a 3-leg HR parlay</b>"<br>`+
+    `• "<b>best HR park today</b>" — top run environments<br>`+
+    `• "<b>most vulnerable pitchers</b>"<br>`+
+    `• "<b>who should I fade</b>"<br>`+
+    `• a <b>player's name</b> — I'll break down their HR matchup<br><br>`+
+    `<span class="hint">I answer only from the model's numbers — no guarantees, just the best read of the spots. Flip on free-form mode below to chat with Claude using your own key.</span>`;
+}
+function homerBestBets(model,n){
+  const plays=homerHRPlays(model).slice(0,n||5);
+  if(!plays.length)return "I don't see any games loaded yet — refresh the slate and ask again.";
+  let out=`Today's top ${plays.length} home-run looks by Master Score:<br><br>`+
+    plays.map((p,i)=>`${i+1}. ${homerFmtPlay(p)}`).join("<br>");
+  if(plays[0].b.hrMatch&&plays[0].b.hrMatch.why)out+=`<br><br>💡 ${plays[0].b.hrMatch.why}`;
+  if(!ODDS_LOADED)out+=`<br><br><span class="hint">Load your odds key on the Odds tab and I'll rank by real EV instead of raw probability.</span>`;
+  return out;
+}
+function homerParlay(model,legs){
+  legs=Math.max(2,Math.min(6,legs||3));
+  const plays=homerHRPlays(model),seen=new Set(),picks=[];
+  for(const p of plays){if(seen.has(p.game))continue;seen.add(p.game);picks.push(p);if(picks.length>=legs)break;}
+  if(picks.length<2)return "I need at least two strong HR spots in different games for a parlay, and I don't have enough loaded right now.";
+  const legObjs=picks.map(p=>({b:p.b,name:p.name,team:p.team,game:p.game,prob:p.prob,book:p.book,label:"HR",isGame:false}));
+  const par=buildParlay(legObjs,ODDS_LOADED);
+  let out=`A ${picks.length}-leg HR parlay — one bat per game to keep the legs independent:<br><br>`+
+    picks.map(p=>`💣 ${homerFmtPlay(p)}`).join("<br>")+
+    `<br><br>Combined: <b>${par.fairAm!=null?amStr(par.fairAm):"—"}</b> fair · ${(par.prob*100).toFixed(1)}% to hit all ${picks.length}`;
+  if(ODDS_LOADED&&par.bookAm!=null)out+=` · book ${amStr(par.bookAm)}${par.edge!=null?` (${par.edge>=0?"+":""}${(par.edge*100).toFixed(1)}% edge)`:""}`;
+  out+=`<br><br><span class="hint">Different games = low correlation, but ${picks.length} legs is already a long shot. Bet it like one.</span>`;
+  return out;
+}
+function homerParks(model){
+  const gs=[...model.games].filter(g=>g._hrEnv!=null).sort((a,b)=>b._hrEnv-a._hrEnv).slice(0,4);
+  if(!gs.length)return "No games loaded yet.";
+  return "Best home-run environments today (park + weather + the starters):<br><br>"+
+    gs.map(g=>{const w=g.weather;return `🏟️ <b>${g.away.short} @ ${g.home.short}</b>${g.dh?` G${g.gameNumber}`:""} — HR env <b>${g._hrEnv}</b> (${hrEnvLabel(g._hrEnv)})${w?` · ${Math.round(w.tempF)}°F, wind ${Math.round(w.windMph)}mph`:""} · park ${g.parkF.toFixed(2)}`;}).join("<br>");
+}
+function homerVulnerable(model){
+  const ps=[];model.games.forEach(g=>{[g._awayK,g._homeK].forEach(k=>{if(k&&k.vuln)ps.push(k);});});
+  ps.sort((a,b)=>b.vuln.score-a.vuln.score);
+  const top=ps.slice(0,5);
+  if(!top.length)return "No probable starters posted yet — check back closer to game time.";
+  return "Most home-run-vulnerable starters today:<br><br>"+
+    top.map(k=>`🎯 <b>${k.name}</b> <span class="hmuted">(${k.team})</span> — vuln <b>${k.vuln.score}</b>/99, ${k.cur.hr9!=null?k.cur.hr9.toFixed(2):"—"} HR/9, ${k.cur.era??"—"} ERA vs ${k.vs}`).join("<br>")+
+    `<br><br>Stack your HR bats against these arms.`;
+}
+function homerFade(model){
+  const plays=homerHRPlays(model).filter(p=>p.b.hrMatch).sort((a,b)=>a.b.hrMatch.score-b.b.hrMatch.score).slice(0,4);
+  const tough=[...model.games].filter(g=>g._hrEnv!=null).sort((a,b)=>a._hrEnv-b._hrEnv).slice(0,2);
+  let out="Spots I'd be cautious chasing HRs in:<br><br>";
+  if(plays.length)out+=plays.map(p=>`❌ <b>${p.name}</b> <span class="hmuted">(${p.team})</span> — ${p.b.hrMatch.tier.e} ${p.b.hrMatch.score} matchup`).join("<br>")+"<br><br>";
+  if(tough.length)out+="Toughest HR parks today: "+tough.map(g=>`${g.home.short} (${g._hrEnv})`).join(", ")+".";
+  return out;
+}
+function homerFindPlayer(model,t){
+  const words=t.replace(/[^a-z ]/g,"").split(/\s+/).filter(w=>w.length>=4);
+  let best=null;
+  (model.batters||[]).forEach(b=>{
+    const nm=b.name.toLowerCase();const parts=nm.split(/\s+/);const last=parts[parts.length-1].replace(/[^a-z]/g,"");
+    if(t.includes(nm))best=b;
+    else if(!best&&last.length>=4&&words.includes(last))best=b;
+  });
+  return best;
+}
+function homerExplainPlayer(b,model){
+  const prob=Math.round(poissonOver(b.proj.hr,0.5)*100);
+  const hm=b.hrMatch;
+  let out=`<b>${b.name}</b> <span class="hmuted">(${b.team})</span> vs ${b.oppPitcher}:<br><br>`;
+  out+=`• HR chance: <b>${prob}%</b> (model)<br>`;
+  out+=`• Power: ${b.cur&&b.cur.iso?b.cur.iso+" ISO":"—"}${b.cur&&b.cur.slg?" / "+b.cur.slg+" SLG":""}<br>`;
+  if(hm)out+=`• HR matchup: <b>${hm.tier.e} ${hm.score}/100</b> (${hm.tier.t})<br>`;
+  out+=`• Grade ${b.grade?b.grade.letter:"—"}${b.platoon&&b.platoon.badge?" · platoon "+b.platoon.badge:""}${b.weakSpot?" · 🎯 weak spot":""}${b.teamStar?" · ⭐ team best":b.teamBolt?" · ⚡ 2nd best":b.teamSleeper?" · 💤 sleeper":""}<br>`;
+  if(hm&&hm.why)out+=`<br>${hm.why}`;
+  return out;
+}
+function homerCount(model){
+  const s=slateHRProjection(model);
+  let out=`The model projects about <b>${s.total.toFixed(1)} home runs</b> across today's ${s.games} game${s.games>1?"s":""} — likely range <b>${s.lo}–${s.hi}</b>.<br><br>Most HR-likely games:<br>`;
+  out+=s.perGame.slice(0,4).map(p=>`💥 ${p.short}${p.dh?" G"+p.gNum:""} — <b>${p.hrs.toFixed(1)}</b> HR${p.env!=null?` <span class="hmuted">(env ${p.env})</span>`:""}`).join("<br>");
+  out+=`<br><br><span class="hint">That's an expected total — actual counts swing a lot game to game. The ✅ Homers tab tracks projected vs. how many actually go out.</span>`;
+  return out;
+}
+function homerFallback(){
+  return `I didn't quite catch that. I can do: <b>best HR bets</b>, <b>build a parlay</b>, <b>best HR parks</b>, <b>vulnerable pitchers</b>, <b>who to fade</b>, or a <b>player name</b>. Tap a chip above or rephrase.`;
+}
+function homerAnswer(text,model){
+  if(!model||!model.games||!model.games.length)return "Load a slate first (refresh up top), then I can talk homers.";
+  const t=(text||"").toLowerCase().trim();
+  if(!t||/^(hi|hey|hello|help|yo|sup|what can you)\b/.test(t))return homerHelp();
+  const pl=homerFindPlayer(model,t);
+  const intentful=/parlay|combo|pair|stack|park|weather|wind|temp|environment|vulnerab|pitcher|fade|avoid|worst|best|top|who|pick|tonight|today/.test(t);
+  if(pl&&!intentful)return homerExplainPlayer(pl,model);
+  if(/parlay|combo|pair|stack/.test(t)){const m=t.match(/(\d+)\s*-?\s*(leg|team|pick|man)/)||t.match(/\b([2-6])\b/);return homerParlay(model,m?Number(m[1]):3);}
+  if(/park|weather|wind|temp|environment|hitter.?friendly/.test(t))return homerParks(model);
+  if(/vulnerab|pitcher|target.*arm|weak.*pitch/.test(t))return homerVulnerable(model);
+  if(/fade|avoid|worst|stay away|don.?t bet/.test(t))return homerFade(model);
+  if(/how many|projected|expect|total|count/.test(t)&&/homer|home ?run|\bhrs?\b|deep/.test(t))return homerCount(model);
+  if(pl)return homerExplainPlayer(pl,model);
+  if(/best|top|who|pick|homer|home ?run|\bhrs?\b|bet|play|deep|tonight|today/.test(t)){const m=t.match(/\b(\d+)\b/);return homerBestBets(model,m?Math.min(10,Number(m[1])):5);}
+  return homerFallback();
+}
+async function homerLLM(text,key){
+  const plays=homerHRPlays(MODEL).slice(0,10).map(p=>`${p.name} (${p.team}) vs ${p.b.oppPitcher}: ${Math.round(p.prob*100)}% HR, matchup ${p.b.hrMatch?p.b.hrMatch.score:"?"}/100${p.ev!=null?", "+(p.ev*100).toFixed(1)+"% EV":""}`).join("\n");
+  const parks=[...MODEL.games].filter(g=>g._hrEnv!=null).sort((a,b)=>b._hrEnv-a._hrEnv).slice(0,5).map(g=>`${g.away.short}@${g.home.short}: HR env ${g._hrEnv}`).join("\n");
+  const sys="You are Homer, a concise MLB home-run betting assistant inside the Edge Board app. Answer ONLY from the data provided. Be brief and practical, honest about variance, never guarantee outcomes, and if the data doesn't cover the question say so. Keep it under 150 words.";
+  const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-haiku-4-5-20251001",max_tokens:500,system:sys,messages:[{role:"user",content:`Today's top HR plays:\n${plays}\n\nHR environments:\n${parks}\n\nQuestion: ${text}`}]})});
+  if(!r.ok)throw new Error("api "+r.status);
+  const d=await r.json();
+  const txt=(d.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("\n");
+  return txt?escHtml(txt).replace(/\n/g,"<br>"):null;
+}
+// ===================== GAME BRIEFINGS — auto-written analyst notes per game =====================
+const BOOK_NAME={fanduel:"FanDuel",draftkings:"DraftKings",betmgm:"BetMGM",caesars:"Caesars",williamhill_us:"Caesars",pointsbetus:"PointsBet",betrivers:"BetRivers",fanatics:"Fanatics",espnbet:"ESPN BET",bovada:"Bovada",mybookieag:"MyBookie",betonlineag:"BetOnline",lowvig:"LowVig",prophetx:"ProphetX",hardrockbet:"Hard Rock",fliff:"Fliff",superbook:"SuperBook",windcreek:"Wind Creek"};
+function capBook(k){if(!k)return"";return BOOK_NAME[k]||k.charAt(0).toUpperCase()+k.slice(1);}
+function gradeWord(l){return (/^[AEFI8]/.test(l)?"an ":"a ")+l;}
+function joinNames(arr){return arr.length<=1?(arr[0]||""):arr.slice(0,-1).join(", ")+" and "+arr[arr.length-1];}
+function briefHRPlays(g){
+  const bats=[...(g._awayBat||[]),...(g._homeBat||[])];
+  return bats.map(b=>{
+    const mean=b.proj.hr,prob=poissonOver(mean,0.5);
+    let book=null,edge=null,ev=null,bookName=null;
+    if(ODDS_LOADED){const be=bestEdgeForMarket(b,"hr",mean);if(be){book=be.over;edge=be.edge;ev=evPct(prob,be.over);bookName=be.book;}}
+    return {b,prob,book,edge,ev,bookName,grade:b.grade?b.grade.letter:"—"};
+  }).sort((a,b)=>b.prob-a.prob);
+}
+function priceTag(p){return p.book!=null?`${amStr(p.book)}${p.bookName?` (${capBook(p.bookName)})`:""}`:"";}
+function gameEnvSentence(g){
+  const pf=g.parkF||1,w=g.weather;
+  const parkTxt=pf<=0.95?"a pitcher-friendly park":pf>=1.08?"a hitter-friendly park":"a roughly neutral park";
+  let windTxt="";
+  if(w){const out=w.outComponent||0;windTxt=out>2?`wind helping the ball carry (~${Math.round(w.windMph)} mph out)`:out<-2?`a ~${Math.round(w.windMph)} mph headwind blowing in`:"light, neutral wind";}
+  const hrc=w?((w.mult-1)*100):0;
+  const amplifies=pf>=1.08||(w&&(w.outComponent||0)>3);
+  const suppresses=pf<=0.93||(w&&(w.outComponent||0)<-3);
+  const lead=amplifies?"The environment leans toward offense":suppresses?"The environment works against power":"The game environment is largely neutral";
+  return `${lead} — ${parkTxt} (${pf.toFixed(2)})${w?`, ${windTxt}, ${Math.round(w.tempF)}°F`:""}, for an HR context of ${hrc>=0?"+":""}${hrc.toFixed(1)}%.`;
+}
+function briefingNarrative(g){
+  const plays=briefHRPlays(g);
+  if(!plays.length||!plays[0].prob)return `<p class="bmuted">Lineups and projections aren't in yet for this one — check back once the cards post.</p>`;
+  const top=plays[0];
+  let html=`<p><b>${top.b.name}</b> is the top home-run target here — the model grades him ${gradeWord(top.grade)} against ${top.b.oppPitcher}, with the highest HR probability in the game at ${Math.round(top.prob*100)}%.`;
+  if(top.b.hrMatch&&top.b.hrMatch.why)html+=` ${top.b.hrMatch.why}`;
+  if(top.book!=null)html+=` Best price is <b>${priceTag(top)}</b>${top.ev!=null?(top.ev>=0?`, a +${(top.ev*100).toFixed(0)}% EV look`:`, though EV is slightly negative (${(top.ev*100).toFixed(0)}%) at that number`):""}.`;
+  html+=`</p>`;
+  const val=plays.filter(p=>p!==top&&p.ev!=null&&p.ev>0).sort((a,b)=>b.ev-a.ev).slice(0,3);
+  if(val.length){
+    html+=`<p>On the value side, ${joinNames(val.map(v=>`<b>${v.b.name}</b>`))} ${val.length>1?"stand":"stands"} out as positive-EV — `;
+    html+=joinNames(val.map(v=>`${v.b.name} grades ${v.grade} with a +${(v.ev*100).toFixed(0)}% gap at ${priceTag(v)}`))+`.`;
+    const dart=val.filter(v=>/^[CDF]/.test(v.grade)).sort((a,b)=>b.ev-a.ev)[0];
+    if(dart)html+=` ${dart.b.name} carries the biggest EV but a ${dart.grade} grade and a long-shot price — a small dart, not a core play.`;
+    html+=`</p>`;
+  }else if(ODDS_LOADED){
+    html+=`<p>No other bat in this game clears positive EV at current prices — the chalk is fairly priced.</p>`;
+  }else{
+    html+=`<p class="bmuted">Load your odds key to surface the positive-EV value plays and the best book prices for this game.</p>`;
+  }
+  html+=`<p>${gameEnvSentence(g)}</p>`;
+  return html;
+}
+function briefHeader(g){
+  const tc=ODDS_LOADED?totalsConsensus(g):null;
+  const ou=tc&&tc.point!=null?tc.point:(g.sim?Math.round(g.sim.total*2)/2:null);
+  const w=g.weather;
+  const dt=new Date(g.time);const tm=isNaN(dt)?"":dt.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
+  const conf=g.away._conf&&g.home._conf;
+  let wxBlock="";
+  if(w){
+    const out=w.outComponent||0;const dir=out>2?"blowing out":out<-2?"blowing in":"cross/calm";
+    const hrc=(w.mult-1)*100;
+    wxBlock=`<div class="bweather"><div class="bwh">Ballpark weather</div>
+      <div class="bwrow"><span>Temp</span> <b>${Math.round(w.tempF)}°F</b></div>
+      <div class="bwrow"><span>Wind</span> <b>${Math.round(w.windMph)} mph ${dir}${w.cardinal?" ("+w.cardinal+")":""}</b></div>
+      <div class="bwrow"><span>Precip</span> <b>${w.precip!=null?Math.round(w.precip)+"%":"—"}</b></div>
+      <div class="bwrow"><span class="hrctx">HR context</span> <b class="hrctx">${hrc>=0?"+":""}${hrc.toFixed(1)}%</b></div></div>`;
+  }
+  return {ou,tm,conf,wxBlock};
+}
+function renderBriefings(model){
+  const wrap=el("briefBoard");
+  if(!model||!model.games||!model.games.length){wrap.innerHTML='<div class="empty"><b>No slate loaded</b>Load games first and I\'ll write up every matchup.</div>';return;}
+  const games=[...model.games].sort((a,b)=>{const ca=(a.away._conf&&a.home._conf)?0:1,cb=(b.away._conf&&b.home._conf)?0:1;return ca-cb||(new Date(a.time)-new Date(b.time));});
+  const updated=new Date().toLocaleString([],{month:"2-digit",day:"2-digit",year:"numeric",hour:"numeric",minute:"2-digit"});
+  const llmOn=el("homerLLM")&&el("homerLLM").checked&&el("homerKey")&&el("homerKey").value.trim();
+  wrap.innerHTML=games.map((g,i)=>{
+    const h=briefHeader(g);
+    return `<div class="brief" data-gi="${i}">
+      <div class="bhead"><div class="bteams">${g.away.short} <span class="bat">@</span> ${g.home.short}${g.dh?` <span class="bdh">G${g.gameNumber}</span>`:""}</div><div class="btime">${h.tm} ${h.conf?'<span class="bconf">✅ confirmed</span>':'<span class="bproj">⚠️ projected</span>'}</div></div>
+      <div class="bsub">O/U <b>${h.ou!=null?h.ou:"—"}</b> &nbsp; PARK FACTOR <b>${(g.parkF||1).toFixed(2)}</b> &nbsp; PROJ HR <b>${gameProjHR(g).toFixed(1)}</b></div>
+      ${h.wxBlock}
+      <div class="bnarr" id="bnarr-${i}">${briefingNarrative(g)}</div>
+      <div class="bfoot"><span>${h.conf?"Lineups confirmed":"Projected lineup — sharpens when posted"}</span>${llmOn?`<button class="baibtn" data-gi="${i}">✨ AI rewrite</button>`:""}<span class="bupd">updated ${updated}</span></div>
+    </div>`;
+  }).join("");
+}
+async function briefingLLM(g){
+  const plays=briefHRPlays(g).slice(0,8).map(p=>`${p.b.name} (grade ${p.grade}): ${Math.round(p.prob*100)}% HR vs ${p.b.oppPitcher}${p.book!=null?`, ${amStr(p.book)} ${p.bookName?"("+capBook(p.bookName)+")":""}`:""}${p.ev!=null?`, ${(p.ev*100).toFixed(0)}% EV`:""}`).join("\n");
+  const env=gameEnvSentence(g);
+  const key=el("homerKey").value.trim();
+  const sys="You are a sharp, concise MLB betting analyst. Write a 3-paragraph home-run/game briefing from ONLY the data given: (1) the top HR target with grade, HR% and price, (2) the notable positive-EV value plays with grades/prices, (3) the park & weather environment. Be specific, honest about variance, never guarantee outcomes. ~150 words.";
+  const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-haiku-4-5-20251001",max_tokens:600,system:sys,messages:[{role:"user",content:`Game: ${g.away.short} @ ${g.home.short}\nHR plays:\n${plays}\n\nEnvironment: ${env}`}]})});
+  if(!r.ok)throw new Error("api");
+  const d=await r.json();const txt=(d.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("\n");
+  return txt?escHtml(txt).split(/\n\n+/).map(p=>`<p>${p.replace(/\n/g,"<br>")}</p>`).join(""):null;
+}
+function renderHomerChat(){
+  const box=el("homerChat");if(!box)return;
+  if(!HOMER_MSGS.length)HOMER_MSGS.push({role:"bot",html:homerHelp()});
+  box.innerHTML=HOMER_MSGS.map(m=>`<div class="hmsg ${m.role}">${m.role==="bot"?'<span class="havatar">🤖</span>':""}<div class="hbubble">${m.html}</div></div>`).join("");
+  box.scrollTop=box.scrollHeight;
+}
+async function homerSend(text){
+  const inp=el("homerInput");
+  text=(text||(inp?inp.value:"")||"").trim();if(!text)return;
+  HOMER_MSGS.push({role:"user",html:escHtml(text)});
+  if(inp)inp.value="";
+  renderHomerChat();
+  const useLLM=el("homerLLM")&&el("homerLLM").checked&&el("homerKey")&&el("homerKey").value.trim();
+  if(useLLM){
+    HOMER_MSGS.push({role:"bot",html:'<span class="typing">Homer is thinking…</span>'});renderHomerChat();
+    let ans=null;try{ans=await homerLLM(text,el("homerKey").value.trim());}catch(e){ans=null;}
+    HOMER_MSGS.pop();
+    HOMER_MSGS.push({role:"bot",html:ans||(homerAnswer(text,MODEL)+'<br><br><span class="hint">(Couldn\'t reach Claude — answered from the model directly.)</span>')});
+  }else{
+    HOMER_MSGS.push({role:"bot",html:homerAnswer(text,MODEL)});
+  }
+  renderHomerChat();
 }
 function renderBestBets(model){
   const wrap=el("bestBoard");
@@ -2775,7 +3182,7 @@ function renderBestBets(model){
   wrap.innerHTML=legend+
     bbSection("Master Board","top 10 across the whole slate",top)+
     bbSection("Top 5 EV plays",ODDS_LOADED?"highest expected value":"needs odds",evP,ODDS_LOADED?"No +data yet.":"Load your odds key (Odds tab) to rank every play by expected value.")+
-    bbSection("Top 5 home-run plays","best HR spots by Master Score",hrP)+
+    bbSection("Top 5 home-run plays","HR-matchup engine + Master Score",hrP,null,true)+
     bbSection("Top 5 prop plays","across HR / hits / bases / RBI",propP)+
     bbSection("Top 5 game lines","ML · run line · total",lineP)+
     bbSection("Highest consensus","most internal signals agreeing",conP)+
@@ -2799,7 +3206,7 @@ function renderHomers(model){
     <div class="hrbk-c"><div class="hrbk-n">▫️ ${nOther}</div><div class="hrbk-l">others (unflagged)</div></div>
   </div>`;
   wrap.innerHTML=breakdown+
-  `<div class="gtip" style="margin-bottom:14px"><b>${called} of ${homers.length}</b> of today's homers came from bats the model graded A-/A/A+ pre-game${nStar+nBolt+nSleep>0?`, and <b>${nStar+nBolt+nSleep} of ${homers.length}</b> were a flagged ⭐/⚡/💤 pick`:""} — a quick gut-check on the matchup model. New to homer bets? See the <b>💣 How to Pick Homers</b> tab under <b>More</b>.</div>`+
+  `<div class="gtip" style="margin-bottom:14px"><b>${homers.length}</b> homer${homers.length===1?"":"s"} hit so far · model projected <b>~${slateHRProjection(model).total.toFixed(0)}</b> across today's slate. <b>${called} of ${homers.length}</b> came from bats graded A-/A/A+ pre-game${nStar+nBolt+nSleep>0?`, and <b>${nStar+nBolt+nSleep} of ${homers.length}</b> were a flagged ⭐/⚡/💤 pick`:""}. New to homer bets? See the <b>💣 How to Pick Homers</b> tab under <b>More</b>.</div>`+
   homers.map(b=>{
     const pre=Math.round(poissonOver(b.proj.hr,0.5)*100);
     const isCalled=b.grade&&/A/.test(b.grade.letter);
@@ -2995,6 +3402,8 @@ function setView(v){
   el("alignView").classList.toggle("hide",v!=="align");
   el("hrView").classList.toggle("hide",v!=="hr");
   el("bestView").classList.toggle("hide",v!=="best");
+  el("homerView").classList.toggle("hide",v!=="homer");
+  el("briefView").classList.toggle("hide",v!=="brief");
   el("hrguideView").classList.toggle("hide",v!=="hrguide");
   el("propsView").classList.toggle("hide",v!=="props");
   el("oddsView").classList.toggle("hide",v!=="odds");
@@ -3008,6 +3417,8 @@ function setView(v){
   if(v==="sims"&&MODEL) renderSims(MODEL);
   if(v==="hr"&&MODEL) renderHomers(MODEL);
   if(v==="best"&&MODEL) renderBestBets(MODEL);
+  if(v==="homer") renderHomerChat();
+  if(v==="brief"&&MODEL) renderBriefings(MODEL);
   if(v==="align"&&MODEL) renderAlignment();
   if(v==="vuln"&&MODEL) renderVuln(MODEL);
   if(v==="wx"&&MODEL) renderWeather(MODEL);
@@ -3025,7 +3436,7 @@ function renderAll(model){
     setView(VIEW);
     return;
   }
-  renderPlays(model);BOARD_LIMIT=30;renderBoard(model,CURRENT_MARKET);renderGames(model);
+  renderPlays(model);BOARD_LIMIT=30;renderBoard(model,CURRENT_MARKET);renderGames(model);renderSlateHRProj(model);
   const conf=model.games.filter(g=>g.away._conf&&g.home._conf).length;
   setStatus(`${model.games.length} games · ${model.batters.length} batters · ${conf} w/ confirmed lineups${ODDS_LOADED?" · odds live":""} · ${new Date().toLocaleTimeString()}`,"live");
   el("loadOdds").disabled=false;
@@ -3042,7 +3453,7 @@ async function run(){
   finally{el("run").disabled=false;setTimeout(()=>setBar(0),600);}
 }
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
-const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
+const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",homer:"Homer AI — your HR assistant",brief:"Game Briefings",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
   document.querySelectorAll("#nav .navgroup").forEach(g=>g.classList.toggle("active",[...g.querySelectorAll("[data-view]")].some(b=>b.dataset.view===v)));
@@ -3081,6 +3492,18 @@ el("oddsTabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(
 el("propTabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;PROP_MARKET=t.dataset.p;[...el("propTabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderProps(MODEL);});
 el("trendSearch").addEventListener("input",e=>{TREND_Q=e.target.value;renderTrends();});
 el("teamSelect").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;TEAM_SEL=b.dataset.key;renderTeamSelector();});
+el("homerSendBtn")&&el("homerSendBtn").addEventListener("click",()=>homerSend());
+el("homerInput")&&el("homerInput").addEventListener("keydown",e=>{if(e.key==="Enter")homerSend();});
+el("homerChips")&&el("homerChips").addEventListener("click",e=>{const b=e.target.closest("button");if(b&&b.dataset.q)homerSend(b.dataset.q);});
+el("homerLLM")&&el("homerLLM").addEventListener("change",e=>{const on=e.target.checked;const k=el("homerKey"),h=el("homerLLMHint");if(k)k.style.display=on?"block":"none";if(h)h.style.display=on?"block":"none";});
+el("briefBoard")&&el("briefBoard").addEventListener("click",async e=>{
+  const btn=e.target.closest(".baibtn");if(!btn||!MODEL)return;
+  const gi=Number(btn.dataset.gi),g=MODEL.games[gi],target=el("bnarr-"+gi);
+  if(!g||!target)return;
+  const prev=target.innerHTML;target.innerHTML='<p class="bmuted">✨ Writing…</p>';btn.disabled=true;
+  try{const out=await briefingLLM(g);target.innerHTML=out||prev;}catch(err){target.innerHTML=prev+'<p class="bmuted">(AI rewrite unavailable — kept the model-written version.)</p>';}
+  btn.disabled=false;
+});
 el("run").addEventListener("click",run);
 el("loadOdds").addEventListener("click",loadOdds);
 (function(){const d=new Date();el("date").value=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;run();})();
