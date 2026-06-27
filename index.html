@@ -162,17 +162,29 @@
   .empty b{color:var(--chalk);display:block;font-size:16px;margin-bottom:6px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.04em}
   .footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted2);font-family:'Roboto Mono',monospace;line-height:1.7}
   /* nav + platoon + teams */
-  .nav{display:flex;gap:8px;margin:2px 0 20px}
-  .nav button{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-weight:600;font-size:15px;padding:9px 22px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;transition:all .14s}
-  .nav button:hover{color:var(--chalk)}
-  .nav button.active{background:var(--panel3);color:var(--chalk);border-color:var(--amber)}
-  .navgroup{position:relative;display:inline-block}
-  .navgroup.active>.navbtn{color:var(--amber);border-color:var(--amber)}
-  .navmenu{position:absolute;top:calc(100% + 6px);left:0;min-width:190px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:6px;display:none;flex-direction:column;gap:2px;z-index:60;box-shadow:0 18px 44px -16px rgba(0,0,0,.7)}
-  .navgroup.open .navmenu{display:flex}
-  .navmenu button{display:block;width:100%;text-align:left;background:none;border:none;color:var(--muted);font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.03em;font-size:13.5px;font-weight:500;padding:9px 13px;border-radius:8px;cursor:pointer;white-space:nowrap}
-  .navmenu button:hover{background:var(--panel2);color:var(--chalk)}
-  .navmenu button.active{color:var(--amber);background:var(--panel2)}
+  .navToggle{display:none;position:fixed;top:14px;left:14px;z-index:120;background:var(--panel3);border:1px solid var(--amber);color:var(--chalk);font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.04em;font-size:14px;padding:9px 14px;border-radius:9px;cursor:pointer}
+  .sidebar{position:fixed;top:0;left:0;width:236px;height:100vh;overflow-y:auto;background:var(--panel);border-right:1px solid var(--line);padding:18px 14px 40px;z-index:110;transition:transform .22s ease}
+  .sb-brand{font-family:'Oswald',sans-serif;font-weight:700;font-size:24px;color:var(--chalk);letter-spacing:-.01em;margin:4px 8px 18px}
+  .sb-brand span{color:var(--amber)}
+  .sb-group{margin-bottom:18px}
+  .sb-h{font-family:'Roboto Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);padding:0 8px 7px}
+  .sidebar button[data-view]{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:none;border:none;border-left:2px solid transparent;color:var(--muted);font-family:'Oswald',sans-serif;font-weight:500;font-size:14.5px;letter-spacing:.01em;padding:8px 10px;border-radius:0 8px 8px 0;cursor:pointer;transition:all .12s}
+  .sidebar button[data-view]:hover{color:var(--chalk);background:var(--panel2)}
+  .sidebar button[data-view].active{color:var(--chalk);background:rgba(95,191,125,.12);border-left-color:var(--good);font-weight:600}
+  .sb-beta{font-family:'Roboto Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.06em;color:#c7b6f0;background:rgba(124,92,200,.25);border-radius:4px;padding:2px 5px;margin-left:auto}
+  .sb-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:105}
+  body.nav-open .sb-backdrop{display:block}
+  @media(min-width:1040px){
+    .wrap{padding-left:236px}
+    .navToggle{display:none}
+    .sb-backdrop{display:none!important}
+  }
+  @media(max-width:1039px){
+    .navToggle{display:block}
+    .sidebar{transform:translateX(-100%);box-shadow:0 0 60px rgba(0,0,0,.6)}
+    body.nav-open .sidebar{transform:translateX(0)}
+    .wrap{padding-top:54px}
+  }
   .viewtitle{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.04em;font-size:13px;color:var(--muted2);margin:2px 0 14px;min-height:14px}
   .loadmore{display:block;width:100%;margin-top:10px;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--amber);font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-weight:600;font-size:13px;cursor:pointer;transition:all .14s}
   .loadmore:hover{background:var(--panel3);border-color:var(--amber)}
@@ -496,6 +508,40 @@
   .hrproj-top span{display:block;color:var(--muted2);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase}
   .hrproj-top b{color:var(--chalk)}
   @media(max-width:560px){.hrproj{justify-content:center}.hrproj-top{text-align:center;width:100%}}
+  .ws-controls{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+  .ws-date{display:flex;align-items:center;gap:8px;font-family:'Roboto Mono',monospace;font-size:13px;color:var(--chalk)}
+  .ws-date button{background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:7px;padding:5px 10px;cursor:pointer;font-family:inherit}
+  .ws-date button:hover{border-color:var(--amber);color:var(--chalk)}
+  .ws-date .ws-today{background:var(--good);color:#0a1a0f;border-color:var(--good);font-weight:700}
+  .ws-count{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2)}
+  .ws-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+  .ws-chips button{font-family:'Roboto Mono',monospace;font-size:11px;background:var(--panel2);border:1px solid var(--line);color:var(--muted);border-radius:18px;padding:6px 12px;cursor:pointer;display:flex;align-items:center;gap:6px}
+  .ws-chips button.active{border-color:var(--good);color:var(--chalk);background:rgba(95,191,125,.12)}
+  .ws-chips small{color:var(--muted2)}
+  .wsdot{width:7px;height:7px;border-radius:50%;display:inline-block;background:var(--muted2)}
+  .wsdot.live{background:var(--good)}.wsdot.final{background:var(--muted2)}.wsdot.sched{background:var(--amber)}
+  .ws-tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+  .ws-table{border-collapse:collapse;width:100%;min-width:1080px;font-size:12.5px}
+  .ws-table th{font-family:'Roboto Mono',monospace;font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted2);text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap;position:sticky;top:0;background:var(--panel2)}
+  .ws-table th.r{text-align:right}.ws-table th.sorted{color:var(--amber)}
+  .ws-table td{padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+  .ws-table td.r{text-align:right;font-family:'Roboto Mono',monospace}
+  .ws-table tr:hover td{background:var(--panel2)}
+  .ws-table .wsname{font-weight:600;color:var(--chalk)}
+  .ws-table .wsname small{color:var(--muted2);font-weight:400}
+  .ws-table .wsbat{font-weight:600;color:var(--chalk)}
+  .ws-table .wsmut{color:var(--muted)}
+  .wsslot{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:rgba(124,92,200,.25);border:1px solid #7c5cc8;color:#c7b6f0;font-family:'Roboto Mono',monospace;font-weight:700;font-size:12px}
+  .wsband{font-family:'Roboto Mono',monospace;font-size:11px;font-weight:700;padding:3px 9px;border-radius:13px}
+  .wsband.wsb-hi{background:rgba(95,191,125,.18);color:var(--good)}
+  .wsband.wsb-med{background:rgba(242,181,60,.15);color:var(--amber)}
+  .wsband.wsb-lo{background:var(--panel3);color:var(--muted2)}
+  .wsconf{color:var(--good)}.wsproj{color:var(--amber)}
+  .wsgrade{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-family:'Oswald',sans-serif;font-weight:700;font-size:12px;color:#0a0f14}
+  .wsg-a{background:#5fbf7d}.wsg-b{background:#4cc0c0}.wsg-c{background:#9b7ed8}.wsg-d{background:#7a8290}
+  .wshr{color:var(--teal);font-weight:600}
+  .wsv-hi{color:var(--good)}.wsv-mid{color:var(--amber)}.wsv-lo{color:#e2604f}
+  .ws-note{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted2);margin-top:10px;line-height:1.6}
 
   /* alignment */
   .align-ctrls{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-bottom:16px}
@@ -538,8 +584,6 @@
     .row .rcol{display:block;flex-basis:100%;order:6;text-align:left}
     .row.head{display:none}
     .controls{margin-left:0;width:100%}
-    .nav{gap:6px}
-    .navbtn{padding:8px 14px;font-size:13px}
   }
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 </style>
@@ -582,45 +626,36 @@
     <span class="bar"><i id="barFill"></i></span>
   </div>
 
-  <div class="nav" id="nav">
-    <button class="navbtn" data-view="slate">Slate</button>
-    <button class="navbtn" data-view="best">🏆</button>
-    <button class="navbtn" data-view="homer">🤖</button>
-    <button class="navbtn" data-view="hr">✅</button>
-    <div class="navgroup">
-      <button class="navbtn drop">Picks ▾</button>
-      <div class="navmenu">
-        <button data-view="align">✓ Alignment Score</button>
-        <button data-view="props">Player Props</button>
-        <button data-view="parlay">Parlay Builder</button>
-      </div>
+  <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
+  <nav class="sidebar" id="nav">
+    <div class="sb-brand">Edge <span>Board</span></div>
+    <div class="sb-group"><div class="sb-h">Hitter Tools</div>
+      <button data-view="slate">📊 Dashboard</button>
+      <button data-view="best">🏆 Best Bets</button>
+      <button data-view="homer">🤖 Homer AI <span class="sb-beta">BETA</span></button>
+      <button data-view="brief">📝 Game Briefings</button>
+      <button data-view="hr">✅ Homers Today</button>
+      <button data-view="props">Home Run &amp; Hit Props</button>
+      <button data-view="align">Alignment Score</button>
+      <button data-view="hrguide">💣 How to Pick Homers</button>
     </div>
-    <div class="navgroup">
-      <button class="navbtn drop">Lines ▾</button>
-      <div class="navmenu">
-        <button data-view="odds">Odds Comparison</button>
-        <button data-view="sims">Game Sims</button>
-      </div>
+    <div class="sb-group"><div class="sb-h">Pitcher &amp; Matchup</div>
+      <button data-view="vuln">Pitcher Weak Spots</button>
+      <button data-view="sims">Game Sims</button>
+      <button data-view="wx">Weather Impact</button>
+      <button data-view="teams">Team Browser</button>
     </div>
-    <div class="navgroup">
-      <button class="navbtn drop">Matchups ▾</button>
-      <div class="navmenu">
-        <button data-view="vuln">Vulnerable Pitchers</button>
-        <button data-view="wx">Weather Impact</button>
-        <button data-view="teams">Team Browser</button>
-      </div>
+    <div class="sb-group"><div class="sb-h">Betting Tools</div>
+      <button data-view="odds">Odds Comparison</button>
+      <button data-view="parlay">Parlay Generator</button>
+      <button data-view="track">📊 Track &amp; Calibrate</button>
+      <button data-view="trends">Trends</button>
     </div>
-    <div class="navgroup">
-      <button class="navbtn drop">More ▾</button>
-      <div class="navmenu">
-        <button data-view="trends">Trends</button>
-        <button data-view="brief">📝 Game Briefings</button>
-        <button data-view="hrguide">💣 How to Pick Homers</button>
-        <button data-view="track">📊 Track &amp; Calibrate</button>
-        <button data-view="guide">❓ Guide</button>
-      </div>
+    <div class="sb-group"><div class="sb-h">Info</div>
+      <button data-view="guide">❓ Guide</button>
     </div>
-  </div>
+  </nav>
+  <div class="sb-backdrop" id="sbBackdrop"></div>
   <div class="viewtitle" id="viewTitle"></div>
 
   <section id="playsSection" class="hide">
@@ -808,8 +843,14 @@
   </section>
 
   <section id="vulnView" class="hide">
-    <div class="sec-head"><h2>Vulnerable Pitchers</h2><span class="tag">most exploitable starters &amp; who to target</span><span class="rule"></span></div>
-    <div id="vulnBoard"></div>
+    <div class="sec-head"><h2>Pitcher Weak Spots</h2><span class="tag">batters in the lineup slot where each pitcher is most vulnerable to a HR</span><span class="rule"></span></div>
+    <div class="ws-controls">
+      <div class="ws-date"><button id="wsPrev" title="Previous day">←</button><span id="wsDateLbl">—</span><button id="wsNext" title="Next day">→</button><button id="wsToday" class="ws-today">Today</button></div>
+      <div class="ws-count" id="wsCount"></div>
+    </div>
+    <div class="ws-chips" id="wsChips"></div>
+    <div class="ws-tablewrap"><table class="ws-table" id="wsTable"></table></div>
+    <div class="ws-note">Weak Spot = the batting-order slot where the model's HR-matchup engine rates this lineup most dangerous against the starter; the Target Batter is whoever hits in that slot. Barrel% and xwOBA populate only with a Statcast proxy/host; OPS &amp; PA are season-to-date.</div>
   </section>
 
   <section id="wxView" class="hide">
@@ -1487,7 +1528,7 @@ function batterModel(bs,opp,parkF,expPA){
   const projRBI=bRBI*expPA*opp.eraFactor*(1+(parkF-1)*0.4), projSB=bSBg;
   return{
     name:bs.name,pos:bs.pos,bats:bs.bats,
-    cur:{avg:st.avg,slg:st.slg,iso:isoN,ops:st.ops,hr,rbi,sb,h:H,ab:Number(st.atBats)||0,g,hrRate,xbhRate},
+    cur:{avg:st.avg,slg:st.slg,iso:isoN,ops:st.ops,hr,rbi,sb,h:H,ab:Number(st.atBats)||0,pa,g,hrRate,xbhRate},
     kRate:bK,
     rates:{hr:cHR,h:cH,tb:cTB},
     proj:{hr:projHR,hits:projH,tb:projTB,rbi:projRBI,sb:projSB}
@@ -2454,21 +2495,90 @@ function vulnRow(p){
     <div class="vtargets"><div class="vbh">Top targets ${wantCode?`(${side})`:""}</div>${tg||'<span style="color:var(--muted2);font-size:11px">targets n/a</span>'}</div>
   </div>`;
 }
+let VULN_SORT={key:"vuln",dir:-1}, VULN_GAME="all";
+function pitcherWeakSpot(K,oppBats){
+  const bats=oppBats||K._oppBats||[];if(!bats.length)return null;
+  let best=null;
+  bats.forEach(b=>{const score=b.hrMatch?b.hrMatch.score:Math.round(poissonOver(b.proj?b.proj.hr:0,0.5)*100);if(!best||score>best.score)best={b,score};});
+  return best;
+}
+function gameStatusLabel(g){const s=(g.status||"").toLowerCase();if(g.live||/final|over|completed/.test(s))return /final|over|completed/.test(s)?"Final":"Live";if(/progress|inning|warmup|delayed/.test(s))return "Live";return "Scheduled";}
+function buildWeakSpots(model){
+  const rows=[];
+  (model.games||[]).forEach(g=>{
+    const add=(K,pteam,oppTeam,facedBats,facedConf)=>{
+      if(!K||!K.vuln)return;
+      const ws=pitcherWeakSpot(K,facedBats);if(!ws)return;const b=ws.b;
+      rows.push({pitcher:K.name,pteam,throws:K.throws,slot:b.slot||null,vuln:K.vuln.score/100,
+        batter:b.name,opp:oppTeam,status:gameStatusLabel(g),lineup:facedConf?"Confirmed":"Projected",
+        grade:b.grade?b.grade.letter:"—",hrProb:poissonOver(b.proj?b.proj.hr:0,0.5),mvuln:ws.score/100,
+        barrel:b.statcast&&b.statcast.barrel!=null?b.statcast.barrel:null,
+        xwoba:b.statcast&&b.statcast.xwoba!=null?b.statcast.xwoba:null,
+        ops:b.cur?pnum(b.cur.ops):null,pa:b.cur&&b.cur.pa?b.cur.pa:null,
+        gamePk:g.gamePk,gameKey:`${g.away.short}@${g.home.short}${g.dh?" G"+g.gameNumber:""}`});
+    };
+    add(g._awayK,g.away.short,g.home.short,g._homeBat,g.home._conf); // away SP faces home lineup
+    add(g._homeK,g.home.short,g.away.short,g._awayBat,g.away._conf);
+  });
+  return rows;
+}
+function vulnBand(v){return v>=0.70?["HIGH","wsb-hi"]:v>=0.45?["MED","wsb-med"]:["LOW","wsb-lo"];}
+function gradeCircleCls(l){return /^A/.test(l)?"wsg-a":/^B/.test(l)?"wsg-b":/^C/.test(l)?"wsg-c":"wsg-d";}
 function renderVuln(model){
-  const wrap=el("vulnBoard");
-  const ps=(model.pitchers||[]).filter(p=>p.vuln);
-  if(!ps.length){wrap.innerHTML='<div class="empty"><b>No starters posted</b>Probable pitchers aren\'t announced yet.</div>';return;}
-  const tier=s=>s>=62?1:s>=48?2:3;
-  const tiers={1:[],2:[],3:[]};
-  [...ps].sort((a,b)=>b.vuln.score-a.vuln.score).forEach(p=>tiers[tier(p.vuln.score)].push(p));
-  const nm={1:["T1 · prime targets","vt1"],2:["T2 · lean","vt2"],3:["T3 · marginal","vt3"]};
-  let html="";
-  [1,2,3].forEach(t=>{if(!tiers[t].length)return;
-    html+=`<div class="vtier"><span class="${nm[t][1]}">${nm[t][0]}</span><span class="rule"></span></div>`+tiers[t].map(vulnRow).join("");});
-  const tough=[...ps].filter(p=>p.vuln.score<38).sort((a,b)=>a.vuln.score-b.vuln.score).slice(0,8);
-  if(tough.length)html+=`<div style="margin-top:18px;font-family:Roboto Mono,monospace;font-size:12px;color:var(--muted);line-height:1.6"><b style="color:var(--teal)">TOUGH — fade:</b> ${tough.map(p=>p.name+" ("+p.vuln.score+")").join(" · ")}</div>`;
-  html+=`<div style="margin-top:10px;font-family:Roboto Mono,monospace;font-size:10.5px;color:var(--muted2)">Vulnerability 1–99 (higher = easier to hit): HR/9, WHIP, ERA, K/9, recent form, park &amp; weather. Targets are the top opposing bats on the pitcher's weaker platoon side.</div>`;
-  wrap.innerHTML=html;
+  const head=el("wsDateLbl");if(head)head.textContent=model&&model.date?model.date:"—";
+  const tbl=el("wsTable"),chips=el("wsChips"),cnt=el("wsCount");
+  if(!model||!model.games||!model.games.length){if(tbl)tbl.innerHTML="";if(chips)chips.innerHTML="";if(cnt)cnt.textContent="";return;}
+  // quick-select chips
+  const games=model.games;
+  let chipHtml=`<button class="wschip ${VULN_GAME==="all"?"active":""}" data-g="all">All (${games.length})</button>`;
+  games.forEach(g=>{const st=gameStatusLabel(g);const hrc=g.weather?((g.weather.mult-1)*100):null;
+    chipHtml+=`<button class="wschip ${VULN_GAME===String(g.gamePk)?"active":""}" data-g="${g.gamePk}"><span class="wsdot ${st==="Live"?"live":st==="Final"?"final":"sched"}"></span>${g.away.short} @ ${g.home.short}${g.dh?" G"+g.gameNumber:""} <small>${st}${hrc!=null?` ${hrc>=0?"+":""}${hrc.toFixed(1)}%`:""}</small></button>`;});
+  if(chips)chips.innerHTML=chipHtml;
+  let rows=buildWeakSpots(model);
+  if(VULN_GAME!=="all")rows=rows.filter(r=>String(r.gamePk)===VULN_GAME);
+  const cols=[
+    {k:"pitcher",l:"Pitcher",num:0,get:r=>r.pitcher},
+    {k:"pteam",l:"Team",num:0,get:r=>r.pteam},
+    {k:"slot",l:"Weak Spot",num:1,get:r=>r.slot||99},
+    {k:"vuln",l:"Vulnerability",num:1,get:r=>r.vuln},
+    {k:"batter",l:"Target Batter",num:0,get:r=>r.batter},
+    {k:"opp",l:"Opp",num:0,get:r=>r.opp},
+    {k:"status",l:"Status",num:0,get:r=>r.status},
+    {k:"lineup",l:"Lineup",num:0,get:r=>r.lineup},
+    {k:"grade",l:"HR Grade",num:0,get:r=>r.grade},
+    {k:"hrProb",l:"HR Prob",num:1,get:r=>r.hrProb},
+    {k:"mvuln",l:"Matchup Vuln",num:1,get:r=>r.mvuln},
+    {k:"barrel",l:"Barrel%",num:1,get:r=>r.barrel==null?-1:r.barrel},
+    {k:"xwoba",l:"xwOBA",num:1,get:r=>r.xwoba==null?-1:r.xwoba},
+    {k:"ops",l:"OPS",num:1,get:r=>r.ops==null?-1:r.ops},
+    {k:"pa",l:"Sample",num:1,get:r=>r.pa==null?-1:r.pa},
+  ];
+  const sc=cols.find(c=>c.k===VULN_SORT.key)||cols[3];
+  rows.sort((a,b)=>{const av=sc.get(a),bv=sc.get(b);const cmp=sc.num?(av-bv):String(av).localeCompare(String(bv));return cmp*VULN_SORT.dir;});
+  if(cnt)cnt.textContent=`${rows.length} pitcher${rows.length===1?"":"s"}`;
+  const thead=`<thead><tr>${cols.map(c=>`<th data-k="${c.k}" class="${c.num?"r":""} ${VULN_SORT.key===c.k?"sorted":""}">${c.l}${VULN_SORT.key===c.k?(VULN_SORT.dir<0?" ↓":" ↑"):""}</th>`).join("")}</tr></thead>`;
+  const body=rows.map(r=>{
+    const [bl,bc]=vulnBand(r.vuln);
+    const mv=r.mvuln, mvc=mv>=0.6?"wsv-hi":mv>=0.45?"wsv-mid":"wsv-lo";
+    return `<tr>
+      <td class="wsname">${r.pitcher} <small>(${r.throws||"?"}HP)</small></td>
+      <td class="wsmut">${r.pteam}</td>
+      <td class="r"><span class="wsslot">${r.slot||"—"}</span></td>
+      <td><span class="wsband ${bc}">${bl} ${r.vuln.toFixed(2)}</span></td>
+      <td class="wsbat">${r.batter}</td>
+      <td class="wsmut">${r.opp}</td>
+      <td class="wsmut"><span class="wsdot ${r.status==="Live"?"live":r.status==="Final"?"final":"sched"}"></span>${r.status}</td>
+      <td class="${r.lineup==="Confirmed"?"wsconf":"wsproj"}">${r.lineup}</td>
+      <td><span class="wsgrade ${gradeCircleCls(r.grade)}">${r.grade}</span></td>
+      <td class="r wshr">${(r.hrProb*100).toFixed(1)}%</td>
+      <td class="r ${mvc}">${mv.toFixed(2)}</td>
+      <td class="r wsmut">${r.barrel!=null?r.barrel.toFixed(1)+"%":"—"}</td>
+      <td class="r wsmut">${r.xwoba!=null?fmt3(r.xwoba):"—"}</td>
+      <td class="r wsmut">${r.ops!=null?r.ops:"—"}</td>
+      <td class="r wsmut">${r.pa!=null?r.pa+" PA":"—"}</td>
+    </tr>`;
+  }).join("");
+  if(tbl)tbl.innerHTML=thead+`<tbody>${body}</tbody>`;
 }
 function renderWeather(model){
   const wrap=el("wxBoard");
@@ -3456,17 +3566,15 @@ el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)r
 const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",homer:"Homer AI — your HR assistant",brief:"Game Briefings",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
-  document.querySelectorAll("#nav .navgroup").forEach(g=>g.classList.toggle("active",[...g.querySelectorAll("[data-view]")].some(b=>b.dataset.view===v)));
   const t=el("viewTitle");if(t)t.textContent=VIEW_TITLE[v]||"";
 }
-function closeMenus(){document.querySelectorAll("#nav .navgroup.open").forEach(x=>x.classList.remove("open"));}
+function closeMenus(){document.body.classList.remove("nav-open");}
 el("nav").addEventListener("click",e=>{
-  const drop=e.target.closest(".drop");
-  if(drop){const g=drop.parentElement,wasOpen=g.classList.contains("open");closeMenus();if(!wasOpen)g.classList.add("open");e.stopPropagation();return;}
   const item=e.target.closest("[data-view]");
   if(item){setView(item.dataset.view);closeMenus();}
 });
-document.addEventListener("click",e=>{if(!e.target.closest("#nav"))closeMenus();});
+el("navToggle")&&el("navToggle").addEventListener("click",()=>document.body.classList.toggle("nav-open"));
+el("sbBackdrop")&&el("sbBackdrop").addEventListener("click",closeMenus);
 el("alignFilter").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;ALIGN_FILTER=b.dataset.f;[...el("alignFilter").children].forEach(c=>c.classList.toggle("active",c===b));renderAlignment();});
 el("alignSort").addEventListener("change",e=>{ALIGN_SORT=e.target.value;renderAlignment();});
 el("trkSave").addEventListener("click",()=>{
@@ -3492,6 +3600,12 @@ el("oddsTabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(
 el("propTabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;PROP_MARKET=t.dataset.p;[...el("propTabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderProps(MODEL);});
 el("trendSearch").addEventListener("input",e=>{TREND_Q=e.target.value;renderTrends();});
 el("teamSelect").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;TEAM_SEL=b.dataset.key;renderTeamSelector();});
+el("wsTable")&&el("wsTable").addEventListener("click",e=>{const th=e.target.closest("th[data-k]");if(!th)return;const k=th.dataset.k;if(VULN_SORT.key===k)VULN_SORT.dir*=-1;else VULN_SORT={key:k,dir:(k==="pitcher"||k==="batter"||k==="pteam"||k==="opp"||k==="status"||k==="lineup"||k==="grade")?1:-1};if(MODEL)renderVuln(MODEL);});
+el("wsChips")&&el("wsChips").addEventListener("click",e=>{const b=e.target.closest("button[data-g]");if(!b)return;VULN_GAME=b.dataset.g;if(MODEL)renderVuln(MODEL);});
+function wsShiftDate(d){const inp=el("date");if(!inp)return;const base=inp.value?new Date(inp.value+"T12:00:00"):new Date();base.setDate(base.getDate()+d);inp.value=ymdLocal(base);const run=el("run");if(run)run.click();}
+el("wsPrev")&&el("wsPrev").addEventListener("click",()=>wsShiftDate(-1));
+el("wsNext")&&el("wsNext").addEventListener("click",()=>wsShiftDate(1));
+el("wsToday")&&el("wsToday").addEventListener("click",()=>{const inp=el("date");if(inp)inp.value=ymdLocal(new Date());const run=el("run");if(run)run.click();});
 el("homerSendBtn")&&el("homerSendBtn").addEventListener("click",()=>homerSend());
 el("homerInput")&&el("homerInput").addEventListener("keydown",e=>{if(e.key==="Enter")homerSend();});
 el("homerChips")&&el("homerChips").addEventListener("click",e=>{const b=e.target.closest("button");if(b&&b.dataset.q)homerSend(b.dataset.q);});
