@@ -162,7 +162,9 @@
   .empty b{color:var(--chalk);display:block;font-size:16px;margin-bottom:6px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.04em}
   .footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted2);font-family:'Roboto Mono',monospace;line-height:1.7}
   /* nav + platoon + teams */
-  .navToggle{display:none;position:fixed;top:14px;left:14px;z-index:120;background:var(--panel3);border:1px solid var(--amber);color:var(--chalk);font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.04em;font-size:14px;padding:9px 14px;border-radius:9px;cursor:pointer}
+  .autorow{display:flex;align-items:center;gap:6px;font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;white-space:nowrap}
+  .autorow input{accent-color:var(--good);cursor:pointer}
+  .freshlbl{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2);white-space:nowrap}
   .sidebar{position:fixed;top:0;left:0;width:236px;height:100vh;overflow-y:auto;background:var(--panel);border-right:1px solid var(--line);padding:18px 14px 40px;z-index:110;transition:transform .22s ease}
   .sb-brand{font-family:'Oswald',sans-serif;font-weight:700;font-size:24px;color:var(--chalk);letter-spacing:-.01em;margin:4px 8px 18px}
   .sb-brand span{color:var(--amber)}
@@ -600,11 +602,13 @@
     <div class="controls">
       <div class="ctrl"><label for="date">Slate date</label><input type="date" id="date" /></div>
       <button class="btn" id="run">Load slate</button>
+      <label class="autorow"><input type="checkbox" id="autoRefresh" checked /> Auto-refresh</label>
+      <span id="freshLbl" class="freshlbl"></span>
     </div>
   </header>
 
   <div class="note">
-    <b>Read me.</b> Projections + grades are a model, not a guarantee. The grade blends the season matchup (log5 batter rate × pitcher-allowed rate, regressed for sample) with career batter-vs-pitcher history and park. <b>Edge %</b> appears only after you load real odds, and equals model probability minus the book's implied probability. Confirmed lineups replace the full roster automatically once teams post them (~2–3 hrs pre-game). <b>For analysis/entertainment only — not financial advice. 21+. If gambling stops being fun, call 1-800-GAMBLER.</b>
+    <b>Read me.</b> Projections + grades are a model, not a guarantee. The grade blends the season matchup (log5 batter rate × pitcher-allowed rate, regressed for sample) with career batter-vs-pitcher history and park. <b>Edge %</b> appears only after you load real odds, and equals model probability minus the book's implied probability. Confirmed lineups replace the full roster automatically once teams post them (~2–3 hrs pre-game). The app pulls live data on every load and (with Auto-refresh on) re-pulls every ~10 minutes and whenever you return to the tab, rolling over to the new day's slate automatically. <b>For analysis/entertainment only — not financial advice. 21+. If gambling stops being fun, call 1-800-GAMBLER.</b>
   </div>
 
   <div class="oddsbar">
@@ -615,9 +619,9 @@
     <button class="btn ghost" id="loadOdds" disabled>Load sportsbook odds</button>
     <div class="ctrl">
       <label for="scproxy">Statcast proxy URL (optional)</label>
-      <input type="text" id="scproxy" placeholder="e.g. https://corsproxy.io/?url=" autocomplete="off" style="width:210px" />
+      <input type="text" id="scproxy" placeholder="optional — not needed for xwOBA/xSLG" autocomplete="off" style="width:230px" />
     </div>
-    <div class="lbl">Odds pull every US sportsbook (DK, FD, BetMGM, Caesars, Fanatics, ESPN BET, Pinnacle &amp; more) via <a href="https://the-odds-api.com/" target="_blank" rel="noopener">the-odds-api.com</a> using <b>your own free key</b> (in memory only). ~6 credits per game regardless of book count. Statcast (EV, barrel%) needs a CORS proxy or hosting.</div>
+    <div class="lbl">Odds pull every US sportsbook (DK, FD, BetMGM, Caesars, Fanatics, ESPN BET, Pinnacle &amp; more) via <a href="https://the-odds-api.com/" target="_blank" rel="noopener">the-odds-api.com</a> using <b>your own free key</b> (in memory only). ~6 credits per game regardless of book count. Expected stats (xwOBA, xSLG, xBA) load straight from the MLB Stats API — no proxy needed. The box above is optional, only for extra Savant-only metrics.</div>
   </div>
 
   <div class="status" id="status">
@@ -850,7 +854,7 @@
     </div>
     <div class="ws-chips" id="wsChips"></div>
     <div class="ws-tablewrap"><table class="ws-table" id="wsTable"></table></div>
-    <div class="ws-note">Weak Spot = the batting-order slot where the model's HR-matchup engine rates this lineup most dangerous against the starter; the Target Batter is whoever hits in that slot. Barrel% and xwOBA populate only with a Statcast proxy/host; OPS &amp; PA are season-to-date.</div>
+    <div class="ws-note">Weak Spot = the batting-order slot where the model's HR-matchup engine rates this lineup most dangerous against the starter; the Target Batter is whoever hits in that slot. xSLG &amp; xwOBA are the MLB Stats API's expected stats (no proxy needed); OPS &amp; PA are season-to-date.</div>
   </section>
 
   <section id="wxView" class="hide">
@@ -1052,6 +1056,12 @@
 const API = "https://statsapi.mlb.com/api/v1";
 const ODDS_BASE = "https://api.the-odds-api.com/v4/sports/baseball_mlb";
 
+// ── Optional raw-Statcast proxy (NOT required) ─────────────────────
+// Expected stats (xwOBA, xSLG) now come straight from the MLB Stats API
+// below — no proxy needed. This is only for extra Savant-only metrics
+// (barrel%, exit velo) if you ever want them; leave "" to ignore.
+const STATS_PROXY = "";
+
 const LG = { hrPA:0.0285, hPA:0.213, tbPA:0.345, rbiPA:0.105, kPA:0.225, sbG:0.055, era:4.10, ops:0.715, rg:4.40 };
 const MIN_PA = 25;
 const SLOT_PA = [4.62,4.54,4.45,4.36,4.26,4.10,3.95,3.80,3.66]; // batting order 1..9
@@ -1078,6 +1088,7 @@ const COORDS={
 };
 
 let MODEL=null, CURRENT_MARKET="hr", ODDS_LOADED=false, VIEW="slate", TEAM_SEL=null, STATCAST_OK=false, TREND_Q="", PROP_MARKET="hit1", ODDS_BOARD_MARKET="hr", ALIGN_FILTER="all", ALIGN_SORT="align", BOARD_LIMIT=30;
+let AUTO_TIMER=null, LAST_REFRESH=0, ODDS_WERE_LOADED=false, WAS_TODAY=false, BUSY=false;
 const PROP_MARKETS={
   hit1:{label:"1+ Hit",mean:b=>b.proj.hits,line:0.5,om:"hits"},
   hit2:{label:"2+ Hits",mean:b=>b.proj.hits,line:1.5,om:"hits"},
@@ -1211,7 +1222,10 @@ function poissonOver(mean,line){ // P(X > line) for a half-line; line like 0.5,1
 function impliedProb(american){const a=Number(american);if(!isFinite(a))return null;return a<0? (-a)/(-a+100): 100/(a+100);}
 function amStr(a){a=Number(a);return (a>0?"+":"")+a;}
 
-async function getJSON(url){const r=await fetch(url);if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}
+async function getJSON(url){const r=await fetch(url,{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}
+function todayStr(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;}
+function rolloverTarget(wasToday,curDate,today){return (wasToday&&curDate!==today)?today:curDate;}
+function freshText(last,now){if(!last)return"";const m=Math.floor((now-last)/60000);return m<=0?"updated just now":`updated ${m}m ago`;}
 function setStatus(t,s){el("statusText").textContent=t;el("dot").className="dot"+(s==="live"?" live":s==="err"?" err":"");}
 function setBar(p){el("barFill").style.width=Math.round(p*100)+"%";}
 
@@ -1276,6 +1290,19 @@ async function fetchSplits(ids,group,season){
         if(code)o[code]=s.stat;
       });
       out[p.id]=o;
+    });}catch(e){}
+  }
+  return out;
+}
+async function fetchExpected(ids,group,season){
+  const out={};
+  for(let i=0;i<ids.length;i+=40){
+    const chunk=ids.slice(i,i+40);
+    const url=`${API}/people?personIds=${chunk.join(",")}&hydrate=stats(group=[${group}],type=[expectedStatistics],season=${season})`;
+    try{const data=await getJSON(url);(data.people||[]).forEach(p=>{
+      const sp=p.stats?.find(s=>s.group?.displayName===group&&s.type?.displayName==="expectedStatistics");
+      const st=sp?.splits?.[0]?.stat;
+      if(st)out[p.id]={xba:pnum(st.avg),xslg:pnum(st.slg),xwoba:pnum(st.woba!=null?st.woba:st.wOba)};
     });}catch(e){}
   }
   return out;
@@ -1752,6 +1779,8 @@ async function buildModel(date){
   const hitting=await fetchPeopleStats(batterIds,"hitting",season);setBar(0.52);
   setStatus("Loading platoon splits (vs LHP/RHP)…");
   const splits=await fetchSplits(batterIds,"hitting",season);setBar(0.6);
+  setStatus("Loading expected stats (xwOBA, xSLG)…");
+  const expected=await fetchExpected(batterIds,"hitting",season);setBar(0.62);
   setStatus("Loading probable starters…");
   const pitching=await fetchPeopleStats(spIds,"pitching",season);setBar(0.64);
 
@@ -1783,6 +1812,7 @@ async function buildModel(date){
       const sp=splits[meta.id];
       if(sp&&(sp.h||sp.a))bm.ha={h:sp.h||null,a:sp.a||null};
       bm.isHome=(side==="home");
+      const _xs=expected[meta.id];if(_xs)bm.xstats=_xs;
       return bm;
     }).filter(Boolean);
     g._awayBat=make(g.away._batters,homeRates,g.home.sp?.name,g.home.sp?.id,g.away.abbr,"away",homeSP?.throws);
@@ -1959,7 +1989,7 @@ async function loadOdds(){
       const data=await getJSON(url);
       attachOdds(g,data);
     },(d,t)=>{setBar(d/t);setStatus(`Loading odds ${d}/${t} games…`);});
-    ODDS_LOADED=true;
+    ODDS_LOADED=true;ODDS_WERE_LOADED=true;
     setStatus(`Odds loaded for ${pairs.length} games · ${new Date().toLocaleTimeString()}`,"live");
     if(MODEL){MODEL._alignRows=null;recordOddsSnapshot(MODEL);}
     renderAll(MODEL);
@@ -2513,7 +2543,8 @@ function buildWeakSpots(model){
         batter:b.name,opp:oppTeam,status:gameStatusLabel(g),lineup:facedConf?"Confirmed":"Projected",
         grade:b.grade?b.grade.letter:"—",hrProb:poissonOver(b.proj?b.proj.hr:0,0.5),mvuln:ws.score/100,
         barrel:b.statcast&&b.statcast.barrel!=null?b.statcast.barrel:null,
-        xwoba:b.statcast&&b.statcast.xwoba!=null?b.statcast.xwoba:null,
+        xslg:b.xstats&&b.xstats.xslg!=null?b.xstats.xslg:null,
+        xwoba:b.xstats&&b.xstats.xwoba!=null?b.xstats.xwoba:(b.statcast&&b.statcast.xwoba!=null?b.statcast.xwoba:null),
         ops:b.cur?pnum(b.cur.ops):null,pa:b.cur&&b.cur.pa?b.cur.pa:null,
         gamePk:g.gamePk,gameKey:`${g.away.short}@${g.home.short}${g.dh?" G"+g.gameNumber:""}`});
     };
@@ -2548,7 +2579,7 @@ function renderVuln(model){
     {k:"grade",l:"HR Grade",num:0,get:r=>r.grade},
     {k:"hrProb",l:"HR Prob",num:1,get:r=>r.hrProb},
     {k:"mvuln",l:"Matchup Vuln",num:1,get:r=>r.mvuln},
-    {k:"barrel",l:"Barrel%",num:1,get:r=>r.barrel==null?-1:r.barrel},
+    {k:"xslg",l:"xSLG",num:1,get:r=>r.xslg==null?-1:r.xslg},
     {k:"xwoba",l:"xwOBA",num:1,get:r=>r.xwoba==null?-1:r.xwoba},
     {k:"ops",l:"OPS",num:1,get:r=>r.ops==null?-1:r.ops},
     {k:"pa",l:"Sample",num:1,get:r=>r.pa==null?-1:r.pa},
@@ -2572,7 +2603,7 @@ function renderVuln(model){
       <td><span class="wsgrade ${gradeCircleCls(r.grade)}">${r.grade}</span></td>
       <td class="r wshr">${(r.hrProb*100).toFixed(1)}%</td>
       <td class="r ${mvc}">${mv.toFixed(2)}</td>
-      <td class="r wsmut">${r.barrel!=null?r.barrel.toFixed(1)+"%":"—"}</td>
+      <td class="r wsmut">${r.xslg!=null?fmt3(r.xslg):"—"}</td>
       <td class="r wsmut">${r.xwoba!=null?fmt3(r.xwoba):"—"}</td>
       <td class="r wsmut">${r.ops!=null?r.ops:"—"}</td>
       <td class="r wsmut">${r.pa!=null?r.pa+" PA":"—"}</td>
@@ -3557,10 +3588,24 @@ function renderAll(model){
 //------------------------------------------------------------------ wiring
 async function run(){
   const date=el("date").value;if(!date){setStatus("Pick a date first.","err");return;}
+  if(BUSY)return;BUSY=true;
   el("run").disabled=true;ODDS_LOADED=false;setBar(0);
-  try{MODEL=await buildModel(date);renderAll(MODEL);}
+  try{MODEL=await buildModel(date);renderAll(MODEL);WAS_TODAY=(date===todayStr());LAST_REFRESH=Date.now();updateFreshLabel();}
   catch(e){console.error(e);setStatus("Couldn't reach the MLB feed: "+e.message,"err");["playsSection","boardSection","gamesSection"].forEach(s=>el(s).classList.add("hide"));}
-  finally{el("run").disabled=false;setTimeout(()=>setBar(0),600);}
+  finally{el("run").disabled=false;BUSY=false;setTimeout(()=>setBar(0),600);}
+}
+function updateFreshLabel(){const e=el("freshLbl");if(e)e.textContent=freshText(LAST_REFRESH,Date.now());}
+async function refreshNow(){
+  if(BUSY||(typeof document!=="undefined"&&document.hidden))return;
+  const tgt=rolloverTarget(WAS_TODAY,el("date").value,todayStr());
+  if(tgt!==el("date").value)el("date").value=tgt;
+  await run();
+  if(ODDS_WERE_LOADED&&el("okey")&&el("okey").value.trim())await loadOdds();
+  LAST_REFRESH=Date.now();updateFreshLabel();
+}
+function startAuto(){
+  if(AUTO_TIMER){clearInterval(AUTO_TIMER);AUTO_TIMER=null;}
+  if(el("autoRefresh")&&el("autoRefresh").checked)AUTO_TIMER=setInterval(()=>{if(!document.hidden)refreshNow();},600000);
 }
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
 const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",homer:"Homer AI — your HR assistant",brief:"Game Briefings",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
@@ -3620,7 +3665,10 @@ el("briefBoard")&&el("briefBoard").addEventListener("click",async e=>{
 });
 el("run").addEventListener("click",run);
 el("loadOdds").addEventListener("click",loadOdds);
-(function(){const d=new Date();el("date").value=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;run();})();
+el("autoRefresh")&&el("autoRefresh").addEventListener("change",startAuto);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&LAST_REFRESH&&Date.now()-LAST_REFRESH>300000)refreshNow();});
+setInterval(updateFreshLabel,60000);
+(function(){const d=new Date();el("date").value=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;if(STATS_PROXY&&el("scproxy")&&!el("scproxy").value)el("scproxy").value=STATS_PROXY;run();startAuto();})();
 </script>
 </body>
 </html>
