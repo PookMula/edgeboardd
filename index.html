@@ -573,6 +573,89 @@
   .wshr{color:var(--teal);font-weight:600}
   .wsv-hi{color:var(--good)}.wsv-mid{color:var(--amber)}.wsv-lo{color:#e2604f}
   .ws-note{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted2);margin-top:10px;line-height:1.6}
+  .hrm-filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+  .hrmf{display:flex;flex-direction:column;gap:4px}
+  .hrmf label{font-family:'Roboto Mono',monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted2)}
+  .hrmf input,.hrmf select{background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--chalk);padding:8px 11px;font-family:inherit;font-size:13px}
+  .hrmf input{min-width:150px}.hrmf select{min-width:120px}
+  .hrm-table{min-width:1500px}
+  .hrm-table .hrmname{font-weight:600;color:var(--chalk)}
+  .hrm-table .hrmmut{color:var(--muted)}
+  .hrm-table .hrmprob{color:var(--teal)}
+  .hrm-table .hrmpow{color:var(--chalk);font-weight:600}
+  .hrm-table .vhi{color:var(--good);font-weight:600}.hrm-table .vmid{color:var(--amber)}
+  .hrm-table .pm{font-size:12px;letter-spacing:-1px}.pm-faint{opacity:.3}.pm-na{color:var(--muted2)}
+  .hrm-table .wpos{color:var(--good)}.hrm-table .wneg{color:#e2604f}.hrm-table .wneu{color:var(--muted2)}
+  .hrm-table .evp{color:var(--good);font-weight:600}.hrm-table .evn{color:#e2604f}
+  .hrm-table .hrmbest{color:var(--chalk)}
+  .fmdot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px}
+  .fmdot.fm-hot{background:#e2604f}.fmdot.fm-cold{background:#4a90d9}.fmdot.fm-avg{background:var(--muted2)}
+  .pvr-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:18px}
+  .pvr-tabs button{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:.02em;padding:9px 14px;cursor:pointer}
+  .pvr-tabs button:hover{color:var(--chalk)}
+  .pvr-tabs button.active{color:var(--good);border-bottom-color:var(--good)}
+  .pvr-tier{display:flex;align-items:center;gap:8px;font-family:'Oswald',sans-serif;font-weight:600;font-size:19px;color:var(--chalk);margin:6px 0 12px}
+  .pvr-tier-dot{width:10px;height:10px;border-radius:50%}.pvr-tier-dot.most{background:var(--good)}.pvr-tier-dot.mod{background:var(--amber)}
+  .pvr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-bottom:24px}
+  .pvr-card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:15px 16px}
+  .pvr-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:11px}
+  .pvr-name{font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;color:var(--chalk)}
+  .pvr-name small{color:var(--muted2);font-weight:400;font-size:12px}
+  .pvr-vs{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2);margin-top:2px}
+  .pvr-status{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted2);white-space:nowrap}
+  .pvr-vlabel{font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted2);display:block;margin-bottom:6px}
+  .pvr-vrow{margin-bottom:11px}
+  .pvr-cell{display:inline-flex;align-items:center;gap:5px;font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);text-transform:uppercase;margin:0 10px 6px 0}
+  .pvr-band{font-family:'Roboto Mono',monospace;font-weight:700;font-size:10px;padding:2px 7px;border-radius:11px}
+  .vb-ext,.vb-hi{background:rgba(95,191,125,.2);color:var(--good)}
+  .vb-med{background:rgba(242,181,60,.16);color:var(--amber)}
+  .vb-lo,.vb-na{background:var(--panel3);color:var(--muted2)}
+  .vb-attack{background:var(--panel3);color:var(--chalk)}
+  .pvr-park{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px}.pvr-park b{color:var(--chalk)}
+  .pvr-card .bweather{margin-bottom:11px}
+  .pvr-targets-h{font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted2);margin-bottom:7px}
+  .pvr-target{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}
+  .pvr-target:last-child{border-bottom:none}
+  .pvr-tinfo b{color:var(--chalk);font-size:13px}.pvr-tinfo small{display:block;color:var(--muted2);font-family:'Roboto Mono',monospace;font-size:10px;margin-top:2px}
+  .pvr-badge.plat{display:inline-block;margin-top:4px;font-family:'Roboto Mono',monospace;font-size:8.5px;letter-spacing:.05em;background:rgba(76,192,192,.18);color:var(--teal);border-radius:5px;padding:2px 6px}
+  .pvr-tright{display:flex;align-items:center;gap:8px;white-space:nowrap}
+  .pvr-prob{font-family:'Roboto Mono',monospace;font-weight:700;color:var(--teal);font-size:13px}
+  .pvr-mtable{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .pvr-mrow{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:13px}
+  .pvr-mrow:last-child{border-bottom:none}.pvr-mrow b{color:var(--chalk)}
+  .pvr-mvs{margin-left:auto;font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted)}
+  .pvr-mprob{font-family:'Roboto Mono',monospace;font-weight:700;color:var(--teal);min-width:48px;text-align:right}
+  .homer-analysis{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 24px;max-width:920px}
+  .homer-analysis p{font-size:14.5px;line-height:1.75;color:var(--muted);margin:0 0 15px}
+  .homer-analysis p:last-child{margin-bottom:0}
+  .homer-analysis b{color:var(--chalk)}
+  .homer-analysis .bmuted{color:var(--muted2);font-style:italic}
+  .homer-upd{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);text-align:right;margin-top:8px;max-width:920px}
+  .hm-list{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;max-width:920px}
+  .hm-row{display:flex;align-items:center;gap:11px;padding:11px 15px;border-bottom:1px solid var(--line)}
+  .hm-row:last-child{border-bottom:none}
+  .hm-row:hover{background:var(--panel2)}
+  .hm-bat{flex:1;min-width:0}.hm-bat b{color:var(--chalk);font-size:14px}
+  .hm-bat small{display:block;color:var(--muted2);font-family:'Roboto Mono',monospace;font-size:10.5px;margin-top:2px}
+  .hm-prob{font-family:'Roboto Mono',monospace;font-weight:700;color:var(--teal);font-size:13px;min-width:52px;text-align:right}
+  .hm-ev{font-family:'Roboto Mono',monospace;font-weight:700;font-size:12px;min-width:56px;text-align:right}
+  .hm-ev.evp{color:var(--good)}.hm-ev.evn{color:#e2604f}
+  .hm-price{font-family:'Roboto Mono',monospace;font-size:12px;color:var(--muted);min-width:56px;text-align:right}
+  #homerContent .brief{max-width:920px}
+  .gt-today{padding:16px 18px;margin-bottom:14px;border-left:3px solid var(--good)}
+  .gt-today h4{font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;color:var(--chalk);display:flex;align-items:center;gap:8px}
+  .gt-tdate{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2);font-weight:400}
+  .gt-tmain{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .gt-tbig{font-family:'Oswald',sans-serif;font-weight:700;font-size:34px;line-height:1;color:var(--chalk)}
+  .gt-rate{font-size:18px;color:var(--good)}
+  .gt-tsub{font-family:'Roboto Mono',monospace;font-size:11.5px;color:var(--muted2)}
+  .gt-pend{color:var(--amber)}
+  .gt-tmks{display:flex;gap:10px;flex-wrap:wrap}
+  .gt-tmk{flex:1;min-width:96px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:9px 11px;text-align:center}
+  .gt-tmk-l{display:block;font-family:'Roboto Mono',monospace;font-size:9.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted2);margin-bottom:4px}
+  .gt-tmk b{font-family:'Oswald',sans-serif;font-size:20px;color:var(--chalk)}
+  .gt-tmk small{display:block;font-family:'Roboto Mono',monospace;font-size:9.5px;color:var(--amber);margin-top:2px}
+  .gt-tnote{font-size:11px;color:var(--muted2);margin:11px 0 0;line-height:1.5}
 
   /* alignment */
   .align-ctrls{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-bottom:16px}
@@ -665,6 +748,7 @@
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <button data-view="slate">📊 Dashboard</button>
       <button data-view="best">🏆 Best Bets</button>
+      <button data-view="hrmodel">💣 Home Runs Model</button>
       <button data-view="homer">🤖 Homer AI <span class="sb-beta">BETA</span></button>
       <button data-view="brief">📝 Game Briefings</button>
       <button data-view="hr">✅ Homers Today</button>
@@ -673,6 +757,7 @@
       <button data-view="hrguide">💣 How to Pick Homers</button>
     </div>
     <div class="sb-group"><div class="sb-h">Pitcher &amp; Matchup</div>
+      <button data-view="vulnrep">Pitcher Vulnerability Report</button>
       <button data-view="vuln">Pitcher Weak Spots</button>
       <button data-view="zones">Zone Matchups</button>
       <button data-view="sims">Game Sims</button>
@@ -740,25 +825,40 @@
   </section>
 
   <section id="homerView" class="hide">
-    <div class="sec-head"><h2>🤖 Homer AI</h2><span class="tag">your home-run assistant — reads the model &amp; answers</span><span class="rule"></span></div>
-    <div class="homer-wrap">
-      <div id="homerChat" class="homer-chat"></div>
-      <div class="homer-chips" id="homerChips">
-        <button data-q="Today's best HR bets">🔥 Best HR bets</button>
-        <button data-q="Build a 3-leg HR parlay">🎲 3-leg HR parlay</button>
-        <button data-q="Best HR park today">🏟️ Best HR parks</button>
-        <button data-q="Most vulnerable pitchers">🎯 Vulnerable arms</button>
-        <button data-q="How many home runs are projected today">💥 HRs projected today</button>
-        <button data-q="Who should I fade">❌ Who to fade</button>
-      </div>
-      <div class="homer-input">
-        <input type="text" id="homerInput" placeholder="Ask about today's homers… (e.g. ‘best bets’, ‘parlay’, a player name)" autocomplete="off" />
-        <button id="homerSendBtn">Send</button>
-      </div>
-      <div class="homer-llm">
-        <label><input type="checkbox" id="homerLLM" /> Free-form mode — use my own Claude API key</label>
-        <input type="password" id="homerKey" placeholder="sk-ant-… (optional, stays in your browser)" autocomplete="off" style="display:none" />
-        <div class="hint" id="homerLLMHint" style="display:none">Routes your question + today's HR data to Claude (Haiku) for open-ended answers. Your key is used in-browser only and never stored or sent anywhere but Anthropic. Costs apply to your key.</div>
+    <div class="sec-head"><h2>🤖 Homer AI <span class="sb-beta">BETA</span></h2><span class="tag">analysis &amp; breakdowns of the day's slate, each game &amp; best matchups — all from model data</span><span class="rule"></span></div>
+    <div class="ws-controls">
+      <div class="ws-date"><button id="homerPrev" title="Previous day">←</button><span id="homerDateLbl">—</span><button id="homerNext" title="Next day">→</button><button id="homerToday" class="ws-today">Today</button></div>
+      <div class="ws-count" id="homerCount"></div>
+    </div>
+    <div class="ws-chips" id="homerGameChips"></div>
+    <div class="pvr-tabs" id="homerTabs">
+      <button data-t="slate" class="active">Slate Analysis</button>
+      <button data-t="matchups">Top Matchups</button>
+      <button data-t="ev">Top EV Matchups</button>
+      <button data-t="games">Game-by-Game</button>
+      <button data-t="chat">💬 Ask Homer</button>
+    </div>
+    <div id="homerContent"></div>
+    <div id="homerChatWrap" class="hide">
+      <div class="homer-wrap">
+        <div id="homerChat" class="homer-chat"></div>
+        <div class="homer-chips" id="homerChips">
+          <button data-q="Today's best HR bets">🔥 Best HR bets</button>
+          <button data-q="Build a 3-leg HR parlay">🎲 3-leg HR parlay</button>
+          <button data-q="Best HR park today">🏟️ Best HR parks</button>
+          <button data-q="Most vulnerable pitchers">🎯 Vulnerable arms</button>
+          <button data-q="How many home runs are projected today">💥 HRs projected today</button>
+          <button data-q="Who should I fade">❌ Who to fade</button>
+        </div>
+        <div class="homer-input">
+          <input type="text" id="homerInput" placeholder="Ask about today's homers… (e.g. ‘best bets’, ‘parlay’, a player name)" autocomplete="off" />
+          <button id="homerSendBtn">Send</button>
+        </div>
+        <div class="homer-llm">
+          <label><input type="checkbox" id="homerLLM" /> Free-form mode — use my own Claude API key</label>
+          <input type="password" id="homerKey" placeholder="sk-ant-… (optional, stays in your browser)" autocomplete="off" style="display:none" />
+          <div class="hint" id="homerLLMHint" style="display:none">Routes your question + today's HR data to Claude (Haiku) for open-ended answers. Your key is used in-browser only and never stored or sent anywhere but Anthropic. Costs apply to your key.</div>
+        </div>
       </div>
     </div>
   </section>
@@ -874,6 +974,38 @@
   <section id="simsView" class="hide">
     <div class="sec-head"><h2>Game Simulations</h2><span class="tag" id="simsTag">projected score, totals, moneyline &amp; run line</span><span class="rule"></span></div>
     <div class="sims" id="simsBoard"></div>
+  </section>
+
+  <section id="vulnrepView" class="hide">
+    <div class="sec-head"><h2>Pitcher Vulnerability Report</h2><span class="tag">starters most vulnerable to HRs — overall &amp; by batter handedness — and who's best positioned to attack</span><span class="rule"></span></div>
+    <div class="ws-controls">
+      <div class="ws-date"><button id="pvrPrev" title="Previous day">←</button><span id="pvrDateLbl">—</span><button id="pvrNext" title="Next day">→</button><button id="pvrToday" class="ws-today">Today</button></div>
+    </div>
+    <div class="pvr-tabs" id="pvrTabs">
+      <button data-t="overview" class="active">Overview</button>
+      <button data-t="starters">Starter Drill-Down</button>
+      <button data-t="matchups">Top Matchups</button>
+    </div>
+    <div id="pvrBoard"></div>
+  </section>
+
+  <section id="hrmodelView" class="hide">
+    <div class="sec-head"><h2>Home Runs Model</h2><span class="tag">best HR bets from batter power, pitcher vulnerability, park/weather &amp; market</span><span class="rule"></span></div>
+    <div class="ws-controls">
+      <div class="ws-date"><button id="hrmPrev" title="Previous day">←</button><span id="hrmDateLbl">—</span><button id="hrmNext" title="Next day">→</button><button id="hrmToday" class="ws-today">Today</button></div>
+      <div class="ws-count" id="hrmCount"></div>
+    </div>
+    <div class="ws-chips" id="hrmChips"></div>
+    <div class="hrm-filters">
+      <div class="hrmf"><label>Batter</label><input type="text" id="hrmSearch" placeholder="Search batter…" autocomplete="off" /></div>
+      <div class="hrmf"><label>Grade</label><select id="hrmGrade"><option value="all">All</option><option value="A+">A+</option><option value="A">A (any)</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div>
+      <div class="hrmf"><label>Lineup</label><select id="hrmLineup"><option value="all">All</option><option value="Confirmed">Confirmed</option><option value="Projected">Projected</option></select></div>
+      <div class="hrmf"><label>Batter Power</label><select id="hrmPower"><option value="all">All</option><option value="90">90+</option><option value="80">80+</option><option value="70">70+</option><option value="60">60+</option></select></div>
+      <div class="hrmf"><label>Pitcher Vuln</label><select id="hrmVuln"><option value="all">All</option><option value="60">High (60+)</option><option value="50">Med+ (50+)</option><option value="45">45+</option></select></div>
+      <div class="hrmf"><label>Team</label><select id="hrmTeam"><option value="all">All Teams</option></select></div>
+    </div>
+    <div class="ws-tablewrap"><table class="ws-table hrm-table" id="hrmTable"></table></div>
+    <div class="ws-note">HR Probability shows model % and fair odds. Batter Power (20–99) is a season power index from ISO, xSLG &amp; HR rate. Power Match 🔥 = the HR pitch-matchup rating. BZ Overlap/Conf populate from the daily zone file (otherwise “—”). Consensus &amp; EV vs Consensus need odds loaded; EV vs Consensus = how the best book price beats the market's own average.</div>
   </section>
 
   <section id="zonesView" class="hide">
@@ -1885,7 +2017,9 @@ async function buildModel(date){
     g.parkF=parkF;
     const gm=`${g.away.abbr}@${g.home.abbr}`;
     const _up=gameStatusLabel(g)==="Scheduled";
-    [...g._awayBat,...g._homeBat].forEach(b=>{b.game=gm;b._upcoming=_up;});
+    const _gst=gameStatusLabel(g), _hrctx=g.weather?((g.weather.mult-1)*100):null;
+    g._awayBat.forEach(b=>{b.game=gm;b._upcoming=_up;b._gstatus=_gst;b._hrctx=_hrctx;b._lineupConf=!!g.away._conf;b._oppTeam=g.home.abbr;b._gamePk=g.gamePk;});
+    g._homeBat.forEach(b=>{b.game=gm;b._upcoming=_up;b._gstatus=_gst;b._hrctx=_hrctx;b._lineupConf=!!g.home._conf;b._oppTeam=g.away.abbr;b._gamePk=g.gamePk;});
     if(g._awayK){g._awayK.team=g.away.abbr;g._awayK.vs=g.home.abbr;g._awayK.game=gm;}
     if(g._homeK){g._homeK.team=g.home.abbr;g._homeK.vs=g.away.abbr;g._homeK.game=gm;}
   });
@@ -2656,6 +2790,211 @@ function renderZones(model){
     renderZoneMatchup(model);
   });
 }
+// ===================== PITCHER VULNERABILITY REPORT — card view, overall + by hand =====================
+let PVR_TAB="overview";
+function handVuln(sideObj){if(!sideObj)return null;const ops=pnum(sideObj.ops);if(ops==null)return null;return Math.max(1,Math.min(99,Math.round(50+(ops-0.715)*180)));}
+function vulnBandLabel(s){if(s==null)return["—","vb-na"];return s>=75?["EXTREME","vb-ext"]:s>=60?["HIGH","vb-hi"]:s>=45?["MED","vb-med"]:["LOW","vb-lo"];}
+function attackSide(vL,vR){if(vL==null&&vR==null)return"—";if(vL==null)return"RHB";if(vR==null)return"LHB";if(Math.abs(vL-vR)<8)return"BOTH";return vL>vR?"LHB":"RHB";}
+function buildVulnReport(model){
+  const cards=[];
+  (model.games||[]).forEach(g=>{
+    const add=K=>{
+      if(!K||!K.vuln)return;
+      const vL=K.split?handVuln(K.split.vL):null, vR=K.split?handVuln(K.split.vR):null;
+      const targets=(K._oppBats||[]).map(b=>({b,score:b.hrMatch?b.hrMatch.score:0,prob:poissonOver(b.proj?b.proj.hr:0,0.5)})).sort((a,b)=>b.score-a.score).slice(0,3);
+      cards.push({K,name:K.name,throws:K.throws,vs:K.vs,overall:K.vuln.score,vL,vR,attack:attackSide(vL,vR),
+        parkF:g.parkF,weather:g.weather,status:gameStatusLabel(g),time:g.time,targets,gamePk:g.gamePk});
+    };
+    add(g._awayK);add(g._homeK);
+  });
+  return cards.sort((a,b)=>b.overall-a.overall);
+}
+function pvrWeatherBlock(w){
+  if(!w)return"";
+  const out=w.outComponent||0,dir=out>2?"blowing out":out<-2?"blowing in":"cross/calm",hrc=(w.mult-1)*100;
+  return `<div class="bweather"><div class="bwh">Ballpark weather</div>
+    <div class="bwrow"><span>Temp</span> <b>${Math.round(w.tempF)}°F</b></div>
+    <div class="bwrow"><span>Wind</span> <b>${Math.round(w.windMph)} mph ${dir}${w.cardinal?" ("+w.cardinal+")":""}</b></div>
+    <div class="bwrow"><span>Precip</span> <b>${w.precip!=null?Math.round(w.precip)+"%":"—"}</b></div>
+    <div class="bwrow"><span class="hrctx">HR context</span> <b class="hrctx">${hrc>=0?"+":""}${hrc.toFixed(1)}%</b></div></div>`;
+}
+function pvrTargetRow(t){
+  const b=t.b, xs=b.xstats&&b.xstats.xslg!=null?fmt3(b.xstats.xslg):null;
+  const plat=b.platoon&&b.platoon.badge==="ADV"?'<span class="pvr-badge plat">PLATOON</span>':"";
+  return `<div class="pvr-target"><div class="pvr-tinfo"><b>${b.name}</b><small>${xs?`xSLG ${xs} · `:""}vs ${b.throws||t.b.oppThrows||"?"}HP${b.cur&&b.cur.iso?` · ${isoStr(b.cur.iso)} ISO`:""}</small>${plat}</div>
+    <div class="pvr-tright"><span class="pvr-prob">${(t.prob*100).toFixed(1)}%</span><span class="wsgrade ${gradeCircleCls(b.grade?b.grade.letter:"—")}">${b.grade?b.grade.letter:"—"}</span></div></div>`;
+}
+function pvrCard(c){
+  const [ob,oc]=vulnBandLabel(c.overall),[lb,lc]=vulnBandLabel(c.vL),[rb,rc]=vulnBandLabel(c.vR);
+  const dt=new Date(c.time),tm=isNaN(dt)?"":dt.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
+  return `<div class="pvr-card">
+    <div class="pvr-head"><div class="pvr-name">${c.name} <small>(${c.throws||"?"}HP)</small><div class="pvr-vs">vs ${c.vs||"—"}</div></div>
+      <div class="pvr-status"><span class="wsdot ${c.status==="Live"?"live":c.status==="Final"?"final":"sched"}"></span>${c.status} ${tm}</div></div>
+    <div class="pvr-vrow"><span class="pvr-vlabel">Vulnerability</span>
+      <span class="pvr-cell">Overall <span class="pvr-band ${oc}">${ob}</span></span>
+      <span class="pvr-cell">vs LHB <span class="pvr-band ${lc}">${lb}</span></span>
+      <span class="pvr-cell">vs RHB <span class="pvr-band ${rc}">${rb}</span></span>
+      <span class="pvr-cell">Attack <span class="pvr-band vb-attack">${c.attack}</span></span></div>
+    <div class="pvr-park">Park factor <b>${(c.parkF||1).toFixed(2)}</b></div>
+    ${pvrWeatherBlock(c.weather)}
+    <div class="pvr-targets-h">Top targets</div>
+    ${c.targets.length?c.targets.map(pvrTargetRow).join(""):'<div class="hmuted" style="font-size:12px;padding:6px 0">Lineup not posted yet.</div>'}
+  </div>`;
+}
+function renderVulnReport(model){
+  const dl=el("pvrDateLbl");if(dl)dl.textContent=model&&model.date?model.date:"—";
+  const board=el("pvrBoard");if(!board)return;
+  if(!model||!model.games||!model.games.length){board.innerHTML='<div class="empty"><b>No slate loaded</b>Load games first.</div>';return;}
+  const cards=buildVulnReport(model);
+  if(!cards.length){board.innerHTML='<div class="empty"><b>No probable starters</b>Pitchers aren\'t posted yet.</div>';return;}
+  if(PVR_TAB==="matchups"){
+    const all=[];cards.forEach(c=>c.targets.forEach(t=>all.push({c,t})));
+    all.sort((a,b)=>b.t.score-a.t.score);
+    board.innerHTML='<div class="pvr-mtable">'+all.slice(0,40).map(({c,t})=>{
+      const [ob,oc]=vulnBandLabel(c.overall);
+      return `<div class="pvr-mrow"><span class="wsgrade ${gradeCircleCls(t.b.grade?t.b.grade.letter:"—")}">${t.b.grade?t.b.grade.letter:"—"}</span><b>${t.b.name}</b> <small class="hmuted">${t.b.team}</small><span class="pvr-mvs">vs ${c.name} <span class="pvr-band ${oc}" style="font-size:9px">${ob}</span></span><span class="pvr-mprob">${(t.prob*100).toFixed(1)}%</span></div>`;
+    }).join("")+'</div>';
+    return;
+  }
+  let shown=cards;
+  if(PVR_TAB==="overview"){
+    const most=cards.filter(c=>c.overall>=60), mod=cards.filter(c=>c.overall>=45&&c.overall<60);
+    board.innerHTML=
+      `<div class="pvr-tier"><span class="pvr-tier-dot most"></span>Most Vulnerable</div><div class="pvr-grid">${most.length?most.map(pvrCard).join(""):'<div class="hmuted" style="padding:8px">None at this threshold today.</div>'}</div>`+
+      `<div class="pvr-tier"><span class="pvr-tier-dot mod"></span>Moderately Vulnerable</div><div class="pvr-grid">${mod.length?mod.map(pvrCard).join(""):'<div class="hmuted" style="padding:8px">None today.</div>'}</div>`;
+    return;
+  }
+  // starters drill-down: all, sorted
+  board.innerHTML=`<div class="pvr-grid">${shown.map(pvrCard).join("")}</div>`;
+}
+// ===================== HOME RUNS MODEL — flagship sortable/filterable HR board =====================
+let HRM_SORT={key:"hrprob",dir:-1}, HRM_GAME="all", HRM_GRADE="all", HRM_LINEUP="all", HRM_POWER="all", HRM_VULN="all", HRM_TEAM="all", HRM_SEARCH="";
+function batterPowerScore(b){
+  if(!b.cur)return 50;
+  const iso=pnum(b.cur.iso);
+  const xslg=b.xstats&&b.xstats.xslg!=null?b.xstats.xslg:null;
+  const hr=b.cur.hrRate!=null?b.cur.hrRate:null;
+  let s=(iso!=null&&isFinite(iso))?55+(iso-0.160)*240:50;
+  if(xslg!=null)s=s*0.6+(45+(xslg-0.400)*150)*0.4;
+  if(hr!=null)s+=clampR((hr-0.035)*180,-8,12);
+  return Math.max(20,Math.min(99,Math.round(s)));
+}
+function powerMatchFires(score){
+  if(score==null)return{n:0,html:'<span class="pm-na">—</span>'};
+  const n=score>=85?3:score>=75?2:score>=65?1:0;
+  return{n,html:n?"🔥".repeat(n):'<span class="pm-faint">🔥</span>'};
+}
+function hrFormLabel(b){const s=b.recentForm&&b.recentForm.state;return s==="hot"?["Hot","fm-hot"]:s==="cold"?["Cold","fm-cold"]:["Average","fm-avg"];}
+function hrMarketConsensus(b){
+  const o=b.odds&&b.odds.hr;if(!o)return null;
+  const imps=[];let best=null;
+  for(const bk of Object.keys(o)){const q=o[bk];if(q.over==null)continue;const ip=impliedProb(q.over);if(ip==null)continue;imps.push(ip);if(!best||q.over>best.over)best={book:bk,over:q.over};}
+  if(!imps.length)return null;
+  const avg=imps.reduce((a,c)=>a+c,0)/imps.length;
+  return{consImplied:avg,consAm:fairAmerican(avg),best,evVsCons:best?evPct(avg,best.over):null,books:imps.length};
+}
+function bzFromZones(b){
+  if(!ZONES||ZONES.error||!ZONES.batters||!ZONES.pitchers)return null;
+  const bz=ZONES.batters[b.id], pid=b.oppPitcherId, pit=pid?ZONES.pitchers[pid]:null;
+  if(!bz||!pit)return null;
+  const side=batterHandSide(b.bats,pit.throws), pSide=pit[side];
+  if(!pSide||!pSide.zones)return null;
+  let overlap=0;
+  for(const z of ZONE_ALL){const zz=bz.zones[z],pu=pSide.zones[z];if(zz&&zz.score!=null&&zz.score>=60&&pu)overlap+=pu.usage;}
+  return{overlap:+(overlap/10).toFixed(1),confidence:Math.min(99,Math.round((pSide.total/8)))}; // overlap ~ scaled usage in strong zones; confidence from sample
+}
+function buildHRModelRows(model){
+  return (model.batters||[]).map(b=>{
+    const mean=b.proj?b.proj.hr:0, prob=poissonOver(mean,0.5);
+    const cons=ODDS_LOADED?hrMarketConsensus(b):null;
+    const be=ODDS_LOADED?bestEdgeForMarket(b,"hr",mean):null;
+    const bz=bzFromZones(b);
+    return {b,name:b.name,team:b.team,grade:b.grade?b.grade.letter:"—",escore:b.escore||0,
+      prob,fair:fairAmerican(prob),power:batterPowerScore(b),form:b.recentForm&&b.recentForm.state||"neutral",
+      pitcher:b.oppPitcher||"TBD",pteam:b._oppTeam||"",vuln:b.oppVuln!=null?b.oppVuln:null,
+      context:b.escore||null,match:b.hrMatch?b.hrMatch.score:null,
+      bzOverlap:bz?bz.overlap:null,bzConf:bz?bz.confidence:null,
+      hrctx:b._hrctx,status:b._gstatus||"",lineup:b._lineupConf?"Confirmed":"Projected",order:b.slot||null,
+      consAm:cons?cons.consAm:null,ev:cons?cons.evVsCons:(be?be.edge:null),
+      bestAm:be?be.over:null,bestBook:be?be.book:null,
+      upcoming:b._upcoming,gamePk:b._gamePk};
+  });
+}
+function hrmGradeOK(letter){if(HRM_GRADE==="all")return true;if(HRM_GRADE==="A")return /^A/.test(letter);return letter===HRM_GRADE;}
+function renderHRModel(model){
+  const tbl=el("hrmTable"),chips=el("hrmChips"),cnt=el("hrmCount"),dl=el("hrmDateLbl");
+  if(dl)dl.textContent=model&&model.date?model.date:"—";
+  if(!model||!model.games||!model.games.length){if(tbl)tbl.innerHTML="";if(chips)chips.innerHTML="";if(cnt)cnt.textContent="";return;}
+  // chips
+  const games=model.games, upN=games.filter(g=>gameStatusLabel(g)==="Scheduled").length, liveN=games.filter(g=>gameStatusLabel(g)==="Live").length;
+  let ch=`<button class="hrmchip ${HRM_GAME==="all"?"active":""}" data-g="all">All (${games.length})</button>`+
+    `<button class="hrmchip ${HRM_GAME==="upcoming"?"active":""}" data-g="upcoming">Upcoming (${upN})</button>`+
+    `<button class="hrmchip ${HRM_GAME==="live"?"active":""}" data-g="live">Live (${liveN})</button>`;
+  games.forEach(g=>{const st=gameStatusLabel(g),hc=g.weather?((g.weather.mult-1)*100):null;
+    ch+=`<button class="hrmchip ${HRM_GAME===String(g.gamePk)?"active":""}" data-g="${g.gamePk}"><span class="wsdot ${st==="Live"?"live":st==="Final"?"final":"sched"}"></span>${g.away.short} @ ${g.home.short}${g.dh?" G"+g.gameNumber:""} <small>${hc!=null?(hc>=0?"+":"")+hc.toFixed(1)+"%":st}</small></button>`;});
+  if(chips)chips.innerHTML=ch;
+  // team filter options
+  const teams=[...new Set((model.batters||[]).map(b=>b.team).filter(Boolean))].sort();
+  if(el("hrmTeam")&&el("hrmTeam").children.length<=1)el("hrmTeam").innerHTML='<option value="all">All Teams</option>'+teams.map(t=>`<option value="${t}">${t}</option>`).join("");
+  let rows=buildHRModelRows(model);
+  // filters
+  rows=rows.filter(r=>{
+    if(HRM_GAME==="upcoming"&&!r.upcoming)return false;
+    if(HRM_GAME==="live"&&r.status!=="Live")return false;
+    if(HRM_GAME!=="all"&&HRM_GAME!=="upcoming"&&HRM_GAME!=="live"&&String(r.gamePk)!==HRM_GAME)return false;
+    if(!hrmGradeOK(r.grade))return false;
+    if(HRM_LINEUP!=="all"&&r.lineup!==HRM_LINEUP)return false;
+    if(HRM_POWER!=="all"&&!(r.power>=+HRM_POWER))return false;
+    if(HRM_VULN!=="all"&&!(r.vuln!=null&&r.vuln>=+HRM_VULN))return false;
+    if(HRM_TEAM!=="all"&&r.team!==HRM_TEAM)return false;
+    if(HRM_SEARCH&&!r.name.toLowerCase().includes(HRM_SEARCH))return false;
+    return true;
+  });
+  const cols=[
+    {k:"name",l:"Batter",num:0,g:r=>r.name},{k:"team",l:"Team",num:0,g:r=>r.team},
+    {k:"grade",l:"Grade",num:1,g:r=>r.escore},{k:"hrprob",l:"HR Probability",num:1,g:r=>r.prob},
+    {k:"power",l:"Batter Power",num:1,g:r=>r.power},{k:"form",l:"Recent Form",num:0,g:r=>r.form},
+    {k:"pitcher",l:"Pitcher",num:0,g:r=>r.pitcher},{k:"pteam",l:"P-Team",num:0,g:r=>r.pteam},
+    {k:"vuln",l:"Pitcher Vuln",num:1,g:r=>r.vuln==null?-1:r.vuln},{k:"context",l:"Context",num:1,g:r=>r.context==null?-1:r.context},
+    {k:"bzOverlap",l:"BZ Overlap",num:1,g:r=>r.bzOverlap==null?-1:r.bzOverlap},{k:"bzConf",l:"BZ Conf",num:1,g:r=>r.bzConf==null?-1:r.bzConf},
+    {k:"match",l:"Power Match",num:1,g:r=>r.match==null?-1:r.match},{k:"weather",l:"Weather",num:1,g:r=>r.hrctx==null?-999:r.hrctx},
+    {k:"status",l:"Status",num:0,g:r=>r.status},{k:"lineup",l:"Lineup",num:0,g:r=>r.lineup},
+    {k:"order",l:"Order",num:1,g:r=>r.order==null?99:r.order},{k:"consAm",l:"Consensus",num:1,g:r=>r.consAm==null?-99999:r.consAm},
+    {k:"ev",l:"EV vs Cons",num:1,g:r=>r.ev==null?-999:r.ev},{k:"best",l:"Best Book",num:1,g:r=>r.bestAm==null?-99999:r.bestAm},
+  ];
+  const sc=cols.find(c=>c.k===HRM_SORT.key)||cols[3];
+  rows.sort((a,b)=>{const av=sc.g(a),bv=sc.g(b);return (sc.num?(av-bv):String(av).localeCompare(String(bv)))*HRM_SORT.dir;});
+  if(cnt)cnt.textContent=`${rows.length} matchup${rows.length===1?"":"s"}`;
+  const thead=`<thead><tr>${cols.map(c=>`<th data-k="${c.k}" class="${c.num?"r":""} ${HRM_SORT.key===c.k?"sorted":""}">${c.l}${HRM_SORT.key===c.k?(HRM_SORT.dir<0?" ↓":" ↑"):""}</th>`).join("")}</tr></thead>`;
+  const body=rows.map(r=>{
+    const [fl,fc]=hrFormLabel(r.b), pm=powerMatchFires(r.match);
+    const wcls=r.hrctx==null?"":r.hrctx>=3?"wpos":r.hrctx<=-3?"wneg":"wneu";
+    const evcls=r.ev==null?"":r.ev>0?"evp":"evn";
+    return `<tr>
+      <td class="hrmname">${rankEmoji(r.b)}${r.name}</td>
+      <td class="hrmmut">${r.team}</td>
+      <td><span class="wsgrade ${gradeCircleCls(r.grade)}">${r.grade}</span></td>
+      <td class="r"><b class="hrmprob">${(r.prob*100).toFixed(1)}%</b> <small class="hrmmut">${r.fair!=null?amStr(r.fair):""}</small></td>
+      <td class="r hrmpow">${r.power}</td>
+      <td><span class="fmdot ${fc}"></span>${fl}</td>
+      <td class="hrmmut">${r.pitcher}</td>
+      <td class="hrmmut">${r.pteam}</td>
+      <td class="r ${r.vuln!=null&&r.vuln>=60?"vhi":r.vuln!=null&&r.vuln>=45?"vmid":"hrmmut"}">${r.vuln!=null?r.vuln:"—"}</td>
+      <td class="r hrmmut">${r.context!=null?r.context:"—"}</td>
+      <td class="r hrmmut">${r.bzOverlap!=null?r.bzOverlap:"—"}</td>
+      <td class="r hrmmut">${r.bzConf!=null?r.bzConf+"%":"—"}</td>
+      <td class="r pm">${pm.html}</td>
+      <td class="r ${wcls}">${r.hrctx!=null?(r.hrctx>=0?"+":"")+r.hrctx.toFixed(1)+"%":"—"}</td>
+      <td class="hrmmut"><span class="wsdot ${r.status==="Live"?"live":r.status==="Final"?"final":"sched"}"></span>${r.status}</td>
+      <td class="${r.lineup==="Confirmed"?"wsconf":"wsproj"}">${r.lineup}</td>
+      <td class="r hrmmut">${r.order!=null?r.order:"—"}</td>
+      <td class="r hrmmut">${r.consAm!=null?amStr(r.consAm):"—"}</td>
+      <td class="r ${evcls}">${r.ev!=null?(r.ev>=0?"+":"")+(r.ev*100).toFixed(1)+"%":"—"}</td>
+      <td class="r hrmbest">${r.bestAm!=null?amStr(r.bestAm)+` <small class="hrmmut">${capBook(r.bestBook)}</small>`:"—"}</td>
+    </tr>`;
+  }).join("");
+  if(tbl)tbl.innerHTML=thead+`<tbody>${body}</tbody>`;
+}
 let VULN_SORT={key:"vuln",dir:-1}, VULN_GAME="all";
 function pitcherWeakSpot(K,oppBats){
   const bats=oppBats||K._oppBats||[];if(!bats.length)return null;
@@ -2980,10 +3319,33 @@ function gameLineStats(filterMk,sinceDays){
   if(ev.length>=5){let profit=0;ev.forEach(p=>{profit+=p.o?(amToDec(p.bp)-1):-1;});roi=profit/ev.length;}
   return {n,wins,losses:n-wins,hitRate:wins/n,expRate:sumP/n,brier:brier/n,roi,evN:ev.length};
 }
+function gameLineToday(filterMk){
+  const today=todayStr();
+  const recs=loadGPreds().filter(p=>p.d===today&&(!filterMk||p.mk===filterMk));
+  let wins=0,losses=0,pending=0,voids=0;
+  recs.forEach(p=>{if(!p.gr){pending++;}else if(p.v){voids++;}else if(p.o===1){wins++;}else if(p.o===0){losses++;}});
+  return {wins,losses,pending,voids,total:recs.length};
+}
+function gameLineTodayBlock(){
+  const today=todayStr();
+  if(!loadGPreds().some(p=>p.d===today))return "";
+  const o=gameLineToday(null), graded=o.wins+o.losses;
+  const wl=graded?`${o.wins}-${o.losses}`:"—";
+  const rate=graded?` <span class="gt-rate">${Math.round(o.wins/graded*100)}%</span>`:"";
+  const pend=o.pending?` · <span class="gt-pend">${o.pending} live/pending</span>`:"";
+  const vd=o.voids?` · ${o.voids} void`:"";
+  const mks=GLINE_MK.map(mk=>{const s=gameLineToday(mk),g=s.wins+s.losses;
+    return `<div class="gt-tmk"><span class="gt-tmk-l">${GLINE_LABEL[mk]}</span><b>${g?`${s.wins}-${s.losses}`:"—"}</b>${s.pending?`<small>${s.pending} live</small>`:""}</div>`;}).join("");
+  return `<div class="gcard gt-today"><h4 style="margin:0 0 10px">Today's game-line record <span class="gt-tdate">${today.slice(5)}</span></h4>
+    <div class="gt-tmain"><div class="gt-tbig">${wl}${rate}</div><div class="gt-tsub">on the model's picks${pend}${vd}</div></div>
+    <div class="gt-tmks">${mks}</div>
+    <p class="gt-tnote">Updates as today's games finalize — hit <b>Grade</b> after first pitches to refresh. Save today's picks first if you haven't.</p></div>`;
+}
 function renderGameTrack(){
   const box=el("gtrackBlock");if(!box)return;
+  const todayHtml=gameLineTodayBlock();
   const any=loadGPreds().some(p=>p.gr&&!p.v&&p.o!=null);
-  if(!any){box.innerHTML=`<div class="gcard" style="padding:14px 16px"><h4 style="margin:0 0 6px">Game-line results — ML · Run Line · Total</h4><div class="empty" style="margin:0"><b>No graded game lines yet</b>Hit Save (load odds first for ROI), then Grade after the finals. The 1-week / 1-month / 1-year / all-time records fill in automatically over time.</div></div>`;return;}
+  if(!any){box.innerHTML=todayHtml+`<div class="gcard" style="padding:14px 16px"><h4 style="margin:0 0 6px">Game-line results — ML · Run Line · Total</h4><div class="empty" style="margin:0"><b>No graded game lines yet</b>Hit Save (load odds first for ROI), then Grade after the finals. The 1-week / 1-month / 1-year / all-time records fill in automatically over time.</div></div>`;return;}
   const cards=GLINE_MK.map(mk=>{
     const wins=GWIN.map(([lbl,days])=>{
       const s=gameLineStats(mk,days);
@@ -2994,7 +3356,7 @@ function renderGameTrack(){
     }).join("");
     return `<div class="gtcard"><div class="gtname">${GLINE_LABEL[mk]}</div><div class="gtwins">${wins}</div></div>`;
   }).join("");
-  box.innerHTML=`<div class="gcard" style="padding:14px 16px"><h4 style="margin:0 0 4px">Game-line results — ML · Run Line · Total</h4>
+  box.innerHTML=todayHtml+`<div class="gcard" style="padding:14px 16px"><h4 style="margin:0 0 4px">Game-line results — ML · Run Line · Total</h4>
     <p style="font-size:11.5px;color:var(--muted2);margin:0 0 12px">Rolling windows update automatically as days pass. <b>Record</b> = wins–losses on the model's pick · <b>%</b> = actual win rate (green beats / red trails the model's own expectation) · <b>exp</b> = model's average predicted win rate · <b>ROI</b> = flat-1u return on its +EV picks (needs book odds).</p>
     ${cards}</div>`;
 }
@@ -3201,6 +3563,8 @@ function bbSection(title,sub,arr,emptyMsg,withWhy){
 }
 // ===================== HOMER AI — HR assistant over the model's numbers =====================
 let HOMER_MSGS=[];
+let HOMER_TAB="slate", HOMER_GAME="all";
+function ordinal(n){const s=["th","st","nd","rd"],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0]);}
 function escHtml(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]||c));}
 function homerHRPlays(model){return collectPlays(model).filter(p=>p.type==="prop"&&p.mk==="hr").sort((a,b)=>(b.master-a.master)||(b.prob-a.prob));}
 function homerFmtPlay(p){
@@ -3414,6 +3778,72 @@ async function briefingLLM(g){
   if(!r.ok)throw new Error("api");
   const d=await r.json();const txt=(d.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("\n");
   return txt?escHtml(txt).split(/\n\n+/).map(p=>`<p>${p.replace(/\n/g,"<br>")}</p>`).join(""):null;
+}
+function homerFilteredGames(model){
+  const games=model.games||[];
+  if(HOMER_GAME==="all")return games;
+  if(HOMER_GAME==="upcoming")return games.filter(g=>gameStatusLabel(g)==="Scheduled");
+  if(HOMER_GAME==="live")return games.filter(g=>gameStatusLabel(g)==="Live");
+  return games.filter(g=>String(g.gamePk)===HOMER_GAME);
+}
+function homerBatLine(r){
+  const slot=r.order?`${r.lineup==="Confirmed"?"confirmed":"projected"} ${ordinal(r.order)} in the ${r.team} order`:`in the ${r.team} order`;
+  let s=`<b>${r.name}</b> grades ${gradeWord(r.grade).trim()} against ${r.pitcher}, ${slot}`;
+  if(r.bestAm!=null)s+=`, best price ${amStr(r.bestAm)}${r.bestBook?` at ${capBook(r.bestBook)}`:""}`;
+  if(r.ev!=null)s+=` (${r.ev>=0?"+":""}${(r.ev*100).toFixed(0)}% EV vs consensus)`;
+  return s;
+}
+function slateAnalysisNarrative(model){
+  const games=homerFilteredGames(model);
+  const gpkSet=new Set(games.map(g=>g.gamePk));
+  const rows=buildHRModelRows(model).filter(r=>r.prob>0&&gpkSet.has(r.gamePk));
+  if(!rows.length)return '<p class="bmuted">No matchups for this filter yet — refresh, or widen the game filter.</p>';
+  const gameByPk={};games.forEach(g=>gameByPk[g.gamePk]=g);
+  const gName=pk=>{const g=gameByPk[pk];return g?`${g.away.short}–${g.home.short}`:"";};
+  const approved=rows.filter(r=>/^A|^B/.test(r.grade)).length;
+  const byGrade=[...rows].sort((a,b)=>b.escore-a.escore||((b.ev==null?-9:b.ev)-(a.ev==null?-9:a.ev))||b.prob-a.prob);
+  const top=byGrade[0];
+  const aCount={};rows.forEach(r=>{if(/^A/.test(r.grade))aCount[r.gamePk]=(aCount[r.gamePk]||0)+1;});
+  let tgPk=null,tgN=0;for(const pk in aCount)if(aCount[pk]>tgN){tgN=aCount[pk];tgPk=pk;}
+  const envs=games.map(g=>({g,s:hrEnvScore(g)})).sort((a,b)=>b.s-a.s);
+  const fringe=rows.filter(r=>r.ev!=null&&r.ev>0.30&&/^[CD]/.test(r.grade)).sort((a,b)=>b.ev-a.ev).slice(0,3);
+  let html="";
+  html+=`<p>${games.length} game${games.length>1?"s":""}, <b>${approved}</b> model-approved matchups (B-grade or better)${tgPk&&tgN>1?`, and the <b>${gName(tgPk)}</b> game holds the densest cluster of top grades`:""}. <b>${top.name}</b> is the best individual bat on the board.</p>`;
+  html+=`<p>${homerBatLine(top)}. The model likes the profile — ${top.power} batter-power into ${top.vuln!=null?`a ${top.vuln}/99-vulnerable arm`:"a live arm"}${top.match!=null?`, with a ${top.match}/100 HR pitch-matchup`:""}. HR probability lands at <b>${(top.prob*100).toFixed(1)}%</b>.</p>`;
+  if(tgPk){const cluster=rows.filter(r=>String(r.gamePk)===String(tgPk)&&r!==top&&/^A/.test(r.grade)).slice(0,3);
+    if(cluster.length)html+=`<p>The ${gName(tgPk)} game backs it up: ${joinNames(cluster.map(r=>`${r.name} (${r.grade}${r.bestAm!=null?`, ${amStr(r.bestAm)}`:""})`))} all grade A-level in the same lineup environment.</p>`;}
+  const others=byGrade.filter(r=>/^A/.test(r.grade)&&r!==top&&String(r.gamePk)!==String(tgPk)).slice(0,3);
+  if(others.length)html+=`<p>Elsewhere on the board: ${others.map(homerBatLine).join("; ")}.</p>`;
+  if(envs.length){const e0=envs[0],e1=envs[1];
+    html+=`<p>On the game-environment beat, <b>${e0.g.away.short}–${e0.g.home.short}</b> leads the slate (${hrEnvLabel(e0.s)}, env ${e0.s})${e0.g.weather?` — ${Math.round(e0.g.weather.tempF)}°F, ${(((e0.g.weather.mult-1)*100)>=0?"+":"")}${((e0.g.weather.mult-1)*100).toFixed(1)}% HR weather`:""}.${e1?` ${e1.g.away.short}–${e1.g.home.short} is next (env ${e1.s}).`:""}</p>`;}
+  if(fringe.length)html+=`<p>On the positive-EV fringe: ${fringe.map(r=>`${r.name} ${r.bestAm!=null?amStr(r.bestAm):""} (${r.grade}, ${(r.ev*100).toFixed(0)}% EV)`).join("; ")} — thin grades, but big gaps between price and model. Darts, not anchors.</p>`;
+  html+=`<p><b>Bottom line:</b> ${top.name} is the play of the day — ${gradeWord(top.grade).trim()} grade${top.lineup==="Confirmed"?", confirmed slot":""}${top.ev!=null&&top.ev>0?`, ${(top.ev*100).toFixed(0)}% EV vs consensus`:""}.</p>`;
+  return html;
+}
+function homerMatchupRow(r){
+  return `<div class="hm-row"><span class="wsgrade ${gradeCircleCls(r.grade)}">${r.grade}</span>
+    <div class="hm-bat"><b>${rankEmoji(r.b)}${r.name}</b><small>${r.team} · vs ${r.pitcher} (${r.pteam})${r.vuln!=null?` · vuln ${r.vuln}`:""}</small></div>
+    <span class="hm-prob">${(r.prob*100).toFixed(1)}%</span>
+    ${r.ev!=null?`<span class="hm-ev ${r.ev>0?"evp":"evn"}">${r.ev>=0?"+":""}${(r.ev*100).toFixed(0)}%</span>`:`<span class="hm-price">${r.bestAm!=null?amStr(r.bestAm):(r.fair!=null?amStr(r.fair):"")}</span>`}</div>`;
+}
+function renderHomerAI(model){
+  const dl=el("homerDateLbl");if(dl)dl.textContent=model&&model.date?model.date:"—";
+  const content=el("homerContent"),chatWrap=el("homerChatWrap");
+  if(!model||!model.games||!model.games.length){if(content)content.innerHTML='<div class="empty"><b>No slate loaded</b>Load games first.</div>';if(el("homerGameChips"))el("homerGameChips").innerHTML="";if(el("homerCount"))el("homerCount").textContent="";return;}
+  const games=model.games,upN=games.filter(g=>gameStatusLabel(g)==="Scheduled").length,liveN=games.filter(g=>gameStatusLabel(g)==="Live").length;
+  let ch=`<button class="hrmchip ${HOMER_GAME==="all"?"active":""}" data-g="all">All (${games.length})</button><button class="hrmchip ${HOMER_GAME==="upcoming"?"active":""}" data-g="upcoming">Upcoming (${upN})</button><button class="hrmchip ${HOMER_GAME==="live"?"active":""}" data-g="live">Live (${liveN})</button>`;
+  games.forEach(g=>{const st=gameStatusLabel(g);ch+=`<button class="hrmchip ${HOMER_GAME===String(g.gamePk)?"active":""}" data-g="${g.gamePk}"><span class="wsdot ${st==="Live"?"live":st==="Final"?"final":"sched"}"></span>${g.away.short} @ ${g.home.short}${g.dh?" G"+g.gameNumber:""}</button>`;});
+  if(el("homerGameChips"))el("homerGameChips").innerHTML=ch;
+  if(el("homerCount"))el("homerCount").textContent=`Games ${games.length} · Matchups ${(model.batters||[]).length}`;
+  if(HOMER_TAB==="chat"){if(content)content.classList.add("hide");if(chatWrap)chatWrap.classList.remove("hide");renderHomerChat();return;}
+  if(content)content.classList.remove("hide");if(chatWrap)chatWrap.classList.add("hide");
+  const gpkSet=new Set(homerFilteredGames(model).map(g=>g.gamePk));
+  const rows=buildHRModelRows(model).filter(r=>r.prob>0&&gpkSet.has(r.gamePk));
+  const upd=LAST_REFRESH?`<div class="homer-upd">Updated ${new Date(LAST_REFRESH).toLocaleString([],{month:"2-digit",day:"2-digit",hour:"numeric",minute:"2-digit"})}</div>`:"";
+  if(HOMER_TAB==="slate"){content.innerHTML=`<div class="homer-analysis">${slateAnalysisNarrative(model)}</div>${upd}`;return;}
+  if(HOMER_TAB==="matchups"){const list=[...rows].sort((a,b)=>b.escore-a.escore||b.prob-a.prob).slice(0,30);content.innerHTML=list.length?`<div class="hm-list">${list.map(homerMatchupRow).join("")}</div>`:'<div class="empty">No matchups for this filter.</div>';return;}
+  if(HOMER_TAB==="ev"){const evr=rows.filter(r=>r.ev!=null).sort((a,b)=>b.ev-a.ev).slice(0,30);content.innerHTML=evr.length?`<div class="hm-list">${evr.map(homerMatchupRow).join("")}</div>`:'<div class="empty"><b>Load odds for EV</b>Top EV needs live odds — load your odds key on the Odds tab.</div>';return;}
+  if(HOMER_TAB==="games"){const gs=homerFilteredGames(model);content.innerHTML=gs.length?gs.map(g=>`<div class="brief"><div class="bhead"><div class="bteams">${g.away.short} <span class="bat">@</span> ${g.home.short}${g.dh?` <span class="bdh">G${g.gameNumber}</span>`:""}</div><div class="btime"><span class="wsdot ${gameStatusLabel(g)==="Live"?"live":gameStatusLabel(g)==="Final"?"final":"sched"}"></span>${gameStatusLabel(g)}</div></div><div class="bnarr">${briefingNarrative(g)}</div></div>`).join(""):'<div class="empty">No games for this filter.</div>';return;}
 }
 function renderHomerChat(){
   const box=el("homerChat");if(!box)return;
@@ -3680,6 +4110,8 @@ function setView(v){
   el("alignView").classList.toggle("hide",v!=="align");
   el("hrView").classList.toggle("hide",v!=="hr");
   el("bestView").classList.toggle("hide",v!=="best");
+  el("hrmodelView").classList.toggle("hide",v!=="hrmodel");
+  el("vulnrepView").classList.toggle("hide",v!=="vulnrep");
   el("homerView").classList.toggle("hide",v!=="homer");
   el("briefView").classList.toggle("hide",v!=="brief");
   el("zonesView").classList.toggle("hide",v!=="zones");
@@ -3696,7 +4128,9 @@ function setView(v){
   if(v==="sims"&&MODEL) renderSims(MODEL);
   if(v==="hr"&&MODEL) renderHomers(MODEL);
   if(v==="best"&&MODEL) renderBestBets(MODEL);
-  if(v==="homer") renderHomerChat();
+  if(v==="hrmodel"&&MODEL) renderHRModel(MODEL);
+  if(v==="vulnrep"&&MODEL) renderVulnReport(MODEL);
+  if(v==="homer") renderHomerAI(MODEL);
   if(v==="brief"&&MODEL) renderBriefings(MODEL);
   if(v==="zones"&&MODEL) renderZones(MODEL);
   if(v==="align"&&MODEL) renderAlignment();
@@ -3747,7 +4181,7 @@ function startAuto(){
   if(el("autoRefresh")&&el("autoRefresh").checked)AUTO_TIMER=setInterval(()=>{if(!document.hidden)refreshNow();},600000);
 }
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
-const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
+const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
   const t=el("viewTitle");if(t)t.textContent=VIEW_TITLE[v]||"";
@@ -3784,6 +4218,17 @@ el("oddsTabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(
 el("propTabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;PROP_MARKET=t.dataset.p;[...el("propTabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderProps(MODEL);});
 el("trendSearch").addEventListener("input",e=>{TREND_Q=e.target.value;renderTrends();});
 el("teamSelect").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;TEAM_SEL=b.dataset.key;renderTeamSelector();});
+el("hrmTable")&&el("hrmTable").addEventListener("click",e=>{const th=e.target.closest("th[data-k]");if(!th)return;const k=th.dataset.k;const strCols=["name","team","form","pitcher","pteam","status","lineup"];if(HRM_SORT.key===k)HRM_SORT.dir*=-1;else HRM_SORT={key:k,dir:strCols.includes(k)?1:-1};if(MODEL)renderHRModel(MODEL);});
+el("pvrTabs")&&el("pvrTabs").addEventListener("click",e=>{const b=e.target.closest("button[data-t]");if(!b)return;PVR_TAB=b.dataset.t;[...el("pvrTabs").children].forEach(c=>c.classList.toggle("active",c===b));if(MODEL)renderVulnReport(MODEL);});
+el("pvrPrev")&&el("pvrPrev").addEventListener("click",()=>wsShiftDate(-1));
+el("pvrNext")&&el("pvrNext").addEventListener("click",()=>wsShiftDate(1));
+el("pvrToday")&&el("pvrToday").addEventListener("click",()=>{const inp=el("date");if(inp)inp.value=ymdLocal(new Date());const run=el("run");if(run)run.click();});
+el("hrmChips")&&el("hrmChips").addEventListener("click",e=>{const b=e.target.closest("button[data-g]");if(!b)return;HRM_GAME=b.dataset.g;if(MODEL)renderHRModel(MODEL);});
+[["hrmGrade",v=>HRM_GRADE=v],["hrmLineup",v=>HRM_LINEUP=v],["hrmPower",v=>HRM_POWER=v],["hrmVuln",v=>HRM_VULN=v],["hrmTeam",v=>HRM_TEAM=v]].forEach(([id,set])=>{const e=el(id);if(e)e.addEventListener("change",ev=>{set(ev.target.value);if(MODEL)renderHRModel(MODEL);});});
+el("hrmSearch")&&el("hrmSearch").addEventListener("input",e=>{HRM_SEARCH=e.target.value.trim().toLowerCase();if(MODEL)renderHRModel(MODEL);});
+el("hrmPrev")&&el("hrmPrev").addEventListener("click",()=>wsShiftDate(-1));
+el("hrmNext")&&el("hrmNext").addEventListener("click",()=>wsShiftDate(1));
+el("hrmToday")&&el("hrmToday").addEventListener("click",()=>{const inp=el("date");if(inp)inp.value=ymdLocal(new Date());const run=el("run");if(run)run.click();});
 el("zoneGameSel")&&el("zoneGameSel").addEventListener("change",e=>{ZONES_GAME=e.target.value;ZONES_BAT=null;if(MODEL)renderZones(MODEL);});
 el("zoneBatSel")&&el("zoneBatSel").addEventListener("change",e=>{ZONES_BAT=e.target.value;if(MODEL)renderZoneMatchup(MODEL);});
 el("wsTable")&&el("wsTable").addEventListener("click",e=>{const th=e.target.closest("th[data-k]");if(!th)return;const k=th.dataset.k;if(VULN_SORT.key===k)VULN_SORT.dir*=-1;else VULN_SORT={key:k,dir:(k==="pitcher"||k==="batter"||k==="pteam"||k==="opp"||k==="status"||k==="lineup"||k==="grade")?1:-1};if(MODEL)renderVuln(MODEL);});
@@ -3793,6 +4238,11 @@ el("wsPrev")&&el("wsPrev").addEventListener("click",()=>wsShiftDate(-1));
 el("wsNext")&&el("wsNext").addEventListener("click",()=>wsShiftDate(1));
 el("wsToday")&&el("wsToday").addEventListener("click",()=>{const inp=el("date");if(inp)inp.value=ymdLocal(new Date());const run=el("run");if(run)run.click();});
 el("homerSendBtn")&&el("homerSendBtn").addEventListener("click",()=>homerSend());
+el("homerTabs")&&el("homerTabs").addEventListener("click",e=>{const b=e.target.closest("button[data-t]");if(!b)return;HOMER_TAB=b.dataset.t;[...el("homerTabs").children].forEach(c=>c.classList.toggle("active",c===b));renderHomerAI(MODEL);});
+el("homerGameChips")&&el("homerGameChips").addEventListener("click",e=>{const b=e.target.closest("button[data-g]");if(!b)return;HOMER_GAME=b.dataset.g;renderHomerAI(MODEL);});
+el("homerPrev")&&el("homerPrev").addEventListener("click",()=>wsShiftDate(-1));
+el("homerNext")&&el("homerNext").addEventListener("click",()=>wsShiftDate(1));
+el("homerToday")&&el("homerToday").addEventListener("click",()=>{const inp=el("date");if(inp)inp.value=ymdLocal(new Date());const run=el("run");if(run)run.click();});
 el("homerInput")&&el("homerInput").addEventListener("keydown",e=>{if(e.key==="Enter")homerSend();});
 el("homerChips")&&el("homerChips").addEventListener("click",e=>{const b=e.target.closest("button");if(b&&b.dataset.q)homerSend(b.dataset.q);});
 el("homerLLM")&&el("homerLLM").addEventListener("change",e=>{const on=e.target.checked;const k=el("homerKey"),h=el("homerLLMHint");if(k)k.style.display=on?"block":"none";if(h)h.style.display=on?"block":"none";});
