@@ -163,6 +163,35 @@
   .footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted2);font-family:'Roboto Mono',monospace;line-height:1.7}
   /* nav + platoon + teams */
   .autorow{display:flex;align-items:center;gap:6px;font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;white-space:nowrap}
+  .zone-top{display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px}
+  .zsel{display:flex;flex-direction:column;gap:4px}
+  .zsel label{font-family:'Roboto Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted2)}
+  .zsel select{background:var(--panel2);border:1px solid var(--line);border-radius:9px;color:var(--chalk);padding:9px 12px;font-family:inherit;font-size:14px;min-width:180px}
+  .zupd{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted2);margin-left:auto;align-self:center}
+  .zone-info{font-size:15px;color:var(--muted);margin-bottom:12px}.zone-info b{color:var(--chalk)}.zmut{color:var(--muted2)}
+  .zone-edges{background:var(--panel);border:1px solid var(--line);border-left:3px solid #e2604f;border-radius:11px;padding:12px 14px;margin-bottom:16px}
+  .zedge-h{font-family:'Roboto Mono',monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:#e2604f;margin-bottom:8px}
+  .zedge{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .zedge:last-child{border-bottom:none}
+  .zedge .zb{font-family:'Oswald',sans-serif;font-weight:700;font-size:12px;color:#c7b6f0;background:rgba(124,92,200,.22);border-radius:5px;padding:2px 7px}
+  .zedge b{color:var(--chalk);flex:1}
+  .zedge .zscore{font-family:'Roboto Mono',monospace;font-weight:700;color:#e2604f}
+  .zedge .zuse{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2)}
+  .zone-grids{display:flex;gap:24px;flex-wrap:wrap}
+  .zside{flex:1;min-width:260px}
+  .zside-h{font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;color:var(--chalk);text-align:center;margin-bottom:10px}
+  .zgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-width:280px;margin:0 auto}
+  .zout{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;max-width:280px;margin:5px auto 0}
+  .zcell{aspect-ratio:1;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;border:1px solid var(--line)}
+  .zcell.out{aspect-ratio:auto;padding:8px 0}
+  .zcell .zlab{position:absolute;top:5px;left:7px;font-family:'Roboto Mono',monospace;font-size:9px;color:rgba(255,255,255,.5)}
+  .zcell .zval{font-family:'Oswald',sans-serif;font-weight:700;font-size:22px;color:#fff}
+  .zcell.out .zval{font-size:15px}
+  .zcell .zsub{font-family:'Roboto Mono',monospace;font-size:9px;color:rgba(255,255,255,.6)}
+  .z-hot{background:rgba(214,69,65,.78)}.z-avg{background:rgba(120,130,144,.5)}.z-cold{background:rgba(70,120,190,.7)}.z-na{background:var(--panel2)}
+  .zcell.z-na .zval{color:var(--muted2)}
+  .zlegend{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:10px;font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2)}
+  .zlegend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-left:6px}
   .autorow input{accent-color:var(--good);cursor:pointer}
   .freshlbl{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2);white-space:nowrap}
   .sidebar{position:fixed;top:0;left:0;width:236px;height:100vh;overflow-y:auto;background:var(--panel);border-right:1px solid var(--line);padding:18px 14px 40px;z-index:110;transition:transform .22s ease}
@@ -645,6 +674,7 @@
     </div>
     <div class="sb-group"><div class="sb-h">Pitcher &amp; Matchup</div>
       <button data-view="vuln">Pitcher Weak Spots</button>
+      <button data-view="zones">Zone Matchups</button>
       <button data-view="sims">Game Sims</button>
       <button data-view="wx">Weather Impact</button>
       <button data-view="teams">Team Browser</button>
@@ -846,6 +876,21 @@
     <div class="sims" id="simsBoard"></div>
   </section>
 
+  <section id="zonesView" class="hide">
+    <div class="sec-head"><h2>Zone Matchups</h2><span class="tag">batter power by strike-zone × pitcher usage</span><span class="rule"></span></div>
+    <div id="zonesEmpty" class="hide"><div class="empty"><b>Zone data not loaded</b>This view needs <code>zones.json</code> next to the site. Run the daily zone build (the <code>build-zones.mjs</code> script + GitHub Action) to create it, then reload. Until then the rest of Edge Board works normally.</div></div>
+    <div id="zonesWrap">
+      <div class="zone-top">
+        <div class="zsel"><label for="zoneGameSel">Game</label><select id="zoneGameSel"></select></div>
+        <div class="zsel"><label for="zoneBatSel">Batter</label><select id="zoneBatSel"></select></div>
+        <span class="zupd" id="zonesUpd"></span>
+      </div>
+      <div class="zone-info" id="zoneInfo"></div>
+      <div class="zone-edges" id="zoneEdges"></div>
+      <div class="zone-grids" id="zoneGrids"></div>
+    </div>
+  </section>
+
   <section id="vulnView" class="hide">
     <div class="sec-head"><h2>Pitcher Weak Spots</h2><span class="tag">batters in the lineup slot where each pitcher is most vulnerable to a HR</span><span class="rule"></span></div>
     <div class="ws-controls">
@@ -911,11 +956,16 @@
         </div></div>
       <div class="pc" style="flex:1;min-width:260px"><label>Filters — stack to narrow the pool</label>
         <div class="pl-markets" id="plFilters">
+          <button data-f="star">⭐ Team best</button>
+          <button data-f="bolt">⚡ 2nd best</button>
+          <button data-f="sleeper">💤 Sleeper</button>
+          <button data-f="hot">🔥 Hot bats</button>
           <button data-f="platoon">Platoon ADV</button>
           <button data-f="grade">Grade A- to B-</button>
           <button data-f="era">vs 4+ ERA</button>
           <button data-f="vuln">Most vulnerable</button>
         </div></div>
+      <label class="pc-check"><input type="checkbox" id="plUpcoming" checked /> Upcoming games only<br><span style="color:var(--muted2);font-size:10px">(hides live &amp; final)</span></label>
       <label class="pc-check"><input type="checkbox" id="plEV" /> +EV legs only<br><span style="color:var(--muted2);font-size:10px">(needs odds)</span></label>
       <button class="btn" id="plGen">Generate</button>
     </div>
@@ -1062,6 +1112,10 @@ const ODDS_BASE = "https://api.the-odds-api.com/v4/sports/baseball_mlb";
 // (barrel%, exit velo) if you ever want them; leave "" to ignore.
 const STATS_PROXY = "";
 
+// Path to the daily zones.json produced by build-zones.mjs (see /zones).
+// Relative to where edge-board.html is served. Edit if you host it elsewhere.
+const ZONES_URL = "./zones.json";
+
 const LG = { hrPA:0.0285, hPA:0.213, tbPA:0.345, rbiPA:0.105, kPA:0.225, sbG:0.055, era:4.10, ops:0.715, rg:4.40 };
 const MIN_PA = 25;
 const SLOT_PA = [4.62,4.54,4.45,4.36,4.26,4.10,3.95,3.80,3.66]; // batting order 1..9
@@ -1089,6 +1143,7 @@ const COORDS={
 
 let MODEL=null, CURRENT_MARKET="hr", ODDS_LOADED=false, VIEW="slate", TEAM_SEL=null, STATCAST_OK=false, TREND_Q="", PROP_MARKET="hit1", ODDS_BOARD_MARKET="hr", ALIGN_FILTER="all", ALIGN_SORT="align", BOARD_LIMIT=30;
 let AUTO_TIMER=null, LAST_REFRESH=0, ODDS_WERE_LOADED=false, WAS_TODAY=false, BUSY=false;
+let ZONES=null, ZONES_GAME=null, ZONES_BAT=null;
 const PROP_MARKETS={
   hit1:{label:"1+ Hit",mean:b=>b.proj.hits,line:0.5,om:"hits"},
   hit2:{label:"2+ Hits",mean:b=>b.proj.hits,line:1.5,om:"hits"},
@@ -1144,6 +1199,11 @@ function gameLegCandidate(g,gm,useBook){
   if(!(prob>0)||prob<0.12||prob>0.985)return null;
   return {id:g.gamePk+":"+gm,b:null,isGame:true,name:sub,team:"",game:gkey,mk:gm,label,line:null,prob,fair:fairAmerican(prob),book,edge};
 }
+function batterPassesRankFilter(b,cfg){
+  if(!(cfg.fStar||cfg.fBolt||cfg.fSleeper||cfg.fHot))return true; // no rank/form filter active
+  const isHot=!!(b.recentForm&&b.recentForm.state==="hot");
+  return !!((cfg.fStar&&b.teamStar)||(cfg.fBolt&&b.teamBolt)||(cfg.fSleeper&&b.teamSleeper)||(cfg.fHot&&isHot));
+}
 function generateParlays(cfg){
   if(!MODEL||!MODEL.batters)return [];
   const useBook=ODDS_LOADED;
@@ -1151,6 +1211,8 @@ function generateParlays(cfg){
   const playerMks=cfg.markets.filter(m=>PARLAY_MARKETS[m]);
   const gameMks=cfg.markets.filter(m=>m==="ml"||m==="spread"||m==="total");
   MODEL.batters.forEach(b=>{
+    if(cfg.upcomingOnly&&!b._upcoming)return;
+    if(!batterPassesRankFilter(b,cfg))return;
     if(cfg.fPlatoon&&!(b.platoon&&b.platoon.badge==="ADV"))return;
     if(cfg.fGrade&&!(b.grade&&GRADE_BAND.has(b.grade.letter)))return;
     if(cfg.fERA&&!(b.oppERA!=null&&b.oppERA>=4.0))return;
@@ -1163,6 +1225,7 @@ function generateParlays(cfg){
     });
   });
   if(gameMks.length)(MODEL.games||[]).forEach(g=>gameMks.forEach(gm=>{
+    if(cfg.upcomingOnly&&gameStatusLabel(g)!=="Scheduled")return;
     const c=gameLegCandidate(g,gm,useBook);if(!c)return;
     if(cfg.onlyEV&&useBook){if(c.edge==null||c.edge<=0)return;}
     c.score=(useBook&&c.edge!=null)?c.edge:(c.prob-0.5);
@@ -1821,7 +1884,8 @@ async function buildModel(date){
     g._awayK=awaySP?pitcherK(awaySP,g._homeBat):null;
     g.parkF=parkF;
     const gm=`${g.away.abbr}@${g.home.abbr}`;
-    [...g._awayBat,...g._homeBat].forEach(b=>{b.game=gm;});
+    const _up=gameStatusLabel(g)==="Scheduled";
+    [...g._awayBat,...g._homeBat].forEach(b=>{b.game=gm;b._upcoming=_up;});
     if(g._awayK){g._awayK.team=g.away.abbr;g._awayK.vs=g.home.abbr;g._awayK.game=gm;}
     if(g._homeK){g._homeK.team=g.home.abbr;g._homeK.vs=g.away.abbr;g._homeK.game=gm;}
   });
@@ -2524,6 +2588,73 @@ function vulnRow(p){
     <div class="vsplits"><div class="vbh">Allows by batter side</div>${vulnSplitLine("vs LHB",vl)}${vulnSplitLine("vs RHB",vr)}</div>
     <div class="vtargets"><div class="vbh">Top targets ${wantCode?`(${side})`:""}</div>${tg||'<span style="color:var(--muted2);font-size:11px">targets n/a</span>'}</div>
   </div>`;
+}
+// ===================== ZONE MATCHUPS — precise per-zone batter power × pitcher usage =====================
+const ZONE_NAME={1:"Up/Left",2:"Up",3:"Up/Right",4:"Left",5:"Middle",6:"Right",7:"Down/Left",8:"Down",9:"Down/Right",11:"Up/Left out",12:"Up/Right out",13:"Down/Left out",14:"Down/Right out"};
+const ZONE_IN=[[1,2,3],[4,5,6],[7,8,9]];
+const ZONE_OUT=[11,12,13,14];
+const ZONE_ALL=[1,2,3,4,5,6,7,8,9,11,12,13,14];
+function zoneScoreColor(score){if(score==null)return"z-na";return score>=66?"z-hot":score>=45?"z-avg":"z-cold";}
+function zoneUsageColor(usage,max){if(usage==null)return"z-na";if(!(max>0))return"z-avg";const r=usage/max;return r>=0.66?"z-hot":r>=0.33?"z-avg":"z-cold";}
+function batterHandSide(bats,throws){if(bats==="L")return"vsL";if(bats==="R")return"vsR";return throws==="L"?"vsR":"vsL";}
+function zoneEdges(batZones,pitSide){
+  if(!batZones||!pitSide||!pitSide.zones)return[];
+  const out=[];
+  for(const z of ZONE_ALL){const bz=batZones[z],pu=pitSide.zones[z];
+    if(!bz||bz.score==null||!pu)continue;
+    if(bz.score>=60&&pu.usage>0)out.push({zone:z,name:ZONE_NAME[z],score:bz.score,usage:pu.usage});}
+  out.sort((a,b)=>(b.score*b.usage)-(a.score*a.usage));
+  return out.slice(0,5);
+}
+function zoneGridHtml(getCell){
+  let h='<div class="zgrid">';
+  for(const row of ZONE_IN)for(const z of row){const c=getCell(z);h+=`<div class="zcell ${c.cls}"><span class="zlab">Z${z}</span><span class="zval">${c.big}</span>${c.top?`<span class="zsub">${c.top}</span>`:""}</div>`;}
+  h+='</div><div class="zout">'+ZONE_OUT.map(z=>{const c=getCell(z);return `<div class="zcell out ${c.cls}"><span class="zlab">Z${z}</span><span class="zval">${c.big}</span></div>`;}).join("")+'</div>';
+  return h;
+}
+async function loadZones(){
+  if(ZONES&&!ZONES.error)return ZONES;
+  try{const r=await fetch(ZONES_URL,{cache:"no-store"});if(!r.ok)throw 0;ZONES=await r.json();}
+  catch(e){ZONES={error:true};}
+  return ZONES;
+}
+function renderZoneMatchup(model){
+  const grids=el("zoneGrids"),edges=el("zoneEdges"),info=el("zoneInfo");
+  if(!grids)return;
+  const g=(model.games||[]).find(x=>String(x.gamePk)===String(ZONES_GAME))||(model.games||[])[0];
+  if(!g){grids.innerHTML="";return;}
+  const bats=[...(g._awayBat||[]),...(g._homeBat||[])];
+  const b=bats.find(x=>String(x.id)===String(ZONES_BAT))||bats[0];
+  if(!b){grids.innerHTML="";return;}
+  const bz=ZONES.batters?ZONES.batters[b.id]:null;
+  const pid=b.oppPitcherId, pit=pid&&ZONES.pitchers?ZONES.pitchers[pid]:null;
+  const side=batterHandSide(b.bats,pit?pit.throws:null);
+  const pSide=pit?pit[side]:null, sideLbl=side==="vsL"?"vs LHB":"vs RHB";
+  if(info)info.innerHTML=`<b>${b.name}</b> <span class="zmut">(${b.bats||"?"}HB)</span> vs <b>${b.oppPitcher||"TBD"}</b>${pit?` <span class="zmut">(${pit.throws||"?"}HP · usage ${sideLbl})</span>`:""}`;
+  if(!bz){grids.innerHTML=`<div class="empty"><b>No zone sample yet</b>${b.name} doesn't have enough tracked pitches in the current file.</div>`;if(edges)edges.innerHTML="";return;}
+  const ed=zoneEdges(bz.zones,pSide);
+  if(edges)edges.innerHTML=ed.length?'<div class="zedge-h">Matchup edges — strong zones the pitcher uses</div>'+ed.map(e=>`<div class="zedge"><span class="zb">Z${e.zone}</span><b>${e.name}</b><span class="zscore">${e.score}</span><span class="zuse">${e.usage}% used</span></div>`).join(""):'<div class="zmut" style="font-size:12px">No standout overlap between this batter\'s strong zones and the pitcher\'s usage.</div>';
+  let html=`<div class="zside"><div class="zside-h">${b.name} — power score</div>${zoneGridHtml(z=>{const zz=bz.zones[z];const s=zz?zz.score:null;return {big:s==null?"—":s,cls:zoneScoreColor(s)};})}<div class="zlegend"><i class="z-hot"></i>Strength <i class="z-avg"></i>Average <i class="z-cold"></i>Weakness</div></div>`;
+  if(pSide){const max=Math.max(...ZONE_ALL.map(z=>pSide.zones[z]?pSide.zones[z].usage:0));
+    html+=`<div class="zside"><div class="zside-h">${b.oppPitcher} — usage ${sideLbl}</div>${zoneGridHtml(z=>{const pu=pSide.zones[z];const u=pu?pu.usage:null;return {big:u==null?"—":u+"%",top:pu&&pu.p?`(${pu.p})`:"",cls:zoneUsageColor(u,max)};})}<div class="zmut" style="font-size:10.5px;margin-top:6px">${pSide.reliable?"":"⚠ small sample — "}${pSide.total} pitches ${sideLbl}</div></div>`;
+  }else html+='<div class="zside"><div class="empty"><b>No pitcher data</b>Starter isn\'t in the zone file yet.</div></div>';
+  grids.innerHTML=html;
+}
+function renderZones(model){
+  loadZones().then(()=>{
+    const empty=el("zonesEmpty"),wrap=el("zonesWrap");
+    if(ZONES&&ZONES.error){if(empty)empty.classList.remove("hide");if(wrap)wrap.classList.add("hide");return;}
+    if(empty)empty.classList.add("hide");if(wrap)wrap.classList.remove("hide");
+    if(el("zonesUpd"))el("zonesUpd").textContent=ZONES.updated?`season ${ZONES.season||""} · updated ${ZONES.updated}`:"";
+    if(!model||!model.games||!model.games.length){if(el("zoneGrids"))el("zoneGrids").innerHTML='<div class="empty">Load a slate first.</div>';return;}
+    if(!ZONES_GAME||!model.games.some(g=>String(g.gamePk)===String(ZONES_GAME)))ZONES_GAME=String(model.games[0].gamePk);
+    if(el("zoneGameSel"))el("zoneGameSel").innerHTML=model.games.map(g=>`<option value="${g.gamePk}" ${String(g.gamePk)===String(ZONES_GAME)?"selected":""}>${g.away.short} @ ${g.home.short}${g.dh?" G"+g.gameNumber:""}</option>`).join("");
+    const g=model.games.find(x=>String(x.gamePk)===String(ZONES_GAME))||model.games[0];
+    const bats=[...(g._awayBat||[]),...(g._homeBat||[])];
+    if(!ZONES_BAT||!bats.some(b=>String(b.id)===String(ZONES_BAT)))ZONES_BAT=bats[0]?String(bats[0].id):null;
+    if(el("zoneBatSel"))el("zoneBatSel").innerHTML=bats.map(b=>`<option value="${b.id}" ${String(b.id)===String(ZONES_BAT)?"selected":""}>${b.name}${b.slot?" ("+b.slot+")":""}</option>`).join("");
+    renderZoneMatchup(model);
+  });
 }
 let VULN_SORT={key:"vuln",dir:-1}, VULN_GAME="all";
 function pitcherWeakSpot(K,oppBats){
@@ -3369,10 +3500,16 @@ function renderParlays(){
   const markets=readParlayMarkets();
   if(!markets.length){out.innerHTML='<div class="empty"><b>Pick at least one prop</b>Tap Home Run / 1+ Hit / 2+ Bases / 1+ RBI to choose, or several to mix &amp; match.</div>';return;}
   const cfg={legs:+el("plLegs").value,maxPerGame:+el("plPerGame").value,count:+el("plCount").value,markets,onlyEV:el("plEV").checked};
+  const upcomingOnly=el("plUpcoming")?el("plUpcoming").checked:false;
+  if(upcomingOnly&&!(MODEL.games||[]).some(g=>gameStatusLabel(g)==="Scheduled")){
+    out.innerHTML='<div class="empty"><b>No upcoming games</b>Every game on this slate has already started or finished. Uncheck <b>Upcoming games only</b> to include them, or load a future date.</div>';return;
+  }
   const filters=new Set([...el("plFilters").querySelectorAll("button.active")].map(b=>b.dataset.f));
   cfg.fPlatoon=filters.has("platoon");cfg.fGrade=filters.has("grade");cfg.fERA=filters.has("era");cfg.fVuln=filters.has("vuln");
+  cfg.fStar=filters.has("star");cfg.fBolt=filters.has("bolt");cfg.fSleeper=filters.has("sleeper");cfg.fHot=filters.has("hot");
+  cfg.upcomingOnly=upcomingOnly;
   const parlays=generateParlays(cfg);
-  if(!parlays.length){out.innerHTML='<div class="empty"><b>Couldn\'t build that</b>Your filters may be too strict. Try fewer legs, allow more bats per game, add prop types, loosen the filters, or turn off +EV-only.</div>';return;}
+  if(!parlays.length){out.innerHTML='<div class="empty"><b>Couldn\'t build that</b>Your filters may be too strict. Try fewer legs, allow more bats per game, add prop types, loosen the filters, turn off +EV-only, or uncheck Upcoming-only.</div>';return;}
   const useBook=ODDS_LOADED;
   const note=`<div class="gtip" style="margin-bottom:14px"><b>Heads up:</b> combined odds &amp; probability assume legs are independent. Same-game legs are correlated, so keep “max per game” low to limit that. ${useBook?"Book payouts show where every leg is priced; otherwise model fair odds.":"Load odds for real sportsbook payouts — showing model fair odds for now."} Parlays are high-variance — stake small.</div>`;
   out.innerHTML=note+parlays.map((p,i)=>{
@@ -3545,6 +3682,7 @@ function setView(v){
   el("bestView").classList.toggle("hide",v!=="best");
   el("homerView").classList.toggle("hide",v!=="homer");
   el("briefView").classList.toggle("hide",v!=="brief");
+  el("zonesView").classList.toggle("hide",v!=="zones");
   el("hrguideView").classList.toggle("hide",v!=="hrguide");
   el("propsView").classList.toggle("hide",v!=="props");
   el("oddsView").classList.toggle("hide",v!=="odds");
@@ -3560,6 +3698,7 @@ function setView(v){
   if(v==="best"&&MODEL) renderBestBets(MODEL);
   if(v==="homer") renderHomerChat();
   if(v==="brief"&&MODEL) renderBriefings(MODEL);
+  if(v==="zones"&&MODEL) renderZones(MODEL);
   if(v==="align"&&MODEL) renderAlignment();
   if(v==="vuln"&&MODEL) renderVuln(MODEL);
   if(v==="wx"&&MODEL) renderWeather(MODEL);
@@ -3608,7 +3747,7 @@ function startAuto(){
   if(el("autoRefresh")&&el("autoRefresh").checked)AUTO_TIMER=setInterval(()=>{if(!document.hidden)refreshNow();},600000);
 }
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
-const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",homer:"Homer AI — your HR assistant",brief:"Game Briefings",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
+const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
   const t=el("viewTitle");if(t)t.textContent=VIEW_TITLE[v]||"";
@@ -3645,6 +3784,8 @@ el("oddsTabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(
 el("propTabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;PROP_MARKET=t.dataset.p;[...el("propTabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderProps(MODEL);});
 el("trendSearch").addEventListener("input",e=>{TREND_Q=e.target.value;renderTrends();});
 el("teamSelect").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;TEAM_SEL=b.dataset.key;renderTeamSelector();});
+el("zoneGameSel")&&el("zoneGameSel").addEventListener("change",e=>{ZONES_GAME=e.target.value;ZONES_BAT=null;if(MODEL)renderZones(MODEL);});
+el("zoneBatSel")&&el("zoneBatSel").addEventListener("change",e=>{ZONES_BAT=e.target.value;if(MODEL)renderZoneMatchup(MODEL);});
 el("wsTable")&&el("wsTable").addEventListener("click",e=>{const th=e.target.closest("th[data-k]");if(!th)return;const k=th.dataset.k;if(VULN_SORT.key===k)VULN_SORT.dir*=-1;else VULN_SORT={key:k,dir:(k==="pitcher"||k==="batter"||k==="pteam"||k==="opp"||k==="status"||k==="lineup"||k==="grade")?1:-1};if(MODEL)renderVuln(MODEL);});
 el("wsChips")&&el("wsChips").addEventListener("click",e=>{const b=e.target.closest("button[data-g]");if(!b)return;VULN_GAME=b.dataset.g;if(MODEL)renderVuln(MODEL);});
 function wsShiftDate(d){const inp=el("date");if(!inp)return;const base=inp.value?new Date(inp.value+"T12:00:00"):new Date();base.setDate(base.getDate()+d);inp.value=ymdLocal(base);const run=el("run");if(run)run.click();}
