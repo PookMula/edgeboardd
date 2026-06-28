@@ -656,6 +656,77 @@
   .gt-tmk b{font-family:'Oswald',sans-serif;font-size:20px;color:var(--chalk)}
   .gt-tmk small{display:block;font-family:'Roboto Mono',monospace;font-size:9.5px;color:var(--amber);margin-top:2px}
   .gt-tnote{font-size:11px;color:var(--muted2);margin:11px 0 0;line-height:1.5}
+  .sg-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+  .sg-cgroup{display:flex;flex-wrap:wrap;gap:4px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:4px}
+  .sg-cgroup button{background:none;border:none;color:var(--muted);font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:.02em;padding:7px 13px;border-radius:7px;cursor:pointer}
+  .sg-cgroup button:hover{color:var(--chalk)}
+  .sg-cgroup button.active{background:var(--good);color:#0a1a0f;font-weight:600}
+  .sg-cgroup button.sg-disabled{opacity:.3;cursor:not-allowed}
+  .sg-regen{background:var(--panel3);border:1px solid var(--line);color:var(--chalk);font-family:'Oswald',sans-serif;font-size:13px;padding:8px 14px;border-radius:9px;cursor:pointer}
+  .sg-regen:hover{border-color:var(--amber)}
+  .sg-meta{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:14px}
+  .sg-meta b{color:var(--chalk)}.sg-cap{color:var(--amber)}
+  .sg-card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:6px 14px 12px;margin-bottom:14px}
+  .sg-ghead{display:flex;align-items:center;gap:9px;padding:11px 2px;border-bottom:1px solid var(--line)}
+  .sg-gtag{font-family:'Roboto Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.05em;color:#c7b6f0;background:rgba(124,92,200,.22);border-radius:5px;padding:3px 7px}
+  .sg-gletter{font-family:'Roboto Mono',monospace;font-size:9.5px;letter-spacing:.06em;color:var(--muted2);background:var(--panel3);border-radius:5px;padding:3px 7px}
+  .sg-gtitle{font-family:'Oswald',sans-serif;font-weight:600;font-size:15px;color:var(--chalk)}.sg-gtitle small{color:var(--muted2);font-weight:400;font-size:11px}
+  .sg-grade{margin-left:auto;font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:7px}
+  .sg-grade.sg-s{color:var(--amber);background:rgba(242,181,60,.16)}.sg-grade.sg-a{color:var(--good);background:rgba(95,191,125,.16)}
+  .sg-grade.sg-b{color:var(--teal);background:rgba(76,192,192,.14)}.sg-grade.sg-c{color:var(--muted2);background:var(--panel3)}
+  .sg-leg{display:flex;align-items:center;gap:11px;padding:11px 2px;border-bottom:1px solid var(--line)}
+  .sg-leg:last-of-type{border-bottom:none}
+  .sg-num{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:rgba(124,92,200,.22);border:1px solid #7c5cc8;color:#c7b6f0;font-family:'Roboto Mono',monospace;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+  .sg-linfo{flex:1;min-width:0}
+  .sg-lname{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.sg-lname b{color:var(--chalk);font-size:14px}
+  .sg-team{font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:.04em;color:var(--muted2);background:var(--panel3);border-radius:4px;padding:2px 5px}
+  .sg-leglbl{font-family:'Roboto Mono',monospace;font-size:9px;color:var(--teal);background:rgba(76,192,192,.12);border-radius:4px;padding:2px 6px}
+  .sg-form{font-family:'Roboto Mono',monospace;font-size:9px;font-weight:700;border-radius:4px;padding:2px 5px}
+  .sg-form.hot{color:#e2604f;background:rgba(226,96,79,.15)}.sg-form.cold{color:#4a90d9;background:rgba(74,144,217,.15)}
+  .sg-linfo small{display:block;color:var(--muted2);font-family:'Roboto Mono',monospace;font-size:10px;margin-top:3px}
+  .sg-lright{text-align:right;white-space:nowrap}
+  .sg-prob{font-family:'Roboto Mono',monospace;font-weight:700;color:var(--teal);font-size:14px;display:block}
+  .sg-price{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted2)}
+  .sg-gfoot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:10px;font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2)}
+  .sg-godds{color:var(--chalk)}
+  .hrb-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+  .hrb-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;min-height:10px}
+  .hrb-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(95,191,125,.12);border:1px solid rgba(95,191,125,.35);border-radius:18px;padding:5px 6px 5px 12px;font-size:13px;color:var(--chalk)}
+  .hrb-chip small{color:var(--muted2);font-family:'Roboto Mono',monospace;font-size:10px}
+  .hrb-chip button{background:var(--panel3);border:none;color:var(--muted);width:18px;height:18px;border-radius:50%;cursor:pointer;line-height:1;font-size:13px}
+  .hrb-chip button:hover{color:#e2604f}
+  .hrb-chip-empty{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2)}
+  .hrb-filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+  .hrb-filters input[type=text]{flex:1;min-width:200px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;color:var(--chalk);padding:9px 13px;font-family:inherit;font-size:13px}
+  .hrb-toggle{display:flex;align-items:center;gap:6px;font-family:'Roboto Mono',monospace;font-size:11.5px;color:var(--muted);cursor:pointer;white-space:nowrap}
+  .hrb-toggle input{accent-color:var(--good)}
+  .hrb-list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:16px}
+  .hrb-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--line);background:var(--panel)}
+  .hrb-row:last-child{border-bottom:none}
+  .hrb-row.on{background:rgba(95,191,125,.08)}
+  .hrb-row:hover{background:var(--panel2)}
+  .hrb-rinfo{flex:1;min-width:0}
+  .hrb-rname{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.hrb-rname b{color:var(--chalk);font-size:14px}
+  .hrb-star{font-size:11px}
+  .hrb-rinfo small{display:block;color:var(--muted2);font-family:'Roboto Mono',monospace;font-size:10px;margin-top:3px}
+  .hrb-rscore{text-align:center;min-width:54px}
+  .hrb-num{font-family:'Oswald',sans-serif;font-weight:700;font-size:24px;color:var(--amber);display:block;line-height:1}
+  .hrb-slbl{font-family:'Roboto Mono',monospace;font-size:8px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted2)}
+  .hrb-add{flex:0 0 auto;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--panel3);color:var(--chalk);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .hrb-add:hover:not(:disabled){border-color:var(--good);color:var(--good)}
+  .hrb-add.added{background:var(--good);color:#0a1a0f;border-color:var(--good);font-weight:700}
+  .hrb-add:disabled{opacity:.3;cursor:not-allowed}
+  .hrb-summary{position:sticky;bottom:14px}
+  .hrb-sumbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;background:linear-gradient(135deg,rgba(242,181,60,.14),var(--panel));border:1px solid rgba(242,181,60,.4);border-radius:14px;padding:14px 20px;box-shadow:0 14px 40px -14px rgba(0,0,0,.7)}
+  .hrb-sumbar.empty-bar{border-color:var(--line);background:var(--panel);font-family:'Roboto Mono',monospace;font-size:12px;color:var(--muted2)}
+  .hrb-sumbar.empty-bar b{color:var(--chalk);margin-right:10px}
+  .hrb-sumtier{font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;color:var(--amber)}
+  .hrb-summeta{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2);margin-top:2px}
+  .hrb-corr{color:#e2604f}
+  .hrb-sumright{display:flex;gap:18px}
+  .hrb-sumstat{text-align:right}
+  .hrb-sumstat b{font-family:'Oswald',sans-serif;font-size:20px;color:var(--chalk);display:block;line-height:1}
+  .hrb-sumstat span{font-family:'Roboto Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted2)}
 
   /* alignment */
   .align-ctrls{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-bottom:16px}
@@ -720,7 +791,7 @@
   </header>
 
   <div class="note">
-    <b>Read me.</b> Projections + grades are a model, not a guarantee. The grade blends the season matchup (log5 batter rate × pitcher-allowed rate, regressed for sample) with career batter-vs-pitcher history and park. <b>Edge %</b> appears only after you load real odds, and equals model probability minus the book's implied probability. Confirmed lineups replace the full roster automatically once teams post them (~2–3 hrs pre-game). The app pulls live data on every load and (with Auto-refresh on) re-pulls every ~10 minutes and whenever you return to the tab, rolling over to the new day's slate automatically. <b>For analysis/entertainment only — not financial advice. 21+. If gambling stops being fun, call 1-800-GAMBLER.</b>
+    <b>Read me.</b> Projections + grades are a model, not a guarantee. The grade blends the season matchup (log5 batter rate × pitcher-allowed rate, regressed for sample) with career batter-vs-pitcher history and park. <b>Edge %</b> appears only after you load real odds, and equals model probability minus the book's implied probability. Confirmed lineups replace the full roster automatically once teams post them (~2–3 hrs pre-game). The app pulls live data on every load and (with Auto-refresh on) re-pulls every ~20 minutes and whenever you return to the tab, rolling over to the new day's slate automatically. <b>For analysis/entertainment only — not financial advice. 21+. If gambling stops being fun, call 1-800-GAMBLER.</b>
   </div>
 
   <div class="oddsbar">
@@ -767,6 +838,8 @@
     <div class="sb-group"><div class="sb-h">Betting Tools</div>
       <button data-view="odds">Odds Comparison</button>
       <button data-view="parlay">Parlay Generator</button>
+      <button data-view="stargroups">⭐ Star Groups</button>
+      <button data-view="hrbuilder">🛠️ HR Group Builder</button>
       <button data-view="track">📊 Track &amp; Calibrate</button>
       <button data-view="trends">Trends</button>
     </div>
@@ -974,6 +1047,49 @@
   <section id="simsView" class="hide">
     <div class="sec-head"><h2>Game Simulations</h2><span class="tag" id="simsTag">projected score, totals, moneyline &amp; run line</span><span class="rule"></span></div>
     <div class="sims" id="simsBoard"></div>
+  </section>
+
+  <section id="hrbuilderView" class="hide">
+    <div class="sec-head"><h2>🛠️ HR Group Builder</h2><span class="tag">hand-build an HR lineup off the matchup board</span><span class="rule"></span></div>
+    <div class="hrb-top">
+      <div class="sg-cgroup" id="hrbLegs"><button data-l="2">2</button><button data-l="3">3</button><button data-l="4" class="active">4</button><button data-l="5">5</button><button data-l="6">6</button></div>
+      <button class="sg-regen" id="hrbAuto">🔀 Auto-fill</button>
+      <button class="sg-regen" id="hrbClear">Clear</button>
+    </div>
+    <div class="hrb-chips" id="hrbChips"></div>
+    <div class="hrb-filters">
+      <input type="text" id="hrbSearch" placeholder="Search players or team…" autocomplete="off" />
+      <label class="hrb-toggle"><input type="checkbox" id="hrbConf" /> Confirmed only</label>
+      <label class="hrb-toggle"><input type="checkbox" id="hrbStars" /> ⭐ Stars only</label>
+    </div>
+    <div class="hrb-list" id="hrbList"></div>
+    <div class="hrb-summary" id="hrbSummary"></div>
+  </section>
+
+  <section id="stargroupsView" class="hide">
+    <div class="sec-head"><h2>⭐ Star Groups</h2><span class="tag">auto-built cross-game parlays — confirmed lineups, best matchups vs the starter</span><span class="rule"></span></div>
+    <div class="sg-controls">
+      <div class="sg-cgroup" id="sgMarkets">
+        <button data-m="hr" class="active">HR</button>
+        <button data-m="tb">2+ Total Bases</button>
+        <button data-m="hits">1+ Hit</button>
+        <button data-m="rbi">1+ RBI</button>
+        <button data-m="ks">Pitcher Ks</button>
+      </div>
+      <div class="sg-cgroup" id="sgLegs">
+        <button data-l="1">1-Pick</button>
+        <button data-l="2" class="active">2-Pick</button>
+        <button data-l="3">3-Pick</button>
+        <button data-l="4">4-Pick</button>
+        <button data-l="5">5-Pick</button>
+        <button data-l="6">6-Pick</button>
+        <button data-l="8">8-Pick</button>
+        <button data-l="10">10-Pick</button>
+      </div>
+      <button class="sg-regen" id="sgRegen">🎲 Shuffle</button>
+    </div>
+    <div class="sg-meta" id="sgMeta"></div>
+    <div id="sgBoard"></div>
   </section>
 
   <section id="vulnrepView" class="hide">
@@ -1276,6 +1392,8 @@ const COORDS={
 let MODEL=null, CURRENT_MARKET="hr", ODDS_LOADED=false, VIEW="slate", TEAM_SEL=null, STATCAST_OK=false, TREND_Q="", PROP_MARKET="hit1", ODDS_BOARD_MARKET="hr", ALIGN_FILTER="all", ALIGN_SORT="align", BOARD_LIMIT=30;
 let AUTO_TIMER=null, LAST_REFRESH=0, ODDS_WERE_LOADED=false, WAS_TODAY=false, BUSY=false;
 let ZONES=null, ZONES_GAME=null, ZONES_BAT=null;
+let STAR_MK_SEL="hr", STAR_LEGS=2, STAR_SEED=0;
+let HRB_LEGS=4, HRB_SELECTED=[], HRB_SEARCH="", HRB_CONF=false, HRB_STARS=false;
 const PROP_MARKETS={
   hit1:{label:"1+ Hit",mean:b=>b.proj.hits,line:0.5,om:"hits"},
   hit2:{label:"2+ Hits",mean:b=>b.proj.hits,line:1.5,om:"hits"},
@@ -2790,6 +2908,175 @@ function renderZones(model){
     renderZoneMatchup(model);
   });
 }
+// ===================== STAR GROUPS — auto-built cross-game parlays =====================
+const STAR_MK={
+  hr:{label:"HR",short:"HR",line:0.5,mean:b=>b.proj.hr,om:"hr",maxLegs:6,kind:"bat",min:0.06},
+  tb:{label:"2+ Total Bases",short:"2+ TB",line:1.5,mean:b=>b.proj.tb,om:"tb",maxLegs:10,kind:"bat",min:0.30},
+  hits:{label:"1+ Hit",short:"1+ Hit",line:0.5,mean:b=>b.proj.hits,om:"hits",maxLegs:10,kind:"bat",min:0.45},
+  rbi:{label:"1+ RBI",short:"1+ RBI",line:0.5,mean:b=>b.proj.rbi,om:"rbi",maxLegs:10,kind:"bat",min:0.25},
+  ks:{label:"Pitcher Strikeouts",short:"Ks",maxLegs:10,kind:"pitch",min:0.40},
+};
+function starGrade(avg){return avg>=82?{l:"S",c:"sg-s"}:avg>=72?{l:"A",c:"sg-a"}:avg>=62?{l:"B",c:"sg-b"}:{l:"C",c:"sg-c"};}
+function seededShuffle(arr,seed){ // light deterministic shuffle so "Shuffle" gives stable variety per seed
+  if(!seed)return arr;let a=[...arr],s=seed*2654435761%2147483647;
+  for(let i=a.length-1;i>0;i--){s=(s*16807)%2147483647;const j=s%(i+1);[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function starCandidates(model,mkKey){
+  const mk=STAR_MK[mkKey],gameByPk={};(model.games||[]).forEach(g=>gameByPk[g.gamePk]=g);
+  const cands=[];
+  if(mk.kind==="bat"){
+    (model.batters||[]).forEach(b=>{
+      if(!b._lineupConf||!b._upcoming)return;          // confirmed lineups + pre-game only
+      const g=gameByPk[b._gamePk];if(!g)return;
+      const oppSP=b.isHome?g._awayK:g._homeK;
+      const mean=mk.mean(b),prob=poissonOver(mean,mk.line);
+      if(!(prob>=mk.min))return;
+      const matchup=mkKey==="hr"?(b.hrMatch?b.hrMatch.score:Math.round(prob*100)):(b.escore||Math.round(prob*100));
+      let book=null,bookName=null,edge=null;
+      if(ODDS_LOADED){const be=bestEdgeForMarket(b,mk.om,mean);if(be){book=be.over;bookName=be.book;edge=be.edge;}}
+      cands.push({kind:"bat",b,name:b.name,team:b.team,game:b._gamePk,gameKey:b.game,prob,mean,line:mk.line,
+        matchup,score:Math.round(0.55*matchup+0.45*prob*100),vs:b.oppPitcher,era:oppSP?oppSP.cur.era:null,
+        vuln:b.oppVuln,iso:b.cur?b.cur.iso:null,form:b.recentForm?b.recentForm.state:null,parkF:g.parkF,book,bookName,edge,om:mk.om});
+    });
+  }else{
+    (model.games||[]).forEach(g=>{
+      if(gameStatusLabel(g)!=="Scheduled")return;
+      [g._awayK,g._homeK].forEach(K=>{
+        if(!K||K.projK==null)return;
+        const line=Math.max(3.5,Math.round(K.projK)-0.5),prob=poissonOver(K.projK,line);
+        if(!(prob>=mk.min))return;
+        cands.push({kind:"pitch",b:K,name:K.name,team:K.team,game:g.gamePk,gameKey:`${g.away.abbr}@${g.home.abbr}`,prob,mean:K.projK,line,
+          matchup:Math.round(prob*100),score:Math.round(prob*100+(K.cur.k9||8)),vs:K.vs,era:K.cur.era,k9:K.cur.k9,form:null,book:null,om:"ks"});
+      });
+    });
+  }
+  return cands.sort((a,b)=>b.score-a.score);
+}
+function buildStarGroups(model,mkKey,legs,count,seed){
+  const mk=STAR_MK[mkKey];legs=Math.max(1,Math.min(mk.maxLegs,legs));
+  const ranked=starCandidates(model,mkKey);
+  let pool=seededShuffle(ranked,seed);
+  if(seed)pool=pool.sort((a,b)=>b.score-a.score); // keep quality order; shuffle only varied ties/near-ties
+  if(ranked.length<legs)return {groups:[],legs,need:legs,have:ranked.length};
+  const groups=[];
+  while(groups.length<(count||7)&&pool.length>=legs){
+    const picks=pool.slice(0,legs);pool=pool.slice(legs);
+    const legObjs=picks.map(c=>({b:c.b,name:c.name,team:c.team,game:c.gameKey,prob:c.prob,book:c.book,label:mk.short,isGame:false}));
+    const par=buildParlay(legObjs,ODDS_LOADED);
+    const avg=picks.reduce((s,c)=>s+c.score,0)/picks.length;
+    const games=new Set(picks.map(p=>p.game)).size;
+    groups.push({letter:String.fromCharCode(65+groups.length),mk:mkKey,picks,par,grade:starGrade(avg),avgScore:Math.round(avg),games});
+  }
+  return {groups,legs,need:legs,have:ranked.length};
+}
+function starLegRow(c,i,mk){
+  const formB=c.form==="hot"?'<span class="sg-form hot">🔥 HOT</span>':c.form==="cold"?'<span class="sg-form cold">🧊 COLD</span>':'';
+  const sub=c.kind==="pitch"
+    ? `vs ${c.vs||"?"} · ${c.era!=null?"ERA "+c.era:""}${c.k9!=null?` · ${c.k9.toFixed(1)} K/9`:""}`
+    : `vs ${c.vs||"TBD"}${c.era!=null?` · ERA ${c.era}`:""}${c.iso?` · ISO ${isoStr(c.iso)}`:""}${c.vuln!=null?` · vuln ${c.vuln}`:""}`;
+  const lineLbl=c.kind==="pitch"?`${c.line+0.5}+ Ks`:mk.short;
+  const price=c.book!=null?`<span class="sg-price">${amStr(c.book)}</span>`:"";
+  return `<div class="sg-leg"><span class="sg-num">${i+1}</span>
+    <div class="sg-linfo"><div class="sg-lname"><b>${c.name}</b> <span class="sg-team">${c.team}</span> ${formB}<span class="sg-leglbl">${lineLbl}</span></div><small>${sub}</small></div>
+    <div class="sg-lright"><span class="sg-prob">${Math.round(c.prob*100)}%</span>${price}</div></div>`;
+}
+function renderStarGroups(model){
+  const board=el("sgBoard"),meta=el("sgMeta");if(!board)return;
+  const mk=STAR_MK[STAR_MK_SEL];
+  // clamp legs for HR
+  if(STAR_LEGS>mk.maxLegs)STAR_LEGS=mk.maxLegs;
+  [...el("sgLegs").children].forEach(btn=>{const l=+btn.dataset.l;btn.classList.toggle("active",l===STAR_LEGS);btn.classList.toggle("sg-disabled",l>mk.maxLegs);});
+  if(!model||!model.games||!model.games.length){board.innerHTML='<div class="empty"><b>No slate loaded</b>Load games first.</div>';if(meta)meta.textContent="";return;}
+  const res=buildStarGroups(model,STAR_MK_SEL,STAR_LEGS,7,STAR_SEED);
+  if(meta)meta.innerHTML=`${res.groups.length} ${res.legs}-leg group${res.groups.length===1?"":"s"} · <b>${mk.label}</b> · confirmed lineups · ranked by matchup vs the starter${STAR_MK_SEL==="hr"?' · <span class="sg-cap">HR capped at 6 legs</span>':''}`;
+  if(!res.groups.length){
+    board.innerHTML=`<div class="empty"><b>Not enough qualifying ${mk.kind==="pitch"?"starters":"bats"}</b>${mk.kind==="bat"?"Need at least "+res.need+" confirmed "+(res.need===1?"bat":"bats")+" — lineups post ~2–3 hrs before first pitch ("+res.have+" available right now). ":"Need at least "+res.need+" probable starters ("+res.have+" available). "}Try fewer legs or a different market.</div>`;
+    return;
+  }
+  board.innerHTML=res.groups.map(grp=>{
+    const ttl=grp.games===1?"Same-Game":"Cross-Game";
+    return `<div class="sg-card">
+      <div class="sg-ghead"><span class="sg-gtag">${grp.picks.length}-LEG</span><span class="sg-gletter">GROUP ${grp.letter}</span><span class="sg-gtitle">${ttl} ${mk.short} Group <small>— ${grp.picks.length} leg${grp.picks.length>1?"s":""} · ${grp.games} game${grp.games>1?"s":""}</small></span><span class="sg-grade ${grp.grade.c}">${grp.grade.l}</span></div>
+      ${grp.picks.map((c,i)=>starLegRow(c,i,mk)).join("")}
+      <div class="sg-gfoot"><span>${grp.picks.map(c=>shortName(c.name)).join(" + ")}</span><span class="sg-godds">${grp.par.fairAm!=null?amStr(grp.par.fairAm)+" fair":""} · ${(grp.par.prob*100).toFixed(1)}% to hit${ODDS_LOADED&&grp.par.bookAm!=null?` · book ${amStr(grp.par.bookAm)}`:""}</span></div>
+    </div>`;
+  }).join("");
+}
+function shortName(n){const p=String(n).split(/\s+/);return p.length>1?`${p[0][0]}. ${p[p.length-1]}`:n;}
+// ===================== HR GROUP BUILDER — interactive lineup board =====================
+function hrScore(b){return b.hrMatch?b.hrMatch.score:batterPowerScore(b);}
+function hrbCandidates(model){
+  const gameByPk={};(model.games||[]).forEach(g=>gameByPk[g.gamePk]=g);
+  return (model.batters||[]).map(b=>{
+    const g=gameByPk[b._gamePk],oppSP=g?(b.isHome?g._awayK:g._homeK):null;
+    return {b,id:String(b.id),name:b.name,team:b.team,score:hrScore(b),iso:b.cur?b.cur.iso:null,xslg:b.xstats?b.xstats.xslg:null,
+      parkF:g?g.parkF:1,era:oppSP?oppSP.cur.era:null,prob:poissonOver(b.proj?b.proj.hr:0,0.5),vs:b.oppPitcher,
+      conf:!!b._lineupConf,up:!!b._upcoming,star:!!(b.teamStar||b.teamBolt||b.teamSleeper),gamePk:b._gamePk,form:b.recentForm?b.recentForm.state:null};
+  }).sort((a,b)=>b.score-a.score);
+}
+function hrbToggle(selected,id,max){
+  if(selected.includes(id))return selected.filter(x=>x!==id);
+  if(selected.length>=max)return selected;
+  return [...selected,id];
+}
+function hrbAutoFill(cands,max){
+  const used=new Set(),pick=[];
+  for(const c of cands){if(used.has(c.gamePk))continue;used.add(c.gamePk);pick.push(c.id);if(pick.length>=max)break;}
+  return pick;
+}
+function hrbSummary(cands){
+  const sel=HRB_SELECTED.map(id=>cands.find(c=>c.id===id)).filter(Boolean);
+  if(!sel.length)return null;
+  const avgScore=Math.round(sel.reduce((s,c)=>s+c.score,0)/sel.length);
+  const avgIso=avgDefined(sel.map(c=>[pnum(c.iso),1]).filter(x=>x[0]!=null));
+  const legObjs=sel.map(c=>({b:c.b,name:c.name,team:c.team,game:c.b.game,prob:c.prob,book:null,label:"HR",isGame:false}));
+  const par=buildParlay(legObjs,ODDS_LOADED);
+  const games=new Set(sel.map(c=>c.gamePk));
+  return {n:sel.length,avgScore,avgIso,par,sameGame:games.size<sel.length};
+}
+function renderHRBuilder(model){
+  const list=el("hrbList");if(!list)return;
+  [...el("hrbLegs").children].forEach(btn=>btn.classList.toggle("active",+btn.dataset.l===HRB_LEGS));
+  if(!model||!model.games||!model.games.length){list.innerHTML='<div class="empty"><b>No slate loaded</b>Load games first.</div>';el("hrbChips").innerHTML="";el("hrbSummary").innerHTML="";return;}
+  let cands=hrbCandidates(model);
+  const all=cands;
+  // selected chips (from full pool so removal always works)
+  const selCands=HRB_SELECTED.map(id=>all.find(c=>c.id===id)).filter(Boolean);
+  el("hrbChips").innerHTML=selCands.length?selCands.map(c=>`<span class="hrb-chip">${c.name} <small>${c.team}</small> <button data-rm="${c.id}">×</button></span>`).join(""):'<span class="hrb-chip-empty">No players added yet — tap + on the board, or Auto-fill.</span>';
+  // filters
+  const q=HRB_SEARCH.toLowerCase();
+  cands=cands.filter(c=>{
+    if(HRB_CONF&&!c.conf)return false;
+    if(HRB_STARS&&!c.star)return false;
+    if(q&&!(c.name.toLowerCase().includes(q)||c.team.toLowerCase().includes(q)))return false;
+    return true;
+  });
+  const full=HRB_SELECTED.length>=HRB_LEGS;
+  list.innerHTML=cands.slice(0,60).map(c=>{
+    const on=HRB_SELECTED.includes(c.id);
+    const park=Math.round((c.parkF-1)*100);
+    const stat=`HR ${c.score} · ISO ${c.iso?isoStr(c.iso):"—"}${c.xslg!=null?` · xSLG ${fmt3(c.xslg)}`:""} · Park ${park>=0?"+":""}${park}%${c.era!=null?` · opp ERA ${c.era}`:""}`;
+    const dot=c.up?(c.conf?'<span class="wsdot sched" title="confirmed"></span>':'<span class="wsdot" title="projected"></span>'):'<span class="wsdot final" title="started"></span>';
+    const formB=c.form==="hot"?'<span class="sg-form hot">🔥</span>':c.form==="cold"?'<span class="sg-form cold">🧊</span>':'';
+    return `<div class="hrb-row ${on?"on":""}">
+      <div class="hrb-rinfo"><div class="hrb-rname">${dot}<b>${c.name}</b> <span class="sg-team">${c.team}</span>${c.star?' <span class="hrb-star">⭐</span>':''}${formB}</div><small>${stat}</small></div>
+      <div class="hrb-rscore"><span class="hrb-num">${c.score}</span><span class="hrb-slbl">HR Score</span></div>
+      <button class="hrb-add ${on?"added":""}" data-add="${c.id}" ${!on&&full?"disabled":""}>${on?"✓":"+"}</button>
+    </div>`;
+  }).join("")||'<div class="empty">No players match those filters.</div>';
+  // summary
+  const s=hrbSummary(all);
+  const sum=el("hrbSummary");
+  if(!s){sum.innerHTML=`<div class="hrb-sumbar empty-bar"><b>HR lineup</b><span>0/${HRB_LEGS} legs — add players to see combined odds</span></div>`;}
+  else{
+    const tier=s.avgScore>=90?"Elite":s.avgScore>=80?"Strong":s.avgScore>=70?"Solid":"Mixed";
+    sum.innerHTML=`<div class="hrb-sumbar">
+      <div class="hrb-sumleft"><div class="hrb-sumtier">${tier} HR lineup</div><div class="hrb-summeta">${s.n}/${HRB_LEGS} legs · avg HR Score ${s.avgScore}${s.sameGame?' · <span class="hrb-corr">⚠ same-game legs (correlated)</span>':''}</div></div>
+      <div class="hrb-sumright"><div class="hrb-sumstat"><b>${(s.par.prob*100).toFixed(1)}%</b><span>to hit all</span></div><div class="hrb-sumstat"><b>${s.par.fairAm!=null?amStr(s.par.fairAm):"—"}</b><span>fair odds</span></div>${ODDS_LOADED&&s.par.bookAm!=null?`<div class="hrb-sumstat"><b>${amStr(s.par.bookAm)}</b><span>book</span></div>`:""}</div>
+    </div>`;
+  }
+}
 // ===================== PITCHER VULNERABILITY REPORT — card view, overall + by hand =====================
 let PVR_TAB="overview";
 function handVuln(sideObj){if(!sideObj)return null;const ops=pnum(sideObj.ops);if(ops==null)return null;return Math.max(1,Math.min(99,Math.round(50+(ops-0.715)*180)));}
@@ -4112,6 +4399,8 @@ function setView(v){
   el("bestView").classList.toggle("hide",v!=="best");
   el("hrmodelView").classList.toggle("hide",v!=="hrmodel");
   el("vulnrepView").classList.toggle("hide",v!=="vulnrep");
+  el("stargroupsView").classList.toggle("hide",v!=="stargroups");
+  el("hrbuilderView").classList.toggle("hide",v!=="hrbuilder");
   el("homerView").classList.toggle("hide",v!=="homer");
   el("briefView").classList.toggle("hide",v!=="brief");
   el("zonesView").classList.toggle("hide",v!=="zones");
@@ -4130,6 +4419,8 @@ function setView(v){
   if(v==="best"&&MODEL) renderBestBets(MODEL);
   if(v==="hrmodel"&&MODEL) renderHRModel(MODEL);
   if(v==="vulnrep"&&MODEL) renderVulnReport(MODEL);
+  if(v==="stargroups"&&MODEL) renderStarGroups(MODEL);
+  if(v==="hrbuilder"&&MODEL) renderHRBuilder(MODEL);
   if(v==="homer") renderHomerAI(MODEL);
   if(v==="brief"&&MODEL) renderBriefings(MODEL);
   if(v==="zones"&&MODEL) renderZones(MODEL);
@@ -4178,10 +4469,10 @@ async function refreshNow(){
 }
 function startAuto(){
   if(AUTO_TIMER){clearInterval(AUTO_TIMER);AUTO_TIMER=null;}
-  if(el("autoRefresh")&&el("autoRefresh").checked)AUTO_TIMER=setInterval(()=>{if(!document.hidden)refreshNow();},600000);
+  if(el("autoRefresh")&&el("autoRefresh").checked)AUTO_TIMER=setInterval(()=>{if(!document.hidden)refreshNow();},1200000);
 }
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
-const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
+const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",stargroups:"Star Groups — auto-built parlays",hrbuilder:"HR Group Builder",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
   const t=el("viewTitle");if(t)t.textContent=VIEW_TITLE[v]||"";
@@ -4220,6 +4511,17 @@ el("trendSearch").addEventListener("input",e=>{TREND_Q=e.target.value;renderTren
 el("teamSelect").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;TEAM_SEL=b.dataset.key;renderTeamSelector();});
 el("hrmTable")&&el("hrmTable").addEventListener("click",e=>{const th=e.target.closest("th[data-k]");if(!th)return;const k=th.dataset.k;const strCols=["name","team","form","pitcher","pteam","status","lineup"];if(HRM_SORT.key===k)HRM_SORT.dir*=-1;else HRM_SORT={key:k,dir:strCols.includes(k)?1:-1};if(MODEL)renderHRModel(MODEL);});
 el("pvrTabs")&&el("pvrTabs").addEventListener("click",e=>{const b=e.target.closest("button[data-t]");if(!b)return;PVR_TAB=b.dataset.t;[...el("pvrTabs").children].forEach(c=>c.classList.toggle("active",c===b));if(MODEL)renderVulnReport(MODEL);});
+el("sgMarkets")&&el("sgMarkets").addEventListener("click",e=>{const b=e.target.closest("button[data-m]");if(!b)return;STAR_MK_SEL=b.dataset.m;[...el("sgMarkets").children].forEach(c=>c.classList.toggle("active",c===b));STAR_SEED=0;if(MODEL)renderStarGroups(MODEL);});
+el("sgLegs")&&el("sgLegs").addEventListener("click",e=>{const b=e.target.closest("button[data-l]");if(!b||b.classList.contains("sg-disabled"))return;STAR_LEGS=+b.dataset.l;STAR_SEED=0;if(MODEL)renderStarGroups(MODEL);});
+el("sgRegen")&&el("sgRegen").addEventListener("click",()=>{STAR_SEED=(STAR_SEED+1)||1;if(MODEL)renderStarGroups(MODEL);});
+el("hrbLegs")&&el("hrbLegs").addEventListener("click",e=>{const b=e.target.closest("button[data-l]");if(!b)return;HRB_LEGS=+b.dataset.l;if(HRB_SELECTED.length>HRB_LEGS)HRB_SELECTED=HRB_SELECTED.slice(0,HRB_LEGS);if(MODEL)renderHRBuilder(MODEL);});
+el("hrbList")&&el("hrbList").addEventListener("click",e=>{const b=e.target.closest("button[data-add]");if(!b)return;HRB_SELECTED=hrbToggle(HRB_SELECTED,b.dataset.add,HRB_LEGS);if(MODEL)renderHRBuilder(MODEL);});
+el("hrbChips")&&el("hrbChips").addEventListener("click",e=>{const b=e.target.closest("button[data-rm]");if(!b)return;HRB_SELECTED=HRB_SELECTED.filter(x=>x!==b.dataset.rm);if(MODEL)renderHRBuilder(MODEL);});
+el("hrbAuto")&&el("hrbAuto").addEventListener("click",()=>{if(!MODEL)return;let c=hrbCandidates(MODEL);if(HRB_CONF)c=c.filter(x=>x.conf);if(HRB_STARS)c=c.filter(x=>x.star);HRB_SELECTED=hrbAutoFill(c,HRB_LEGS);renderHRBuilder(MODEL);});
+el("hrbClear")&&el("hrbClear").addEventListener("click",()=>{HRB_SELECTED=[];if(MODEL)renderHRBuilder(MODEL);});
+el("hrbSearch")&&el("hrbSearch").addEventListener("input",e=>{HRB_SEARCH=e.target.value.trim();if(MODEL)renderHRBuilder(MODEL);});
+el("hrbConf")&&el("hrbConf").addEventListener("change",e=>{HRB_CONF=e.target.checked;if(MODEL)renderHRBuilder(MODEL);});
+el("hrbStars")&&el("hrbStars").addEventListener("change",e=>{HRB_STARS=e.target.checked;if(MODEL)renderHRBuilder(MODEL);});
 el("pvrPrev")&&el("pvrPrev").addEventListener("click",()=>wsShiftDate(-1));
 el("pvrNext")&&el("pvrNext").addEventListener("click",()=>wsShiftDate(1));
 el("pvrToday")&&el("pvrToday").addEventListener("click",()=>{const inp=el("date");if(inp)inp.value=ymdLocal(new Date());const run=el("run");if(run)run.click();});
