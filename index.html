@@ -689,6 +689,19 @@
   .sg-price{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted2)}
   .sg-gfoot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:10px;font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2)}
   .sg-godds{color:var(--chalk)}
+  .sg-wins{margin-bottom:18px}
+  .sg-wins:empty{display:none}
+  .sgwin-head{font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;color:var(--good);display:flex;align-items:center;gap:9px;margin-bottom:11px}
+  .sgwin-count{font-family:'Roboto Mono',monospace;font-size:11px;font-weight:700;color:#0a1a0f;background:var(--good);border-radius:11px;padding:2px 9px}
+  .sgwin-empty{font-family:'Roboto Mono',monospace;font-size:11.5px;color:var(--muted2);background:var(--panel);border:1px dashed var(--line);border-radius:11px;padding:13px 15px;line-height:1.5}
+  .sgwin-card{background:linear-gradient(135deg,rgba(95,191,125,.13),var(--panel));border:1px solid rgba(95,191,125,.4);border-radius:12px;padding:12px 15px;margin-bottom:10px}
+  .sgwin-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:9px}
+  .sgwin-tag{font-family:'Roboto Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.05em;color:var(--good);background:rgba(95,191,125,.18);border-radius:5px;padding:3px 8px}
+  .sgwin-odds{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2)}
+  .sgwin-badge{margin-left:auto;font-family:'Oswald',sans-serif;font-weight:700;font-size:12px;letter-spacing:.04em;color:#0a1a0f;background:var(--good);border-radius:6px;padding:3px 10px}
+  .sgwin-legs{display:flex;flex-wrap:wrap;gap:7px}
+  .sgwin-leg{font-family:'Roboto Mono',monospace;font-size:11.5px;color:var(--chalk);background:var(--panel3);border-radius:7px;padding:5px 10px}
+  .sgwin-leg small{color:var(--muted2);font-size:9px;margin-left:3px}
   .hrb-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
   .hrb-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;min-height:10px}
   .hrb-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(95,191,125,.12);border:1px solid rgba(95,191,125,.35);border-radius:18px;padding:5px 6px 5px 12px;font-size:13px;color:var(--chalk)}
@@ -1068,6 +1081,7 @@
 
   <section id="stargroupsView" class="hide">
     <div class="sec-head"><h2>⭐ Star Groups</h2><span class="tag">auto-built cross-game parlays — confirmed lineups, best matchups vs the starter</span><span class="rule"></span></div>
+    <div id="sgWins" class="sg-wins"></div>
     <div class="sg-controls">
       <div class="sg-cgroup" id="sgMarkets">
         <button data-m="hr" class="active">HR</button>
@@ -2989,6 +3003,8 @@ function renderStarGroups(model){
   [...el("sgLegs").children].forEach(btn=>{const l=+btn.dataset.l;btn.classList.toggle("active",l===STAR_LEGS);btn.classList.toggle("sg-disabled",l>mk.maxLegs);});
   if(!model||!model.games||!model.games.length){board.innerHTML='<div class="empty"><b>No slate loaded</b>Load games first.</div>';if(meta)meta.textContent="";return;}
   const res=buildStarGroups(model,STAR_MK_SEL,STAR_LEGS,7,STAR_SEED);
+  if(res.groups.length)saveSGParlays(res.groups,STAR_MK_SEL);
+  renderSGWins(model);
   if(meta)meta.innerHTML=`${res.groups.length} ${res.legs}-leg group${res.groups.length===1?"":"s"} · <b>${mk.label}</b> · confirmed lineups · ranked by matchup vs the starter${STAR_MK_SEL==="hr"?' · <span class="sg-cap">HR capped at 6 legs</span>':''}`;
   if(!res.groups.length){
     board.innerHTML=`<div class="empty"><b>Not enough qualifying ${mk.kind==="pitch"?"starters":"bats"}</b>${mk.kind==="bat"?"Need at least "+res.need+" confirmed "+(res.need===1?"bat":"bats")+" — lineups post ~2–3 hrs before first pitch ("+res.have+" available right now). ":"Need at least "+res.need+" probable starters ("+res.have+" available). "}Try fewer legs or a different market.</div>`;
@@ -3004,6 +3020,61 @@ function renderStarGroups(model){
   }).join("");
 }
 function shortName(n){const p=String(n).split(/\s+/);return p.length>1?`${p[0][0]}. ${p[p.length-1]}`:n;}
+// --- Winning parlays (today): persist recommended groups, grade vs live results ---
+const LS_SGWINS="eb:sgwins";
+function loadSGWins(){try{const o=JSON.parse(localStorage.getItem(LS_SGWINS)||"null");if(o&&o.date===todayStr())return o;}catch(e){}return {date:todayStr(),parlays:{}};}
+function saveSGWins(o){try{o.date=todayStr();localStorage.setItem(LS_SGWINS,JSON.stringify(o));}catch(e){}}
+function sgSig(picks,mkKey){return mkKey+"|"+picks.length+"|"+picks.map(c=>c.kind==="pitch"?("p:"+norm(c.name)):("b:"+String(c.b.id))).sort().join(",");}
+function saveSGParlays(groups,mkKey){
+  if(!groups||!groups.length)return;
+  const store=loadSGWins();let changed=false;
+  groups.forEach(grp=>{
+    const sig=sgSig(grp.picks,mkKey);
+    if(store.parlays[sig])return;
+    store.parlays[sig]={sig,mk:mkKey,n:grp.picks.length,grade:grp.grade.l,fairAm:grp.par.fairAm,bookAm:grp.par.bookAm,prob:grp.par.prob,savedAt:Date.now(),
+      legs:grp.picks.map(c=>({id:c.kind==="pitch"?null:String(c.b.id),name:c.name,team:c.team,mk:mkKey,line:c.line,gamePk:c.gamePk}))};
+    changed=true;
+  });
+  if(changed)saveSGWins(store);
+}
+function sgResultLookup(model){
+  const bats={},pits={};
+  (model.batters||[]).forEach(b=>{bats[String(b.id)]={b,final:b._gstatus==="Final"};});
+  (model.games||[]).forEach(g=>{const fin=gameStatusLabel(g)==="Final";[g._awayK,g._homeK].forEach(K=>{if(K)pits[norm(K.name)]={p:K,final:fin};});});
+  return {bats,pits};
+}
+const SG_THRESH={hr:["hr",1],tb:["tb",2],hits:["h",1],rbi:["rbi",1]};
+function gradeSGLeg(leg,lk){
+  if(leg.mk==="ks"){
+    const e=lk.pits[norm(leg.name)];if(!e||!e.p.result)return e&&e.final?"miss":"pending";
+    if(e.p.result.k>=leg.line+0.5)return "hit";return e.final?"miss":"pending";
+  }
+  const e=lk.bats[String(leg.id)];if(!e)return "pending";
+  const need=SG_THRESH[leg.mk];if(!need)return "pending";
+  if(e.b.result&&(e.b.result[need[0]]||0)>=need[1])return "hit";
+  return e.final?"miss":"pending";
+}
+function gradeSGParlay(par,lk){
+  const st=par.legs.map(l=>gradeSGLeg(l,lk));
+  if(st.every(s=>s==="hit"))return "won";
+  if(st.some(s=>s==="miss"))return "lost";
+  return "pending";
+}
+function renderSGWins(model){
+  const box=el("sgWins");if(!box)return;
+  const store=loadSGWins(),sigs=Object.keys(store.parlays);
+  if(!sigs.length){box.innerHTML="";return;}
+  const lk=sgResultLookup(model),won=[];
+  sigs.forEach(sig=>{const p=store.parlays[sig];if(gradeSGParlay(p,lk)==="won")won.push(p);});
+  if(!won.length){box.innerHTML=`<div class="sgwin-head">🏆 Winning Parlays — Today</div><div class="sgwin-empty">None of today's recommended parlays have fully cashed yet — winners land here automatically the moment every leg hits.</div>`;return;}
+  won.sort((a,b)=>b.n-a.n||(b.fairAm||0)-(a.fairAm||0));
+  box.innerHTML=`<div class="sgwin-head">🏆 Winning Parlays — Today <span class="sgwin-count">${won.length}</span></div>`+
+    won.map(p=>{
+      const mkS=STAR_MK[p.mk]?STAR_MK[p.mk].short:p.mk;
+      const legs=p.legs.map(l=>`<span class="sgwin-leg">✓ ${shortName(l.name)} <small>${l.team}</small></span>`).join("");
+      return `<div class="sgwin-card"><div class="sgwin-top"><span class="sgwin-tag">${p.n}-LEG ${mkS}</span><span class="sgwin-odds">${p.fairAm!=null?amStr(p.fairAm)+" fair":""}${ODDS_LOADED&&p.bookAm!=null?` · book ${amStr(p.bookAm)}`:""} · ${(p.prob*100).toFixed(1)}% to hit</span><span class="sgwin-badge">WON ✓</span></div><div class="sgwin-legs">${legs}</div></div>`;
+    }).join("");
+}
 // ===================== HR GROUP BUILDER — interactive lineup board =====================
 function hrScore(b){return b.hrMatch?b.hrMatch.score:batterPowerScore(b);}
 function hrbCandidates(model){
