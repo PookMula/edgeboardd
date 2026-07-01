@@ -714,6 +714,35 @@
   .mlf-bar{height:5px;background:var(--panel3);border-radius:3px;overflow:hidden}
   .mlf-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--good));border-radius:3px}
   .mlf-na td{color:var(--muted2);opacity:.6}
+  .hsim-headbar{font-family:'Roboto Mono',monospace;font-size:12px;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 15px;margin-bottom:14px}
+  .hsim-headbar b{color:var(--chalk)}.hsim-ran{color:var(--muted2)}
+  .hsim-lead{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .hsim-lhead,.hsim-lrow{display:grid;grid-template-columns:42px 1fr 1.3fr 90px 70px;align-items:center;gap:8px;padding:9px 14px}
+  .hsim-lhead{background:var(--panel2);font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted2)}
+  .hsim-lrow{border-top:1px solid var(--line);background:var(--panel)}
+  .hsim-lrow:hover{background:var(--panel2)}
+  .hsim-lr{font-family:'Roboto Mono',monospace;font-size:13px;color:var(--muted2);text-align:center}
+  .hsim-ln b{color:var(--chalk);font-size:14px}.hsim-ln small{color:var(--muted2);font-family:'Roboto Mono',monospace;font-size:10px}
+  .hsim-proj{font-family:'Roboto Mono',monospace;font-size:8px;color:var(--amber);background:rgba(242,181,60,.14);border-radius:4px;padding:1px 5px}
+  .hsim-lc{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted)}.hsim-lc small{color:var(--muted2)}
+  .hsim-lc2{text-align:right;font-family:'Roboto Mono',monospace}
+  .hsim-tot{color:var(--chalk);font-weight:700;font-size:14px}.hsim-pct{color:var(--teal);font-weight:700}
+  .hsim-game{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 15px;margin-bottom:14px}
+  .hsim-ghead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:11px}
+  .hsim-gteams{font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;color:var(--chalk)}.hsim-gteams .bat{color:var(--muted2);font-weight:400}
+  .hsim-gmeta{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted2)}
+  .hsim-wpos{color:var(--good)}.hsim-wneg{color:#e2604f}
+  .hsim-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:640px){.hsim-cols{grid-template-columns:1fr}}
+  .hsim-cteam{font-family:'Oswald',sans-serif;font-weight:600;font-size:14px;color:var(--chalk);margin-bottom:8px}
+  .hsim-cteam small{color:var(--muted2);font-weight:400;font-family:'Roboto Mono',monospace;font-size:10px}
+  .hsim-pod{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--line)}
+  .hsim-pod:last-child{border-bottom:none}
+  .hsim-medal{font-size:16px;width:22px;text-align:center}
+  .hsim-pinfo{flex:1;min-width:0}.hsim-pinfo b{color:var(--chalk);font-size:13px}
+  .hsim-pinfo small{display:block;color:var(--muted2);font-family:'Roboto Mono',monospace;font-size:10px;margin-top:1px}
+  .hsim-prob{font-family:'Roboto Mono',monospace;font-weight:700;color:var(--teal);font-size:13px}
+  .hsim-none{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2);padding:6px 0}
   .sg-wins{margin-bottom:18px}
   .sg-wins:empty{display:none}
   .sgwin-head{font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;color:var(--good);display:flex;align-items:center;gap:9px;margin-bottom:11px}
@@ -858,6 +887,7 @@
       <button data-view="slate">📊 Dashboard</button>
       <button data-view="best">🏆 Best Bets</button>
       <button data-view="hrmodel">💣 Home Runs Model</button>
+      <button data-view="hrsim">🎲 HR Simulator</button>
       <button data-view="homer">🤖 Homer AI <span class="sb-beta">BETA</span></button>
       <button data-view="brief">📝 Game Briefings</button>
       <button data-view="hr">✅ Homers Today</button>
@@ -1103,6 +1133,20 @@
     </div>
     <div class="hrb-list" id="hrbList"></div>
     <div class="hrb-summary" id="hrbSummary"></div>
+  </section>
+
+  <section id="hrsimView" class="hide">
+    <div class="sec-head"><h2>🎲 Daily HR Simulator</h2><span class="tag">10,000 Monte Carlo sims per game — total simulated home runs by hitter</span><span class="rule"></span></div>
+    <div class="ws-controls">
+      <div class="ws-date"><button id="hrsimPrev" title="Previous day">←</button><span id="hrsimDateLbl">—</span><button id="hrsimNext" title="Next day">→</button><button id="hrsimToday" class="ws-today">Today</button></div>
+      <button class="sg-regen" id="hrsimRerun">🎲 Re-run 10,000</button>
+    </div>
+    <div class="hsim-headbar" id="hrsimHead"></div>
+    <div class="pvr-tabs" id="hrsimTabs">
+      <button data-t="leaderboard" class="active">Slate Leaderboard</button>
+      <button data-t="games">By Team (Podiums)</button>
+    </div>
+    <div id="hrsimBoard"></div>
   </section>
 
   <section id="mlmodelView" class="hide">
@@ -3106,6 +3150,82 @@ function renderSGWins(model){
       return `<div class="sgwin-card"><div class="sgwin-top"><span class="sgwin-tag">${p.n}-LEG ${mkS}</span><span class="sgwin-odds">${p.fairAm!=null?amStr(p.fairAm)+" fair":""}${ODDS_LOADED&&p.bookAm!=null?` · book ${amStr(p.bookAm)}`:""} · ${(p.prob*100).toFixed(1)}% to hit</span><span class="sgwin-badge">WON ✓</span></div><div class="sgwin-legs">${legs}</div></div>`;
     }).join("");
 }
+// ===================== DAILY HR SIMULATOR — 10,000-sim Monte Carlo per game =====================
+let HRSIM_TAB="leaderboard";
+function runHRSim(model,n){
+  n=n||10000;
+  const gameByPk={};(model.games||[]).forEach(g=>gameByPk[g.gamePk]=g);
+  const players=[];
+  (model.batters||[]).forEach(b=>{
+    const lam=b.proj?b.proj.hr:0;if(!(lam>0))return;
+    let total=0,games=0,multi=0;
+    for(let i=0;i<n;i++){const k=poisRand(lam);if(k>0){games++;total+=k;if(k>1)multi++;}}
+    const g=gameByPk[b._gamePk],oppSP=g?(b.isHome?g._awayK:g._homeK):null;
+    players.push({b,id:b.id,name:b.name,team:b.team,gamePk:b._gamePk,isHome:b.isHome,
+      total,prob:games/n,avgHR:total/n,multiPct:multi/n,
+      sp:b.oppPitcher,spEra:oppSP&&oppSP.cur?oppSP.cur.era:null,iso:b.cur?b.cur.iso:null,
+      barrel:b.statcast&&b.statcast.barrel!=null?b.statcast.barrel:null,
+      parkF:g?g.parkF:1,weather:g?g.weather:null,conf:!!b._lineupConf,upcoming:!!b._upcoming});
+  });
+  players.sort((a,b)=>b.total-a.total);
+  return {n,players,date:model.date,ranAt:Date.now()};
+}
+function getHRSim(model,force){
+  if(!force&&model._hrSim&&model._hrSimStamp===model.date)return model._hrSim;
+  const sim=runHRSim(model,10000);model._hrSim=sim;model._hrSimStamp=model.date;return sim;
+}
+function hrSimByGame(sim,model){
+  const byGame={};sim.players.forEach(p=>{(byGame[p.gamePk]=byGame[p.gamePk]||[]).push(p);});
+  return (model.games||[]).map(g=>{
+    const ps=byGame[g.gamePk]||[];
+    const away=ps.filter(p=>!p.isHome).sort((a,b)=>b.total-a.total).slice(0,3);
+    const home=ps.filter(p=>p.isHome).sort((a,b)=>b.total-a.total).slice(0,3);
+    const top=Math.max(away[0]?away[0].total:0,home[0]?home[0].total:0);
+    return {g,away,home,top};
+  }).filter(x=>x.away.length||x.home.length).sort((a,b)=>b.top-a.top);
+}
+const HRSIM_MEDAL=["🥇","🥈","🥉"];
+function hrSimPodium(list){
+  if(!list.length)return '<div class="hsim-none">No projected hitters.</div>';
+  return list.map((p,i)=>`<div class="hsim-pod"><span class="hsim-medal">${HRSIM_MEDAL[i]||""}</span>
+    <div class="hsim-pinfo"><b>${p.name}</b><small>${p.total.toLocaleString()} HR / ${(p._n||10000).toLocaleString()} sims${p.barrel!=null?` · ${p.barrel.toFixed(0)}% brl`:p.iso?` · ${isoStr(p.iso)} ISO`:""}</small></div>
+    <span class="hsim-prob">${(p.prob*100).toFixed(1)}%</span></div>`).join("");
+}
+function hrSimWx(g){
+  if(!g.weather)return "";
+  const w=g.weather,hrc=(w.mult-1)*100;
+  return `${Math.round(w.tempF)}°F · ${Math.round(w.windMph)}mph ${w.cardinal||""} · <span class="${hrc>=0?'hsim-wpos':'hsim-wneg'}">${hrc>=0?"+":""}${hrc.toFixed(1)}% HR</span>`;
+}
+function renderHRSim(model){
+  const board=el("hrsimBoard"),head=el("hrsimHead"),dl=el("hrsimDateLbl");
+  if(dl)dl.textContent=model&&model.date?model.date:"—";
+  if(!model||!model.games||!model.games.length){if(board)board.innerHTML='<div class="empty"><b>No slate loaded</b>Load games first.</div>';if(head)head.textContent="";return;}
+  const sim=getHRSim(model);
+  const slateTotal=Math.round(sim.players.reduce((s,p)=>s+p.avgHR,0));
+  if(head)head.innerHTML=`<b>${sim.n.toLocaleString()}</b> simulations/game · <b>${sim.players.length}</b> hitters · ~<b>${slateTotal}</b> HRs projected across the slate · <span class="hsim-ran">ran ${new Date(sim.ranAt).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}</span>`;
+  [...el("hrsimTabs").children].forEach(b=>b.classList.toggle("active",b.dataset.t===HRSIM_TAB));
+  if(HRSIM_TAB==="leaderboard"){
+    const top=sim.players.slice(0,40);
+    board.innerHTML=`<div class="hsim-lead"><div class="hsim-lhead"><span class="hsim-lr">#</span><span class="hsim-ln">Hitter</span><span class="hsim-lc">vs SP</span><span class="hsim-lc2">Total HR</span><span class="hsim-lc2">HR%</span></div>`+
+      top.map((p,i)=>`<div class="hsim-lrow"><span class="hsim-lr">${i<3?HRSIM_MEDAL[i]:i+1}</span>
+        <span class="hsim-ln"><b>${p.name}</b> <small>${p.team}</small>${!p.conf?' <span class="hsim-proj">proj</span>':''}</span>
+        <span class="hsim-lc">${shortName(p.sp||"TBD")}${p.spEra!=null?` <small>${p.spEra}</small>`:""}</span>
+        <span class="hsim-lc2 hsim-tot">${p.total.toLocaleString()}</span>
+        <span class="hsim-lc2 hsim-pct">${(p.prob*100).toFixed(1)}%</span></div>`).join("")+`</div>`;
+    return;
+  }
+  const cards=hrSimByGame(sim,model);
+  board.innerHTML=cards.map(x=>{
+    const g=x.g;
+    return `<div class="hsim-game">
+      <div class="hsim-ghead"><div class="hsim-gteams">${g.away.short} <span class="bat">@</span> ${g.home.short}${g.dh?` <span class="bdh">G${g.gameNumber}</span>`:""}</div>
+        <div class="hsim-gmeta"><span class="wsdot ${gameStatusLabel(g)==="Live"?"live":gameStatusLabel(g)==="Final"?"final":"sched"}"></span>${gameStatusLabel(g)} · Park ${(g.parkF||1).toFixed(2)}${g.weather?" · "+hrSimWx(g):""}</div></div>
+      <div class="hsim-cols">
+        <div class="hsim-col"><div class="hsim-cteam">${g.away.short} <small>vs ${shortName(g._homeK?g._homeK.name:"TBD")}${g._homeK&&g._homeK.cur&&g._homeK.cur.era!=null?" · "+g._homeK.cur.era+" ERA":""}</small></div>${hrSimPodium(x.away)}</div>
+        <div class="hsim-col"><div class="hsim-cteam">${g.home.short} <small>vs ${shortName(g._awayK?g._awayK.name:"TBD")}${g._awayK&&g._awayK.cur&&g._awayK.cur.era!=null?" · "+g._awayK.cur.era+" ERA":""}</small></div>${hrSimPodium(x.home)}</div>
+      </div></div>`;
+  }).join("")+`<div class="ws-note">Each hitter's per-game HR rate (from the matchup model — lineup, starter, L/R splits, power, pitcher HR/9, park, weather; barrel%/hard-hit% when a Statcast proxy is set) is sampled ${sim.n.toLocaleString()} times. Total HR = HRs across all sims; HR% = share of sims with ≥1.</div>`;
+}
 // ===================== MONEYLINE MODEL — 0–100 factor-based ML score =====================
 function spQual(k){
   if(!k||!k.cur)return {score:50,have:false};
@@ -4577,6 +4697,7 @@ function setView(v){
   el("vulnrepView").classList.toggle("hide",v!=="vulnrep");
   el("stargroupsView").classList.toggle("hide",v!=="stargroups");
   el("mlmodelView").classList.toggle("hide",v!=="mlmodel");
+  el("hrsimView").classList.toggle("hide",v!=="hrsim");
   el("hrbuilderView").classList.toggle("hide",v!=="hrbuilder");
   el("homerView").classList.toggle("hide",v!=="homer");
   el("briefView").classList.toggle("hide",v!=="brief");
@@ -4598,6 +4719,7 @@ function setView(v){
   if(v==="vulnrep"&&MODEL) renderVulnReport(MODEL);
   if(v==="stargroups"&&MODEL) renderStarGroups(MODEL);
   if(v==="mlmodel"&&MODEL) renderMLModel(MODEL);
+  if(v==="hrsim"&&MODEL) renderHRSim(MODEL);
   if(v==="hrbuilder"&&MODEL) renderHRBuilder(MODEL);
   if(v==="homer") renderHomerAI(MODEL);
   if(v==="brief"&&MODEL) renderBriefings(MODEL);
@@ -4650,7 +4772,7 @@ function startAuto(){
   if(el("autoRefresh")&&el("autoRefresh").checked)AUTO_TIMER=setInterval(()=>{if(!document.hidden)refreshNow();},1200000);
 }
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
-const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",stargroups:"Star Groups — auto-built parlays",mlmodel:"Moneyline Model — 0–100 score",hrbuilder:"HR Group Builder",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
+const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",stargroups:"Star Groups — auto-built parlays",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",hrbuilder:"HR Group Builder",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
   const t=el("viewTitle");if(t)t.textContent=VIEW_TITLE[v]||"";
@@ -4692,6 +4814,11 @@ el("pvrTabs")&&el("pvrTabs").addEventListener("click",e=>{const b=e.target.close
 el("sgMarkets")&&el("sgMarkets").addEventListener("click",e=>{const b=e.target.closest("button[data-m]");if(!b)return;STAR_MK_SEL=b.dataset.m;[...el("sgMarkets").children].forEach(c=>c.classList.toggle("active",c===b));STAR_SEED=0;if(MODEL)renderStarGroups(MODEL);});
 el("sgLegs")&&el("sgLegs").addEventListener("click",e=>{const b=e.target.closest("button[data-l]");if(!b||b.classList.contains("sg-disabled"))return;STAR_LEGS=+b.dataset.l;STAR_SEED=0;if(MODEL)renderStarGroups(MODEL);});
 el("sgRegen")&&el("sgRegen").addEventListener("click",()=>{STAR_SEED=(STAR_SEED+1)||1;if(MODEL)renderStarGroups(MODEL);});
+el("hrsimTabs")&&el("hrsimTabs").addEventListener("click",e=>{const b=e.target.closest("button[data-t]");if(!b)return;HRSIM_TAB=b.dataset.t;renderHRSim(MODEL);});
+el("hrsimRerun")&&el("hrsimRerun").addEventListener("click",()=>{if(MODEL){getHRSim(MODEL,true);renderHRSim(MODEL);}});
+el("hrsimPrev")&&el("hrsimPrev").addEventListener("click",()=>wsShiftDate(-1));
+el("hrsimNext")&&el("hrsimNext").addEventListener("click",()=>wsShiftDate(1));
+el("hrsimToday")&&el("hrsimToday").addEventListener("click",()=>{const inp=el("date");if(inp)inp.value=ymdLocal(new Date());const run=el("run");if(run)run.click();});
 el("hrbLegs")&&el("hrbLegs").addEventListener("click",e=>{const b=e.target.closest("button[data-l]");if(!b)return;HRB_LEGS=+b.dataset.l;if(HRB_SELECTED.length>HRB_LEGS)HRB_SELECTED=HRB_SELECTED.slice(0,HRB_LEGS);if(MODEL)renderHRBuilder(MODEL);});
 el("hrbList")&&el("hrbList").addEventListener("click",e=>{const b=e.target.closest("button[data-add]");if(!b)return;HRB_SELECTED=hrbToggle(HRB_SELECTED,b.dataset.add,HRB_LEGS);if(MODEL)renderHRBuilder(MODEL);});
 el("hrbChips")&&el("hrbChips").addEventListener("click",e=>{const b=e.target.closest("button[data-rm]");if(!b)return;HRB_SELECTED=HRB_SELECTED.filter(x=>x!==b.dataset.rm);if(MODEL)renderHRBuilder(MODEL);});
