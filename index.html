@@ -717,7 +717,7 @@
   .hsim-headbar{font-family:'Roboto Mono',monospace;font-size:12px;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px 15px;margin-bottom:14px}
   .hsim-headbar b{color:var(--chalk)}.hsim-ran{color:var(--muted2)}
   .hsim-lead{border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .hsim-lhead,.hsim-lrow{display:grid;grid-template-columns:42px 1fr 1.3fr 90px 70px;align-items:center;gap:8px;padding:9px 14px}
+  .hsim-lhead,.hsim-lrow{display:grid;grid-template-columns:42px 1fr 1.2fr 60px 84px 64px;align-items:center;gap:8px;padding:9px 14px}
   .hsim-lhead{background:var(--panel2);font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted2)}
   .hsim-lrow{border-top:1px solid var(--line);background:var(--panel)}
   .hsim-lrow:hover{background:var(--panel2)}
@@ -726,7 +726,7 @@
   .hsim-proj{font-family:'Roboto Mono',monospace;font-size:8px;color:var(--amber);background:rgba(242,181,60,.14);border-radius:4px;padding:1px 5px}
   .hsim-lc{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted)}.hsim-lc small{color:var(--muted2)}
   .hsim-lc2{text-align:right;font-family:'Roboto Mono',monospace}
-  .hsim-tot{color:var(--chalk);font-weight:700;font-size:14px}.hsim-pct{color:var(--teal);font-weight:700}
+  .hsim-tot{color:var(--chalk);font-weight:700;font-size:14px}.hsim-pct{color:var(--teal);font-weight:700}.hsim-pag{color:var(--muted)}
   .hsim-game{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 15px;margin-bottom:14px}
   .hsim-ghead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:11px}
   .hsim-gteams{font-family:'Oswald',sans-serif;font-weight:600;font-size:16px;color:var(--chalk)}.hsim-gteams .bat{color:var(--muted2);font-weight:400}
@@ -1457,6 +1457,8 @@ const LG = { hrPA:0.0285, hPA:0.213, tbPA:0.345, rbiPA:0.105, kPA:0.225, sbG:0.0
 const MIN_PA = 25;
 const SLOT_PA = [4.62,4.54,4.45,4.36,4.26,4.10,3.95,3.80,3.66]; // batting order 1..9
 const DEF_PA = 4.05;
+function paG(b){const p=b&&b._expPA!=null?b._expPA:(b&&b.slot?SLOT_PA[Math.min(8,Math.max(0,b.slot-1))]:DEF_PA);return p;}
+function avgPA(b){if(!b||!b.cur)return null;const pa=b.cur.pa,g=b.cur.g;if(pa==null||!g)return null;return pa/g;}
 const PRIOR = { hr:160,h:60,tb:90,rbi:140,kBat:120,sbG:45,hrP:170,hP:70,tbP:90,kP:90 };
 const PARK = {115:1.33,113:1.18,147:1.13,143:1.07,158:1.07,117:1.05,110:1.04,111:1.04,145:1.04,119:1.04,144:1.03,141:1.03,140:1.02,109:1.02,120:1.01,112:1.00,108:1.00,142:1.00,114:0.98,121:0.97,139:0.97,118:0.96,135:0.95,138:0.95,133:1.05,116:0.94,146:0.92,136:0.92,134:0.93,137:0.90};
 // home park: lat, lon, cf = compass bearing home plate -> center field (deg), roof: open/retract/dome
@@ -2753,7 +2755,7 @@ function renderBoard(model,market){
     const fallback=!oddsCell?`<span class="neg">OPS ${b.cur.ops??"—"}</span>`:"";
     const row=document.createElement("div");row.className="row"+(i===0?" top1":i<3?" top"+(i+1):"");
     row.innerHTML=`<div class="rank">${i+1}</div><div>${gbadge(b.grade)}</div>
-      <div class="who"><span class="nm">${rankEmoji(b)}${formEmoji(b)}${b.name}</span><span class="meta">${b.team} ${b.pos||""} · AVG ${b.cur.avg??"—"} · SLG ${b.cur.slg??"—"} · ISO ${isoStr(b.cur.iso)}</span></div>
+      <div class="who"><span class="nm">${rankEmoji(b)}${formEmoji(b)}${b.name}</span><span class="meta">${b.team} ${b.pos||""}${avgPA(b)!=null?` · ${avgPA(b).toFixed(1)} avg PA`:""} · AVG ${b.cur.avg??"—"} · SLG ${b.cur.slg??"—"} · ISO ${isoStr(b.cur.iso)}</span></div>
       <div class="opp">vs <b>${b.oppPitcher}</b> ${platPill(b)} ${weakPill(b)}<span class="pmeta">${b.game}${b.bvp&&b.bvp.pa>=4?` · BvP ${b.bvp.h}-${b.bvp.ab}`:""}</span></div>
       <div class="proj">${b.proj[market].toFixed(M.dec)}</div>
       <div class="rcol">${oddsCell||fallback}${resCell}</div>`;
@@ -3063,7 +3065,7 @@ function starLegRow(c,i,mk){
   const formB=c.form==="hot"?'<span class="sg-form hot">🔥 HOT</span>':c.form==="cold"?'<span class="sg-form cold">🧊 COLD</span>':'';
   const sub=c.kind==="pitch"
     ? `vs ${c.vs||"?"} · ${c.era!=null?"ERA "+c.era:""}${c.k9!=null?` · ${c.k9.toFixed(1)} K/9`:""}`
-    : `vs ${c.vs||"TBD"}${c.era!=null?` · ERA ${c.era}`:""}${c.iso?` · ISO ${isoStr(c.iso)}`:""}${c.vuln!=null?` · vuln ${c.vuln}`:""}`;
+    : `vs ${c.vs||"TBD"}${c.era!=null?` · ERA ${c.era}`:""}${c.iso?` · ISO ${isoStr(c.iso)}`:""}${c.b&&avgPA(c.b)!=null?` · ${avgPA(c.b).toFixed(1)} avg PA`:""}${c.vuln!=null?` · vuln ${c.vuln}`:""}`;
   const lineLbl=c.kind==="pitch"?`${c.line+0.5}+ Ks`:mk.short;
   const price=c.book!=null?`<span class="sg-price">${amStr(c.book)}</span>`:"";
   return `<div class="sg-leg"><span class="sg-num">${i+1}</span>
@@ -3163,7 +3165,7 @@ function runHRSim(model,n){
     const g=gameByPk[b._gamePk],oppSP=g?(b.isHome?g._awayK:g._homeK):null;
     players.push({b,id:b.id,name:b.name,team:b.team,gamePk:b._gamePk,isHome:b.isHome,
       total,prob:games/n,avgHR:total/n,multiPct:multi/n,
-      sp:b.oppPitcher,spEra:oppSP&&oppSP.cur?oppSP.cur.era:null,iso:b.cur?b.cur.iso:null,
+      sp:b.oppPitcher,spEra:oppSP&&oppSP.cur?oppSP.cur.era:null,iso:b.cur?b.cur.iso:null,paG:avgPA(b),
       barrel:b.statcast&&b.statcast.barrel!=null?b.statcast.barrel:null,
       parkF:g?g.parkF:1,weather:g?g.weather:null,conf:!!b._lineupConf,upcoming:!!b._upcoming});
   });
@@ -3188,7 +3190,7 @@ const HRSIM_MEDAL=["🥇","🥈","🥉"];
 function hrSimPodium(list){
   if(!list.length)return '<div class="hsim-none">No projected hitters.</div>';
   return list.map((p,i)=>`<div class="hsim-pod"><span class="hsim-medal">${HRSIM_MEDAL[i]||""}</span>
-    <div class="hsim-pinfo"><b>${p.name}</b><small>${p.total.toLocaleString()} HR / ${(p._n||10000).toLocaleString()} sims${p.barrel!=null?` · ${p.barrel.toFixed(0)}% brl`:p.iso?` · ${isoStr(p.iso)} ISO`:""}</small></div>
+    <div class="hsim-pinfo"><b>${p.name}</b><small>${p.total.toLocaleString()} HR / ${(p._n||10000).toLocaleString()} sims${p.paG!=null?` · ${p.paG.toFixed(1)} avg PA`:""}${p.barrel!=null?` · ${p.barrel.toFixed(0)}% brl`:p.iso?` · ${isoStr(p.iso)} ISO`:""}</small></div>
     <span class="hsim-prob">${(p.prob*100).toFixed(1)}%</span></div>`).join("");
 }
 function hrSimWx(g){
@@ -3206,10 +3208,11 @@ function renderHRSim(model){
   [...el("hrsimTabs").children].forEach(b=>b.classList.toggle("active",b.dataset.t===HRSIM_TAB));
   if(HRSIM_TAB==="leaderboard"){
     const top=sim.players.slice(0,40);
-    board.innerHTML=`<div class="hsim-lead"><div class="hsim-lhead"><span class="hsim-lr">#</span><span class="hsim-ln">Hitter</span><span class="hsim-lc">vs SP</span><span class="hsim-lc2">Total HR</span><span class="hsim-lc2">HR%</span></div>`+
+    board.innerHTML=`<div class="hsim-lead"><div class="hsim-lhead"><span class="hsim-lr">#</span><span class="hsim-ln">Hitter</span><span class="hsim-lc">vs SP</span><span class="hsim-lc2">AVG PA</span><span class="hsim-lc2">Total HR</span><span class="hsim-lc2">HR%</span></div>`+
       top.map((p,i)=>`<div class="hsim-lrow"><span class="hsim-lr">${i<3?HRSIM_MEDAL[i]:i+1}</span>
         <span class="hsim-ln"><b>${p.name}</b> <small>${p.team}</small>${!p.conf?' <span class="hsim-proj">proj</span>':''}</span>
         <span class="hsim-lc">${shortName(p.sp||"TBD")}${p.spEra!=null?` <small>${p.spEra}</small>`:""}</span>
+        <span class="hsim-lc2 hsim-pag">${p.paG!=null?p.paG.toFixed(1):"—"}</span>
         <span class="hsim-lc2 hsim-tot">${p.total.toLocaleString()}</span>
         <span class="hsim-lc2 hsim-pct">${(p.prob*100).toFixed(1)}%</span></div>`).join("")+`</div>`;
     return;
@@ -3352,7 +3355,7 @@ function renderHRBuilder(model){
   list.innerHTML=cands.slice(0,60).map(c=>{
     const on=HRB_SELECTED.includes(c.id);
     const park=Math.round((c.parkF-1)*100);
-    const stat=`HR ${c.score} · ISO ${c.iso?isoStr(c.iso):"—"}${c.xslg!=null?` · xSLG ${fmt3(c.xslg)}`:""} · Park ${park>=0?"+":""}${park}%${c.era!=null?` · opp ERA ${c.era}`:""}`;
+    const stat=`HR ${c.score} · ISO ${c.iso?isoStr(c.iso):"—"}${c.xslg!=null?` · xSLG ${fmt3(c.xslg)}`:""}${avgPA(c.b)!=null?` · ${avgPA(c.b).toFixed(1)} avg PA`:""} · Park ${park>=0?"+":""}${park}%${c.era!=null?` · opp ERA ${c.era}`:""}`;
     const dot=c.up?(c.conf?'<span class="wsdot sched" title="confirmed"></span>':'<span class="wsdot" title="projected"></span>'):'<span class="wsdot final" title="started"></span>';
     const formB=c.form==="hot"?'<span class="sg-form hot">🔥</span>':c.form==="cold"?'<span class="sg-form cold">🧊</span>':'';
     return `<div class="hrb-row ${on?"on":""}">
@@ -3404,7 +3407,7 @@ function pvrWeatherBlock(w){
 function pvrTargetRow(t){
   const b=t.b, xs=b.xstats&&b.xstats.xslg!=null?fmt3(b.xstats.xslg):null;
   const plat=b.platoon&&b.platoon.badge==="ADV"?'<span class="pvr-badge plat">PLATOON</span>':"";
-  return `<div class="pvr-target"><div class="pvr-tinfo"><b>${b.name}</b><small>${xs?`xSLG ${xs} · `:""}vs ${b.throws||t.b.oppThrows||"?"}HP${b.cur&&b.cur.iso?` · ${isoStr(b.cur.iso)} ISO`:""}</small>${plat}</div>
+  return `<div class="pvr-target"><div class="pvr-tinfo"><b>${b.name}</b><small>${xs?`xSLG ${xs} · `:""}vs ${b.throws||t.b.oppThrows||"?"}HP${b.cur&&b.cur.iso?` · ${isoStr(b.cur.iso)} ISO`:""}${avgPA(b)!=null?` · ${avgPA(b).toFixed(1)} avg PA`:""}</small>${plat}</div>
     <div class="pvr-tright"><span class="pvr-prob">${(t.prob*100).toFixed(1)}%</span><span class="wsgrade ${gradeCircleCls(b.grade?b.grade.letter:"—")}">${b.grade?b.grade.letter:"—"}</span></div></div>`;
 }
 function pvrCard(c){
@@ -3497,7 +3500,7 @@ function buildHRModelRows(model){
       pitcher:b.oppPitcher||"TBD",pteam:b._oppTeam||"",vuln:b.oppVuln!=null?b.oppVuln:null,
       context:b.escore||null,match:b.hrMatch?b.hrMatch.score:null,
       bzOverlap:bz?bz.overlap:null,bzConf:bz?bz.confidence:null,
-      hrctx:b._hrctx,status:b._gstatus||"",lineup:b._lineupConf?"Confirmed":"Projected",order:b.slot||null,
+      hrctx:b._hrctx,status:b._gstatus||"",lineup:b._lineupConf?"Confirmed":"Projected",order:b.slot||null,paG:avgPA(b),
       consAm:cons?cons.consAm:null,ev:cons?cons.evVsCons:(be?be.edge:null),
       bestAm:be?be.over:null,bestBook:be?be.book:null,
       upcoming:b._upcoming,gamePk:b._gamePk};
@@ -3542,7 +3545,7 @@ function renderHRModel(model){
     {k:"bzOverlap",l:"BZ Overlap",num:1,g:r=>r.bzOverlap==null?-1:r.bzOverlap},{k:"bzConf",l:"BZ Conf",num:1,g:r=>r.bzConf==null?-1:r.bzConf},
     {k:"match",l:"Power Match",num:1,g:r=>r.match==null?-1:r.match},{k:"weather",l:"Weather",num:1,g:r=>r.hrctx==null?-999:r.hrctx},
     {k:"status",l:"Status",num:0,g:r=>r.status},{k:"lineup",l:"Lineup",num:0,g:r=>r.lineup},
-    {k:"order",l:"Order",num:1,g:r=>r.order==null?99:r.order},{k:"consAm",l:"Consensus",num:1,g:r=>r.consAm==null?-99999:r.consAm},
+    {k:"order",l:"Order",num:1,g:r=>r.order==null?99:r.order},{k:"paG",l:"AVG PA",num:1,g:r=>r.paG==null?-1:r.paG},{k:"consAm",l:"Consensus",num:1,g:r=>r.consAm==null?-99999:r.consAm},
     {k:"ev",l:"EV vs Cons",num:1,g:r=>r.ev==null?-999:r.ev},{k:"best",l:"Best Book",num:1,g:r=>r.bestAm==null?-99999:r.bestAm},
   ];
   const sc=cols.find(c=>c.k===HRM_SORT.key)||cols[3];
@@ -3571,6 +3574,7 @@ function renderHRModel(model){
       <td class="hrmmut"><span class="wsdot ${r.status==="Live"?"live":r.status==="Final"?"final":"sched"}"></span>${r.status}</td>
       <td class="${r.lineup==="Confirmed"?"wsconf":"wsproj"}">${r.lineup}</td>
       <td class="r hrmmut">${r.order!=null?r.order:"—"}</td>
+      <td class="r hrmmut">${r.paG!=null?r.paG.toFixed(1):"—"}</td>
       <td class="r hrmmut">${r.consAm!=null?amStr(r.consAm):"—"}</td>
       <td class="r ${evcls}">${r.ev!=null?(r.ev>=0?"+":"")+(r.ev*100).toFixed(1)+"%":"—"}</td>
       <td class="r hrmbest">${r.bestAm!=null?amStr(r.bestAm)+` <small class="hrmmut">${capBook(r.bestBook)}</small>`:"—"}</td>
@@ -3635,7 +3639,7 @@ function renderVuln(model){
     {k:"xslg",l:"xSLG",num:1,get:r=>r.xslg==null?-1:r.xslg},
     {k:"xwoba",l:"xwOBA",num:1,get:r=>r.xwoba==null?-1:r.xwoba},
     {k:"ops",l:"OPS",num:1,get:r=>r.ops==null?-1:r.ops},
-    {k:"pa",l:"Sample",num:1,get:r=>r.pa==null?-1:r.pa},
+    {k:"pa",l:"Sample (PA)",num:1,get:r=>r.pa==null?-1:r.pa},
   ];
   const sc=cols.find(c=>c.k===VULN_SORT.key)||cols[3];
   rows.sort((a,b)=>{const av=sc.get(a),bv=sc.get(b);const cmp=sc.num?(av-bv):String(av).localeCompare(String(bv));return cmp*VULN_SORT.dir;});
@@ -4405,7 +4409,7 @@ function slateAnalysisNarrative(model){
 }
 function homerMatchupRow(r){
   return `<div class="hm-row"><span class="wsgrade ${gradeCircleCls(r.grade)}">${r.grade}</span>
-    <div class="hm-bat"><b>${rankEmoji(r.b)}${r.name}</b><small>${r.team} · vs ${r.pitcher} (${r.pteam})${r.vuln!=null?` · vuln ${r.vuln}`:""}</small></div>
+    <div class="hm-bat"><b>${rankEmoji(r.b)}${r.name}</b><small>${r.team} · vs ${r.pitcher} (${r.pteam})${r.b&&avgPA(r.b)!=null?` · ${avgPA(r.b).toFixed(1)} avg PA`:""}${r.vuln!=null?` · vuln ${r.vuln}`:""}</small></div>
     <span class="hm-prob">${(r.prob*100).toFixed(1)}%</span>
     ${r.ev!=null?`<span class="hm-ev ${r.ev>0?"evp":"evn"}">${r.ev>=0?"+":""}${(r.ev*100).toFixed(0)}%</span>`:`<span class="hm-price">${r.bestAm!=null?amStr(r.bestAm):(r.fair!=null?amStr(r.fair):"")}</span>`}</div>`;
 }
@@ -4615,7 +4619,7 @@ function playerRow(b,conf){
   const today=b.result?resultChip(b):'<span style="color:var(--muted2);font-family:Roboto Mono,monospace;font-size:10.5px">—</span>';
   return `<div class="prow">
     <span class="slot">${slot}</span>
-    <span class="pnm">${rankEmoji(b)}${formEmoji(b)}${b.name}<small>${b.pos||""} · B:${b.bats||"?"} · AVG ${b.cur.avg??"—"} · SLG ${b.cur.slg??"—"} · ISO ${isoStr(b.cur.iso)} · HR% ${(b.cur.hrRate*100).toFixed(1)}${b.statcast?` · EV ${b.statcast.ev?b.statcast.ev.toFixed(1):"—"} · Brl ${b.statcast.barrel?b.statcast.barrel.toFixed(1)+"%":"—"}`:""}${b.recentForm?` · L10 ${b.recentForm.l10.h}-${b.recentForm.l10.ab}`:""}${b.bvp&&b.bvp.pa>=1?` · BvP ${b.bvp.h}-${b.bvp.ab}`:""}</small></span>
+    <span class="pnm">${rankEmoji(b)}${formEmoji(b)}${b.name}<small>${b.pos||""} · B:${b.bats||"?"}${avgPA(b)!=null?` · ${avgPA(b).toFixed(1)} avg PA`:""} · AVG ${b.cur.avg??"—"} · SLG ${b.cur.slg??"—"} · ISO ${isoStr(b.cur.iso)} · HR% ${(b.cur.hrRate*100).toFixed(1)}${b.statcast?` · EV ${b.statcast.ev?b.statcast.ev.toFixed(1):"—"} · Brl ${b.statcast.barrel?b.statcast.barrel.toFixed(1)+"%":"—"}`:""}${b.recentForm?` · L10 ${b.recentForm.l10.h}-${b.recentForm.l10.ab}`:""}${b.bvp&&b.bvp.pa>=1?` · BvP ${b.bvp.h}-${b.bvp.ab}`:""}</small></span>
     <span class="pc">${gbadge(b.grade)}</span>
     <span class="pc">${plat||'<span style="color:var(--muted2)">—</span>'}</span>
     <span class="pv">${b.proj.hr.toFixed(2)}</span>
