@@ -743,6 +743,23 @@
   .hsim-pinfo small{display:block;color:var(--muted2);font-family:'Roboto Mono',monospace;font-size:10px;margin-top:1px}
   .hsim-prob{font-family:'Roboto Mono',monospace;font-weight:700;color:var(--teal);font-size:13px}
   .hsim-none{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2);padding:6px 0}
+  .calib-card{max-width:520px;margin-top:14px;padding:14px 16px}
+  .calib-toghead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+  .calib-tog{display:flex;align-items:center;gap:6px;font-family:'Roboto Mono',monospace;font-size:11.5px;color:var(--muted);cursor:pointer}
+  .calib-tog input{accent-color:var(--good)}
+  .calib-rows{border:1px solid var(--line);border-radius:9px;overflow:hidden;margin-bottom:9px}
+  .calib-row{display:grid;grid-template-columns:1.1fr 2fr 42px;gap:8px;align-items:center;padding:7px 11px;border-bottom:1px solid var(--line);font-family:'Roboto Mono',monospace;font-size:11px}
+  .calib-row:last-child{border-bottom:none}
+  .calib-head{background:var(--panel2);color:var(--muted2);font-size:9px;letter-spacing:.04em;text-transform:uppercase}
+  .calib-mk{color:var(--chalk)}.calib-map{color:var(--teal)}.calib-n{text-align:right;color:var(--muted2)}
+  .calib-note{font-size:11px;color:var(--muted2);margin:0;line-height:1.55}.calib-note b{color:var(--muted)}
+  .tdgamehead{font-family:'Oswald',sans-serif;font-weight:600;font-size:20px;color:var(--chalk);margin-bottom:12px;letter-spacing:.01em}
+  .tdgame{display:grid;grid-template-columns:1fr;gap:20px}
+  @media(min-width:1180px){.tdgame{grid-template-columns:1fr 1fr;gap:18px}}
+  .tdblock{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .tdblock .tdhead{padding:14px 16px 12px}
+  .tdfacing{color:var(--amber)!important;background:rgba(242,181,60,.07)}
+  .tdspcard{padding:8px 16px 14px;font-family:'Roboto Mono',monospace;font-size:12px;color:var(--muted);border-bottom:1px solid var(--line)}
   .sg-wins{margin-bottom:18px}
   .sg-wins:empty{display:none}
   .sgwin-head{font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;color:var(--good);display:flex;align-items:center;gap:9px;margin-bottom:11px}
@@ -852,13 +869,12 @@
     <div class="controls">
       <div class="ctrl"><label for="date">Slate date</label><input type="date" id="date" /></div>
       <button class="btn" id="run">Load slate</button>
-      <label class="autorow"><input type="checkbox" id="autoRefresh" checked /> Auto-refresh</label>
       <span id="freshLbl" class="freshlbl"></span>
     </div>
   </header>
 
   <div class="note">
-    <b>Read me.</b> Projections + grades are a model, not a guarantee. The grade blends the season matchup (log5 batter rate × pitcher-allowed rate, regressed for sample) with career batter-vs-pitcher history and park. <b>Edge %</b> appears only after you load real odds, and equals model probability minus the book's implied probability. Confirmed lineups replace the full roster automatically once teams post them (~2–3 hrs pre-game). The app pulls live data on every load and (with Auto-refresh on) re-pulls every ~20 minutes and whenever you return to the tab, rolling over to the new day's slate automatically. <b>For analysis/entertainment only — not financial advice. 21+. If gambling stops being fun, call 1-800-GAMBLER.</b>
+    <b>Read me.</b> Projections + grades are a model, not a guarantee. The grade blends the season matchup (log5 batter rate × pitcher-allowed rate, regressed for sample) with career batter-vs-pitcher history and park. <b>Edge %</b> appears only after you load real odds, and equals model probability minus the book's implied probability. Confirmed lineups replace the full roster automatically once teams post them (~2–3 hrs pre-game). The app pulls live data each time you load the page or hit Run; the timestamp shows how long ago that was. <b>For analysis/entertainment only — not financial advice. 21+. If gambling stops being fun, call 1-800-GAMBLER.</b>
   </div>
 
   <div class="oddsbar">
@@ -1461,6 +1477,26 @@ function paG(b){const p=b&&b._expPA!=null?b._expPA:(b&&b.slot?SLOT_PA[Math.min(8
 function avgPA(b){if(!b||!b.cur)return null;const pa=b.cur.pa,g=b.cur.g;if(pa==null||!g)return null;return pa/g;}
 const PRIOR = { hr:160,h:60,tb:90,rbi:140,kBat:120,sbG:45,hrP:170,hP:70,tbP:90,kP:90 };
 const PARK = {115:1.33,113:1.18,147:1.13,143:1.07,158:1.07,117:1.05,110:1.04,111:1.04,145:1.04,119:1.04,144:1.03,141:1.03,140:1.02,109:1.02,120:1.01,112:1.00,108:1.00,142:1.00,114:0.98,121:0.97,139:0.97,118:0.96,135:0.95,138:0.95,133:1.05,116:0.94,146:0.92,136:0.92,134:0.93,137:0.90};
+// LHB / RHB home-run park factors for the clearly asymmetric parks (short porches, alleys). Others fall back to the overall PARK value.
+const PARK_LR = {
+  147:{L:1.35,R:1.00}, // NYY short RF porch — huge for lefties
+  137:{L:0.80,R:0.98}, // SF Oracle — Triples Alley kills LHB power
+  134:{L:1.00,R:0.88}, // PIT PNC — deep LF for RHB
+  143:{L:1.14,R:1.02}, // PHI CBP — LHB-friendly
+  117:{L:1.00,R:1.12}, // HOU short LF Crawford Boxes — RHB
+  110:{L:1.10,R:0.98}, // BAL deeper LF wall suppresses RHB
+  113:{L:1.22,R:1.15}, // CIN GABP — both, tilt LHB
+  115:{L:1.31,R:1.35}, // COL Coors — both sky-high
+  119:{L:1.07,R:1.02}, // LAD
+  120:{L:1.04,R:0.99}, // WSH
+  111:{L:1.02,R:1.06}, // BOS Fenway — Monster aids RHB HR modestly
+  136:{L:0.95,R:0.90}, // SEA T-Mobile suppresses RHB
+  135:{L:0.92,R:0.98}, // SD Petco
+  158:{L:1.10,R:1.05}, // MIL
+  141:{L:1.01,R:1.05}, // TOR
+  114:{L:0.95,R:1.00}, // CLE
+};
+function parkHR(homeId,effCode){const lr=PARK_LR[homeId];if(lr){if(effCode==="vl")return lr.L;if(effCode==="vr")return lr.R;}return PARK[homeId]||1.0;}
 // home park: lat, lon, cf = compass bearing home plate -> center field (deg), roof: open/retract/dome
 const COORDS={
   108:{lat:33.8003,lon:-117.8827,cf:48,roof:"open"},109:{lat:33.4453,lon:-112.0667,cf:0,roof:"retract"},
@@ -1481,7 +1517,7 @@ const COORDS={
 };
 
 let MODEL=null, CURRENT_MARKET="hr", ODDS_LOADED=false, VIEW="slate", TEAM_SEL=null, STATCAST_OK=false, TREND_Q="", PROP_MARKET="hit1", ODDS_BOARD_MARKET="hr", ALIGN_FILTER="all", ALIGN_SORT="align", BOARD_LIMIT=30;
-let AUTO_TIMER=null, LAST_REFRESH=0, ODDS_WERE_LOADED=false, WAS_TODAY=false, BUSY=false;
+let LAST_REFRESH=0, ODDS_WERE_LOADED=false, WAS_TODAY=false, BUSY=false;
 let ZONES=null, ZONES_GAME=null, ZONES_BAT=null;
 let STAR_MK_SEL="hr", STAR_LEGS=2, STAR_SEED=0;
 let HRB_LEGS=4, HRB_SELECTED=[], HRB_SEARCH="", HRB_CONF=false, HRB_STARS=false;
@@ -1723,18 +1759,29 @@ async function fetchWeather(lat,lon,utcISO,cf){
     if(idx<0)idx=H.time.findIndex(h=>h.slice(0,13)>=key);
     if(idx<0)idx=Math.min(18,H.time.length-1);
     const tempF=H.temperature_2m[idx], wind=H.wind_speed_10m[idx], wdir=H.wind_direction_10m[idx], precip=H.precipitation_probability?H.precipitation_probability[idx]:null;
+    const rh=H.relative_humidity_2m?H.relative_humidity_2m[idx]:null;
     const towardDir=(wdir+180)%360;
     const out=wind*Math.cos((towardDir-cf)*Math.PI/180); // + = blowing toward CF (out)
-    return {tempF,windMph:wind,windDir:wdir,cardinal:cardinalDir(wdir),outComponent:out,precip};
+    return {tempF,windMph:wind,windDir:wdir,cardinal:cardinalDir(wdir),outComponent:out,precip,rh};
   }catch(e){return null;}
 }
+// Air-density HR factor from temperature + humidity, at a fixed reference pressure so a park's
+// static altitude stays in the PARK factor (avoids double-counting). Less-dense air (hot/humid) = more carry.
+function airDensity(tempF,rh){
+  const P0=1013.25,Tc=(tempF-32)*5/9,RH=rh!=null?rh:50;
+  const es=6.1078*Math.pow(10,7.5*Tc/(Tc+237.3)),Pv=(RH/100)*es,Pd=P0-Pv,Tk=Tc+273.15;
+  return (Pd*100)/(287.05*Tk)+(Pv*100)/(461.495*Tk); // kg/m^3
+}
+const RHO_REF=airDensity(70,50); // ~1.194 kg/m^3 baseline (70°F, 50% RH)
+function airDensityHR(tempF,rh){return Math.pow(RHO_REF/airDensity(tempF,rh),2.3);}
 function weatherModel(w,roof){
   if(!w||w.tempF==null)return null;
-  let tempFactor=1+(w.tempF-70)*0.004;
-  let windFactor=1+(w.outComponent||0)*0.012;
-  const dampen=roof==="dome"?0.12:roof==="retract"?0.5:1;
-  tempFactor=1+(tempFactor-1)*dampen;windFactor=1+(windFactor-1)*dampen;
-  const mult=Math.max(0.8,Math.min(1.25,tempFactor*windFactor));
+  let densFactor=airDensityHR(w.tempF,w.rh);            // temp + humidity via real air density
+  const oc=w.outComponent||0;
+  let windFactor=1+(oc>=0?oc*0.012:oc*0.009);           // out-blowing helps more than in-blowing hurts
+  const dampen=roof==="dome"?0.06:roof==="retract"?0.5:1; // domes ~climate-controlled; retractables unknown state
+  densFactor=1+(densFactor-1)*dampen;windFactor=1+(windFactor-1)*dampen;
+  const mult=Math.max(0.80,Math.min(1.28,densFactor*windFactor));
   const offMult=1+(mult-1)*0.45;
   let label,fav;
   if(mult>=1.10){label="Hitters ++";fav="hit";}
@@ -1742,14 +1789,14 @@ function weatherModel(w,roof){
   else if(mult<=0.90){label="Pitchers ++";fav="pit";}
   else if(mult<=0.96){label="Pitchers +";fav="pit";}
   else{label="Neutral";fav="neu";}
-  return {mult,offMult,label,fav,tempF:w.tempF,windMph:w.windMph,cardinal:w.cardinal,outComponent:w.outComponent,roof,precip:w.precip};
+  return {mult,offMult,label,fav,tempF:w.tempF,windMph:w.windMph,cardinal:w.cardinal,outComponent:w.outComponent,roof,precip:w.precip,rh:w.rh,densFactor:Math.round((densFactor-1)*1000)/10,windPct:Math.round((windFactor-1)*1000)/10};
 }
 function wxChip(w){
   if(!w)return "";
   const cls=w.fav==="hit"?"hit":w.fav==="pit"?"pit":"neu";
   const wd=isFinite(w.outComponent)?(w.outComponent>1.5?`${Math.round(w.outComponent)}↗ out`:w.outComponent<-1.5?`${Math.round(-w.outComponent)}↘ in`:"cross"):"";
   const icon=w.fav==="hit"?"🔥":w.fav==="pit"?"🧊":"〜";
-  return `<span class="wx ${cls}" title="${Math.round(w.tempF)}°F, wind ${Math.round(w.windMph)}mph ${w.cardinal}${w.roof!=="open"?" · roof park":""}">${icon} ${Math.round(w.tempF)}°F · wind ${Math.round(w.windMph)} ${wd} · ${w.label}${w.roof!=="open"?" (roof)":""}</span>`;
+  return `<span class="wx ${cls}" title="${Math.round(w.tempF)}°F${w.rh!=null?` · ${Math.round(w.rh)}% RH`:""}, wind ${Math.round(w.windMph)}mph ${w.cardinal}${w.densFactor!=null?` · air ${w.densFactor>=0?"+":""}${w.densFactor}% / wind ${w.windPct>=0?"+":""}${w.windPct}%`:""}${w.roof!=="open"?" · roof park":""}">${icon} ${Math.round(w.tempF)}°F · wind ${Math.round(w.windMph)} ${wd} · ${w.label}${w.roof!=="open"?" (roof)":""}</span>`;
 }
 const isoStr=n=>(n!=null&&isFinite(n))?("."+Math.round(n*1000).toString().padStart(3,"0")):"—";
 const ops3=n=>(n!=null&&isFinite(n))?n.toFixed(3).replace(/^0(?=\.)/,"").replace(/^(\d)/,(m)=>m):n; // keep e.g. 1.050 / .850
@@ -2204,9 +2251,12 @@ async function buildModel(date){
     const homeSP=g.home.sp?pitching[g.home.sp.id]:null, awaySP=g.away.sp?pitching[g.away.sp.id]:null;
     const homeRates=pitcherAllowed(homeSP), awayRates=pitcherAllowed(awaySP);
     const make=(list,opp,oppName,oppId,teamAbbr,side,oppHand)=>list.map(meta=>{
-      const bm=batterModel(hitting[meta.id],opp,parkF, meta.slot?SLOT_PA[meta.slot-1]:DEF_PA);
+      const rec=hitting[meta.id];
+      const eff=rec?effectiveSide(rec.bats,oppHand):null;
+      const hpark=parkHR(g.home.id,eff);
+      const bm=batterModel(rec,opp,hpark, meta.slot?SLOT_PA[meta.slot-1]:DEF_PA);
       if(!bm)return null;
-      bm._expPA=meta.slot?SLOT_PA[meta.slot-1]:DEF_PA;bm._park=parkF;
+      bm._expPA=meta.slot?SLOT_PA[meta.slot-1]:DEF_PA;bm._park=hpark;bm._parkSide=eff==="vl"?"L":eff==="vr"?"R":null;
       bm.id=meta.id;bm.slot=meta.slot;bm.team=teamAbbr;bm.side=side;
       bm.oppPitcher=oppName||"TBD";bm.oppPitcherId=oppId||null;
       if(meta.pos)bm.pos=meta.pos;
@@ -3159,7 +3209,7 @@ function runHRSim(model,n){
   const gameByPk={};(model.games||[]).forEach(g=>gameByPk[g.gamePk]=g);
   const players=[];
   (model.batters||[]).forEach(b=>{
-    const lam=b.proj?b.proj.hr:0;if(!(lam>0))return;
+    const lam=calHRLambda(b);if(!(lam>0))return;
     let total=0,games=0,multi=0;
     for(let i=0;i<n;i++){const k=poisRand(lam);if(k>0){games++;total+=k;if(k>1)multi++;}}
     const g=gameByPk[b._gamePk],oppSP=g?(b.isHome?g._awayK:g._homeK):null;
@@ -3491,7 +3541,7 @@ function bzFromZones(b){
 }
 function buildHRModelRows(model){
   return (model.batters||[]).map(b=>{
-    const mean=b.proj?b.proj.hr:0, prob=poissonOver(mean,0.5);
+    const mean=b.proj?b.proj.hr:0, prob=calibrate(poissonOver(mean,0.5),"hr");
     const cons=ODDS_LOADED?hrMarketConsensus(b):null;
     const be=ODDS_LOADED?bestEdgeForMarket(b,"hr",mean):null;
     const bz=bzFromZones(b);
@@ -3772,6 +3822,49 @@ function trackStats(filterMk){
   if(ev.length>=10){let profit=0;ev.forEach(p=>{profit+=p.o?(amToDec(p.bp)-1):-1;});roi=profit/ev.length;}
   return {n,wins,hitRate:wins/n,expRate:sumP/n,brier:brier/n,logloss:ll/n,ece,buckets,evN:ev.length,roi};
 }
+// ---- Self-calibration: Platt scaling fit on graded tracker history, applied to HR outputs ----
+const CALIB_MIN_MK=50, CALIB_MIN_GLOBAL=120;
+let CALIB=null, CALIB_ON=true;
+try{const v=localStorage.getItem("eb:calibOn");if(v!=null)CALIB_ON=v==="1";}catch(e){}
+function clip01(p){return Math.min(1-1e-6,Math.max(1e-6,p));}
+function logit(p){p=clip01(p);return Math.log(p/(1-p));}
+function sigmoid(z){return 1/(1+Math.exp(-z));}
+function fitPlatt(pairs){
+  if(!pairs||pairs.length<20)return null;
+  const X=pairs.map(pr=>logit(pr.p)),Y=pairs.map(pr=>pr.o);
+  let A=1,B=0;const lr=0.06;
+  for(let it=0;it<600;it++){
+    let gA=0,gB=0;
+    for(let i=0;i<X.length;i++){const pred=sigmoid(A*X[i]+B),err=pred-Y[i];gA+=err*X[i];gB+=err;}
+    A-=lr*gA/X.length;B-=lr*gB/X.length;
+  }
+  if(!isFinite(A)||!isFinite(B))return null;
+  return {A:+A.toFixed(4),B:+B.toFixed(4),n:pairs.length};
+}
+function computeCalibration(){
+  let preds=[];try{preds=loadPreds().filter(p=>p.gr&&!p.v&&p.o!=null&&p.p!=null);}catch(e){}
+  const byMk={},all=[];
+  preds.forEach(p=>{(byMk[p.mk]=byMk[p.mk]||[]).push({p:p.p,o:p.o});all.push({p:p.p,o:p.o});});
+  const fits={};
+  Object.keys(byMk).forEach(mk=>{if(byMk[mk].length>=CALIB_MIN_MK){const f=fitPlatt(byMk[mk]);if(f)fits[mk]=f;}});
+  const global=all.length>=CALIB_MIN_GLOBAL?fitPlatt(all):null;
+  CALIB={byMk:fits,global,ranAt:Date.now(),total:all.length};
+  return CALIB;
+}
+function getCalibration(){return CALIB||computeCalibration();}
+function calibFor(mk){const c=getCalibration();if(!c)return null;return (mk&&c.byMk[mk])||c.global||null;}
+function calibrate(p,mk){ // map model prob -> calibrated prob (identity if off / no fit)
+  if(!CALIB_ON||p==null)return p;
+  const f=calibFor(mk);if(!f)return p;
+  return sigmoid(f.A*logit(p)+f.B);
+}
+function calHRLambda(b){ // calibrated HR mean for sims: back out lambda from calibrated P(>=1)
+  const lam=b&&b.proj?b.proj.hr:0;
+  if(!CALIB_ON)return lam;
+  const f=calibFor("hr");if(!f)return lam;
+  const pc=calibrate(poissonOver(lam,0.5),"hr");
+  return pc!=null&&pc<0.999?-Math.log(1-pc):lam;
+}
 function calibrationSVG(buckets){
   const W=300,H=300,pad=34,pw=W-pad*2,ph=H-pad*2;
   const x=v=>pad+v*pw, y=v=>pad+(1-v)*ph;
@@ -3791,6 +3884,23 @@ function calibrationSVG(buckets){
   s+=`</svg>`;return s;
 }
 const TRACK_LABEL={hr:"Home Run",hit1:"1+ Hit",hit2:"2+ Hits",tb2:"2+ Bases",tb3:"3+ Bases",rbi1:"1+ RBI"};
+function calibPanelHTML(){
+  const c=computeCalibration();
+  const mkLabel={hr:"Home Run",hit1:"1+ Hit",hit2:"2+ Hits",tb2:"2+ TB",tb3:"3+ TB",rbi1:"1+ RBI"};
+  const fits=Object.keys(c.byMk),hasAny=fits.length||c.global;
+  const sample=f=>[0.1,0.2,0.3,0.4].map(p=>`${Math.round(p*100)}→${Math.round(sigmoid(f.A*logit(p)+f.B)*100)}`).join(" · ");
+  let body;
+  if(!hasAny){
+    body=`<p class="calib-note">Not enough graded history yet to fit a correction (need ~${CALIB_MIN_MK}+ for a market, or ${CALIB_MIN_GLOBAL}+ overall — you have <b>${c.total}</b>). Keep saving &amp; grading; once it fits, the model auto-corrects its probabilities toward what actually happens.</p>`;
+  }else{
+    const order=["hr"].concat(fits.filter(m=>m!=="hr"));
+    const rows=order.filter(m=>c.byMk[m]).map(mk=>`<div class="calib-row"><span class="calib-mk">${mkLabel[mk]||mk}</span><span class="calib-map">${sample(c.byMk[mk])}</span><span class="calib-n">${c.byMk[mk].n}</span></div>`);
+    if(c.global)rows.push(`<div class="calib-row"><span class="calib-mk">All markets (fallback)</span><span class="calib-map">${sample(c.global)}</span><span class="calib-n">${c.global.n}</span></div>`);
+    body=`<div class="calib-rows"><div class="calib-row calib-head"><span class="calib-mk">Market</span><span class="calib-map">model% → calibrated%</span><span class="calib-n">N</span></div>${rows.join("")}</div>
+      <p class="calib-note">Currently applied to the <b>Home Runs Model</b> &amp; <b>HR Simulator</b> outputs. Fit by Platt scaling on your graded results — it nudges the model's stated probabilities toward your observed hit rates.</p>`;
+  }
+  return `<div class="gcard calib-card"><div class="calib-toghead"><h4 style="margin:0">Model self-calibration</h4><label class="calib-tog"><input type="checkbox" id="calibToggle" ${CALIB_ON?"checked":""}/> Apply</label></div>${body}</div>`;
+}
 function renderTrackStats(){
   const sum=el("trackSummary"),chart=el("trackChart"),tbl=el("trackTable");
   const all=trackStats(null);
@@ -3810,7 +3920,7 @@ function renderTrackStats(){
   ];
   if(all.roi!=null)cards.push(["+EV ROI",(all.roi>=0?"+":"")+(all.roi*100).toFixed(1)+"%",`flat 1u · ${all.evN} bets`]);
   sum.innerHTML=`<div class="tcards">${cards.map(c=>`<div class="tcard"><div class="tv">${c[1]}</div><div class="tl">${c[0]}</div><div class="ts">${c[2]}</div></div>`).join("")}</div>`;
-  chart.innerHTML=`<div class="gcard" style="max-width:420px"><h4 style="margin-top:0">Calibration — predicted vs actual</h4>${calibrationSVG(all.buckets)}<p style="font-size:11.5px;margin:8px 0 0">Dots on the dashed line = well-calibrated. Above the line = the model is too pessimistic there; below = too confident. Dot size = sample.</p></div>`;
+  chart.innerHTML=`<div class="gcard" style="max-width:420px"><h4 style="margin-top:0">Calibration — predicted vs actual</h4>${calibrationSVG(all.buckets)}<p style="font-size:11.5px;margin:8px 0 0">Dots on the dashed line = well-calibrated. Above the line = the model is too pessimistic there; below = too confident. Dot size = sample.</p></div>`+calibPanelHTML();
   let rows="";
   TRACK_MK.concat(["hit2","tb3"]).forEach(mk=>{const s=trackStats(mk);if(!s)return;
     rows+=`<div class="tmrow"><div class="tmname">${TRACK_LABEL[mk]}</div><div class="tmstats">`+
@@ -3830,6 +3940,7 @@ async function trackGradeAndRender(){
     try{const r=await gradeAll();const rg=await gradeGameLines();st.textContent=`Graded ${r.graded+rg.graded} completed. ${loadPreds().filter(p=>!p.gr).length+loadGPreds().filter(p=>!p.gr).length} still pending (games not final).`;}
     catch(e){st.textContent="Grading hit an error (network?). Try again.";}
   }else{st.textContent="All saved predictions are graded.";}
+  CALIB=null; // recompute calibration from freshly graded data
   renderTrackStats();renderGameTrack();
 }
 // ===== GAME-LINE TRACKER (ML · Run Line · Total) with rolling 1W/1M/1Y/all-time windows =====
@@ -4630,45 +4741,55 @@ function playerRow(b,conf){
     <span class="pend">${today}</span>
   </div>`;
 }
-function renderTeamDetail(key){
-  const box=el("teamDetail");
-  const t=MODEL&&MODEL.teams?MODEL.teams.find(x=>x.key===key):null;
-  if(!t){box.innerHTML="";return;}
-  const dt=new Date(t.time);const time=isNaN(dt)?"":dt.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
-  const facing=t.facing?`facing <b>${t.facing.name}</b>${t.facing.hand?` (${t.facing.hand}HP)`:""}`:"facing TBD";
+function spStatCard(sp,vsAbbr,label){
+  if(!sp)return `<div class="tdsub">${label}</div><div style="padding:8px 18px 16px;color:var(--muted);font-family:Roboto Mono,monospace;font-size:12px">Not announced yet</div>`;
+  const spForm=sp.form?` · L${sp.form.gs} starts: ${sp.form.era!=null?sp.form.era.toFixed(2):"—"} ERA, ${sp.form.k9!=null?sp.form.k9.toFixed(1):"—"} K/9${sp.form.state==="sharp"?" 🎯 sharp":sp.form.state==="struggling"?" ⚠️ struggling":""}`:"";
+  return `<div class="tdsub tdfacing">${label}</div>
+    <div class="tdspcard">
+      <b style="color:var(--chalk);font-size:15px;font-family:Oswald,sans-serif">${sp.name}</b> ${vulnPill(sp)} · ${sp.throws||"?"}HP · ${sp.cur.era??"—"} ERA · ${sp.cur.whip??"—"} WHIP · K9 ${sp.cur.k9?sp.cur.k9.toFixed(1):"—"} · ${sp.cur.hr9!=null?sp.cur.hr9.toFixed(2)+" HR/9":""} · <b style="color:var(--teal)">${sp.projK.toFixed(1)} proj K vs ${vsAbbr}</b>${spForm} ${sp.result?pitResultChip(sp):""}
+      ${sp.split&&(sp.split.vL||sp.split.vR)?`<div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:6px"><span class="scpill">vs LHB: <b style="color:var(--chalk)">${sp.split.vL?sideTxt(sp.split.vL)+" ("+sp.split.vL.bf+" BF)":"—"}</b></span><span class="scpill">vs RHB: <b style="color:var(--chalk)">${sp.split.vR?sideTxt(sp.split.vR)+" ("+sp.split.vR.bf+" BF)":"—"}</b></span></div>`:""}
+    </div>`;
+}
+function teamLineupBlock(t,oppSP){
   const status=t.conf?`<span class="lstat conf">✅ Confirmed lineup</span>`:`<span class="lstat proj">Lineup not posted yet</span>`;
   let bats=[...t.batters];
-  if(t.conf) bats.sort((a,b)=>(a.slot||99)-(b.slot||99));
-  else bats.sort((a,b)=>b.escore-a.escore);
+  if(t.conf) bats.sort((a,b)=>(a.slot||99)-(b.slot||99)); else bats.sort((a,b)=>b.escore-a.escore);
   const rows=bats.map(b=>playerRow(b,t.conf)).join("");
-  const sp=t.ownSP;
-  const spForm=sp&&sp.form?` · L${sp.form.gs} starts: ${sp.form.era!=null?sp.form.era.toFixed(2):"—"} ERA, ${sp.form.k9!=null?sp.form.k9.toFixed(1):"—"} K/9${sp.form.state==="sharp"?" 🎯 sharp":sp.form.state==="struggling"?" ⚠️ struggling":""}`:"";
-  const spcard=sp?`<div class="tdsub">Probable starter</div>
-    <div style="padding:8px 18px 16px;font-family:'Roboto Mono',monospace;font-size:12px;color:var(--muted)">
-      <b style="color:var(--chalk);font-size:15px;font-family:Oswald,sans-serif">${sp.name}</b> ${vulnPill(sp)} · ${sp.throws||"?"}HP · ${sp.cur.era??"—"} ERA · ${sp.cur.whip??"—"} WHIP · K9 ${sp.cur.k9?sp.cur.k9.toFixed(1):"—"} · ${sp.cur.hr9!=null?sp.cur.hr9.toFixed(2)+" HR/9":""} · <b style="color:var(--teal)">${sp.projK.toFixed(1)} proj K vs ${t.oppAbbr}</b>${spForm} ${sp.result?pitResultChip(sp):""}
-      ${sp.split&&(sp.split.vL||sp.split.vR)?`<div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:6px"><span class="scpill">vs LHB: <b style="color:var(--chalk)">${sp.split.vL?sideTxt(sp.split.vL)+" ("+sp.split.vL.bf+" BF)":"—"}</b></span><span class="scpill">vs RHB: <b style="color:var(--chalk)">${sp.split.vR?sideTxt(sp.split.vR)+" ("+sp.split.vR.bf+" BF)":"—"}</b></span></div>`:""}
-    </div>`:`<div class="tdsub">Probable starter</div><div style="padding:8px 18px 16px;color:var(--muted);font-family:Roboto Mono,monospace;font-size:12px">Not announced</div>`;
   const teamForm=t.form?`<div style="margin-top:7px"><span class="formtag ${t.form.state==="hot"?"hot":t.form.state==="cold"?"cold":""}">L30: <b>${fmt3(t.form.ops)}</b> OPS · ${t.form.rpg.toFixed(2)} R/G · ${t.form.hr} HR${t.form.state!=="neutral"?" · "+(t.form.state==="hot"?"🔥 hot offense":"🧊 cold offense"):""}</span></div>`:"";
-  box.innerHTML=`
+  return `<div class="tdblock">
     <div class="tdhead"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap">
-      <div><div class="tn">${t.full}${t.dh?` <span style="color:var(--amber);font-size:13px">· Game ${t.gameNumber}</span>`:""}</div><div class="tm">${t.home?"vs":"@"} <b>${t.oppAbbr}</b> · ${time} · ${facing} · HR park ${t.park.toFixed(2)}${t.live?" · LIVE/FINAL":""}</div>
+      <div><div class="tn">${t.full}${t.dh?` <span style="color:var(--amber);font-size:13px">· Game ${t.gameNumber}</span>`:""}</div><div class="tm">${t.home?"vs":"@"} <b>${t.oppAbbr}</b> · HR park ${t.park.toFixed(2)}${t.live?" · LIVE/FINAL":""}</div>
       ${t.weather?`<div style="margin-top:7px">${wxChip(t.weather)}</div>`:""}${teamForm}</div>
       <div>${status}</div></div></div>
+    ${spStatCard(oppSP,t.abbr,`⚾ ${t.abbr} hitters facing`)}
     <div class="tdsub">${t.conf?"Confirmed batting order (1–9)":"Active roster — best matchups first (lineup not posted)"}</div>
     <div class="ptable"><div class="prow h"><span>#</span><span style="text-align:left">Player</span><span>Grade</span><span>Plat</span><span>xHR</span><span>xH</span><span>xTB</span><span>xRBI</span><span>xSB</span><span style="text-align:left">Today</span></div>${rows||'<div class="empty">No qualified batters (small-sample players filtered out).</div>'}</div>
-    ${spcard}`;
+  </div>`;
+}
+function renderTeamDetail(gamePk){
+  const box=el("teamDetail");
+  if(!MODEL||!MODEL.teams){box.innerHTML="";return;}
+  const away=MODEL.teams.find(x=>String(x.gamePk)===String(gamePk)&&!x.home), home=MODEL.teams.find(x=>String(x.gamePk)===String(gamePk)&&x.home);
+  if(!away&&!home){box.innerHTML="";return;}
+  const g=MODEL.games?MODEL.games.find(x=>String(x.gamePk)===String(gamePk)):null;
+  const dt=g?new Date(g.time):null;const time=(dt&&!isNaN(dt))?dt.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}):"";
+  const head=g?`<div class="tdgamehead">${g.away.abbr} <span style="color:var(--muted2)">@</span> ${g.home.abbr}${time?` · ${time}`:""}${g.dh?` · Game ${g.gameNumber}`:""}</div>`:"";
+  // away hitters face the home starter; home hitters face the away starter
+  const homeSP=home?home.ownSP:null, awaySP=away?away.ownSP:null;
+  box.innerHTML=head+`<div class="tdgame">${away?teamLineupBlock(away,homeSP):""}${home?teamLineupBlock(home,awaySP):""}</div>`;
 }
 function renderTeamSelector(){
   const sel=el("teamSelect");
-  if(!MODEL||!MODEL.teams||!MODEL.teams.length){sel.innerHTML="";el("teamDetail").innerHTML='<div class="empty"><b>No teams</b>Load a slate with games first.</div>';return;}
-  const teams=[...MODEL.teams].sort((a,b)=>(new Date(a.time)-new Date(b.time))||a.abbr.localeCompare(b.abbr));
-  if(!TEAM_SEL||!teams.find(t=>t.key===TEAM_SEL)) TEAM_SEL=teams[0].key;
+  if(!MODEL||!MODEL.games||!MODEL.games.length){sel.innerHTML="";el("teamDetail").innerHTML='<div class="empty"><b>No teams</b>Load a slate with games first.</div>';return;}
+  const games=[...MODEL.games].sort((a,b)=>(new Date(a.time)-new Date(b.time))||a.away.abbr.localeCompare(b.away.abbr));
+  if(!TEAM_SEL||!games.find(g=>String(g.gamePk)===String(TEAM_SEL))) TEAM_SEL=String(games[0].gamePk);
   sel.innerHTML="";
-  teams.forEach(t=>{
-    const dt=new Date(t.time);const tm=isNaN(dt)?"":dt.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
+  games.forEach(g=>{
+    const dt=new Date(g.time);const tm=isNaN(dt)?"":dt.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
     const btn=document.createElement("button");
-    btn.dataset.key=t.key;btn.className=t.key===TEAM_SEL?"active":"";
-    btn.innerHTML=`${t.abbr} <small>${t.home?"vs":"@"} ${t.oppAbbr} · ${tm}${t.dh?` · G${t.gameNumber}`:""}</small>${t.conf?' <span style="color:var(--good)">●</span>':''}`;
+    btn.dataset.key=String(g.gamePk);btn.className=String(g.gamePk)===String(TEAM_SEL)?"active":"";
+    const dot=(g.away._conf&&g.home._conf)?' <span style="color:var(--good)">●</span>':(g.away._conf||g.home._conf)?' <span style="color:var(--amber)">◐</span>':'';
+    btn.innerHTML=`${g.away.abbr} <small>@</small> ${g.home.abbr} <small>· ${tm}${g.dh?` · G${g.gameNumber}`:""}</small>${dot}`;
     sel.appendChild(btn);
   });
   renderTeamDetail(TEAM_SEL);
@@ -4763,18 +4884,6 @@ async function run(){
   finally{el("run").disabled=false;BUSY=false;setTimeout(()=>setBar(0),600);}
 }
 function updateFreshLabel(){const e=el("freshLbl");if(e)e.textContent=freshText(LAST_REFRESH,Date.now());}
-async function refreshNow(){
-  if(BUSY||(typeof document!=="undefined"&&document.hidden))return;
-  const tgt=rolloverTarget(WAS_TODAY,el("date").value,todayStr());
-  if(tgt!==el("date").value)el("date").value=tgt;
-  await run();
-  if(ODDS_WERE_LOADED&&el("okey")&&el("okey").value.trim())await loadOdds();
-  LAST_REFRESH=Date.now();updateFreshLabel();
-}
-function startAuto(){
-  if(AUTO_TIMER){clearInterval(AUTO_TIMER);AUTO_TIMER=null;}
-  if(el("autoRefresh")&&el("autoRefresh").checked)AUTO_TIMER=setInterval(()=>{if(!document.hidden)refreshNow();},1200000);
-}
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
 const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",stargroups:"Star Groups — auto-built parlays",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",hrbuilder:"HR Group Builder",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
@@ -4823,6 +4932,7 @@ el("hrsimRerun")&&el("hrsimRerun").addEventListener("click",()=>{if(MODEL){getHR
 el("hrsimPrev")&&el("hrsimPrev").addEventListener("click",()=>wsShiftDate(-1));
 el("hrsimNext")&&el("hrsimNext").addEventListener("click",()=>wsShiftDate(1));
 el("hrsimToday")&&el("hrsimToday").addEventListener("click",()=>{const inp=el("date");if(inp)inp.value=ymdLocal(new Date());const run=el("run");if(run)run.click();});
+document.addEventListener("change",e=>{if(e.target&&e.target.id==="calibToggle"){CALIB_ON=e.target.checked;try{localStorage.setItem("eb:calibOn",CALIB_ON?"1":"0");}catch(_){}if(MODEL)MODEL._hrSim=null;renderTrackStats();if(MODEL){if(!el("hrmodelView").classList.contains("hide"))renderHRModel(MODEL);if(!el("hrsimView").classList.contains("hide"))renderHRSim(MODEL);}}});
 el("hrbLegs")&&el("hrbLegs").addEventListener("click",e=>{const b=e.target.closest("button[data-l]");if(!b)return;HRB_LEGS=+b.dataset.l;if(HRB_SELECTED.length>HRB_LEGS)HRB_SELECTED=HRB_SELECTED.slice(0,HRB_LEGS);if(MODEL)renderHRBuilder(MODEL);});
 el("hrbList")&&el("hrbList").addEventListener("click",e=>{const b=e.target.closest("button[data-add]");if(!b)return;HRB_SELECTED=hrbToggle(HRB_SELECTED,b.dataset.add,HRB_LEGS);if(MODEL)renderHRBuilder(MODEL);});
 el("hrbChips")&&el("hrbChips").addEventListener("click",e=>{const b=e.target.closest("button[data-rm]");if(!b)return;HRB_SELECTED=HRB_SELECTED.filter(x=>x!==b.dataset.rm);if(MODEL)renderHRBuilder(MODEL);});
@@ -4867,10 +4977,8 @@ el("briefBoard")&&el("briefBoard").addEventListener("click",async e=>{
 });
 el("run").addEventListener("click",run);
 el("loadOdds").addEventListener("click",loadOdds);
-el("autoRefresh")&&el("autoRefresh").addEventListener("change",startAuto);
-document.addEventListener("visibilitychange",()=>{if(!document.hidden&&LAST_REFRESH&&Date.now()-LAST_REFRESH>300000)refreshNow();});
 setInterval(updateFreshLabel,60000);
-(function(){const d=new Date();el("date").value=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;if(STATS_PROXY&&el("scproxy")&&!el("scproxy").value)el("scproxy").value=STATS_PROXY;run();startAuto();})();
+(function(){const d=new Date();el("date").value=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;if(STATS_PROXY&&el("scproxy")&&!el("scproxy").value)el("scproxy").value=STATS_PROXY;run();})();
 </script>
 </body>
 </html>
