@@ -13,7 +13,7 @@
     --chalk:#EDF2F4;--muted:#8FA0A9;--muted2:#647079;
     --amber:#F2B53C;--amber-glow:rgba(242,181,60,.35);
     --teal:#46C2A6;--clay:#D2734A;--red:#E2604F;--good:#5FBF7D;--green2:#7FD08C;
-    --radius:14px;--maxw:1240px;
+    --radius:14px;--maxw:1560px;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
@@ -258,6 +258,8 @@
   .prow .slot{font-family:'Oswald',sans-serif;font-weight:700;font-size:16px;color:var(--amber);text-align:center}
   .prow .pnm{font-weight:600;font-size:13px;min-width:0}
   .prow .pnm small{display:block;color:var(--muted);font-weight:400;font-size:10px;white-space:normal;line-height:1.4;margin-top:2px}
+  .prow-sc{display:inline-block;margin-top:4px;font-family:'Roboto Mono',monospace;font-size:9.5px;color:var(--muted2);background:rgba(76,192,192,.07);border:1px solid rgba(76,192,192,.18);border-radius:6px;padding:3px 8px;line-height:1.5}
+  .prow-sc b{color:var(--teal);font-weight:700}
   .prow .pv{font-family:'Roboto Mono',monospace;text-align:center;color:var(--amber);font-weight:700;font-size:13px}
   .prow .pc{text-align:center}
   .prow .pend{justify-self:start;display:flex;flex-wrap:wrap;gap:4px;align-items:center}
@@ -1050,6 +1052,21 @@
       </div>
 
       <div class="gcard">
+        <h3>Reading the Statcast line (contact quality)</h3>
+        <p>With a Savant proxy set, every hitter shows a <b>Statcast pill line</b> — their season quality-of-contact. It describes how well a batter <i>should</i> hit for power, stripped of luck. Higher is better on all of these except <b>xHR</b>, which is a signal:</p>
+        <div class="hrlist">
+          <div class="hritem"><span class="hk">EV · exit velocity</span><div class="hd">How hard he hits the ball. League ~88–89 mph · <b>good 90+</b> · <b>elite 92+</b>.</div></div>
+          <div class="hritem"><span class="hk">LA · launch angle</span><div class="hd">His average trajectory. Home runs live ~15–35°; the power sweet spot is <b>12–20°</b>. Too low (&lt;8°) = groundballs, too high (&gt;25° avg) = popups.</div></div>
+          <div class="hritem"><span class="hk">Barrel% · barrels per batted ball</span><div class="hd">The best single power stat — the EV+LA combo that becomes a HR most often. League ~7–8% · good 10%+ · strong 12–14% · <b>elite 15%+</b>.</div></div>
+          <div class="hritem"><span class="hk">HardHit% · 95+ mph contact</span><div class="hd">How consistently he squares it up. League ~38–40% · good 45%+ · <b>elite 50%+</b>.</div></div>
+          <div class="hritem"><span class="hk">Pull-air% · pulled balls in the air</span><div class="hd">Where home runs actually come from, and one of the most predictive marks. ~10% average · good 13%+ · <b>elite 16%+</b>.</div></div>
+          <div class="hritem"><span class="hk">xwOBA · expected value on contact</span><div class="hd">Overall quality-of-contact production. League ~.315–.320 · good .350+ · <b>elite .380+</b>. A high xwOBA means the results are real, not luck.</div></div>
+          <div class="hritem"><span class="hk">xHR · expected-HR signal (green / red)</span><div class="hd">Not "high = good" — it's a regression flag. <b style="color:var(--good)">Green +%</b> = his contact says he's homering <i>less</i> than he should be, so he's due to regress up (a buy-low). <b style="color:#e2604f">Red −%</b> = he's running hot on luck (fade or downgrade).</div></div>
+        </div>
+        <div class="gtip" style="margin-top:12px"><b>The ideal power profile to hunt:</b> Barrel <b>15%+</b>, HardHit <b>50%+</b>, Pull-air <b>16%+</b>, xwOBA <b>.380+</b>, LA <b>12–20°</b> — with a <b style="color:var(--good)">green xHR</b> as the tiebreaker. When several of these light up on a <b>confirmed</b> hitter facing a <b>vulnerable</b> starter in a good <b>park &amp; weather</b>, that's your strongest home-run spot. A great profile improves your odds — it's never a lock.</div>
+      </div>
+
+      <div class="gcard">
         <h3>Pitcher home-run vulnerability checklist</h3>
         <p>Flip the lens and grade the <b>pitcher</b> instead of the hitter. Target starters showing multiple of these red flags — the more that stack, the more his bats become live HR plays (and his opponent's team total / run line gets interesting):</p>
         <ul class="vflags">
@@ -1463,7 +1480,7 @@ const ODDS_BASE = "https://api.the-odds-api.com/v4/sports/baseball_mlb";
 // Expected stats (xwOBA, xSLG) now come straight from the MLB Stats API
 // below — no proxy needed. This is only for extra Savant-only metrics
 // (barrel%, exit velo) if you ever want them; leave "" to ignore.
-const STATS_PROXY = "";
+const STATS_PROXY = "https://pook-statcast.pooky702.workers.dev/?url=";
 
 // Path to the daily zones.json produced by build-zones.mjs (see /zones).
 // Relative to where edge-board.html is served. Edit if you host it elsewhere.
@@ -1826,7 +1843,7 @@ function parseCSV(text){
 }
 async function fetchStatcast(proxy,season){
   // Baseball Savant custom leaderboard CSV — blocked by CORS unless proxied / same-origin
-  const sel="player_id,player_name,exit_velocity_avg,launch_angle_avg,barrel_batted_rate,hard_hit_percent,xwoba";
+  const sel="player_id,player_name,exit_velocity_avg,launch_angle_avg,barrel_batted_rate,hard_hit_percent,xwoba,pull_percent,flyballs_percent";
   const savant=`https://baseballsavant.mlb.com/leaderboard/custom?year=${season}&type=batter&filter=&min=10&selections=${sel}&chart=false&csv=true`;
   const url=proxy? (proxy.includes("{url}")?proxy.replace("{url}",encodeURIComponent(savant)):proxy+encodeURIComponent(savant)) : savant;
   const r=await fetch(url);if(!r.ok)throw new Error("HTTP "+r.status);
@@ -1835,7 +1852,8 @@ async function fetchStatcast(proxy,season){
   rows.forEach(row=>{
     const id=Number(row.player_id);if(!id)return;
     out[id]={ev:pnum(row.exit_velocity_avg),la:pnum(row.launch_angle_avg),
-      barrel:pnum(row.barrel_batted_rate),hardhit:pnum(row.hard_hit_percent),xwoba:pnum(row.xwoba)};
+      barrel:pnum(row.barrel_batted_rate),hardhit:pnum(row.hard_hit_percent),xwoba:pnum(row.xwoba),
+      pull:pnum(row.pull_percent),fb:pnum(row.flyballs_percent)};
   });
   return out;
 }
@@ -2354,7 +2372,13 @@ async function buildModel(date){
     const proxy=el("scproxy")?el("scproxy").value.trim():"";
     const sc=await fetchStatcast(proxy,season);
     if(sc&&Object.keys(sc).length){STATCAST_OK=true;
-      games.forEach(g=>[...g._awayBat,...g._homeBat].forEach(b=>{if(sc[b.id])b.statcast=sc[b.id];}));}
+      games.forEach(g=>[...g._awayBat,...g._homeBat].forEach(b=>{
+        if(!sc[b.id])return;
+        b.statcast=sc[b.id];
+        const m=statcastHRMult(b);        // regress results HR -> xHR, nudge by pull-air
+        b._xHRrate=xHRrate(b.statcast); b._hrMult=m;
+        if(b.proj&&m!==1) b.proj.hr*=m;   // refine the per-game HR projection (park/weather/platoon stay intact)
+      }));}
   }catch(e){STATCAST_OK=false;}
 
   // team last-30-day hitting form
@@ -2628,7 +2652,41 @@ const PITCH_NAME={FF:"four-seam",FA:"fastball",SI:"sinker",FT:"two-seam",FC:"cut
 function pitchName(c){return PITCH_NAME[c]||c;}
 function nz(v,lo,hi){if(v==null||!isFinite(v))return null;return clampR((v-lo)/(hi-lo),0,1);}
 function avgDefined(pairs){let sw=0,acc=0;pairs.forEach(([v,w])=>{if(v!=null&&isFinite(v)){acc+=v*w;sw+=w;}});return sw?acc/sw:null;}
+// Reusable Statcast pill line — used on every player-stat surface
+function statcastLine(b){
+  const s=b&&b.statcast; if(!s)return "";
+  let h=`<div class="sclines"><span class="scpill">EV <b>${s.ev!=null?s.ev.toFixed(1):"—"}</b></span><span class="scpill">LA <b>${s.la!=null?s.la.toFixed(1)+"°":"—"}</b></span><span class="scpill">Barrel <b>${s.barrel!=null?s.barrel.toFixed(1)+"%":"—"}</b></span><span class="scpill">HardHit <b>${s.hardhit!=null?s.hardhit.toFixed(1)+"%":"—"}</b></span>`;
+  if(s.pullAir!=null)h+=`<span class="scpill">Pull-air <b>${s.pullAir.toFixed(1)}%</b></span>`;
+  if(s.xwoba!=null)h+=`<span class="scpill">xwOBA <b>${fmt3(s.xwoba)}</b></span>`;
+  if(b._hrMult!=null&&Math.abs(b._hrMult-1)>0.02)h+=`<span class="scpill" title="xHR regression vs results">xHR <b style="color:${b._hrMult>1?"var(--good)":"#e2604f"}">${b._hrMult>1?"+":""}${Math.round((b._hrMult-1)*100)}%</b></span>`;
+  return h+`</div>`;
+}
 function laHRScore(la){if(la==null||!isFinite(la))return null;return clampR(Math.exp(-Math.pow((la-15)/12,2)),0,1);} // HR launch angle peaks ~15°
+// Expected HR rate (per PA) from Statcast contact quality — far more stable than results HR rate.
+function xHRrate(sc){
+  if(!sc||sc.barrel==null||!isFinite(sc.barrel))return null;
+  const bbePerPA=0.66, brlToHR=0.62;      // league: BBE/PA and barrel->HR conversion
+  let xr=(sc.barrel/100)*bbePerPA*brlToHR; // barrel% already encodes EV+LA of a "barrel"
+  if(sc.ev!=null) xr*=clampR(1+(sc.ev-89)*0.012,0.85,1.18);  // raw exit-velo nudge
+  if(sc.la!=null) xr*=clampR(1+(sc.la-12)*0.006,0.90,1.12);  // loft nudge
+  return Math.max(0,xr);
+}
+function pullAirPct(sc){ // approx % of batted balls that are pulled AND in the air (best HR predictor)
+  if(!sc||sc.pull==null||sc.fb==null||!isFinite(sc.pull)||!isFinite(sc.fb))return null;
+  return (sc.pull/100)*(sc.fb/100)*100;
+}
+// Regress a hitter's noisy results HR toward xHR and nudge by pull-air; returns a multiplier on proj.hr.
+function statcastHRMult(b){
+  const sc=b.statcast; if(!sc)return 1;
+  const xr=xHRrate(sc); if(xr==null)return 1;
+  const results=b.cur&&b.cur.hrRate!=null?b.cur.hrRate:null; if(results==null)return 1;
+  const floor=Math.max(results,0.006);
+  const w=0.55;                                   // weight on stable xHR vs noisy results
+  const stable=w*xr+(1-w)*results;
+  let mult=stable/floor;
+  const pa=pullAirPct(sc); if(pa!=null){ sc.pullAir=pa; mult*=clampR(1+(pa-10)*0.02,0.9,1.2); }
+  return clampR(mult,0.6,1.7);
+}
 function hrMatchTier(s){return s>=90?{e:"🔥",t:"Elite HR Target",cls:"hm-elite"}:s>=80?{e:"✅",t:"Strong HR Target",cls:"hm-strong"}:s>=70?{e:"⚠️",t:"Moderate HR Target",cls:"hm-mod"}:{e:"❌",t:"Avoid",cls:"hm-avoid"};}
 function hrMatchWhy(contrib,batter,pitcher){
   if(!contrib||!contrib.length)return "";
@@ -2741,7 +2799,7 @@ function renderPlays(model){
     }
     let scLine="";
     if(b.statcast){const s=b.statcast;
-      scLine=`<div class="sclines"><span class="scpill">EV <b>${s.ev?s.ev.toFixed(1):"—"}</b></span><span class="scpill">LA <b>${s.la?s.la.toFixed(1)+"°":"—"}</b></span><span class="scpill">Barrel <b>${s.barrel?s.barrel.toFixed(1)+"%":"—"}</b></span><span class="scpill">HardHit <b>${s.hardhit?s.hardhit.toFixed(1)+"%":"—"}</b></span></div>`;
+      scLine=statcastLine(b);
     }
     let psLine="";
     if(b.pSide&&b.pSide.data){const sd=b.pSide.data;const lbl=b.pSide.code==="vl"?"LHB":"RHB";
@@ -4251,7 +4309,7 @@ function bbPlayRow(p,withWhy){
   return `<div class="bbrow">
     <div class="bbscore ${tier.cls}"><span>${tier.e}</span><b>${p.master}</b></div>
     <div class="bbmid"><div class="bbn">${p.type==="line"?"🎲 ":(p.b?rankEmoji(p.b):"")}${p.name} <span class="bbmk">${p.label}</span></div>
-      <div class="bbsub">${p.type==="prop"?p.team+" · ":""}${p.game} · ${Math.round(p.prob*100)}% model${bk} · ${p.con.agree}/${p.con.total} agree</div>${why}</div>
+      <div class="bbsub">${p.type==="prop"?p.team+" · ":""}${p.game} · ${Math.round(p.prob*100)}% model${bk} · ${p.con.agree}/${p.con.total} agree</div>${why}${p.type==="prop"&&p.b?statcastLine(p.b):""}</div>
     <div class="bbev ${p.ev!=null?(p.ev>=0?"pos":"neg"):""}">${evtxt}</div>
   </div>`;
 }
@@ -4617,7 +4675,7 @@ function renderHomers(model){
     return `<div class="hrcard ${isCalled?'called':''}">
       <div class="hrleft"><div class="hrn">💣 ${rankEmoji(b)}${b.name} <small>${b.team}</small></div>
         <div class="hrm">${b.result.hr} HR · ${b.result.h||0}-for-${b.result.ab||0}${b.result.rbi?`, ${b.result.rbi} RBI`:""} · vs ${b.oppPitcher} · ${b.game}</div>
-        ${flags.length?`<div class="hrflags">${flags.join(" · ")}</div>`:""}</div>
+        ${flags.length?`<div class="hrflags">${flags.join(" · ")}</div>`:""}${statcastLine(b)}</div>
       <div class="hrright">${gbadge(b.grade)}<div class="hrpre">${pre}% pre-game · EDGE ${Math.round(b.escore)}</div></div>
     </div>`;
   }).join("");
@@ -4728,9 +4786,11 @@ function playerRow(b,conf){
   const slot=(conf&&b.slot)?b.slot:"—";
   const plat=platPill(b);
   const today=b.result?resultChip(b):'<span style="color:var(--muted2);font-family:Roboto Mono,monospace;font-size:10.5px">—</span>';
+  const s=b.statcast;
+  const scLine=statcastLine(b);
   return `<div class="prow">
     <span class="slot">${slot}</span>
-    <span class="pnm">${rankEmoji(b)}${formEmoji(b)}${b.name}<small>${b.pos||""} · B:${b.bats||"?"}${avgPA(b)!=null?` · ${avgPA(b).toFixed(1)} avg PA`:""} · AVG ${b.cur.avg??"—"} · SLG ${b.cur.slg??"—"} · ISO ${isoStr(b.cur.iso)} · HR% ${(b.cur.hrRate*100).toFixed(1)}${b.statcast?` · EV ${b.statcast.ev?b.statcast.ev.toFixed(1):"—"} · Brl ${b.statcast.barrel?b.statcast.barrel.toFixed(1)+"%":"—"}`:""}${b.recentForm?` · L10 ${b.recentForm.l10.h}-${b.recentForm.l10.ab}`:""}${b.bvp&&b.bvp.pa>=1?` · BvP ${b.bvp.h}-${b.bvp.ab}`:""}</small></span>
+    <span class="pnm">${rankEmoji(b)}${formEmoji(b)}${b.name}<small>${b.pos||""} · B:${b.bats||"?"}${avgPA(b)!=null?` · ${avgPA(b).toFixed(1)} avg PA`:""} · AVG ${b.cur.avg??"—"} · SLG ${b.cur.slg??"—"} · ISO ${isoStr(b.cur.iso)} · HR% ${(b.cur.hrRate*100).toFixed(1)}${b.recentForm?` · L10 ${b.recentForm.l10.h}-${b.recentForm.l10.ab}`:""}${b.bvp&&b.bvp.pa>=1?` · BvP ${b.bvp.h}-${b.bvp.ab}`:""}</small>${scLine}</span>
     <span class="pc">${gbadge(b.grade)}</span>
     <span class="pc">${plat||'<span style="color:var(--muted2)">—</span>'}</span>
     <span class="pv">${b.proj.hr.toFixed(2)}</span>
@@ -4921,6 +4981,7 @@ el("plGen").addEventListener("click",()=>renderParlays());
 el("oddsTabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;ODDS_BOARD_MARKET=t.dataset.o;[...el("oddsTabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderOddsBoard(MODEL);});
 el("propTabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;PROP_MARKET=t.dataset.p;[...el("propTabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderProps(MODEL);});
 el("trendSearch").addEventListener("input",e=>{TREND_Q=e.target.value;renderTrends();});
+el("scproxy")&&el("scproxy").addEventListener("input",e=>{try{localStorage.setItem("eb:scproxy",e.target.value.trim());}catch(_){}});
 el("teamSelect").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;TEAM_SEL=b.dataset.key;renderTeamSelector();});
 el("hrmTable")&&el("hrmTable").addEventListener("click",e=>{const th=e.target.closest("th[data-k]");if(!th)return;const k=th.dataset.k;const strCols=["name","team","form","pitcher","pteam","status","lineup"];if(HRM_SORT.key===k)HRM_SORT.dir*=-1;else HRM_SORT={key:k,dir:strCols.includes(k)?1:-1};if(MODEL)renderHRModel(MODEL);});
 el("pvrTabs")&&el("pvrTabs").addEventListener("click",e=>{const b=e.target.closest("button[data-t]");if(!b)return;PVR_TAB=b.dataset.t;[...el("pvrTabs").children].forEach(c=>c.classList.toggle("active",c===b));if(MODEL)renderVulnReport(MODEL);});
@@ -4978,7 +5039,7 @@ el("briefBoard")&&el("briefBoard").addEventListener("click",async e=>{
 el("run").addEventListener("click",run);
 el("loadOdds").addEventListener("click",loadOdds);
 setInterval(updateFreshLabel,60000);
-(function(){const d=new Date();el("date").value=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;if(STATS_PROXY&&el("scproxy")&&!el("scproxy").value)el("scproxy").value=STATS_PROXY;run();})();
+(function(){const d=new Date();el("date").value=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;let px=STATS_PROXY;try{const sv=localStorage.getItem("eb:scproxy");if(sv!=null)px=sv;}catch(e){}if(px&&el("scproxy")&&!el("scproxy").value)el("scproxy").value=px;run();})();
 </script>
 </body>
 </html>
