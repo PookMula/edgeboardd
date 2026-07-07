@@ -1475,6 +1475,8 @@
 //==================================================================
 const API = "https://statsapi.mlb.com/api/v1";
 const ODDS_BASE = "https://api.the-odds-api.com/v4/sports/baseball_mlb";
+// Only pull/use these sportsbooks from the Odds API (the-odds-api keys). betmgm = BetMGM (US), caesars = Caesars.
+const ODDS_BOOKS = ["betmgm","caesars"];
 
 // ── Optional raw-Statcast proxy (NOT required) ─────────────────────
 // Expected stats (xwOBA, xSLG) now come straight from the MLB Stats API
@@ -2466,7 +2468,7 @@ async function loadOdds(){
     if(!pairs.length){setStatus("No matching odds events (slate may be too far out, or key region mismatch).","err");el("loadOdds").disabled=false;return;}
     let i=0;
     await pool(pairs,4,async({g,ev})=>{
-      const url=`${ODDS_BASE}/events/${ev.id}/odds?apiKey=${key}&regions=us&oddsFormat=american&markets=${markets}`;
+      const url=`${ODDS_BASE}/events/${ev.id}/odds?apiKey=${key}&bookmakers=${ODDS_BOOKS.join(",")}&oddsFormat=american&markets=${markets}`;
       const data=await getJSON(url);
       attachOdds(g,data);
     },(d,t)=>{setBar(d/t);setStatus(`Loading odds ${d}/${t} games…`);});
@@ -2485,6 +2487,7 @@ const ODDS_MARKET_MAP={batter_home_runs:"hr",batter_hits:"hits",batter_total_bas
 function attachOdds(g,data){
   const byName={}; // name -> {market:{book:{point,over,under}}}
   (data.bookmakers||[]).forEach(bk=>{
+    if(!ODDS_BOOKS.includes(bk.key))return;
     const book=bk.key; // betmgm / caesars
     (bk.markets||[]).forEach(m=>{
       const mk=ODDS_MARKET_MAP[m.key];if(!mk)return;
@@ -2504,6 +2507,7 @@ function attachOdds(g,data){
   const hn=norm(g.home.full), an=norm(g.away.full);
   const lines={h2h:{},totals:{},spreads:{}};
   (data.bookmakers||[]).forEach(bk=>{
+    if(!ODDS_BOOKS.includes(bk.key))return;
     (bk.markets||[]).forEach(m=>{
       if(m.key==="h2h"){(m.outcomes||[]).forEach(o=>{const s=norm(o.name)===hn?"home":norm(o.name)===an?"away":null;if(s){lines.h2h[bk.key]=lines.h2h[bk.key]||{};lines.h2h[bk.key][s]=o.price;}});}
       else if(m.key==="totals"){(m.outcomes||[]).forEach(o=>{lines.totals[bk.key]=lines.totals[bk.key]||{};if(/over/i.test(o.name)){lines.totals[bk.key].point=o.point;lines.totals[bk.key].over=o.price;}else if(/under/i.test(o.name)){lines.totals[bk.key].under=o.price;lines.totals[bk.key].point=o.point;}});}
@@ -2724,7 +2728,7 @@ function hrMatchApprox(b,g,pitcher){
   const bPow=avgDefined([[nz(bIso,.100,.280),0.5],[nz(bSlg,.380,.560),0.3],[b.statcast&&b.statcast.barrel!=null?nz(b.statcast.barrel/100,.04,.16):null,0.2]]);
   const matchup=0.6*(bPow!=null?bPow:0.5)+0.4*(pVuln!=null?pVuln:0.5);
   const score=Math.round(clampR(avgDefined([[matchup,0.50],[nz(g.parkF,.85,1.40),0.18],[g._hrEnv!=null?g._hrEnv/100:null,0.17],[b.recentForm?clampR(0.5+b.recentForm.delta*3,0,1):null,0.15]])*100,1,100));
-  const why=`${b.name} vs ${b.oppPitcher}: ${ps?`allows ${ps.slg||"—"} SLG / ${fmt3(ps.iso!=null?ps.iso:(pnum(ps.slg)-pnum(ps.avg)))} ISO to ${sideLbl}`:(pitcher&&pitcher.cur?`${pitcher.cur.hr9!=null?pitcher.cur.hr9.toFixed(2):"—"} HR/9`:"limited pitcher data")}; ${b.name} carries ${b.cur&&b.cur.iso?b.cur.iso:"—"} ISO. Park ${(g.parkF||1).toFixed(2)} · ${hrEnvLabel(g._hrEnv||50)}. (Approx — exact pitch-type Statcast needs a host/proxy.)`;
+  const why=`${b.name} vs ${b.oppPitcher}: ${ps?`allows ${ps.slg||"—"} SLG / ${fmt3(ps.iso!=null?ps.iso:(pnum(ps.slg)-pnum(ps.avg)))} ISO to ${sideLbl}`:(pitcher&&pitcher.cur?`${pitcher.cur.hr9!=null?pitcher.cur.hr9.toFixed(2):"—"} HR/9`:"limited pitcher data")}; ${b.name} carries ${b.cur&&b.cur.iso!=null?isoStr(b.cur.iso):"—"} ISO. Park ${(g.parkF||1).toFixed(2)} · ${hrEnvLabel(g._hrEnv||50)}. (Approx — exact pitch-type Statcast needs a host/proxy.)`;
   return {score,tier:hrMatchTier(score),why,approx:true};
 }
 function hrMatchScore(b,g,pitcher){
@@ -4399,7 +4403,7 @@ function homerExplainPlayer(b,model){
   const hm=b.hrMatch;
   let out=`<b>${b.name}</b> <span class="hmuted">(${b.team})</span> vs ${b.oppPitcher}:<br><br>`;
   out+=`• HR chance: <b>${prob}%</b> (model)<br>`;
-  out+=`• Power: ${b.cur&&b.cur.iso?b.cur.iso+" ISO":"—"}${b.cur&&b.cur.slg?" / "+b.cur.slg+" SLG":""}<br>`;
+  out+=`• Power: ${b.cur&&b.cur.iso!=null?isoStr(b.cur.iso)+" ISO":"—"}${b.cur&&b.cur.slg?" / "+b.cur.slg+" SLG":""}<br>`;
   if(hm)out+=`• HR matchup: <b>${hm.tier.e} ${hm.score}/100</b> (${hm.tier.t})<br>`;
   out+=`• Grade ${b.grade?b.grade.letter:"—"}${b.platoon&&b.platoon.badge?" · platoon "+b.platoon.badge:""}${b.weakSpot?" · 🎯 weak spot":""}${b.teamStar?" · ⭐ team best":b.teamBolt?" · ⚡ 2nd best":b.teamSleeper?" · 💤 sleeper":""}<br>`;
   if(hm&&hm.why)out+=`<br>${hm.why}`;
