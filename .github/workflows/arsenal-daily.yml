@@ -1,0 +1,40 @@
+name: Daily Arsenal Build
+
+# Builds arsenal.json (pitch-level matchup data) every morning and commits it to the repo,
+# so Edge Board's HR engine auto-upgrades from the season-split approximation to exact
+# pitch-type matchups. You can also run it on demand from the Actions tab.
+
+on:
+  schedule:
+    - cron: "30 11 * * *"   # 11:30 UTC daily (~6:30am ET / 4:30am PT) — before day games
+  workflow_dispatch: {}
+
+permissions:
+  contents: write            # lets the job commit arsenal.json back to the repo
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install --upgrade pybaseball pandas numpy
+
+      - name: Build arsenal.json
+        run: python build_arsenal.py
+
+      - name: Commit updated arsenal.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add arsenal.json
+          git diff --staged --quiet || git commit -m "Update arsenal.json ($(date -u +%F))"
+          git push
