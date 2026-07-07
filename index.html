@@ -793,6 +793,37 @@
   .ars-mpt{color:var(--chalk)}.ars-mpt small{color:var(--muted2)}
   .ars-muse{color:var(--teal);text-align:right}.ars-mbrl{color:var(--muted);text-align:right}.ars-mbrl i{color:var(--muted2)}
   .ars-note{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted2);line-height:1.6}
+  .ars-cardwrap{border-radius:14px;padding:2px}
+  .vb-b-strong{background:linear-gradient(180deg,rgba(95,191,125,.5),transparent 60px)}
+  .vb-b-lean{background:linear-gradient(180deg,rgba(242,181,60,.45),transparent 60px)}
+  .vb-b-flier{background:linear-gradient(180deg,rgba(76,140,220,.45),transparent 60px)}
+  .vb-b-pass{background:linear-gradient(180deg,rgba(120,130,140,.35),transparent 60px)}
+  .vbadge{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-radius:11px;padding:11px 15px;margin-bottom:12px;border:1px solid var(--line)}
+  .vbadge.vb-strong{background:rgba(95,191,125,.12);border-color:rgba(95,191,125,.45)}
+  .vbadge.vb-lean{background:rgba(242,181,60,.1);border-color:rgba(242,181,60,.4)}
+  .vbadge.vb-flier{background:rgba(76,140,220,.12);border-color:rgba(76,140,220,.4)}
+  .vbadge.vb-pass{background:rgba(120,130,140,.08);border-color:var(--line)}
+  .vb-tag{font-family:'Oswald',sans-serif;font-weight:700;font-size:15px;letter-spacing:.02em;white-space:nowrap;flex:0 0 auto}
+  .vb-strong .vb-tag{color:var(--good)}.vb-lean .vb-tag{color:var(--amber)}.vb-flier .vb-tag{color:#6fa8e6}.vb-pass .vb-tag{color:var(--muted2)}
+  .vb-reason{font-size:12.5px;color:var(--muted);line-height:1.45}
+  .gl-card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:6px 14px 12px;margin-bottom:18px;max-width:1000px}
+  .gl-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;padding:11px 0 8px}
+  .gl-head b{font-family:'Oswald',sans-serif;font-size:17px;color:var(--chalk)}
+  .gl-head span{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2)}
+  .gl-legend{display:flex;gap:12px;flex-wrap:wrap;font-family:'Roboto Mono',monospace;font-size:10.5px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .gl-legend .vb-strong{color:var(--good)}.gl-legend .vb-lean{color:var(--amber)}.gl-legend .vb-flier{color:#6fa8e6}
+  .gl-lgmut{color:var(--muted2);margin-left:auto}
+  .gl-hdr,.gl-row{display:grid;grid-template-columns:26px 1fr 48px 56px 64px;gap:8px;align-items:center}
+  .gl-hdr{font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted2);padding:7px 6px 5px}
+  .gl-hdr span:nth-child(n+3){text-align:right}
+  .gl-row{width:100%;background:none;border:none;border-bottom:1px solid var(--line);padding:8px 6px;cursor:pointer;text-align:left;font-family:inherit}
+  .gl-row:last-child{border-bottom:none}
+  .gl-row:hover{background:var(--panel2)}
+  .gl-v{font-size:13px;text-align:center}
+  .gl-nm{color:var(--chalk);font-size:13.5px;font-weight:600;line-height:1.15;overflow:hidden}
+  .gl-nm small{display:block;color:var(--muted2);font-weight:400;font-size:10px;font-family:'Roboto Mono',monospace;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .gl-sc,.gl-mp,.gl-ed{font-family:'Roboto Mono',monospace;font-size:12px;text-align:right}
+  .gl-sc{color:var(--muted)}.gl-mp{color:var(--teal);font-weight:700}.gl-ed{color:var(--muted)}
   .sg-wins{margin-bottom:18px}
   .sg-wins:empty{display:none}
   .sgwin-head{font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;color:var(--good);display:flex;align-items:center;gap:9px;margin-bottom:11px}
@@ -1297,6 +1328,7 @@
     <div class="sec-head"><h2>🎯 Arsenal Matchup</h2><span class="tag">batter contact quality vs the pitcher's exact pitch mix</span><span class="rule"></span></div>
     <div id="arsenalEmpty" class="hide"><div class="empty"><b>Arsenal data not loaded</b>This view needs <code>arsenal.json</code> next to the site (built by the daily <code>build_arsenal.py</code> pipeline + GitHub Action). Until it's there, Best Bets still runs the season-split approximation.</div></div>
     <div id="arsenalWrap">
+      <div id="goList"></div>
       <div class="zone-top">
         <div class="zsel"><label for="arsGameSel">Game</label><select id="arsGameSel"></select></div>
         <div class="zsel"><label for="arsBatSel">Batter</label><select id="arsBatSel"></select></div>
@@ -3205,6 +3237,82 @@ const ARS_TILES=[
   {k:"ev",l:"EV",pct:false},{k:"dist",l:"Dist",pct:false,dist:true},{k:"pullbrl",l:"PullBrl%",pct:true},
 ];
 function arsFmt(t,v){if(v==null||!isFinite(v))return "—";return t.pct?(v*100).toFixed(1)+"%":t.dist?Math.round(v)+"'":v.toFixed(1);}
+// ---- Verdict engine: collapse the whole read into one go/no-go call ----
+const VERDICT_META={strong:{e:"🟢",l:"STRONG PLAY",cls:"vb-strong"},lean:{e:"🟡",l:"LEAN",cls:"vb-lean"},flier:{e:"🔵",l:"FLIER",cls:"vb-flier"},pass:{e:"⚪",l:"PASS",cls:"vb-pass"}};
+const vcap=s=>s?s.charAt(0).toUpperCase()+s.slice(1):s;
+function bestHRPrice(b){
+  if(!b.odds||!b.odds.hr)return null;let best=null;
+  ["betmgm","caesars"].forEach(bk=>{const q=b.odds.hr[bk];if(q&&q.over!=null){const imp=impliedProb(q.over);if(imp!=null&&(!best||q.over>best.price))best={price:q.over,imp,book:bk};}});
+  return best;
+}
+function hrVerdict(b,g){
+  const score=b.hrMatch?b.hrMatch.score:null;
+  const modelProb=calibrate(poissonOver(b.proj?b.proj.hr:0,0.5),"hr");
+  const sc=b.statcast||{};
+  const powerGood=(sc.barrel!=null&&sc.barrel>=10)||(b.cur&&b.cur.iso!=null&&b.cur.iso>=0.18);
+  const pitcher=b.isHome?g._awayK:g._homeK;
+  const mu=arsenalMatchup(b,pitcher);
+  const cov=mu?mu.coverage:null;
+  const arsGreen=(mu&&mu.metrics&&mu.metrics.barrel&&mu.metrics.barrel.delta!=null)?mu.metrics.barrel.delta>0:null;
+  const park=b._park!=null?b._park:1, parkHurts=park<0.95, parkHelps=park>1.05;
+  let edge=null,priceObj=null;
+  if(ODDS_LOADED){priceObj=bestHRPrice(b);if(priceObj&&priceObj.imp!=null)edge=modelProb-priceObj.imp;}
+  const scoreOK=score!=null&&score>=68, scoreMid=score!=null&&score>=58;
+  let tier,reason;
+  if(edge!=null&&edge<=-0.02){
+    tier="pass";reason=`No price edge — model ${Math.round(modelProb*100)}% but ${capBook(priceObj.book)} ${amStr(priceObj.price)} implies ${Math.round(priceObj.imp*100)}%.`;
+  }else if(scoreOK&&powerGood&&(cov==null||cov>=0.7)&&(edge==null||edge>=0.03)){
+    tier="strong";const bits=[];
+    if(arsGreen)bits.push("barrels this pitcher's main pitches");
+    bits.push(`strong HR score (${score})`);
+    if(parkHelps)bits.push("hitter-friendly park");
+    if(edge!=null&&edge>=0.03)bits.push(`priced with edge (+${Math.round(edge*100)}%)`);
+    reason=vcap(bits.join(", "))+"."+(edge==null?" Load odds to confirm the price.":"");
+  }else if(scoreMid&&powerGood){
+    tier="lean";const flags=[];
+    if(parkHurts)flags.push("tough HR park");
+    if(sc.pullAir!=null&&sc.pullAir<12)flags.push("modest pull-air");
+    if(cov!=null&&cov<0.7)flags.push("thin arsenal coverage");
+    if(edge!=null&&edge<0.03&&edge>-0.02)flags.push("only a thin price edge");
+    reason="Good matchup"+(flags.length?", but "+flags.join(" & ")+".":".")+(edge==null?" Load odds to confirm the price.":"");
+  }else if(arsGreen||modelProb>=0.15){
+    tier="flier";const blk=[];
+    if(!scoreMid&&score!=null)blk.push(`HR score is low (${score})`);
+    if(parkHurts)blk.push("park suppresses his power");
+    if(!blk.length)blk.push("the full picture is mixed");
+    reason="Longshot only — good contact vs the arsenal, but "+blk.join(" & ")+".";
+  }else{
+    tier="pass";reason="Matchup and profile don't clear the bar"+(parkHurts?"; park hurts too":"")+".";
+  }
+  return {tier,reason,modelProb,score,edge,price:priceObj,coverage:cov};
+}
+function verdictBadge(v){const m=VERDICT_META[v.tier]||VERDICT_META.pass;return `<div class="vbadge ${m.cls}"><span class="vb-tag">${m.e} ${m.l}</span><span class="vb-reason">${v.reason}</span></div>`;}
+function buildGoList(model){
+  const order={strong:0,lean:1,flier:2,pass:3},rows=[];
+  model.games.forEach(g=>[...(g._awayBat||[]),...(g._homeBat||[])].forEach(b=>{if(!b.proj)return;rows.push({b,g,v:hrVerdict(b,g)});}));
+  rows.sort((a,b)=>{const d=order[a.v.tier]-order[b.v.tier];if(d)return d;
+    if(a.v.edge!=null&&b.v.edge!=null&&a.v.edge!==b.v.edge)return b.v.edge-a.v.edge;
+    if((b.v.score||0)!==(a.v.score||0))return (b.v.score||0)-(a.v.score||0);
+    return b.v.modelProb-a.v.modelProb;});
+  return rows;
+}
+function renderGoList(model){
+  const box=el("goList");if(!box)return;
+  if(!model||!model.games||!model.games.length){box.innerHTML="";return;}
+  const rows=buildGoList(model), go=rows.filter(r=>r.v.tier!=="pass"), passes=rows.length-go.length, top=go.slice(0,40);
+  const body=top.map(r=>{const m=VERDICT_META[r.v.tier],b=r.b,g=r.g,pitcher=b.isHome?g._awayK:g._homeK;
+    return `<button class="gl-row" data-g="${g.gamePk}" data-b="${b.id}">
+      <span class="gl-v ${m.cls}" title="${m.l}">${m.e}</span>
+      <span class="gl-nm">${b.name}<small>${b.team||""} · vs ${pitcher?shortName(pitcher.name):"TBD"}${b.slot?" · "+ordinal(b.slot):""}</small></span>
+      <span class="gl-sc">${r.v.score!=null?r.v.score:"—"}</span>
+      <span class="gl-mp">${Math.round(r.v.modelProb*100)}%</span>
+      <span class="gl-ed ${r.v.edge!=null?(r.v.edge>0?"ars-up":"ars-dn"):""}">${r.v.edge!=null?((r.v.edge>0?"+":"")+Math.round(r.v.edge*100)+"%"):(r.v.price?amStr(r.v.price.price):"—")}</span>
+    </button>`;}).join("");
+  box.innerHTML=`<div class="gl-card"><div class="gl-head"><b>Today's Go List</b><span>${go.length} play${go.length===1?"":"s"}${passes?` · ${passes} passes hidden`:""}${ODDS_LOADED?"":" · load odds for price edges"}</span></div>
+    <div class="gl-legend"><span class="vb-strong">🟢 Strong</span><span class="vb-lean">🟡 Lean</span><span class="vb-flier">🔵 Flier</span><span class="gl-lgmut">tap a row for the full card</span></div>
+    <div class="gl-hdr"><span></span><span>Batter</span><span>Score</span><span>Model</span><span>${ODDS_LOADED?"Edge":"Price"}</span></div>
+    ${body||'<div class="empty">No qualifying plays yet — check back once lineups post.</div>'}</div>`;
+}
 function arsTileHtml(t,cell){
   if(!cell||cell.arsenal==null)return `<div class="ars-tile"><div class="ars-tl">${t.l}</div><div class="ars-tv">—</div><div class="ars-tall">no data</div></div>`;
   let d="";
@@ -3218,6 +3326,7 @@ function arsenalCard(b,g){
   const pitcher=b.isHome?g._awayK:g._homeK;
   const mu=arsenalMatchup(b,pitcher);
   const hm=b.hrMatch;
+  const v=hrVerdict(b,g);
   const modelProb=calibrate(poissonOver(b.proj?b.proj.hr:0,0.5),"hr");
   const cells=["betmgm","caesars"].map(bk=>{const q=b.odds&&b.odds.hr&&b.odds.hr[bk];if(!q||q.over==null)return "";const imp=impliedProb(q.over);const edge=imp!=null?modelProb-imp:null;return `<span class="ars-obk">${capBook(bk)} <b>${amStr(q.over)}</b>${edge!=null?` <span class="${edge>0?"ars-up":"ars-dn"}">${edge>0?"+":""}${Math.round(edge*100)}%</span>`:""}</span>`;}).filter(Boolean).join("");
   const oddsRow=`<div class="ars-odds"><span class="ars-obk">MODEL <b>${(modelProb*100).toFixed(1)}%</b></span>${cells||'<span class="ars-omut">load odds for BetMGM / Caesars prices</span>'}</div>`;
@@ -3225,17 +3334,17 @@ function arsenalCard(b,g){
     <div class="ars-sub">${pitcher?pitcher.name+"'s arsenal":"pitcher TBD"}${mu&&mu.batterMeta?` · ${mu.batterMeta.bip} BIP · ${mu.batterMeta.hr} HR`:""}</div></div>
     ${hm?`<span class="ars-score ${hm.tier.cls}">${hm.score}<small>${hm.tier.e}</small></span>`:""}</div>`;
   if(!mu){
-    return head+oddsRow+`<div class="empty" style="margin-top:12px"><b>No pitch-level data yet</b>${b.name}${pitcher?" or "+pitcher.name:""} isn't in arsenal.json yet (needs enough tracked pitches, or the file isn't built). ${hm?`The HR engine is using its ${hm.approx?"season-split approximation":"full model"} for now — score <b>${hm.score}</b>.`:""}</div>`;
+    return `<div class="ars-cardwrap vb-b-${v.tier}">`+head+verdictBadge(v)+oddsRow+`<div class="empty" style="margin-top:12px"><b>No pitch-level data yet</b>${b.name}${pitcher?" or "+pitcher.name:""} isn't in arsenal.json yet (needs enough tracked pitches, or the file isn't built). ${hm?`The HR engine is using its ${hm.approx?"season-split approximation":"full model"} for now — score <b>${hm.score}</b>.`:""}</div></div>`;
   }
   const tiles=ARS_TILES.map(t=>arsTileHtml(t,mu.metrics[t.k])).join("");
   const mix=mu.pitches.map(p=>{const bd=b._pitchData[p.type];const brl=bd&&bd.barrel!=null?(bd.barrel*100).toFixed(1)+"%":"—";
     return `<div class="ars-mix"><span class="ars-mpt">${p.name||p.type} <small>${p.type}</small></span><span class="ars-muse">${Math.round(p.usage*100)}% used</span><span class="ars-mbrl">${brl} brl${bd?"":" <i>no data</i>"}</span></div>`;}).join("");
   const cov=Math.round(mu.coverage*100);
-  return head+oddsRow+
+  return `<div class="ars-cardwrap vb-b-${v.tier}">`+head+verdictBadge(v)+oddsRow+
     `<div class="ars-tiles">${tiles}</div>`+
     (hm&&hm.why?`<div class="ars-why">${hm.why}</div>`:"")+
     `<div class="ars-mixwrap"><div class="ars-mixh">${pitcher?pitcher.name:"Pitcher"}'s pitch mix — &amp; how ${shortName(b.name)} hits each</div>${mix}</div>`+
-    `<div class="ars-note">Tiles show ${shortName(b.name)}'s contact quality vs ${pitcher?pitcher.name+"'s":"this"} exact pitch mix (usage-weighted), next to his season baseline on all pitches. Covers ${cov}% of the arsenal by usage. Green = more HR-favorable than his norm.${ARSENAL_OK?"":" ⚠ arsenal.json not loaded — approximation in use."}</div>`;
+    `<div class="ars-note">Tiles show ${shortName(b.name)}'s contact quality vs ${pitcher?pitcher.name+"'s":"this"} exact pitch mix (usage-weighted), next to his season baseline on all pitches. Covers ${cov}% of the arsenal by usage. Green = more HR-favorable than his norm.${ARSENAL_OK?"":" ⚠ arsenal.json not loaded — approximation in use."}</div></div>`;
 }
 function renderArsenal(model){
   loadArsenal().then(()=>{
@@ -3243,6 +3352,7 @@ function renderArsenal(model){
     if(ARSENAL&&ARSENAL.error){if(empty)empty.classList.remove("hide");if(wrap)wrap.classList.add("hide");return;}
     if(empty)empty.classList.add("hide");if(wrap)wrap.classList.remove("hide");
     if(el("arsUpd"))el("arsUpd").textContent=ARSENAL.updated?`season ${ARSENAL.season||""} · updated ${ARSENAL.updated}`:"";
+    renderGoList(model);
     if(!model||!model.games||!model.games.length){if(el("arsCard"))el("arsCard").innerHTML='<div class="empty">Load a slate first.</div>';return;}
     if(!ARS_GAME||!model.games.some(g=>String(g.gamePk)===String(ARS_GAME)))ARS_GAME=String(model.games[0].gamePk);
     if(el("arsGameSel"))el("arsGameSel").innerHTML=model.games.map(g=>`<option value="${g.gamePk}" ${String(g.gamePk)===String(ARS_GAME)?"selected":""}>${g.away.short} @ ${g.home.short}${g.dh?" G"+g.gameNumber:""}</option>`).join("");
@@ -5162,6 +5272,7 @@ el("hrmNext")&&el("hrmNext").addEventListener("click",()=>wsShiftDate(1));
 el("hrmToday")&&el("hrmToday").addEventListener("click",()=>{const inp=el("date");if(inp)inp.value=ymdLocal(new Date());const run=el("run");if(run)run.click();});
 el("zoneGameSel")&&el("zoneGameSel").addEventListener("change",e=>{ZONES_GAME=e.target.value;ZONES_BAT=null;if(MODEL)renderZones(MODEL);});
 el("arsGameSel")&&el("arsGameSel").addEventListener("change",e=>{ARS_GAME=e.target.value;ARS_BAT=null;if(MODEL)renderArsenal(MODEL);});
+el("goList")&&el("goList").addEventListener("click",e=>{const r=e.target.closest(".gl-row");if(!r)return;ARS_GAME=r.dataset.g;ARS_BAT=r.dataset.b;if(MODEL)renderArsenal(MODEL);const c=el("arsCard");if(c&&c.scrollIntoView)c.scrollIntoView({behavior:"smooth",block:"center"});});
 el("arsBatSel")&&el("arsBatSel").addEventListener("change",e=>{ARS_BAT=e.target.value;if(MODEL)renderArsenal(MODEL);});
 el("zoneBatSel")&&el("zoneBatSel").addEventListener("change",e=>{ZONES_BAT=e.target.value;if(MODEL)renderZoneMatchup(MODEL);});
 el("wsTable")&&el("wsTable").addEventListener("click",e=>{const th=e.target.closest("th[data-k]");if(!th)return;const k=th.dataset.k;if(VULN_SORT.key===k)VULN_SORT.dir*=-1;else VULN_SORT={key:k,dir:(k==="pitcher"||k==="batter"||k==="pteam"||k==="opp"||k==="status"||k==="lineup"||k==="grade")?1:-1};if(MODEL)renderVuln(MODEL);});
