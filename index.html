@@ -824,6 +824,21 @@
   .gl-nm small{display:block;color:var(--muted2);font-weight:400;font-size:10px;font-family:'Roboto Mono',monospace;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .gl-sc,.gl-mp,.gl-ed{font-family:'Roboto Mono',monospace;font-size:12px;text-align:right}
   .gl-sc{color:var(--muted)}.gl-mp{color:var(--teal);font-weight:700}.gl-ed{color:var(--muted)}
+  .obk-table{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:12px}
+  .obk-hdr,.obk-row{display:grid;grid-template-columns:1.4fr 64px 52px 56px 84px;gap:8px;align-items:center;padding:7px 12px;font-family:'Roboto Mono',monospace;font-size:12px}
+  .obk-hdr{background:var(--panel2);color:var(--muted2);font-size:9px;letter-spacing:.04em;text-transform:uppercase}
+  .obk-row{border-top:1px solid var(--line)}
+  .obk-bestrow{background:rgba(76,192,192,.06)}
+  .obk-name{color:var(--chalk)}.obk-name small{color:var(--teal);font-size:9px}
+  .obk-price,.obk-imp,.obk-edge{text-align:right}.obk-price{color:var(--chalk)}.obk-imp{color:var(--muted2)}
+  .obk-tag{text-align:right;font-size:10.5px;font-weight:700}
+  .obk-play{color:var(--good)}.obk-thin{color:var(--amber)}.obk-no{color:var(--muted2)}
+  .obk-foot{padding:8px 12px;font-size:10px;color:var(--muted2);line-height:1.55;border-top:1px solid var(--line)}.obk-foot b{color:var(--muted)}
+  .ars-nobook{font-family:'Roboto Mono',monospace;font-size:11.5px;color:var(--muted2);background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:11px 14px;margin-bottom:12px;line-height:1.5}
+  .ars-hr-banner{background:linear-gradient(180deg,rgba(242,181,60,.25),rgba(242,181,60,.08));border:1px solid var(--amber);border-radius:11px;padding:11px 15px;margin-bottom:10px;font-family:'Oswald',sans-serif;font-weight:700;font-size:16px;color:var(--amber);letter-spacing:.01em}
+  .ars-homered{box-shadow:0 0 0 1px var(--amber),0 0 22px rgba(242,181,60,.25)}
+  .gl-hr .gl-nm{color:var(--amber)}
+  .gl-hrtag{font-family:'Roboto Mono',monospace;font-size:8.5px;font-weight:700;color:#1a1a1a;background:var(--amber);border-radius:4px;padding:1px 5px;margin-left:5px;vertical-align:middle;letter-spacing:.03em}
   .sg-wins{margin-bottom:18px}
   .sg-wins:empty{display:none}
   .sgwin-head{font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;color:var(--good);display:flex;align-items:center;gap:9px;margin-bottom:11px}
@@ -1553,6 +1568,7 @@
 const API = "https://statsapi.mlb.com/api/v1";
 const ODDS_BASE = "https://api.the-odds-api.com/v4/sports/baseball_mlb";
 // Only pull/use these sportsbooks from the Odds API (the-odds-api keys). betmgm = BetMGM (US), caesars = Caesars.
+// (All US books load. This list is kept only as "preferred books to surface first" if needed.)
 const ODDS_BOOKS = ["betmgm","caesars"];
 
 // ── Optional raw-Statcast proxy (NOT required) ─────────────────────
@@ -2563,7 +2579,7 @@ async function loadOdds(){
     if(!pairs.length){setStatus("No matching odds events (slate may be too far out, or key region mismatch).","err");el("loadOdds").disabled=false;return;}
     let i=0;
     await pool(pairs,4,async({g,ev})=>{
-      const url=`${ODDS_BASE}/events/${ev.id}/odds?apiKey=${key}&bookmakers=${ODDS_BOOKS.join(",")}&oddsFormat=american&markets=${markets}`;
+      const url=`${ODDS_BASE}/events/${ev.id}/odds?apiKey=${key}&regions=us&oddsFormat=american&markets=${markets}`;
       const data=await getJSON(url);
       attachOdds(g,data);
     },(d,t)=>{setBar(d/t);setStatus(`Loading odds ${d}/${t} games…`);});
@@ -2582,8 +2598,7 @@ const ODDS_MARKET_MAP={batter_home_runs:"hr",batter_hits:"hits",batter_total_bas
 function attachOdds(g,data){
   const byName={}; // name -> {market:{book:{point,over,under}}}
   (data.bookmakers||[]).forEach(bk=>{
-    if(!ODDS_BOOKS.includes(bk.key))return;
-    const book=bk.key; // betmgm / caesars
+    const book=bk.key; // all US books
     (bk.markets||[]).forEach(m=>{
       const mk=ODDS_MARKET_MAP[m.key];if(!mk)return;
       (m.outcomes||[]).forEach(o=>{
@@ -2602,7 +2617,6 @@ function attachOdds(g,data){
   const hn=norm(g.home.full), an=norm(g.away.full);
   const lines={h2h:{},totals:{},spreads:{}};
   (data.bookmakers||[]).forEach(bk=>{
-    if(!ODDS_BOOKS.includes(bk.key))return;
     (bk.markets||[]).forEach(m=>{
       if(m.key==="h2h"){(m.outcomes||[]).forEach(o=>{const s=norm(o.name)===hn?"home":norm(o.name)===an?"away":null;if(s){lines.h2h[bk.key]=lines.h2h[bk.key]||{};lines.h2h[bk.key][s]=o.price;}});}
       else if(m.key==="totals"){(m.outcomes||[]).forEach(o=>{lines.totals[bk.key]=lines.totals[bk.key]||{};if(/over/i.test(o.name)){lines.totals[bk.key].point=o.point;lines.totals[bk.key].over=o.price;}else if(/under/i.test(o.name)){lines.totals[bk.key].under=o.price;lines.totals[bk.key].point=o.point;}});}
@@ -3300,10 +3314,10 @@ function renderGoList(model){
   const box=el("goList");if(!box)return;
   if(!model||!model.games||!model.games.length){box.innerHTML="";return;}
   const rows=buildGoList(model), go=rows.filter(r=>r.v.tier!=="pass"), passes=rows.length-go.length, top=go.slice(0,40);
-  const body=top.map(r=>{const m=VERDICT_META[r.v.tier],b=r.b,g=r.g,pitcher=b.isHome?g._awayK:g._homeK;
-    return `<button class="gl-row" data-g="${g.gamePk}" data-b="${b.id}">
-      <span class="gl-v ${m.cls}" title="${m.l}">${m.e}</span>
-      <span class="gl-nm">${b.name}<small>${b.team||""} · vs ${pitcher?shortName(pitcher.name):"TBD"}${b.slot?" · "+ordinal(b.slot):""}</small></span>
+  const body=top.map(r=>{const m=VERDICT_META[r.v.tier],b=r.b,g=r.g,pitcher=b.isHome?g._awayK:g._homeK;const homered=b.result&&b.result.hr>0;
+    return `<button class="gl-row${homered?" gl-hr":""}" data-g="${g.gamePk}" data-b="${b.id}">
+      <span class="gl-v ${m.cls}" title="${m.l}">${homered?"💥":m.e}</span>
+      <span class="gl-nm">${b.name}${homered?' <span class="gl-hrtag">HOMERED</span>':""}<small>${b.team||""} · vs ${pitcher?shortName(pitcher.name):"TBD"}${b.slot?" · "+ordinal(b.slot):""}</small></span>
       <span class="gl-sc">${r.v.score!=null?r.v.score:"—"}</span>
       <span class="gl-mp">${Math.round(r.v.modelProb*100)}%</span>
       <span class="gl-ed ${r.v.edge!=null?(r.v.edge>0?"ars-up":"ars-dn"):""}">${r.v.edge!=null?((r.v.edge>0?"+":"")+Math.round(r.v.edge*100)+"%"):(r.v.price?amStr(r.v.price.price):"—")}</span>
@@ -3321,6 +3335,18 @@ function arsTileHtml(t,cell){
     d=`<div class="ars-td ${cls}">${cell.delta>0?"+":""}${dv} vs all</div>`;}
   return `<div class="ars-tile"><div class="ars-tl">${t.l}</div><div class="ars-tv">${arsFmt(t,cell.arsenal)}</div>${d}<div class="ars-tall">all: ${arsFmt(t,cell.all)}</div></div>`;
 }
+// Every book's HR price for a hitter, each with its own edge + play/no-play call.
+function hrBookTable(b,modelProb){
+  if(!b.odds||!b.odds.hr)return "";
+  const rows=Object.keys(b.odds.hr).map(bk=>{const q=b.odds.hr[bk];if(q.over==null)return null;const imp=impliedProb(q.over);return imp==null?null:{bk,price:q.over,imp,edge:modelProb-imp};}).filter(Boolean).sort((a,b)=>b.price-a.price);
+  if(!rows.length)return "";
+  const best=rows.reduce((a,c)=>c.price>a.price?c:a);
+  const body=rows.map(r=>{
+    const tag=r.edge>=0.03?'<span class="obk-play">🟢 PLAY</span>':r.edge>=0?'<span class="obk-thin">🟡 THIN</span>':'<span class="obk-no">⚪ NO</span>';
+    return `<div class="obk-row${r.bk===best.bk?" obk-bestrow":""}"><span class="obk-name">${capBook(r.bk)}${r.bk===best.bk?' <small>best</small>':""}</span><span class="obk-price">${amStr(r.price)}</span><span class="obk-imp">${Math.round(r.imp*100)}%</span><span class="obk-edge ${r.edge>0?"ars-up":r.edge<0?"ars-dn":""}">${r.edge>0?"+":""}${Math.round(r.edge*100)}%</span><span class="obk-tag">${tag}</span></div>`;
+  }).join("");
+  return `<div class="obk-table"><div class="obk-hdr"><span>Book</span><span>Price</span><span>Impl</span><span>Edge</span><span>Call</span></div>${body}<div class="obk-foot">🟢 <b>PLAY</b> = your ${Math.round(modelProb*100)}% model beats the book by 3%+ · 🟡 THIN = small edge · ⚪ NO = priced shorter than your model. Best price: <b>${capBook(best.bk)} ${amStr(best.price)}</b>.</div></div>`;
+}
 function arsenalCard(b,g){
   if(!b)return '<div class="empty">No batter.</div>';
   const pitcher=b.isHome?g._awayK:g._homeK;
@@ -3328,19 +3354,21 @@ function arsenalCard(b,g){
   const hm=b.hrMatch;
   const v=hrVerdict(b,g);
   const modelProb=calibrate(poissonOver(b.proj?b.proj.hr:0,0.5),"hr");
-  const cells=["betmgm","caesars"].map(bk=>{const q=b.odds&&b.odds.hr&&b.odds.hr[bk];if(!q||q.over==null)return "";const imp=impliedProb(q.over);const edge=imp!=null?modelProb-imp:null;return `<span class="ars-obk">${capBook(bk)} <b>${amStr(q.over)}</b>${edge!=null?` <span class="${edge>0?"ars-up":"ars-dn"}">${edge>0?"+":""}${Math.round(edge*100)}%</span>`:""}</span>`;}).filter(Boolean).join("");
-  const oddsRow=`<div class="ars-odds"><span class="ars-obk">MODEL <b>${(modelProb*100).toFixed(1)}%</b></span>${cells||'<span class="ars-omut">load odds for BetMGM / Caesars prices</span>'}</div>`;
+  const bookTable=ODDS_LOADED?hrBookTable(b,modelProb):"";
+  const oddsRow=`<div class="ars-odds"><span class="ars-obk">MODEL <b>${(modelProb*100).toFixed(1)}% HR</b></span></div>`+(bookTable||`<div class="ars-nobook">${ODDS_LOADED?`No HR price posted for ${shortName(b.name)} at any book right now.`:"Enter your Odds API key in the top bar &amp; hit <b>Load odds</b> to price every book and get a play/no-play call."}</div>`);
+  const homered=b.result&&b.result.hr>0;
+  const hrBanner=homered?`<div class="ars-hr-banner">💥 HOMERED${b.result.hr>1?" ×"+b.result.hr:""} — ${shortName(b.name)} went deep today${b.result.ab!=null?` (${b.result.h}-${b.result.ab})`:""}</div>`:"";
   const head=`<div class="ars-head"><div><div class="ars-name">${b.name} <span class="ars-hand">${b.bats||"?"}HB vs ${pitcher?(pitcher.throws||"?"):"?"}HP</span></div>
     <div class="ars-sub">${pitcher?pitcher.name+"'s arsenal":"pitcher TBD"}${mu&&mu.batterMeta?` · ${mu.batterMeta.bip} BIP · ${mu.batterMeta.hr} HR`:""}</div></div>
     ${hm?`<span class="ars-score ${hm.tier.cls}">${hm.score}<small>${hm.tier.e}</small></span>`:""}</div>`;
   if(!mu){
-    return `<div class="ars-cardwrap vb-b-${v.tier}">`+head+verdictBadge(v)+oddsRow+`<div class="empty" style="margin-top:12px"><b>No pitch-level data yet</b>${b.name}${pitcher?" or "+pitcher.name:""} isn't in arsenal.json yet (needs enough tracked pitches, or the file isn't built). ${hm?`The HR engine is using its ${hm.approx?"season-split approximation":"full model"} for now — score <b>${hm.score}</b>.`:""}</div></div>`;
+    return `<div class="ars-cardwrap vb-b-${v.tier}${homered?" ars-homered":""}">`+hrBanner+head+verdictBadge(v)+oddsRow+`<div class="empty" style="margin-top:12px"><b>No pitch-level data yet</b>${b.name}${pitcher?" or "+pitcher.name:""} isn't in arsenal.json yet (needs enough tracked pitches, or the file isn't built). ${hm?`The HR engine is using its ${hm.approx?"season-split approximation":"full model"} for now — score <b>${hm.score}</b>.`:""}</div></div>`;
   }
   const tiles=ARS_TILES.map(t=>arsTileHtml(t,mu.metrics[t.k])).join("");
   const mix=mu.pitches.map(p=>{const bd=b._pitchData[p.type];const brl=bd&&bd.barrel!=null?(bd.barrel*100).toFixed(1)+"%":"—";
     return `<div class="ars-mix"><span class="ars-mpt">${p.name||p.type} <small>${p.type}</small></span><span class="ars-muse">${Math.round(p.usage*100)}% used</span><span class="ars-mbrl">${brl} brl${bd?"":" <i>no data</i>"}</span></div>`;}).join("");
   const cov=Math.round(mu.coverage*100);
-  return `<div class="ars-cardwrap vb-b-${v.tier}">`+head+verdictBadge(v)+oddsRow+
+  return `<div class="ars-cardwrap vb-b-${v.tier}${homered?" ars-homered":""}">`+hrBanner+head+verdictBadge(v)+oddsRow+
     `<div class="ars-tiles">${tiles}</div>`+
     (hm&&hm.why?`<div class="ars-why">${hm.why}</div>`:"")+
     `<div class="ars-mixwrap"><div class="ars-mixh">${pitcher?pitcher.name:"Pitcher"}'s pitch mix — &amp; how ${shortName(b.name)} hits each</div>${mix}</div>`+
