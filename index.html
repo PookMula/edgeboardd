@@ -783,6 +783,22 @@
   .ars-tile{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 8px;text-align:center}
   .ars-tl{font-family:'Roboto Mono',monospace;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted2)}
   .ars-tv{font-family:'Oswald',sans-serif;font-weight:700;font-size:24px;color:var(--chalk);line-height:1.15;margin-top:3px}
+  .ars-tile.cq-good .ars-tv{color:var(--good)}.ars-tile.cq-bad .ars-tv{color:#e2604f}.ars-tile.cq-ok .ars-tv{color:var(--chalk)}.ars-tile.cq-na .ars-tv{color:var(--muted2)}
+  .ars-tile.cq-good{border-color:rgba(95,191,125,.4)}.ars-tile.cq-bad{border-color:rgba(226,96,79,.35)}
+  .ars-tsub{font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted2);margin-top:2px}
+  .track-note{font-size:11.5px;color:var(--muted2);line-height:1.55;max-width:820px;margin:2px 0 12px;padding:9px 13px;background:var(--panel);border:1px solid var(--line);border-radius:9px}.track-note b{color:var(--muted)}
+  .apt-h{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted2);padding:9px 0 7px}.apt-h small{color:var(--good)}
+  .apt-hdr,.apt-row{display:grid;grid-template-columns:1.3fr 42px repeat(6,minmax(52px,1fr));gap:5px;align-items:center;min-width:560px}
+  .apt-hdr{font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted2);padding:5px 0;border-bottom:1px solid var(--line)}
+  .apt-hdr span:nth-child(n+3){text-align:center}
+  .apt-row{padding:5px 0;border-bottom:1px solid var(--line);font-family:'Roboto Mono',monospace;font-size:12px}
+  .apt-row:last-child{border-bottom:none}
+  .apt-pt{color:var(--chalk)}.apt-pt small{color:var(--muted2);font-size:9px}
+  .apt-use{color:var(--teal);text-align:right;padding-right:6px}
+  .pc-cell{text-align:center;border-radius:5px;padding:3px 2px}
+  .pc-cell.cq-good{background:rgba(95,191,125,.2);color:#bfe9cc}
+  .pc-cell.cq-bad{background:rgba(226,96,79,.16);color:#f0b3a8}
+  .pc-cell.cq-ok{color:var(--muted)}.pc-cell.cq-na{color:var(--muted2)}
   .ars-td{font-family:'Roboto Mono',monospace;font-size:10px;font-weight:700;margin-top:3px}
   .ars-tall{font-family:'Roboto Mono',monospace;font-size:9.5px;color:var(--muted2);margin-top:2px}
   .ars-why{font-size:13px;color:var(--muted);line-height:1.6;background:linear-gradient(180deg,var(--panel2),var(--panel));border-left:3px solid var(--teal);border-radius:8px;padding:11px 14px;margin-bottom:12px}
@@ -1374,8 +1390,12 @@
     <div class="track-ctrls">
       <button class="btn" id="trkSave">Save today's predictions</button>
       <button class="btn ghost" id="trkGrade">Grade completed</button>
+      <button class="btn ghost" id="trkExport">⬇ Backup</button>
+      <button class="btn ghost" id="trkImport">⬆ Restore</button>
       <button class="btn ghost" id="trkReset">Reset data</button>
+      <input type="file" id="trkImportFile" accept="application/json,.json" style="display:none">
     </div>
+    <div class="track-note">Your tracking is saved in <b>this browser only</b>. Updating the site doesn't erase it, but a different browser/device, private mode, or clearing browser data will. Hit <b>⬇ Backup</b> to save a file, and <b>⬆ Restore</b> after an update or on a new device so you never lose your history.</div>
     <div class="trackstatus" id="trackStatus"></div>
     <div id="trackSummary"></div>
     <div id="trackChart"></div>
@@ -3187,7 +3207,7 @@ function arsenalMatchup(b,pitcher){
   if(!b||!b._pitchData||!pitcher||!pitcher._arsenal||!pitcher._arsenal.pitches)return null;
   const bp=b._pitchData, pitches=pitcher._arsenal.pitches;
   const all=(ARSENAL&&ARSENAL.batters&&ARSENAL.batters[b.id])?ARSENAL.batters[b.id].all:null;
-  const metrics=["barrel","hardhit","hr","ev","dist","pullbrl"];
+  const metrics=["barrel","hardhit","hr","ev","dist","pullbrl","iso","slg"];
   const res={metrics:{}};
   metrics.forEach(m=>{
     let wsum=0,acc=0;
@@ -3248,9 +3268,17 @@ function renderZones(model){
 // ===================== ARSENAL MATCHUP — pitch-level HR profile =====================
 const ARS_TILES=[
   {k:"barrel",l:"Brl%",pct:true},{k:"hardhit",l:"HH%",pct:true},{k:"hr",l:"HR%",pct:true},
-  {k:"ev",l:"EV",pct:false},{k:"dist",l:"Dist",pct:false,dist:true},{k:"pullbrl",l:"PullBrl%",pct:true},
+  {k:"iso",l:"ISO",iso:true},{k:"ev",l:"EV"},{k:"pullbrl",l:"PullBrl%",pct:true},
 ];
-function arsFmt(t,v){if(v==null||!isFinite(v))return "—";return t.pct?(v*100).toFixed(1)+"%":t.dist?Math.round(v)+"'":v.toFixed(1);}
+// League benchmarks — grade a hitter's contact vs the LEAGUE (absolute), not vs his own baseline.
+const LG_PITCH={barrel:{lo:0.06,hi:0.10},hardhit:{lo:0.35,hi:0.45},ev:{lo:87,hi:91},la:{lo:8,hi:22,band:true},pullbrl:{lo:0.04,hi:0.08},hr:{lo:0.03,hi:0.07},dist:{lo:175,hi:195},iso:{lo:0.120,hi:0.200},slg:{lo:0.380,hi:0.480}};
+function lgClass(metric,v){
+  if(v==null||!isFinite(v))return "cq-na";
+  const b=LG_PITCH[metric];if(!b)return "cq-ok";
+  if(b.band)return (v>=b.lo&&v<=b.hi)?"cq-good":((v<b.lo-6||v>b.hi+8)?"cq-bad":"cq-ok");
+  if(v>=b.hi)return "cq-good";if(v<=b.lo)return "cq-bad";return "cq-ok";
+}
+function arsFmt(t,v){if(v==null||!isFinite(v))return "—";return t.iso?isoStr(v):t.pct?(v*100).toFixed(1)+"%":t.dist?Math.round(v)+"'":v.toFixed(1);}
 // ---- Verdict engine: collapse the whole read into one go/no-go call ----
 const VERDICT_META={strong:{e:"🟢",l:"STRONG PLAY",cls:"vb-strong"},lean:{e:"🟡",l:"LEAN",cls:"vb-lean"},flier:{e:"🔵",l:"FLIER",cls:"vb-flier"},pass:{e:"⚪",l:"PASS",cls:"vb-pass"}};
 const vcap=s=>s?s.charAt(0).toUpperCase()+s.slice(1):s;
@@ -3267,7 +3295,10 @@ function hrVerdict(b,g){
   const pitcher=b.isHome?g._awayK:g._homeK;
   const mu=arsenalMatchup(b,pitcher);
   const cov=mu?mu.coverage:null;
-  const arsGreen=(mu&&mu.metrics&&mu.metrics.barrel&&mu.metrics.barrel.delta!=null)?mu.metrics.barrel.delta>0:null;
+  const barrelArs=(mu&&mu.metrics&&mu.metrics.barrel)?mu.metrics.barrel.arsenal:null;
+  const isoArs=(mu&&mu.metrics&&mu.metrics.iso)?mu.metrics.iso.arsenal:null;
+  const hrArs=(mu&&mu.metrics&&mu.metrics.hr)?mu.metrics.hr.arsenal:null;
+  const arsStrong=(barrelArs!=null&&barrelArs>=0.09)||(isoArs!=null&&isoArs>=0.180)||(hrArs!=null&&hrArs>=0.06);
   const park=b._park!=null?b._park:1, parkHurts=park<0.95, parkHelps=park>1.05;
   let edge=null,priceObj=null;
   if(ODDS_LOADED){priceObj=bestHRPrice(b);if(priceObj&&priceObj.imp!=null)edge=modelProb-priceObj.imp;}
@@ -3277,7 +3308,7 @@ function hrVerdict(b,g){
     tier="pass";reason=`No price edge — model ${Math.round(modelProb*100)}% but ${capBook(priceObj.book)} ${amStr(priceObj.price)} implies ${Math.round(priceObj.imp*100)}%.`;
   }else if(scoreOK&&powerGood&&(cov==null||cov>=0.7)&&(edge==null||edge>=0.03)){
     tier="strong";const bits=[];
-    if(arsGreen)bits.push("barrels this pitcher's main pitches");
+    if(arsStrong)bits.push("punishes this pitcher's main pitches");
     bits.push(`strong HR score (${score})`);
     if(parkHelps)bits.push("hitter-friendly park");
     if(edge!=null&&edge>=0.03)bits.push(`priced with edge (+${Math.round(edge*100)}%)`);
@@ -3289,7 +3320,7 @@ function hrVerdict(b,g){
     if(cov!=null&&cov<0.7)flags.push("thin arsenal coverage");
     if(edge!=null&&edge<0.03&&edge>-0.02)flags.push("only a thin price edge");
     reason="Good matchup"+(flags.length?", but "+flags.join(" & ")+".":".")+(edge==null?" Load odds to confirm the price.":"");
-  }else if(arsGreen||modelProb>=0.15){
+  }else if(arsStrong||modelProb>=0.15){
     tier="flier";const blk=[];
     if(!scoreMid&&score!=null)blk.push(`HR score is low (${score})`);
     if(parkHurts)blk.push("park suppresses his power");
@@ -3328,12 +3359,23 @@ function renderGoList(model){
     ${body||'<div class="empty">No qualifying plays yet — check back once lineups post.</div>'}</div>`;
 }
 function arsTileHtml(t,cell){
-  if(!cell||cell.arsenal==null)return `<div class="ars-tile"><div class="ars-tl">${t.l}</div><div class="ars-tv">—</div><div class="ars-tall">no data</div></div>`;
+  if(!cell||cell.arsenal==null)return `<div class="ars-tile cq-na"><div class="ars-tl">${t.l}</div><div class="ars-tv">—</div><div class="ars-tsub">no data</div></div>`;
+  const cls=lgClass(t.k,cell.arsenal);
   let d="";
-  if(cell.delta!=null){const dv=t.pct?(cell.delta*100).toFixed(1)+"%":t.dist?Math.round(cell.delta)+"'":cell.delta.toFixed(1);
-    const cls=cell.delta>0.0001?"ars-up":cell.delta<-0.0001?"ars-dn":"ars-nu";
-    d=`<div class="ars-td ${cls}">${cell.delta>0?"+":""}${dv} vs all</div>`;}
-  return `<div class="ars-tile"><div class="ars-tl">${t.l}</div><div class="ars-tv">${arsFmt(t,cell.arsenal)}</div>${d}<div class="ars-tall">all: ${arsFmt(t,cell.all)}</div></div>`;
+  if(cell.delta!=null){const dv=t.iso?((cell.delta>=0?"+":"")+cell.delta.toFixed(3)):t.pct?((cell.delta>0?"+":"")+(cell.delta*100).toFixed(1)+"%"):t.dist?((cell.delta>0?"+":"")+Math.round(cell.delta)+"'"):((cell.delta>0?"+":"")+cell.delta.toFixed(1));d=`<div class="ars-tsub">${dv} vs his avg</div>`;}
+  return `<div class="ars-tile ${cls}"><div class="ars-tl">${t.l}</div><div class="ars-tv">${arsFmt(t,cell.arsenal)}</div>${d}</div>`;
+}
+// Per-pitch-type breakdown (pro-style): how the hitter does on each pitch the pitcher throws, colored vs league.
+function pcCell(metric,v,kind){
+  const cls=lgClass(metric,v);
+  let txt="—";
+  if(v!=null&&isFinite(v))txt=kind==="iso"?isoStr(v):kind==="pct"?(v*100).toFixed(1)+"%":kind==="ev"?v.toFixed(1):v.toFixed(1);
+  return `<span class="pc-cell ${cls}">${txt}</span>`;
+}
+function arsPitchTable(b,pitcher){
+  const rows=(pitcher._arsenal.pitches||[]).map(p=>{const d=b._pitchData[p.type]||{};
+    return `<div class="apt-row"><span class="apt-pt">${p.name||p.type} <small>${p.type}</small></span><span class="apt-use">${Math.round(p.usage*100)}%</span>${pcCell("slg",d.slg,"iso")}${pcCell("iso",d.iso,"iso")}${pcCell("barrel",d.barrel,"pct")}${pcCell("hardhit",d.hardhit,"pct")}${pcCell("ev",d.ev,"ev")}${pcCell("hr",d.hr,"pct")}</div>`;}).join("");
+  return `<div class="apt-wrap"><div class="apt-h">${pitcher.name}'s arsenal — how ${shortName(b.name)} hits each pitch <small>green = strong vs league</small></div><div class="apt-hdr"><span>Pitch</span><span>Use</span><span>SLG</span><span>ISO</span><span>Brl%</span><span>HH%</span><span>EV</span><span>HR%</span></div>${rows}</div>`;
 }
 // Every book's HR price for a hitter, each with its own edge + play/no-play call.
 function hrBookTable(b,modelProb){
@@ -3365,14 +3407,12 @@ function arsenalCard(b,g){
     return `<div class="ars-cardwrap vb-b-${v.tier}${homered?" ars-homered":""}">`+hrBanner+head+verdictBadge(v)+oddsRow+`<div class="empty" style="margin-top:12px"><b>No pitch-level data yet</b>${b.name}${pitcher?" or "+pitcher.name:""} isn't in arsenal.json yet (needs enough tracked pitches, or the file isn't built). ${hm?`The HR engine is using its ${hm.approx?"season-split approximation":"full model"} for now — score <b>${hm.score}</b>.`:""}</div></div>`;
   }
   const tiles=ARS_TILES.map(t=>arsTileHtml(t,mu.metrics[t.k])).join("");
-  const mix=mu.pitches.map(p=>{const bd=b._pitchData[p.type];const brl=bd&&bd.barrel!=null?(bd.barrel*100).toFixed(1)+"%":"—";
-    return `<div class="ars-mix"><span class="ars-mpt">${p.name||p.type} <small>${p.type}</small></span><span class="ars-muse">${Math.round(p.usage*100)}% used</span><span class="ars-mbrl">${brl} brl${bd?"":" <i>no data</i>"}</span></div>`;}).join("");
   const cov=Math.round(mu.coverage*100);
   return `<div class="ars-cardwrap vb-b-${v.tier}${homered?" ars-homered":""}">`+hrBanner+head+verdictBadge(v)+oddsRow+
     `<div class="ars-tiles">${tiles}</div>`+
     (hm&&hm.why?`<div class="ars-why">${hm.why}</div>`:"")+
-    `<div class="ars-mixwrap"><div class="ars-mixh">${pitcher?pitcher.name:"Pitcher"}'s pitch mix — &amp; how ${shortName(b.name)} hits each</div>${mix}</div>`+
-    `<div class="ars-note">Tiles show ${shortName(b.name)}'s contact quality vs ${pitcher?pitcher.name+"'s":"this"} exact pitch mix (usage-weighted), next to his season baseline on all pitches. Covers ${cov}% of the arsenal by usage. Green = more HR-favorable than his norm.${ARSENAL_OK?"":" ⚠ arsenal.json not loaded — approximation in use."}</div></div>`;
+    arsPitchTable(b,pitcher)+
+    `<div class="ars-note">Numbers are ${shortName(b.name)}'s contact quality vs ${pitcher?pitcher.name+"'s":"this"} exact pitch mix (usage-weighted). <b>Color = vs league average</b> (green = strong, red = weak) — not vs his own norm. The small "vs his avg" line is just extra context. Covers ${cov}% of the arsenal.${ARSENAL_OK?"":" ⚠ arsenal.json not loaded — approximation in use."}</div></div>`;
 }
 function renderArsenal(model){
   loadArsenal().then(()=>{
@@ -5256,6 +5296,54 @@ el("trkSave").addEventListener("click",()=>{
   renderTrackStats();renderGameTrack();
 });
 el("trkGrade").addEventListener("click",()=>trackGradeAndRender());
+// ---- Backup / Restore: survives site updates, browser changes, and new devices ----
+const BACKUP_KEYS=["eb:preds","eb:gpreds","eb:odh","eb:calibOn","eb:scproxy","eb:okey"];
+el("trkExport")&&el("trkExport").addEventListener("click",()=>{
+  try{
+    const data={_app:"edge-board",_type:"tracking-backup",_version:1,_exported:new Date().toISOString(),store:{}};
+    BACKUP_KEYS.forEach(k=>{const v=localStorage.getItem(k);if(v!=null)data.store[k]=v;});
+    const preds=loadPreds().length;
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);const a=document.createElement("a");
+    a.href=url;a.download=`edge-board-backup-${todayStr()}.json`;document.body.appendChild(a);a.click();
+    setTimeout(()=>{URL.revokeObjectURL(url);a.remove();},200);
+    el("trackStatus").textContent=`Backed up ${preds} tracked prediction${preds===1?"":"s"} + calibration to a file. Keep it safe.`;
+  }catch(e){el("trackStatus").textContent="Backup failed: "+e.message;}
+});
+el("trkImport")&&el("trkImport").addEventListener("click",()=>{const f=el("trkImportFile");if(f)f.click();});
+el("trkImportFile")&&el("trkImportFile").addEventListener("change",e=>{
+  const file=e.target.files&&e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const data=JSON.parse(reader.result);
+      const store=data&&data.store?data.store:data; // accept raw store too
+      if(!store||typeof store!=="object")throw new Error("unrecognized file");
+      const incoming=store["eb:preds"]?JSON.parse(store["eb:preds"]):[];
+      const existing=loadPreds();
+      let mode="replace";
+      if(existing.length){mode=confirm(`You have ${existing.length} predictions saved here. OK = MERGE with the ${incoming.length} from the backup (recommended). Cancel = REPLACE with the backup.`)?"merge":"replace";}
+      Object.keys(store).forEach(k=>{if(BACKUP_KEYS.includes(k)&&k!=="eb:preds"&&k!=="eb:gpreds")localStorage.setItem(k,store[k]);});
+      const mergeArr=(cur,inc,keyf)=>{const seen=new Set(cur.map(keyf));inc.forEach(p=>{if(!seen.has(keyf(p)))cur.push(p);});return cur;};
+      const pkey=p=>`${p.id||p.name||""}|${p.date||""}|${p.market||""}|${p.point||""}`;
+      if(mode==="merge"){
+        const gExisting=(()=>{try{return JSON.parse(localStorage.getItem("eb:gpreds")||"[]");}catch(_){return [];}})();
+        const gInc=store["eb:gpreds"]?JSON.parse(store["eb:gpreds"]):[];
+        savePreds(mergeArr(existing.slice(),incoming,pkey));
+        try{localStorage.setItem("eb:gpreds",JSON.stringify(mergeArr(gExisting.slice(),gInc,pkey)));}catch(_){}
+      }else{
+        savePreds(incoming);
+        if(store["eb:gpreds"])localStorage.setItem("eb:gpreds",store["eb:gpreds"]);
+      }
+      try{const c=localStorage.getItem("eb:calibOn");if(c!=null)CALIB_ON=c==="1";}catch(_){}
+      CALIB=null;
+      el("trackStatus").textContent=`Restored backup (${mode==="merge"?"merged":"replaced"}) — ${loadPreds().length} predictions now saved.`;
+      renderTrackStats();renderGameTrack();
+    }catch(err){el("trackStatus").textContent="Restore failed: "+err.message+" (is this an Edge Board backup file?)";}
+    finally{e.target.value="";}
+  };
+  reader.readAsText(file);
+});
 el("trkReset").addEventListener("click",()=>{
   if(!confirm("Delete all saved predictions and calibration history on this device?"))return;
   try{localStorage.removeItem(LS_PREDS);localStorage.removeItem(LS_GPREDS);}catch(e){}
