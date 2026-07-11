@@ -43,11 +43,33 @@ def rnd(x, n):
     return None if x is None or (isinstance(x, float) and (np.isnan(x))) else round(float(x), n)
 
 
-def agg_batter(d):
+HIT_TB = {"single": 1, "double": 2, "triple": 3, "home_run": 4}
+AB_EVENTS = {"single", "double", "triple", "home_run", "field_out", "strikeout",
+             "grounded_into_double_play", "force_out", "field_error", "fielders_choice",
+             "fielders_choice_out", "double_play", "strikeout_double_play", "triple_play",
+             "other_out"}
+
+def rate_stats(ends):
+    """Standard rate stats (SLG/ISO/BA/HR%) from PA-ending pitches (events not null)."""
+    n = len(ends)
+    if n == 0:
+        return {}
+    ab = int(ends["events"].isin(AB_EVENTS).sum())
+    tb = int(ends["events"].map(lambda e: HIT_TB.get(e, 0)).sum())
+    h  = int(ends["events"].isin(HIT_TB).sum())
+    hr = int((ends["events"] == "home_run").sum())
+    out = {"pa": int(n), "ab": ab, "hrRate": rnd(hr / n, 4)}
+    if ab:
+        out["slg"] = rnd(tb / ab, 3)
+        out["ba"]  = rnd(h / ab, 3)
+        out["iso"] = rnd((tb - h) / ab, 3)
+    return out
+
+def agg_batter(d, ends=None):
     n = len(d)
     if n == 0:
         return None
-    return {
+    o = {
         "bip": int(n),
         "barrel":  rnd(d["is_barrel"].mean(), 4),
         "hardhit": rnd(d["is_hardhit"].mean(), 4),
@@ -57,6 +79,15 @@ def agg_batter(d):
         "pullbrl": rnd(d["is_pullbrl"].mean(), 4),
         "hr":      rnd(d["is_hr"].mean(), 4),
     }
+    if ends is not None:
+        r = rate_stats(ends)
+        # slg/iso/ba are the engine's top-weighted inputs; hr here is PA-based HR rate
+        for k in ("slg", "iso", "ba"):
+            if k in r:
+                o[k] = r[k]
+        if "hrRate" in r:
+            o["hr"] = r["hrRate"]   # prefer PA-based HR rate over BIP-based when available
+    return o
 
 
 def main():
@@ -78,6 +109,7 @@ def main():
     df["is_pullbrl"] = df["is_barrel"] & df["is_pull"]
 
     bip = df[df["is_bip"]].copy()
+    ends = df[df["events"].notna()].copy()   # PA-ending pitches (for SLG/ISO/BA/HR rate)
 
     # ---------- PITCHERS: arsenal (usage) + what each pitch allows ----------
     pitchers = {}
@@ -88,6 +120,7 @@ def main():
         thr = pdf["p_throws"].mode()
         throws = thr.iat[0] if not thr.empty else None
         pbip = bip[bip["pitcher"] == pid]
+        pends = ends[ends["pitcher"] == pid]
         pitches = []
         for pt, ptdf in pdf.groupby("pitch_type"):
             usage = len(ptdf) / total
@@ -100,6 +133,10 @@ def main():
                 entry["hrAllowed"]      = rnd(b["is_hr"].mean(), 4)
                 entry["hardhitAllowed"] = rnd(b["is_hardhit"].mean(), 4)
                 entry["evAllowed"]      = rnd(b["launch_speed"].mean(), 1)
+                # SLG/ISO allowed (engine's top-weighted pVuln inputs)
+                r = rate_stats(pends[pends["pitch_type"] == pt])
+                if "slg" in r: entry["slgAllowed"] = r["slg"]
+                if "iso" in r: entry["isoAllowed"] = r["iso"]
             pitches.append(entry)
         pitches.sort(key=lambda x: -x["usage"])
         if pitches:
@@ -110,15 +147,16 @@ def main():
     for bid, bdf in bip.groupby("batter"):
         if len(bdf) < MIN_BATTER_BIP_ALL:
             continue
+        bends = ends[ends["batter"] == bid]
         by_pitch = {}
         for pt, ptdf in bdf.groupby("pitch_type"):
             if len(ptdf) < MIN_BATTER_BIP_TYPE:
                 continue
-            by_pitch[pt] = agg_batter(ptdf)
+            by_pitch[pt] = agg_batter(ptdf, bends[bends["pitch_type"] == pt])
         batters[int(bid)] = {
             "bip": int(len(bdf)),
             "hr": int(bdf["is_hr"].sum()),
-            "all": agg_batter(bdf),
+            "all": agg_batter(bdf, bends),
             "byPitch": by_pitch,
         }
 
