@@ -954,6 +954,30 @@
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 
 
+  /* ===== PHONE LAYOUT — bottom tabs instead of a hamburger ===== */
+  .tabbar{display:none}
+  @media(max-width:760px){
+    .tabbar{
+      display:flex;position:fixed;left:0;right:0;bottom:0;z-index:104;
+      background:var(--panel);border-top:1px solid var(--teal);
+      padding:5px 0 max(5px,env(safe-area-inset-bottom));
+    }
+    body.nav-open .tabbar{display:none}          /* the drawer owns the screen */
+    .navToggle{display:none}                      /* "More" replaces the hamburger */
+    .wrap{padding-top:14px;padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+  }
+  .tb-btn{
+    flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;
+    background:none;border:none;padding:4px 2px;cursor:pointer;
+    font-family:'Roboto Mono',monospace;font-size:8.5px;letter-spacing:.03em;
+    text-transform:uppercase;color:var(--muted2);
+  }
+  .tb-btn i{font-style:normal;font-size:16px;line-height:1;filter:grayscale(1);opacity:.5}
+  .tb-btn span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .tb-btn.on{color:var(--teal)}
+  .tb-btn.on i{filter:none;opacity:1}
+  .tb-btn:active{background:var(--panel2)}
+
   /* ===== C · BROADCAST — signature ===== */
   /* faint scanline over the studio navy */
   body{background-image:repeating-linear-gradient(rgba(255,255,255,.014) 0 1px,transparent 1px 3px),
@@ -1266,6 +1290,13 @@
     </div>
   </nav>
   <div class="sb-backdrop" id="sbBackdrop"></div>
+  <nav class="tabbar" id="tabbar" aria-label="Main">
+    <button class="tb-btn" data-tab="arsenal"><i>🎯</i><span>Board</span></button>
+    <button class="tb-btn" data-tab="live"><i>📺</i><span>Live</span></button>
+    <button class="tb-btn" data-tab="best"><i>🏆</i><span>Bets</span></button>
+    <button class="tb-btn" data-tab="track"><i>📊</i><span>Track</span></button>
+    <button class="tb-btn" data-tab="__more"><i>⋯</i><span>More</span></button>
+  </nav>
   <div class="viewtitle" id="viewTitle"></div>
 
   <section id="playsSection" class="hide">
@@ -5792,6 +5823,7 @@ function renderTrends(){
 function setView(v){
   VIEW=v;
   updateNavActive(v);
+  syncTabbar(v);
   const haveGames=MODEL&&MODEL.games&&MODEL.games.length;
   ["playsSection","boardSection","gamesSection"].forEach(s=>el(s).classList.toggle("hide",v!=="slate"||!haveGames));
   el("simsView").classList.toggle("hide",v!=="sims");
@@ -5880,12 +5912,24 @@ function updateNavActive(v){
   const t=el("viewTitle");if(t)t.textContent=VIEW_TITLE[v]||"";
 }
 function closeMenus(){document.body.classList.remove("nav-open");}
+// Which bottom tab should light up for the view we're on.
+function syncTabbar(v){
+  const tabs=document.querySelectorAll(".tb-btn");
+  if(!tabs||!tabs.length)return;
+  tabs.forEach(t=>t.classList.toggle("on",t.dataset.tab===v));
+}
 el("nav").addEventListener("click",e=>{
   const item=e.target.closest("[data-view]");
   if(item){setView(item.dataset.view);closeMenus();}
 });
 el("navToggle")&&el("navToggle").addEventListener("click",()=>document.body.classList.toggle("nav-open"));
 el("sbBackdrop")&&el("sbBackdrop").addEventListener("click",closeMenus);
+el("tabbar")&&el("tabbar").addEventListener("click",e=>{
+  const b=e.target.closest(".tb-btn");if(!b)return;
+  const t=b.dataset.tab;
+  if(t==="__more"){document.body.classList.toggle("nav-open");return;}
+  closeMenus();setView(t);window.scrollTo({top:0,behavior:"smooth"});
+});
 el("alignFilter").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;ALIGN_FILTER=b.dataset.f;[...el("alignFilter").children].forEach(c=>c.classList.toggle("active",c===b));renderAlignment();});
 el("alignSort").addEventListener("change",e=>{ALIGN_SORT=e.target.value;renderAlignment();});
 el("trkSave").addEventListener("click",()=>{
