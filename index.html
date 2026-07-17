@@ -954,6 +954,56 @@
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 
 
+  /* ===== ⭐ MY TARGETS ===== */
+  .wstar{background:none;border:none;cursor:pointer;color:var(--muted2);font-size:15px;line-height:1;
+         padding:2px 4px;transition:color .12s,transform .12s;flex:0 0 auto}
+  .wstar:hover{color:var(--amber);transform:scale(1.15)}
+  .wstar.on{color:var(--amber)}
+  .ars-name .wstar{font-size:18px;margin-right:6px;vertical-align:2px}
+  .gl-star,.tg-x{display:flex;align-items:center}
+  .tg-add{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;background:var(--panel);
+          border:1px solid var(--line);border-radius:2px;padding:11px 13px;margin-bottom:14px;max-width:1000px}
+  .tg-add .zsel{flex:1 1 150px;min-width:0}
+  .tg-sec{margin-bottom:18px;max-width:1000px}
+  .tg-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;
+        padding-bottom:6px;border-bottom:1px solid var(--teal);margin-bottom:2px}
+  .tg-h b{font-family:'Saira Condensed',sans-serif;font-size:16px;text-transform:uppercase;letter-spacing:.05em}
+  .tg-h span{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2)}
+  .tg-hdr,.tg-row{display:grid;grid-template-columns:26px 16px minmax(0,1.6fr) 54px 52px 74px 52px 58px;
+                  gap:7px;align-items:center;padding:7px 4px;border-bottom:1px solid var(--line)}
+  .tg-hdr{font-family:'Roboto Mono',monospace;font-size:8px;letter-spacing:.04em;text-transform:uppercase;
+          color:var(--muted2);border-bottom:1px solid var(--line);padding-top:8px}
+  .tg-hdr span:nth-child(n+4){text-align:right}
+  .tg-row{cursor:pointer}
+  .tg-row:hover{background:var(--panel2)}
+  .tg-row.tg-won{background:rgba(255,184,28,.07)}
+  .tg-row.tg-off{opacity:.5;cursor:default}
+  .tg-nm b{font-size:12.5px;color:var(--chalk);font-weight:600;display:block;line-height:1.2;
+           white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tg-nm small{font-family:'Roboto Mono',monospace;font-size:8.5px;color:var(--muted2);display:block;
+               white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tg-v{font-size:11px;text-align:center}
+  .tg-sc,.tg-mp,.tg-ed{font-family:'Roboto Mono',monospace;font-size:11px;text-align:right}
+  .tg-sc{color:var(--muted)}
+  .tg-mp{color:var(--teal);font-weight:700}
+  .tg-pr{font-family:'Roboto Mono',monospace;font-size:11px;text-align:right}
+  .tg-pr b{color:var(--chalk);display:block}
+  .tg-pr small{color:var(--muted2);font-size:8px}
+  .tg-noodds{color:var(--muted2)}
+  .tg-res{text-align:right;font-family:'Roboto Mono',monospace;font-size:9px;font-weight:700}
+  .tg-hit{color:var(--amber)} .tg-miss{color:var(--muted2)} .tg-pend{color:var(--muted2);font-weight:400}
+  .tg-note{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);line-height:1.6;max-width:1000px}
+  .tg-note b{color:var(--muted)}
+  .tg-clear{background:none;border:1px solid var(--line);border-radius:2px;color:var(--muted2);
+            font-family:'Roboto Mono',monospace;font-size:9px;padding:2px 7px;margin-left:6px;cursor:pointer}
+  .tg-clear:hover{color:var(--red);border-color:var(--red)}
+  @media(max-width:760px){
+    .tg-hdr,.tg-row{grid-template-columns:24px 14px minmax(0,1fr) 46px 58px;gap:5px}
+    .tg-hdr span:nth-child(4),.tg-row .tg-sc{display:none}
+    .tg-hdr span:nth-child(7),.tg-row .tg-ed{display:none}
+    .tg-add .zsel{flex:1 1 100%}
+  }
+
   /* ===== PHONE LAYOUT — bottom tabs instead of a hamburger ===== */
   .tabbar{display:none}
   @media(max-width:760px){
@@ -1254,6 +1304,7 @@
     <div class="sb-brand">Edge <span>Board</span></div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <button data-view="slate">📊 Dashboard</button>
+      <button data-view="targets">⭐ My Targets</button>
       <button data-view="best">🏆 Best Bets</button>
       <button data-view="live">📺 Game Day</button>
       <button data-view="compare">⚖️ Head to Head</button>
@@ -1623,6 +1674,11 @@
     </div>
   </section>
 
+  <section id="targetsView" class="hide">
+    <div class="sec-head"><h2>⭐ My Targets</h2><span class="tag">the players &amp; props you're on today</span><span class="rule"></span></div>
+    <div id="tgWrap"></div>
+  </section>
+
   <section id="liveView" class="hide">
     <div class="sec-head"><h2>📺 Game Day</h2><span class="tag">your plays, sorted by who's still alive</span><span class="rule"></span></div>
     <div id="liveWrap"></div>
@@ -1943,6 +1999,7 @@ let LAST_REFRESH=0, ODDS_WERE_LOADED=false, WAS_TODAY=false, BUSY=false;
 let ZONES=null, ZONES_GAME=null, ZONES_BAT=null;
 let ARSENAL=null, ARSENAL_OK=false, ARS_GAME=null, ARS_BAT=null;
 let ATK_PID=null, CMP_A=null, CMP_B=null, LIVE_STAMP="";
+let TG_GAME=null, TG_BAT=null, TG_MK="hr";
 let STAR_MK_SEL="hr", STAR_LEGS=2, STAR_SEED=0;
 let HRB_LEGS=4, HRB_SELECTED=[], HRB_SEARCH="", HRB_CONF=false, HRB_STARS=false;
 const PROP_MARKETS={
@@ -3668,16 +3725,17 @@ function renderGoList(model){
   if(!model||!model.games||!model.games.length){box.innerHTML="";return;}
   const rows=buildGoList(model), go=rows.filter(r=>r.v.tier!=="pass"), passes=rows.length-go.length, top=go.slice(0,40);
   const body=top.map(r=>{const m=VERDICT_META[r.v.tier],b=r.b,g=r.g,pitcher=b.isHome?g._awayK:g._homeK;const homered=b.result&&b.result.hr>0;
-    return `<button class="gl-row${homered?" gl-hr":""}" data-g="${g.gamePk}" data-b="${b.id}">
+    return `<div class="gl-row${homered?" gl-hr":""}" data-g="${g.gamePk}" data-b="${b.id}">
+      <span class="gl-star">${starHTML(g.gamePk,b.id,"hr",isWatched(g.gamePk,b.id,"hr"))}</span>
       <span class="gl-v ${m.cls}" title="${m.l}">${homered?"💥":m.e}</span>
       <span class="gl-nm">${b.name}${homered?' <span class="gl-hrtag">HOMERED</span>':""}<small>${b.team||""} · vs ${pitcher?shortName(pitcher.name):"TBD"}${b.slot?" · "+ordinal(b.slot):""}</small></span>
       <span class="gl-sc">${r.v.score!=null?r.v.score:"—"}</span>
       <span class="gl-mp">${Math.round(r.v.modelProb*100)}%</span>
       <span class="gl-ed ${r.v.edge!=null?(r.v.edge>0?"ars-up":"ars-dn"):""}">${r.v.edge!=null?((r.v.edge>0?"+":"")+Math.round(r.v.edge*100)+"%"):(r.v.price?amStr(r.v.price.price):"—")}</span>
-    </button>`;}).join("");
+    </div>`;}).join("");
   box.innerHTML=`<div class="gl-card"><div class="gl-head"><b>Today's Go List</b><span>${go.length} play${go.length===1?"":"s"}${passes?` · ${passes} passes hidden`:""}${ODDS_LOADED?"":" · load odds for price edges"}</span></div>
     <div class="gl-legend"><span class="vb-strong">🟢 Strong</span><span class="vb-lean">🟡 Lean</span><span class="vb-flier">🔵 Flier</span><span class="gl-lgmut">tap a row for the full card</span></div>
-    <div class="gl-hdr"><span></span><span>Batter</span><span>Score</span><span>Model</span><span>${ODDS_LOADED?"Edge":"Price"}</span></div>
+    <div class="gl-hdr"><span></span><span></span><span>Batter</span><span>Score</span><span>Model</span><span>${ODDS_LOADED?"Edge":"Price"}</span></div>
     ${body||'<div class="empty">No qualifying plays yet — check back once lineups post.</div>'}</div>`;
 }
 function arsTileHtml(t,cell){
@@ -3722,7 +3780,7 @@ function arsenalCard(b,g){
   const oddsRow=`<div class="ars-odds"><span class="ars-obk">MODEL <b>${(modelProb*100).toFixed(1)}% HR</b></span></div>`+(bookTable||`<div class="ars-nobook">${ODDS_LOADED?`No HR price posted for ${shortName(b.name)} at any book right now.`:"Enter your Odds API key in the top bar &amp; hit <b>Load odds</b> to price every book and get a play/no-play call."}</div>`);
   const homered=b.result&&b.result.hr>0;
   const hrBanner=homered?`<div class="ars-hr-banner">💥 HOMERED${b.result.hr>1?" ×"+b.result.hr:""} — ${shortName(b.name)} went deep today${b.result.ab!=null?` (${b.result.h}-${b.result.ab})`:""}</div>`:"";
-  const head=`<div class="ars-head"><div><div class="ars-name">${b.name} <span class="ars-hand">${b.bats||"?"}HB vs ${pitcher?(pitcher.throws||"?"):"?"}HP</span></div>
+  const head=`<div class="ars-head"><div><div class="ars-name">${starHTML(g.gamePk,b.id,"hr",isWatched(g.gamePk,b.id,"hr"))}${b.name} <span class="ars-hand">${b.bats||"?"}HB vs ${pitcher?(pitcher.throws||"?"):"?"}HP</span></div>
     <div class="ars-sub">${pitcher?pitcher.name+"'s arsenal":"pitcher TBD"}${mu&&mu.batterMeta?` · ${mu.batterMeta.bip} BIP · ${mu.batterMeta.hr} HR`:""}</div></div>
     ${hm?`<span class="ars-score ${hm.tier.cls}">${hm.score}<small>${hm.tier.e}</small></span>`:""}</div>`;
   if(!mu){
@@ -4055,6 +4113,111 @@ function clvPanelHTML(){
     ${led}
     <div class="clv-note"><b>CLV</b> = did the market move toward your bet after you made it? Took +240, closed +185 → the market agreed with you. Positive CLV is the strongest evidence you're finding real edges — it shows up weeks before win/loss does.</div>
   </div>`;
+}
+
+// ===================== ⭐ MY TARGETS — the players & props you're on today =====================
+const LS_WATCH="eb:watch";
+// entries: {d:date, g:gamePk, id:playerId, nm, tm, mk}  — mk "hr" lives in Players, everything else in Props
+function loadWatch(){try{return JSON.parse(localStorage.getItem(LS_WATCH)||"[]");}catch(e){return [];}}
+function saveWatch(a){try{localStorage.setItem(LS_WATCH,JSON.stringify(a.slice(-500)));return true;}catch(e){return false;}}
+const wKey=(g,id,mk)=>`${g}|${id}|${mk}`;
+function isWatched(g,id,mk){const k=wKey(g,id,mk);return loadWatch().some(w=>wKey(w.g,w.id,w.mk)===k);}
+function toggleWatch(g,id,mk,nm,tm,d){
+  const list=loadWatch(),k=wKey(g,id,mk),i=list.findIndex(w=>wKey(w.g,w.id,w.mk)===k);
+  if(i>=0){list.splice(i,1);saveWatch(list);return false;}
+  list.push({d:d||(MODEL&&MODEL.date)||todayStr(),g,id,nm,tm,mk,t:Date.now()});
+  saveWatch(list);return true;
+}
+function starHTML(g,id,mk,on){
+  return `<button class="wstar${on?" on":""}" data-w="${g}|${id}|${mk}" title="${on?"Remove from My Targets":"Add to My Targets"}" aria-label="${on?"Remove from targets":"Add to targets"}">${on?"★":"☆"}</button>`;
+}
+// Look up the live model entry behind a saved target
+function watchEntry(w,model){
+  if(!model||!model.games)return null;
+  const g=model.games.find(x=>String(x.gamePk)===String(w.g));if(!g)return null;
+  const b=[...(g._awayBat||[]),...(g._homeBat||[])].find(x=>String(x.id)===String(w.id));
+  return b?{b,g}:null;
+}
+function targetRow(w,model){
+  const e=watchEntry(w,model);
+  const M=PROP_MARKETS[w.mk];
+  const label=M?M.label:w.mk;
+  if(!e){
+    return `<div class="tg-row tg-off"><span class="tg-x">${starHTML(w.g,w.id,w.mk,true)}</span>
+      <span class="tg-v"></span>
+      <span class="tg-nm"><b>${w.nm||"—"}</b><small>${w.tm||""} · ${label} · not in today's slate</small></span>
+      <span class="tg-sc">—</span><span class="tg-mp">—</span><span class="tg-pr">—</span><span class="tg-ed">—</span><span class="tg-res">—</span></div>`;
+  }
+  const {b,g}=e;
+  const pitcher=b.isHome?g._awayK:g._homeK;
+  const prob=M?calibrate(poissonOver(M.mean(b),M.line),w.mk):null;
+  const be=(ODDS_LOADED&&M)?bestEdgeForMarket(b,M.om,M.mean(b)):null;
+  const edge=(be&&be.imp!=null&&prob!=null)?prob-be.imp:null;
+  const res=b.result?evalOutcome(w.mk,b.result):null;
+  const resHTML=res===1?`<span class="tg-hit">${w.mk==="hr"?"💥 ":""}HIT</span>`:res===0?`<span class="tg-miss">miss</span>`:
+    `<span class="tg-pend">${gameStatusLabel(g)==="Live"?"live":"—"}</span>`;
+  const v=w.mk==="hr"?hrVerdict(b,g):null;
+  const vb=v?`<span class="tg-v ${VERDICT_META[v.tier].cls}" title="${VERDICT_META[v.tier].l}">${VERDICT_META[v.tier].e}</span>`:`<span class="tg-v"></span>`;
+  const mid=v?`<span class="tg-sc">${v.score??"—"}</span>`:`<span class="tg-sc">${M?M.label:""}</span>`;
+  return `<div class="tg-row${res===1?" tg-won":""}" data-g="${g.gamePk}" data-b="${b.id}">
+    <span class="tg-x">${starHTML(g.gamePk,b.id,w.mk,true)}</span>
+    ${vb}
+    <span class="tg-nm"><b>${b.name}</b><small>${b.team||""} · vs ${pitcher?shortName(pitcher.name):"TBD"}${b.slot?" · "+ordinal(b.slot):""}</small></span>
+    ${mid}
+    <span class="tg-mp">${prob!=null?Math.round(prob*100)+"%":"—"}</span>
+    <span class="tg-pr">${be&&be.over!=null?`<b>${amStr(be.over)}</b><small>${be.book?capBook(be.book):""}</small>`:'<small class="tg-noodds">no price</small>'}</span>
+    <span class="tg-ed ${edge!=null?(edge>0?"ars-up":"ars-dn"):""}">${edge!=null?((edge>0?"+":"")+Math.round(edge*100)+"%"):"—"}</span>
+    <span class="tg-res">${resHTML}</span>
+  </div>`;
+}
+function targetsSummary(list,model){
+  let hit=0,miss=0,pend=0;
+  list.forEach(w=>{
+    const e=watchEntry(w,model);
+    const r=e&&e.b.result?evalOutcome(w.mk,e.b.result):null;
+    if(r===1)hit++;else if(r===0)miss++;else pend++;
+  });
+  return {hit,miss,pend};
+}
+function renderTargets(model){
+  const wrap=el("tgWrap");if(!wrap)return;
+  const date=(model&&model.date)||todayStr();
+  const all=loadWatch();
+  const today=all.filter(w=>w.d===date);
+  const players=today.filter(w=>w.mk==="hr");
+  const props=today.filter(w=>w.mk!=="hr");
+  const older=all.length-today.length;
+
+  // --- add controls ---
+  let picker='<div class="empty">Load a slate to add targets.</div>';
+  if(model&&model.games&&model.games.length){
+    const gOpts=model.games.map(g=>`<option value="${g.gamePk}" ${String(g.gamePk)===String(TG_GAME)?"selected":""}>${g.away.short} @ ${g.home.short}</option>`).join("");
+    const g=model.games.find(x=>String(x.gamePk)===String(TG_GAME))||model.games[0];
+    TG_GAME=String(g.gamePk);
+    const bats=[...(g._awayBat||[]),...(g._homeBat||[])];
+    const bOpts=bats.map(b=>`<option value="${b.id}" ${String(b.id)===String(TG_BAT)?"selected":""}>${b.name}${b.slot?" ("+b.slot+")":""}</option>`).join("");
+    if(!bats.some(b=>String(b.id)===String(TG_BAT)))TG_BAT=bats[0]?String(bats[0].id):null;
+    const mOpts=Object.keys(PROP_MARKETS).map(k=>`<option value="${k}" ${k===TG_MK?"selected":""}>${PROP_MARKETS[k].label}</option>`).join("");
+    picker=`<div class="tg-add">
+      <div class="zsel"><label for="tgGame">Game</label><select id="tgGame">${gOpts}</select></div>
+      <div class="zsel"><label for="tgBat">Player</label><select id="tgBat">${bOpts}</select></div>
+      <div class="zsel"><label for="tgMk">Market</label><select id="tgMk">${mOpts}</select></div>
+      <button class="btn" id="tgAdd">+ Add target</button>
+    </div>`;
+  }
+
+  const sumP=targetsSummary(players,model),sumR=targetsSummary(props,model);
+  const sec=(title,list,sum,emptyMsg)=>`
+    <div class="tg-sec">
+      <div class="tg-h"><b>${title}</b><span>${list.length?`${list.length} · ${sum.hit} hit · ${sum.miss} miss · ${sum.pend} pending`:"nothing yet"}</span></div>
+      ${list.length?`<div class="tg-hdr"><span></span><span></span><span>Player</span><span>${title==="Players"?"Score":"Market"}</span><span>Model</span><span>Best</span><span>Edge</span><span>Result</span></div>
+        ${list.map(w=>targetRow(w,model)).join("")}`:`<div class="empty">${emptyMsg}</div>`}
+    </div>`;
+
+  wrap.innerHTML=picker+
+    sec("Players",players,sumP,"Tap ☆ on any Go List row or Arsenal card to start a list of hitters you're targeting for home runs.")+
+    sec("Props",props,sumR,"Add a player above with a market like 1+ Hit or 2+ Bases to track props separately.")+
+    `<div class="tg-note">Targets are saved on this device for <b>${date}</b>${older?` · ${older} from other dates hidden`:""}. They update live — price, edge and result fill in as odds load and games finish.${older?` <button class="tg-clear" id="tgClear">Clear older targets</button>`:""}</div>`;
 }
 
 // ===================== STAR GROUPS — auto-built cross-game parlays =====================
@@ -5841,6 +6004,7 @@ function setView(v){
   el("zonesView").classList.toggle("hide",v!=="zones");
   el("arsenalView").classList.toggle("hide",v!=="arsenal");
   el("liveView").classList.toggle("hide",v!=="live");
+  el("targetsView").classList.toggle("hide",v!=="targets");
   el("attackView").classList.toggle("hide",v!=="attack");
   el("compareView").classList.toggle("hide",v!=="compare");
   el("hrguideView").classList.toggle("hide",v!=="hrguide");
@@ -5866,6 +6030,7 @@ function setView(v){
   if(v==="brief"&&MODEL) renderBriefings(MODEL);
   if(v==="zones"&&MODEL) renderZones(MODEL);
   if(v==="arsenal"&&MODEL) renderArsenal(MODEL);
+  if(v==="targets") renderTargets(MODEL);
   if(v==="live"&&MODEL){try{captureClosing();}catch(e){}renderLive(MODEL);
     refreshLiveState().then(n=>{if(n&&VIEW==="live"){LIVE_STAMP=new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit",second:"2-digit"});try{captureClosing();}catch(_){}renderLive(MODEL);}});}
   if(v==="attack"&&MODEL) renderAttack(MODEL);
@@ -5906,7 +6071,7 @@ async function run(){
 }
 function updateFreshLabel(){const e=el("freshLbl");if(e)e.textContent=freshText(LAST_REFRESH,Date.now());}
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
-const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",stargroups:"Star Groups — auto-built parlays",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",hrbuilder:"HR Group Builder",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
+const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",stargroups:"Star Groups — auto-built parlays",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",hrbuilder:"HR Group Builder",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",targets:"My Targets — players &amp; props you're on today",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
   const t=el("viewTitle");if(t)t.textContent=VIEW_TITLE[v]||"";
@@ -5924,6 +6089,43 @@ el("nav").addEventListener("click",e=>{
 });
 el("navToggle")&&el("navToggle").addEventListener("click",()=>document.body.classList.toggle("nav-open"));
 el("sbBackdrop")&&el("sbBackdrop").addEventListener("click",closeMenus);
+document.addEventListener("click",e=>{
+  const s=e.target.closest(".wstar");if(!s)return;
+  e.preventDefault();e.stopPropagation();
+  const [g,id,mk]=(s.dataset.w||"").split("|");
+  if(!g||!id||!mk)return;
+  let nm="",tm="";
+  if(MODEL&&MODEL.games){
+    const gm=MODEL.games.find(x=>String(x.gamePk)===String(g));
+    const b=gm&&[...(gm._awayBat||[]),...(gm._homeBat||[])].find(x=>String(x.id)===String(id));
+    if(b){nm=b.name;tm=b.team||"";}
+  }
+  const on=toggleWatch(g,id,mk,nm,tm,(MODEL&&MODEL.date)||todayStr());
+  s.classList.toggle("on",on);s.textContent=on?"★":"☆";
+  if(VIEW==="targets")renderTargets(MODEL);
+});
+el("tgWrap")&&el("tgWrap").addEventListener("change",e=>{
+  const t=e.target;
+  if(t.id==="tgGame"){TG_GAME=t.value;TG_BAT=null;renderTargets(MODEL);}
+  if(t.id==="tgBat")TG_BAT=t.value;
+  if(t.id==="tgMk")TG_MK=t.value;
+});
+el("tgWrap")&&el("tgWrap").addEventListener("click",e=>{
+  if(e.target.closest("#tgAdd")){
+    if(!TG_GAME||!TG_BAT)return;
+    const gm=MODEL&&MODEL.games.find(x=>String(x.gamePk)===String(TG_GAME));
+    const b=gm&&[...(gm._awayBat||[]),...(gm._homeBat||[])].find(x=>String(x.id)===String(TG_BAT));
+    if(!b)return;
+    if(!isWatched(TG_GAME,TG_BAT,TG_MK))toggleWatch(TG_GAME,TG_BAT,TG_MK,b.name,b.team||"",(MODEL&&MODEL.date)||todayStr());
+    renderTargets(MODEL);return;
+  }
+  if(e.target.closest("#tgClear")){
+    const d=(MODEL&&MODEL.date)||todayStr();
+    saveWatch(loadWatch().filter(w=>w.d===d));renderTargets(MODEL);return;
+  }
+  const row=e.target.closest(".tg-row");
+  if(row&&row.dataset.g&&!e.target.closest(".wstar")){ARS_GAME=row.dataset.g;ARS_BAT=row.dataset.b;setView("arsenal");}
+});
 el("tabbar")&&el("tabbar").addEventListener("click",e=>{
   const b=e.target.closest(".tb-btn");if(!b)return;
   const t=b.dataset.tab;
@@ -5943,7 +6145,7 @@ el("trkSave").addEventListener("click",()=>{
 });
 el("trkGrade").addEventListener("click",()=>trackGradeAndRender());
 // ---- Backup / Restore: survives site updates, browser changes, and new devices ----
-const BACKUP_KEYS=["eb:preds","eb:gpreds","eb:odh","eb:calibOn","eb:scproxy","eb:okey"];
+const BACKUP_KEYS=["eb:preds","eb:gpreds","eb:odh","eb:watch","eb:calibOn","eb:scproxy","eb:okey"];
 el("trkExport")&&el("trkExport").addEventListener("click",()=>{
   try{
     const data={_app:"edge-board",_type:"tracking-backup",_version:1,_exported:new Date().toISOString(),store:{}};
