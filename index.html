@@ -197,7 +197,8 @@
   .autorow input{accent-color:var(--good);cursor:pointer}
   .freshlbl{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2);white-space:nowrap}
   .sidebar{position:fixed;top:0;left:0;width:236px;height:100vh;overflow-y:auto;background:var(--panel);border-right:1px solid var(--line);padding:18px 14px 40px;z-index:110;transition:transform .22s ease}
-  .sb-brand{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:24px;color:var(--chalk);letter-spacing:-.01em;margin:4px 8px 18px}
+  .sb-brand{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:24px;color:var(--chalk);letter-spacing:-.01em;margin:4px 8px 2px}
+  .sb-build{font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted2);margin:0 8px 16px;letter-spacing:.04em}
   .sb-brand span{color:var(--amber)}
   .sb-group{margin-bottom:18px}
   .sb-h{font-family:'Roboto Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);padding:0 8px 7px}
@@ -961,6 +962,15 @@
 
 
   /* ===== 📋 MATCHUP GRID ===== */
+  .mg-scout{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-bottom:10px;max-width:1400px}
+  .mg-hs{background:var(--panel);border:1px solid var(--line);border-radius:2px;padding:8px 11px}
+  .mg-hs .k{font-family:'Roboto Mono',monospace;font-size:8px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted2)}
+  .mg-hs .v{font-family:'Roboto Mono',monospace;font-weight:700;font-size:19px;color:var(--chalk);line-height:1.15;margin-top:1px}
+  .mg-hs .v.mut{color:var(--muted2)}
+  .mg-hs .v small{font-size:9px;color:var(--muted2);font-weight:400}
+  .mg-hs .s{font-family:'Roboto Mono',monospace;font-size:8.5px;color:var(--muted);margin-top:1px}
+  @media(max-width:900px){.mg-scout{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  @media(max-width:560px){.mg-scout{grid-template-columns:repeat(2,minmax(0,1fr))}}
   .mg-hd{background:var(--panel);border:1px solid var(--line);border-radius:2px;padding:11px 14px;margin-bottom:10px;max-width:1400px}
   .mg-hd h3{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:20px;margin:0;line-height:1;text-transform:uppercase;letter-spacing:.03em}
   .mg-hand{font-family:'Roboto Mono',monospace;font-size:9.5px;color:var(--muted2);text-transform:none;letter-spacing:0}
@@ -1335,6 +1345,7 @@
   <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
+    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.07.20.3</div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
       <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
@@ -4323,6 +4334,28 @@ function renderMatchupGrid(model){
   const K=sel.K,g=sel.g;
   const rows=mgRows(K,g);
   if(!rows.length){wrap.innerHTML=`<div class="empty"><b>No lineup yet</b>${K.name}'s opponent hasn't posted a lineup.</div>`;return;}
+  // Pitcher scouting line: overall rate + HR / ISO allowed to each batter hand.
+  const sp=K.split||{};
+  const hr9=K.cur&&K.cur.hr9!=null?K.cur.hr9:null;
+  const era=K.cur&&K.cur.era!=null?K.cur.era:null;
+  const whip=K.cur&&K.cur.whip!=null?K.cur.whip:null;
+  const handStat=(side,label)=>{
+    const s=sp[side];
+    if(!s||s.bf==null)return `<div class="mg-hs"><div class="k">HR vs ${label}</div><div class="v mut">—</div></div>`;
+    const per=s.bf>0?(s.hr/s.bf*100):null;                 // HR per batter faced, that hand
+    const iso=s.iso!=null?s.iso:(pnum(s.slg)-pnum(s.avg)); // ISO allowed that hand (power against)
+    // heat: higher HR-rate against = greener for the hitters (worse for the pitcher)
+    const t=per==null?0.5:Math.max(0,Math.min(1,(per-2)/(5-2)));
+    const bg=per==null?"":`background:hsla(${(t*130).toFixed(0)},60%,26%,.5)`;
+    return `<div class="mg-hs" style="${bg}"><div class="k">HR vs ${label}</div><div class="v">${s.hr}<small> / ${s.bf} BF</small></div><div class="s">${per!=null?per.toFixed(1)+"% · ":""}${isoStr(iso)} ISO · ${fmt3(pnum(s.slg))} SLG</div></div>`;
+  };
+  const scout=`<div class="mg-scout">
+    <div class="mg-hs"><div class="k">ERA</div><div class="v">${era!=null?Number(era).toFixed(2):"—"}</div></div>
+    <div class="mg-hs"><div class="k">WHIP</div><div class="v">${whip!=null?Number(whip).toFixed(2):"—"}</div></div>
+    <div class="mg-hs"><div class="k">HR / 9</div><div class="v">${hr9!=null?hr9.toFixed(2):"—"}</div></div>
+    ${handStat("vL","LHB")}
+    ${handStat("vR","RHB")}
+  </div>`;
   const cols=`minmax(120px,1.6fr) 30px ${MG_COLS.map(c=>"minmax(46px,1fr)").join(" ")}`;
   const head=`<div class="mg-hd">
     <div><h3>vs ${K.name} <span class="mg-hand">${K.throws||"?"}HP · ${K.team||""}</span></h3>
@@ -4335,7 +4368,7 @@ function renderMatchupGrid(model){
     return `<button class="mg-r" data-g="${g.gamePk}" data-b="${r.b.id}" style="grid-template-columns:${cols}">
       <span class="mg-nm">${rankEmoji(r.b)}${r.b.name} <small>${r.b.bats||""}</small></span>
       <span class="mg-v ${m.cls}" title="${m.l}">${m.e}</span>${cells}</button>`;}).join("");
-  wrap.innerHTML=head+`<div class="mg-legend"><span class="mg-lg-g">green = strong for the hitter</span><span class="mg-lg-r">red = weak</span><span class="mg-lg-mut">⭐ team's best bat · ⚡ 2nd · 💤 sleeper (by grade) · MATCH=overall · KHR=pitch-arsenal · FORM=L10 vs season</span></div><div class="mg-grid">${hdr}${body}</div>`;
+  wrap.innerHTML=head+scout+`<div class="mg-legend"><span class="mg-lg-g">green = strong for the hitter</span><span class="mg-lg-r">red = weak</span><span class="mg-lg-mut">⭐ team's best bat · ⚡ 2nd · 💤 sleeper (by grade) · MATCH=overall · KHR=pitch-arsenal · FORM=L10 vs season</span></div><div class="mg-grid">${hdr}${body}</div>`;
 }
 
 // ===================== STAR GROUPS — auto-built cross-game parlays =====================
