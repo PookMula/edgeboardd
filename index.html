@@ -3968,8 +3968,8 @@ function renderLive(model){
 function todayStarters(model){
   const out=[];
   (model&&model.games||[]).forEach(g=>{
-    if(g._awayK)out.push({K:g._awayK,g,side:"away",opp:g.home.abbr||g.home.short});
-    if(g._homeK)out.push({K:g._homeK,g,side:"home",opp:g.away.abbr||g.away.short});
+    if(g._awayK)out.push({K:g._awayK,g,side:"away",opp:g.home.abbr||g.home.short,uid:g.gamePk+":away"});
+    if(g._homeK)out.push({K:g._homeK,g,side:"home",opp:g.away.abbr||g.away.short,uid:g.gamePk+":home"});
   });
   return out;
 }
@@ -3988,9 +3988,9 @@ function renderAttack(model){
   if(!model||!model.games||!model.games.length){wrap.innerHTML='<div class="empty">Load a slate first.</div>';return;}
   const starters=todayStarters(model);
   if(!starters.length){wrap.innerHTML='<div class="empty"><b>No starters posted yet</b>Probable pitchers usually appear the morning of the slate.</div>';return;}
-  if(!ATK_PID||!starters.some(s=>String(s.K.id)===String(ATK_PID)))ATK_PID=String(starters[0].K.id);
-  if(el("atkSel"))el("atkSel").innerHTML=starters.map(s=>`<option value="${s.K.id}" ${String(s.K.id)===String(ATK_PID)?"selected":""}>${s.K.name} (${s.K.throws||"?"}HP) — vs ${s.opp}</option>`).join("");
-  const sel=starters.find(s=>String(s.K.id)===String(ATK_PID))||starters[0];
+  if(!ATK_PID||!starters.some(s=>s.uid===ATK_PID))ATK_PID=starters[0].uid;
+  if(el("atkSel"))el("atkSel").innerHTML=starters.map(s=>`<option value="${s.uid}" ${s.uid===ATK_PID?"selected":""}>${s.K.name} (${s.K.throws||"?"}HP) — vs ${s.opp}</option>`).join("");
+  const sel=starters.find(s=>s.uid===ATK_PID)||starters[0];
   const K=sel.K,g=sel.g;
   const vuln=computeVuln?computeVuln(K,g):null;
   const {pitches,rows}=attackRows(K,g);
@@ -4317,9 +4317,9 @@ function renderMatchupGrid(model){
   if(!model||!model.games||!model.games.length){wrap.innerHTML='<div class="empty">Load a slate first.</div>';return;}
   const starters=todayStarters(model);
   if(!starters.length){wrap.innerHTML='<div class="empty"><b>No starters posted yet</b>Probable pitchers appear the morning of the slate.</div>';return;}
-  if(!MG_PID||!starters.some(s=>String(s.K.id)===String(MG_PID)))MG_PID=String(starters[0].K.id);
-  if(el("mgSel"))el("mgSel").innerHTML=starters.map(s=>`<option value="${s.K.id}" ${String(s.K.id)===String(MG_PID)?"selected":""}>${s.K.name} (${s.K.throws||"?"}HP) — vs ${s.opp}</option>`).join("");
-  const sel=starters.find(s=>String(s.K.id)===String(MG_PID))||starters[0];
+  if(!MG_PID||!starters.some(s=>s.uid===MG_PID))MG_PID=starters[0].uid;
+  if(el("mgSel"))el("mgSel").innerHTML=starters.map(s=>`<option value="${s.uid}" ${s.uid===MG_PID?"selected":""}>${s.K.name} (${s.K.throws||"?"}HP) — vs ${s.opp}</option>`).join("");
+  const sel=starters.find(s=>s.uid===MG_PID)||starters[0];
   const K=sel.K,g=sel.g;
   const rows=mgRows(K,g);
   if(!rows.length){wrap.innerHTML=`<div class="empty"><b>No lineup yet</b>${K.name}'s opponent hasn't posted a lineup.</div>`;return;}
@@ -4333,9 +4333,9 @@ function renderMatchupGrid(model){
     const m=VERDICT_META[r.v.tier];
     const cells=MG_COLS.map(c=>{const val=c.g(r);return `<span class="mg-c" style="${heatBG(val,c)}">${c.f(val,r)}</span>`;}).join("");
     return `<button class="mg-r" data-g="${g.gamePk}" data-b="${r.b.id}" style="grid-template-columns:${cols}">
-      <span class="mg-nm">${r.b.name} <small>${r.b.bats||""}</small></span>
+      <span class="mg-nm">${rankEmoji(r.b)}${r.b.name} <small>${r.b.bats||""}</small></span>
       <span class="mg-v ${m.cls}" title="${m.l}">${m.e}</span>${cells}</button>`;}).join("");
-  wrap.innerHTML=head+`<div class="mg-legend"><span class="mg-lg-g">green = strong for the hitter</span><span class="mg-lg-r">red = weak</span><span class="mg-lg-mut">MATCH=overall · HR%=model · KHR=pitch-arsenal score · FORM=L10 vs season · PIT/BIP=sample</span></div><div class="mg-grid">${hdr}${body}</div>`;
+  wrap.innerHTML=head+`<div class="mg-legend"><span class="mg-lg-g">green = strong for the hitter</span><span class="mg-lg-r">red = weak</span><span class="mg-lg-mut">⭐ team's best bat · ⚡ 2nd · 💤 sleeper (by grade) · MATCH=overall · KHR=pitch-arsenal · FORM=L10 vs season</span></div><div class="mg-grid">${hdr}${body}</div>`;
 }
 
 // ===================== STAR GROUPS — auto-built cross-game parlays =====================
