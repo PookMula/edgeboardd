@@ -201,9 +201,9 @@
   .sb-brand span{color:var(--amber)}
   .sb-group{margin-bottom:18px}
   .sb-h{font-family:'Roboto Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);padding:0 8px 7px}
-  .sidebar button[data-view]{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:none;border:none;border-left:2px solid transparent;color:var(--muted);font-family:'Saira Condensed',sans-serif;font-weight:500;font-size:14.5px;letter-spacing:.01em;padding:8px 10px;border-radius:0 3px 3px 0;cursor:pointer;transition:all .12s}
-  .sidebar button[data-view]:hover{color:var(--chalk);background:var(--panel2)}
-  .sidebar button[data-view].active{color:var(--chalk);background:rgba(34,208,122,.12);border-left-color:var(--good);font-weight:600}
+  .sidebar [data-view]{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:none;border:none;border-left:2px solid transparent;color:var(--muted);font-family:'Saira Condensed',sans-serif;font-weight:500;font-size:14.5px;letter-spacing:.01em;padding:8px 10px;border-radius:0 3px 3px 0;cursor:pointer;transition:all .12s}
+  .sidebar [data-view]:hover{color:var(--chalk);background:var(--panel2)}
+  .sidebar [data-view].active{color:var(--chalk);background:rgba(34,208,122,.12);border-left-color:var(--good);font-weight:600}
   .sb-beta{font-family:'Roboto Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.06em;color:#C0B0F0;background:rgba(124,92,200,.25);border-radius:2px;padding:2px 5px;margin-left:auto}
   .sb-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:105}
   body.nav-open .sb-backdrop{display:block}
@@ -218,7 +218,13 @@
     body.nav-open .sidebar{transform:translateX(0)}
     .wrap{padding-top:54px}
   }
-  .viewtitle{font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:.04em;font-size:13px;color:var(--muted2);margin:2px 0 14px;min-height:14px}
+  .sidebar [data-view]{text-decoration:none;cursor:pointer}
+  .newtab-btn{display:inline-flex;align-items:center;gap:5px;background:none;border:1px solid var(--line);
+    border-radius:2px;color:var(--muted2);font-family:'Roboto Mono',monospace;font-size:9px;letter-spacing:.04em;
+    text-transform:uppercase;padding:3px 8px;margin-left:10px;cursor:pointer;vertical-align:middle;text-decoration:none}
+  .newtab-btn:hover{color:var(--teal);border-color:var(--teal)}
+  @media(max-width:760px){.newtab-btn{display:none}}
+  .viewtitle{display:flex;align-items:center;flex-wrap:wrap;gap:2px;font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:.04em;font-size:13px;color:var(--muted2);margin:2px 0 14px;min-height:14px}
   .loadmore{display:block;width:100%;margin-top:10px;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:3px;color:var(--amber);font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:.05em;font-weight:600;font-size:13px;cursor:pointer;transition:all .14s}
   .loadmore:hover{background:var(--panel3);border-color:var(--amber)}
   .hrbk{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
@@ -1303,41 +1309,41 @@
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
-      <button data-view="slate">📊 Dashboard</button>
-      <button data-view="targets">⭐ My Targets</button>
-      <button data-view="best">🏆 Best Bets</button>
-      <button data-view="live">📺 Game Day</button>
-      <button data-view="compare">⚖️ Head to Head</button>
-      <button data-view="hrmodel">💣 Home Runs Model</button>
-      <button data-view="hrsim">🎲 HR Simulator</button>
-      <button data-view="homer">🤖 Homer AI <span class="sb-beta">BETA</span></button>
-      <button data-view="brief">📝 Game Briefings</button>
-      <button data-view="hr">✅ Homers Today</button>
-      <button data-view="props">Home Run &amp; Hit Props</button>
-      <button data-view="align">Alignment Score</button>
-      <button data-view="hrguide">💣 How to Pick Homers</button>
+      <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
+      <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
+      <a href="#/best" data-view="best" role="button">🏆 Best Bets</a>
+      <a href="#/live" data-view="live" role="button">📺 Game Day</a>
+      <a href="#/compare" data-view="compare" role="button">⚖️ Head to Head</a>
+      <a href="#/hrmodel" data-view="hrmodel" role="button">💣 Home Runs Model</a>
+      <a href="#/hrsim" data-view="hrsim" role="button">🎲 HR Simulator</a>
+      <a href="#/homer" data-view="homer" role="button">🤖 Homer AI <span class="sb-beta">BETA</span></a>
+      <a href="#/brief" data-view="brief" role="button">📝 Game Briefings</a>
+      <a href="#/hr" data-view="hr" role="button">✅ Homers Today</a>
+      <a href="#/props" data-view="props" role="button">Home Run &amp; Hit Props</a>
+      <a href="#/align" data-view="align" role="button">Alignment Score</a>
+      <a href="#/hrguide" data-view="hrguide" role="button">💣 How to Pick Homers</a>
     </div>
     <div class="sb-group"><div class="sb-h">Pitcher &amp; Matchup</div>
-      <button data-view="vulnrep">Pitcher Vulnerability Report</button>
-      <button data-view="vuln">Pitcher Weak Spots</button>
-      <button data-view="zones">Zone Matchups</button>
-      <button data-view="arsenal">🎯 Arsenal Matchup</button>
-      <button data-view="attack">🥊 Attack the Arm</button>
-      <button data-view="sims">Game Sims</button>
-      <button data-view="mlmodel">💯 Moneyline Model</button>
-      <button data-view="wx">Weather Impact</button>
-      <button data-view="teams">Team Browser</button>
+      <a href="#/vulnrep" data-view="vulnrep" role="button">Pitcher Vulnerability Report</a>
+      <a href="#/vuln" data-view="vuln" role="button">Pitcher Weak Spots</a>
+      <a href="#/zones" data-view="zones" role="button">Zone Matchups</a>
+      <a href="#/arsenal" data-view="arsenal" role="button">🎯 Arsenal Matchup</a>
+      <a href="#/attack" data-view="attack" role="button">🥊 Attack the Arm</a>
+      <a href="#/sims" data-view="sims" role="button">Game Sims</a>
+      <a href="#/mlmodel" data-view="mlmodel" role="button">💯 Moneyline Model</a>
+      <a href="#/wx" data-view="wx" role="button">Weather Impact</a>
+      <a href="#/teams" data-view="teams" role="button">Team Browser</a>
     </div>
     <div class="sb-group"><div class="sb-h">Betting Tools</div>
-      <button data-view="odds">Odds Comparison</button>
-      <button data-view="parlay">Parlay Generator</button>
-      <button data-view="stargroups">⭐ Star Groups</button>
-      <button data-view="hrbuilder">🛠️ HR Group Builder</button>
-      <button data-view="track">📊 Track &amp; Calibrate</button>
-      <button data-view="trends">Trends</button>
+      <a href="#/odds" data-view="odds" role="button">Odds Comparison</a>
+      <a href="#/parlay" data-view="parlay" role="button">Parlay Generator</a>
+      <a href="#/stargroups" data-view="stargroups" role="button">⭐ Star Groups</a>
+      <a href="#/hrbuilder" data-view="hrbuilder" role="button">🛠️ HR Group Builder</a>
+      <a href="#/track" data-view="track" role="button">📊 Track &amp; Calibrate</a>
+      <a href="#/trends" data-view="trends" role="button">Trends</a>
     </div>
     <div class="sb-group"><div class="sb-h">Info</div>
-      <button data-view="guide">❓ Guide</button>
+      <a href="#/guide" data-view="guide" role="button">❓ Guide</a>
     </div>
   </nav>
   <div class="sb-backdrop" id="sbBackdrop"></div>
@@ -5985,6 +5991,7 @@ function renderTrends(){
 }
 function setView(v){
   VIEW=v;
+  try{const want="#/"+v;if(location.hash!==want)history.replaceState(null,"",want);}catch(e){}
   updateNavActive(v);
   syncTabbar(v);
   const haveGames=MODEL&&MODEL.games&&MODEL.games.length;
@@ -6057,7 +6064,7 @@ function renderAll(model){
   setStatus(`${model.games.length} games · ${model.batters.length} batters · ${conf} w/ confirmed lineups${ODDS_LOADED?" · odds live":""} · ${new Date().toLocaleTimeString()}`,"live");
   el("loadOdds").disabled=false;
   el("footer").innerHTML=`Source: MLB Stats API (statsapi.mlb.com), season ${model.season} · weather via open-meteo.com${ODDS_LOADED?" · odds via the-odds-api.com (BetMGM, Caesars)":""}${STATCAST_OK?" · Statcast via baseballsavant.mlb.com":""}. Grade & Edge Score blend season log5 matchup + career BvP + platoon + recent form (L10) + pitcher vs-side HR + park + weather. Pitcher vulnerability (1–99, higher = easier to hit) weighs HR/9, WHIP, ERA, K/9, recent form, park & weather. Props tab = Poisson model probabilities + fair odds. Alignment Score (0–100) blends 9 weighted factors per prop with a confidence + risk read and factor-agreement count. Sims run a 10,000-game Monte Carlo (over-dispersed runs) for totals, moneyline &amp; run line from lineup, team form, starter ERA/FIP/platoon splits, bullpen, park &amp; weather. Odds tab compares every US sportsbook with de-vig fair odds + model edge. Parlay tab builds correlated-aware parlays (legs assumed independent). 🎯 WEAK SPOT = batter facing the pitcher's weaker platoon side. 🔥/🧊 = hot/cold L10. ${STATCAST_OK?"":"Statcast shown only with a proxy/host (CORS). "}Not affiliated with MLB or any sportsbook. Analysis/entertainment only — not betting or financial advice.`;
-  setView(VIEW);
+  setView(viewFromHash()||VIEW);
 }
 
 //------------------------------------------------------------------ wiring
@@ -6074,7 +6081,7 @@ el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)r
 const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",stargroups:"Star Groups — auto-built parlays",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",hrbuilder:"HR Group Builder",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",targets:"My Targets — players &amp; props you're on today",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
-  const t=el("viewTitle");if(t)t.textContent=VIEW_TITLE[v]||"";
+  const t=el("viewTitle");if(t)t.innerHTML=`<span>${VIEW_TITLE[v]||""}</span><a class="newtab-btn" href="#/${v}" target="_blank" rel="noopener" title="Open this page in a new browser tab">⧉ New tab</a>`;
 }
 function closeMenus(){document.body.classList.remove("nav-open");}
 // Which bottom tab should light up for the view we're on.
@@ -6083,10 +6090,22 @@ function syncTabbar(v){
   if(!tabs||!tabs.length)return;
   tabs.forEach(t=>t.classList.toggle("on",t.dataset.tab===v));
 }
+// The set of real views (data-view targets), for validating hashes.
+const KNOWN_VIEWS=(()=>{const s=new Set();document.querySelectorAll("#nav [data-view]").forEach(b=>s.add(b.dataset.view));return s;})();
+function viewFromHash(){
+  const raw=(location.hash||"").replace(/^#\/?/,"");
+  return KNOWN_VIEWS.has(raw)?raw:null;
+}
 el("nav").addEventListener("click",e=>{
   const item=e.target.closest("[data-view]");
-  if(item){setView(item.dataset.view);closeMenus();}
+  if(!item)return;
+  // Let the browser handle "open in new tab": ⌘/ctrl/shift-click or middle-click.
+  if(e.metaKey||e.ctrlKey||e.shiftKey||e.button===1)return;
+  e.preventDefault();
+  setView(item.dataset.view);closeMenus();
 });
+// Back/forward, edited URLs, and freshly-opened tabs all route through here.
+window.addEventListener("hashchange",()=>{const v=viewFromHash();if(v&&v!==VIEW)setView(v);});
 el("navToggle")&&el("navToggle").addEventListener("click",()=>document.body.classList.toggle("nav-open"));
 el("sbBackdrop")&&el("sbBackdrop").addEventListener("click",closeMenus);
 document.addEventListener("click",e=>{
