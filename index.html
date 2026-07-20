@@ -960,7 +960,34 @@
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 
 
-  /* ===== ⭐ MY TARGETS ===== */
+  /* ===== 📋 MATCHUP GRID ===== */
+  .mg-hd{background:var(--panel);border:1px solid var(--line);border-radius:2px;padding:11px 14px;margin-bottom:10px;max-width:1400px}
+  .mg-hd h3{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:20px;margin:0;line-height:1;text-transform:uppercase;letter-spacing:.03em}
+  .mg-hand{font-family:'Roboto Mono',monospace;font-size:9.5px;color:var(--muted2);text-transform:none;letter-spacing:0}
+  .mg-sub{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);margin-top:5px}
+  .mg-legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:8px;font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted2)}
+  .mg-lg-g{color:var(--good)} .mg-lg-r{color:var(--red)}
+  .mg-lg-mut{color:var(--muted2)}
+  .mg-grid{border:1px solid var(--line);border-radius:2px;overflow-x:auto;background:var(--panel);max-width:1400px}
+  .mg-h{display:grid;gap:0;align-items:center;padding:0;border-bottom:1px solid var(--teal);min-width:760px;
+        font-family:'Roboto Mono',monospace;font-size:8px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted2)}
+  .mg-h span{padding:7px 3px;text-align:center}
+  .mg-h .mg-nmh{text-align:left;padding-left:10px}
+  .mg-r{display:grid;gap:0;align-items:stretch;width:100%;padding:0;border:none;border-bottom:1px solid var(--line);
+        background:none;cursor:pointer;text-align:left;min-width:760px;font-family:'Roboto Mono',monospace}
+  .mg-r:last-child{border-bottom:none}
+  .mg-r:hover{outline:1px solid var(--teal);outline-offset:-1px}
+  .mg-nm{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--chalk);padding:8px 6px 8px 10px;
+         display:flex;align-items:center;gap:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mg-nm small{font-family:'Roboto Mono',monospace;font-size:8px;color:var(--muted2);font-weight:400}
+  .mg-v{display:flex;align-items:center;justify-content:center;font-size:11px}
+  .mg-c{display:flex;align-items:center;justify-content:center;font-size:10.5px;color:var(--chalk);
+        padding:8px 3px;border-left:1px solid rgba(0,0,0,.15)}
+  @media(max-width:760px){
+    .mg-sub{font-size:9px}
+    .mg-nm{font-size:11px;padding-left:8px}
+  }
+
   .wstar{background:none;border:none;cursor:pointer;color:var(--muted2);font-size:15px;line-height:1;
          padding:2px 4px;transition:color .12s,transform .12s;flex:0 0 auto}
   .wstar:hover{color:var(--amber);transform:scale(1.15)}
@@ -1329,6 +1356,7 @@
       <a href="#/zones" data-view="zones" role="button">Zone Matchups</a>
       <a href="#/arsenal" data-view="arsenal" role="button">🎯 Arsenal Matchup</a>
       <a href="#/attack" data-view="attack" role="button">🥊 Attack the Arm</a>
+      <a href="#/mgrid" data-view="mgrid" role="button">📋 Matchup Grid</a>
       <a href="#/sims" data-view="sims" role="button">Game Sims</a>
       <a href="#/mlmodel" data-view="mlmodel" role="button">💯 Moneyline Model</a>
       <a href="#/wx" data-view="wx" role="button">Weather Impact</a>
@@ -1690,6 +1718,12 @@
     <div id="liveWrap"></div>
   </section>
 
+  <section id="mgView" class="hide">
+    <div class="sec-head"><h2>📋 Matchup Grid</h2><span class="tag">the whole lineup, every metric, heat-mapped</span><span class="rule"></span></div>
+    <div class="zone-top"><div class="zsel"><label for="mgSel">Starting pitcher</label><select id="mgSel"></select></div></div>
+    <div id="mgWrap"></div>
+  </section>
+
   <section id="attackView" class="hide">
     <div class="sec-head"><h2>🥊 Attack the Arm</h2><span class="tag">one pitcher, the whole lineup ranked</span><span class="rule"></span></div>
     <div class="zone-top"><div class="zsel"><label for="atkSel">Starting pitcher</label><select id="atkSel"></select></div></div>
@@ -2006,6 +2040,7 @@ let ZONES=null, ZONES_GAME=null, ZONES_BAT=null;
 let ARSENAL=null, ARSENAL_OK=false, ARS_GAME=null, ARS_BAT=null;
 let ATK_PID=null, CMP_A=null, CMP_B=null, LIVE_STAMP="";
 let TG_GAME=null, TG_BAT=null, TG_MK="hr";
+let MG_PID=null;
 let STAR_MK_SEL="hr", STAR_LEGS=2, STAR_SEED=0;
 let HRB_LEGS=4, HRB_SELECTED=[], HRB_SEARCH="", HRB_CONF=false, HRB_STARS=false;
 const PROP_MARKETS={
@@ -4226,6 +4261,83 @@ function renderTargets(model){
     `<div class="tg-note">Targets are saved on this device for <b>${date}</b>${older?` · ${older} from other dates hidden`:""}. They update live — price, edge and result fill in as odds load and games finish.${older?` <button class="tg-clear" id="tgClear">Clear older targets</button>`:""}</div>`;
 }
 
+// ===================== 📋 MATCHUP GRID — full lineup, heat-mapped (Kasper-style) =====================
+// Every column here is backed by REAL data. Nothing is invented.
+// Heat scales are league-anchored [red edge, mid, green edge]; higher=greener unless inv:true.
+const MG_COLS=[
+  {k:"match", l:"MATCH", w:1, g:r=>r.v.score,                       f:v=>v==null?"—":v.toFixed(0),        lo:35,mid:55,hi:75},
+  {k:"model", l:"HR%",   w:1, g:r=>r.v.modelProb==null?null:r.v.modelProb*100, f:v=>v==null?"—":v.toFixed(1)+"%", lo:6,mid:12,hi:22},
+  {k:"khr",   l:"KHR",   w:1, g:r=>r.khr,                           f:v=>v==null?"—":v.toFixed(1),        lo:38,mid:52,hi:66},
+  {k:"form",  l:"FORM",  w:1, g:r=>r.form,                          f:(v,r)=>r.formTxt,                   lo:-0.06,mid:0,hi:0.06},
+  {k:"pit",   l:"PIT",   w:1, g:r=>r.pit,                           f:v=>v==null?"—":v.toLocaleString(),  neutral:true},
+  {k:"bip",   l:"BIP",   w:1, g:r=>r.bip,                           f:v=>v==null?"—":v.toLocaleString(),  neutral:true},
+  {k:"iso",   l:"ISO",   w:1, g:r=>r.iso,                           f:v=>v==null?"—":isoStr(v),           lo:0.110,mid:0.165,hi:0.250},
+  {k:"xwoba", l:"xwOBA", w:1, g:r=>r.xwoba,                         f:v=>v==null?"—":fmt3(v),             lo:0.290,mid:0.330,hi:0.380},
+  {k:"brl",   l:"BRL%",  w:1, g:r=>r.brl,                           f:v=>v==null?"—":v.toFixed(1)+"%",    lo:5,mid:9,hi:14},
+  {k:"hh",    l:"HH%",   w:1, g:r=>r.hh,                            f:v=>v==null?"—":v.toFixed(1)+"%",    lo:33,mid:40,hi:48},
+  {k:"ev",    l:"EV",    w:1, g:r=>r.ev,                            f:v=>v==null?"—":v.toFixed(1),        lo:86,mid:89,hi:92},
+  {k:"la",    l:"LA",    w:1, g:r=>r.la,                            f:v=>v==null?"—":v.toFixed(1),        lo:6,mid:14,hi:20},
+];
+// green→amber→red for a value on a [lo,mid,hi] scale (inv flips it)
+function heatBG(v,c){
+  if(v==null||!isFinite(v)||c.neutral)return "";
+  let lo=c.lo,hi=c.hi;
+  let t=(v-lo)/((hi-lo)||1); t=Math.max(0,Math.min(1,t));
+  if(c.inv)t=1-t;
+  // 0 = red(0), .5 = amber(45), 1 = green(130)
+  const hue=t*130;
+  const sat=62, light=(t>0.45&&t<0.55)?30:26;
+  return `background:hsla(${hue.toFixed(0)},${sat}%,${light}%,.55)`;
+}
+function mgRows(K,g){
+  const bats=(K._oppBats||[]).filter(b=>b.proj);
+  return bats.map(b=>{
+    const v=hrVerdict(b,g);
+    const sc=b.statcast||{};
+    const fx=b.xstats||{};
+    const form=b.recentForm&&b.recentForm.delta!=null?b.recentForm.delta:null;
+    const fs=b.recentForm?b.recentForm.state:null;
+    return {
+      b,v,
+      khr:b.hrMatch?b.hrMatch.score:null,          // pitch-arsenal HR score (0–100)
+      form, formTxt:(form==null?"—":`${(form*100>=0?"+":"")}${Math.round(form*100)}%${fs==="hot"?" 🔥":fs==="cold"?" 🧊":""}`),
+      pit:b.cur&&b.cur.pa!=null?b.cur.pa:null,      // sample sizes (real)
+      bip:sc.bip!=null?sc.bip:(b._bip!=null?b._bip:null),
+      iso:b.cur&&b.cur.iso!=null?b.cur.iso:null,
+      xwoba:fx.xwoba!=null?fx.xwoba:(sc.xwoba!=null?sc.xwoba:null),
+      brl:sc.barrel!=null?sc.barrel:null,
+      hh:sc.hardhit!=null?sc.hardhit:(sc.hh!=null?sc.hh:null),
+      ev:sc.ev!=null?sc.ev:null,
+      la:sc.la!=null?sc.la:null,
+    };
+  }).sort((a,b)=>(b.v.score||0)-(a.v.score||0));
+}
+function renderMatchupGrid(model){
+  const wrap=el("mgWrap");if(!wrap)return;
+  if(!model||!model.games||!model.games.length){wrap.innerHTML='<div class="empty">Load a slate first.</div>';return;}
+  const starters=todayStarters(model);
+  if(!starters.length){wrap.innerHTML='<div class="empty"><b>No starters posted yet</b>Probable pitchers appear the morning of the slate.</div>';return;}
+  if(!MG_PID||!starters.some(s=>String(s.K.id)===String(MG_PID)))MG_PID=String(starters[0].K.id);
+  if(el("mgSel"))el("mgSel").innerHTML=starters.map(s=>`<option value="${s.K.id}" ${String(s.K.id)===String(MG_PID)?"selected":""}>${s.K.name} (${s.K.throws||"?"}HP) — vs ${s.opp}</option>`).join("");
+  const sel=starters.find(s=>String(s.K.id)===String(MG_PID))||starters[0];
+  const K=sel.K,g=sel.g;
+  const rows=mgRows(K,g);
+  if(!rows.length){wrap.innerHTML=`<div class="empty"><b>No lineup yet</b>${K.name}'s opponent hasn't posted a lineup.</div>`;return;}
+  const cols=`minmax(120px,1.6fr) 30px ${MG_COLS.map(c=>"minmax(46px,1fr)").join(" ")}`;
+  const head=`<div class="mg-hd">
+    <div><h3>vs ${K.name} <span class="mg-hand">${K.throws||"?"}HP · ${K.team||""}</span></h3>
+      <div class="mg-sub">${sel.opp} lineup · park ${(g.parkF||1).toFixed(2)} · ${STATCAST_OK?"Statcast live":"⚠ load Statcast proxy for xwOBA/Brl/EV columns"}</div></div>
+  </div>`;
+  const hdr=`<div class="mg-h" style="grid-template-columns:${cols}"><span class="mg-nmh">HITTER</span><span></span>${MG_COLS.map(c=>`<span title="${c.l}">${c.l}</span>`).join("")}</div>`;
+  const body=rows.map(r=>{
+    const m=VERDICT_META[r.v.tier];
+    const cells=MG_COLS.map(c=>{const val=c.g(r);return `<span class="mg-c" style="${heatBG(val,c)}">${c.f(val,r)}</span>`;}).join("");
+    return `<button class="mg-r" data-g="${g.gamePk}" data-b="${r.b.id}" style="grid-template-columns:${cols}">
+      <span class="mg-nm">${r.b.name} <small>${r.b.bats||""}</small></span>
+      <span class="mg-v ${m.cls}" title="${m.l}">${m.e}</span>${cells}</button>`;}).join("");
+  wrap.innerHTML=head+`<div class="mg-legend"><span class="mg-lg-g">green = strong for the hitter</span><span class="mg-lg-r">red = weak</span><span class="mg-lg-mut">MATCH=overall · HR%=model · KHR=pitch-arsenal score · FORM=L10 vs season · PIT/BIP=sample</span></div><div class="mg-grid">${hdr}${body}</div>`;
+}
+
 // ===================== STAR GROUPS — auto-built cross-game parlays =====================
 const STAR_MK={
   hr:{label:"HR",short:"HR",line:0.5,mean:b=>b.proj.hr,om:"hr",maxLegs:6,kind:"bat",min:0.06},
@@ -6013,6 +6125,7 @@ function setView(v){
   el("liveView").classList.toggle("hide",v!=="live");
   el("targetsView").classList.toggle("hide",v!=="targets");
   el("attackView").classList.toggle("hide",v!=="attack");
+  el("mgView").classList.toggle("hide",v!=="mgrid");
   el("compareView").classList.toggle("hide",v!=="compare");
   el("hrguideView").classList.toggle("hide",v!=="hrguide");
   el("propsView").classList.toggle("hide",v!=="props");
@@ -6041,6 +6154,7 @@ function setView(v){
   if(v==="live"&&MODEL){try{captureClosing();}catch(e){}renderLive(MODEL);
     refreshLiveState().then(n=>{if(n&&VIEW==="live"){LIVE_STAMP=new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit",second:"2-digit"});try{captureClosing();}catch(_){}renderLive(MODEL);}});}
   if(v==="attack"&&MODEL) renderAttack(MODEL);
+  if(v==="mgrid"&&MODEL) renderMatchupGrid(MODEL);
   if(v==="compare"&&MODEL) renderCompare(MODEL);
   if(v==="align"&&MODEL) renderAlignment();
   if(v==="vuln"&&MODEL) renderVuln(MODEL);
@@ -6078,7 +6192,7 @@ async function run(){
 }
 function updateFreshLabel(){const e=el("freshLbl");if(e)e.textContent=freshText(LAST_REFRESH,Date.now());}
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
-const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",stargroups:"Star Groups — auto-built parlays",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",hrbuilder:"HR Group Builder",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",targets:"My Targets — players &amp; props you're on today",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
+const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",stargroups:"Star Groups — auto-built parlays",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",hrbuilder:"HR Group Builder",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",targets:"My Targets — players &amp; props you're on today",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",mgrid:"Matchup Grid — full lineup, every metric",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
   const t=el("viewTitle");if(t)t.innerHTML=`<span>${VIEW_TITLE[v]||""}</span><a class="newtab-btn" href="#/${v}" target="_blank" rel="noopener" title="Open this page in a new browser tab">⧉ New tab</a>`;
@@ -6265,6 +6379,8 @@ el("liveWrap")&&el("liveWrap").addEventListener("click",async e=>{
   if(!n&&el("lvStamp"))el("lvStamp").textContent="couldn't reach the live feed — try again";
 });
 el("atkSel")&&el("atkSel").addEventListener("change",e=>{ATK_PID=e.target.value;if(MODEL)renderAttack(MODEL);});
+el("mgSel")&&el("mgSel").addEventListener("change",e=>{MG_PID=e.target.value;if(MODEL)renderMatchupGrid(MODEL);});
+el("mgWrap")&&el("mgWrap").addEventListener("click",e=>{const r=e.target.closest(".mg-r");if(!r)return;ARS_GAME=r.dataset.g;ARS_BAT=r.dataset.b;setView("arsenal");});
 el("atkWrap")&&el("atkWrap").addEventListener("click",e=>{const r=e.target.closest(".atk-r");if(!r)return;ARS_GAME=r.dataset.g;ARS_BAT=r.dataset.b;setView("arsenal");});
 el("cmpSelA")&&el("cmpSelA").addEventListener("change",e=>{CMP_A=e.target.value;if(MODEL)renderCompare(MODEL);});
 el("cmpSelB")&&el("cmpSelB").addEventListener("change",e=>{CMP_B=e.target.value;if(MODEL)renderCompare(MODEL);});
