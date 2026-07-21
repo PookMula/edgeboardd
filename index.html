@@ -979,18 +979,25 @@
   .mg-lg-g{color:var(--good)} .mg-lg-r{color:var(--red)}
   .mg-lg-mut{color:var(--muted2)}
   .mg-grid{border:1px solid var(--line);border-radius:2px;overflow-x:auto;background:var(--panel);max-width:1400px}
-  .mg-h{display:grid;gap:0;align-items:center;padding:0;border-bottom:1px solid var(--teal);min-width:760px;
+  .mg-h{display:grid;gap:0;align-items:center;padding:0;border-bottom:1px solid var(--teal);min-width:900px;
         font-family:'Roboto Mono',monospace;font-size:8px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted2)}
   .mg-h span{padding:7px 3px;text-align:center}
-  .mg-h .mg-nmh{text-align:left;padding-left:10px}
+  .mg-h .mg-nmh{text-align:left;padding-left:6px}
+  .mg-sort{cursor:pointer;user-select:none}
+  .mg-sort:hover{color:var(--chalk)}
+  .mg-son{color:var(--teal)!important}
+  .mg-sar{font-style:normal;font-size:7px;opacity:.9}
   .mg-r{display:grid;gap:0;align-items:stretch;width:100%;padding:0;border:none;border-bottom:1px solid var(--line);
-        background:none;cursor:pointer;text-align:left;min-width:760px;font-family:'Roboto Mono',monospace}
+        background:none;cursor:pointer;text-align:left;min-width:900px;font-family:'Roboto Mono',monospace}
   .mg-r:last-child{border-bottom:none}
   .mg-r:hover{outline:1px solid var(--teal);outline-offset:-1px}
-  .mg-nm{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--chalk);padding:8px 6px 8px 10px;
+  .mg-r.mg-plat{background:rgba(0,163,224,.05)}
+  .mg-star{display:flex;align-items:center;justify-content:center}
+  .mg-star .wstar{font-size:13px;padding:2px}
+  .mg-nm{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--chalk);padding:8px 6px 8px 6px;
          display:flex;align-items:center;gap:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .mg-nm small{font-family:'Roboto Mono',monospace;font-size:8px;color:var(--muted2);font-weight:400}
-  .mg-v{display:flex;align-items:center;justify-content:center;font-size:11px}
+  .mg-v{display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer}
   .mg-c{display:flex;align-items:center;justify-content:center;font-size:10.5px;color:var(--chalk);
         padding:8px 3px;border-left:1px solid rgba(0,0,0,.15)}
   @media(max-width:760px){
@@ -1345,7 +1352,7 @@
   <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
-    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.07.20.3</div>
+    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.07.20.4</div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
       <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
@@ -2051,7 +2058,7 @@ let ZONES=null, ZONES_GAME=null, ZONES_BAT=null;
 let ARSENAL=null, ARSENAL_OK=false, ARS_GAME=null, ARS_BAT=null;
 let ATK_PID=null, CMP_A=null, CMP_B=null, LIVE_STAMP="";
 let TG_GAME=null, TG_BAT=null, TG_MK="hr";
-let MG_PID=null;
+let MG_PID=null, MG_SORT="match";
 let STAR_MK_SEL="hr", STAR_LEGS=2, STAR_SEED=0;
 let HRB_LEGS=4, HRB_SELECTED=[], HRB_SEARCH="", HRB_CONF=false, HRB_STARS=false;
 const PROP_MARKETS={
@@ -4277,7 +4284,9 @@ function renderTargets(model){
 // Heat scales are league-anchored [red edge, mid, green edge]; higher=greener unless inv:true.
 const MG_COLS=[
   {k:"match", l:"MATCH", w:1, g:r=>r.v.score,                       f:v=>v==null?"—":v.toFixed(0),        lo:35,mid:55,hi:75},
+  {k:"edge",  l:"EDGE",  w:1, g:r=>r.edge==null?null:r.edge*100,    f:(v,r)=>r.edge==null?"—":`${r.platoonAdv?"↔ ":""}${r.edge>0?"+":""}${Math.round(r.edge*100)}`, lo:-25,mid:0,hi:35},
   {k:"model", l:"HR%",   w:1, g:r=>r.v.modelProb==null?null:r.v.modelProb*100, f:v=>v==null?"—":v.toFixed(1)+"%", lo:6,mid:12,hi:22},
+  {k:"price", l:"PRICE", w:1, g:r=>r.price,                         f:v=>v==null?"—":amStr(v),           neutral:true},
   {k:"khr",   l:"KHR",   w:1, g:r=>r.khr,                           f:v=>v==null?"—":v.toFixed(1),        lo:38,mid:52,hi:66},
   {k:"form",  l:"FORM",  w:1, g:r=>r.form,                          f:(v,r)=>r.formTxt,                   lo:-0.06,mid:0,hi:0.06},
   {k:"pit",   l:"PIT",   w:1, g:r=>r.pit,                           f:v=>v==null?"—":v.toLocaleString(),  neutral:true},
@@ -4302,26 +4311,57 @@ function heatBG(v,c){
 }
 function mgRows(K,g){
   const bats=(K._oppBats||[]).filter(b=>b.proj);
+  const sp=K.split||{};
+  const pHand=K.throws||null;
   return bats.map(b=>{
     const v=hrVerdict(b,g);
     const sc=b.statcast||{};
     const fx=b.xstats||{};
     const form=b.recentForm&&b.recentForm.delta!=null?b.recentForm.delta:null;
     const fs=b.recentForm?b.recentForm.state:null;
+    const iso=b.cur&&b.cur.iso!=null?b.cur.iso:null;
+    // --- platoon: does this batter have the hand edge vs this pitcher? ---
+    const side=effectiveSide(b.bats,pHand);          // "vl"/"vr" = pitcher-vs-that-hand split key
+    const splitKey=side==="vl"?"vL":side==="vr"?"vR":null;
+    const hs=splitKey?sp[splitKey]:null;
+    const platoonAdv=!!(pHand&&b.bats&&b.bats!=="S"&&((pHand==="R"&&b.bats==="L")||(pHand==="L"&&b.bats==="R")))||b.bats==="S";
+    // --- fused EDGE: hitter power (ISO vs league) × pitcher's ISO-allowed to this hand (vs league) ---
+    // Both centered on league (~.150 hitter ISO, ~.145 allowed ISO). Positive = mismatch in hitter's favor.
+    let edge=null;
+    if(iso!=null&&hs){
+      const allowIso=hs.iso!=null?hs.iso:(pnum(hs.slg)-pnum(hs.avg));
+      if(allowIso!=null&&isFinite(allowIso)){
+        const hitPow=(iso-0.150)/0.150;            // hitter power vs league, normalized
+        const pitchVuln=(allowIso-0.145)/0.145;    // pitcher vulnerability to this hand vs league
+        edge=(hitPow+pitchVuln)/2;                 // -1..+~1, >0 favors the hitter
+      }
+    }
     return {
-      b,v,
+      b,v,iso,
       khr:b.hrMatch?b.hrMatch.score:null,          // pitch-arsenal HR score (0–100)
       form, formTxt:(form==null?"—":`${(form*100>=0?"+":"")}${Math.round(form*100)}%${fs==="hot"?" 🔥":fs==="cold"?" 🧊":""}`),
       pit:b.cur&&b.cur.pa!=null?b.cur.pa:null,      // sample sizes (real)
       bip:sc.bip!=null?sc.bip:(b._bip!=null?b._bip:null),
-      iso:b.cur&&b.cur.iso!=null?b.cur.iso:null,
       xwoba:fx.xwoba!=null?fx.xwoba:(sc.xwoba!=null?sc.xwoba:null),
       brl:sc.barrel!=null?sc.barrel:null,
       hh:sc.hardhit!=null?sc.hardhit:(sc.hh!=null?sc.hh:null),
       ev:sc.ev!=null?sc.ev:null,
       la:sc.la!=null?sc.la:null,
+      edge, platoonAdv,
+      price:(v.price&&v.price.price!=null)?v.price.price:null,   // best HR price from the verdict engine
     };
-  }).sort((a,b)=>(b.v.score||0)-(a.v.score||0));
+  });
+}
+// Sort a set of grid rows by a column key (desc, nulls last). MATCH is the default.
+function mgSort(rows,key){
+  const col=MG_COLS.find(c=>c.k===key);
+  const get=key==="edge"?(r=>r.edge):key==="price"?(r=>r.price==null?null:impliedProb(r.price)):(col?r=>col.g(r):r=>r.v.score);
+  return rows.slice().sort((a,b)=>{
+    const va=get(a),vb=get(b);
+    if(va==null&&vb==null)return 0;
+    if(va==null)return 1; if(vb==null)return -1;
+    return vb-va;
+  });
 }
 function renderMatchupGrid(model){
   const wrap=el("mgWrap");if(!wrap)return;
@@ -4332,7 +4372,7 @@ function renderMatchupGrid(model){
   if(el("mgSel"))el("mgSel").innerHTML=starters.map(s=>`<option value="${s.uid}" ${s.uid===MG_PID?"selected":""}>${s.K.name} (${s.K.throws||"?"}HP) — vs ${s.opp}</option>`).join("");
   const sel=starters.find(s=>s.uid===MG_PID)||starters[0];
   const K=sel.K,g=sel.g;
-  const rows=mgRows(K,g);
+  const rows=mgSort(mgRows(K,g),MG_SORT);
   if(!rows.length){wrap.innerHTML=`<div class="empty"><b>No lineup yet</b>${K.name}'s opponent hasn't posted a lineup.</div>`;return;}
   // Pitcher scouting line: overall rate + HR / ISO allowed to each batter hand.
   const sp=K.split||{};
@@ -4356,19 +4396,21 @@ function renderMatchupGrid(model){
     ${handStat("vL","LHB")}
     ${handStat("vR","RHB")}
   </div>`;
-  const cols=`minmax(120px,1.6fr) 30px ${MG_COLS.map(c=>"minmax(46px,1fr)").join(" ")}`;
+  const cols=`26px minmax(112px,1.5fr) 30px ${MG_COLS.map(c=>"minmax(46px,1fr)").join(" ")}`;
   const head=`<div class="mg-hd">
     <div><h3>vs ${K.name} <span class="mg-hand">${K.throws||"?"}HP · ${K.team||""}</span></h3>
       <div class="mg-sub">${sel.opp} lineup · park ${(g.parkF||1).toFixed(2)} · ${STATCAST_OK?"Statcast live":"⚠ load Statcast proxy for xwOBA/Brl/EV columns"}</div></div>
   </div>`;
-  const hdr=`<div class="mg-h" style="grid-template-columns:${cols}"><span class="mg-nmh">HITTER</span><span></span>${MG_COLS.map(c=>`<span title="${c.l}">${c.l}</span>`).join("")}</div>`;
+  const arrow=k=>MG_SORT===k?' <i class="mg-sar">▼</i>':"";
+  const hdr=`<div class="mg-h" style="grid-template-columns:${cols}"><span></span><span class="mg-nmh mg-sort${MG_SORT==="match"?" mg-son":""}" data-sort="match">HITTER${MG_SORT==="match"?arrow("match"):""}</span><span></span>${MG_COLS.map(c=>`<span class="mg-sort${MG_SORT===c.k?" mg-son":""}" data-sort="${c.k}" title="Sort by ${c.l}">${c.l}${arrow(c.k)}</span>`).join("")}</div>`;
   const body=rows.map(r=>{
     const m=VERDICT_META[r.v.tier];
     const cells=MG_COLS.map(c=>{const val=c.g(r);return `<span class="mg-c" style="${heatBG(val,c)}">${c.f(val,r)}</span>`;}).join("");
-    return `<button class="mg-r" data-g="${g.gamePk}" data-b="${r.b.id}" style="grid-template-columns:${cols}">
-      <span class="mg-nm">${rankEmoji(r.b)}${r.b.name} <small>${r.b.bats||""}</small></span>
-      <span class="mg-v ${m.cls}" title="${m.l}">${m.e}</span>${cells}</button>`;}).join("");
-  wrap.innerHTML=head+scout+`<div class="mg-legend"><span class="mg-lg-g">green = strong for the hitter</span><span class="mg-lg-r">red = weak</span><span class="mg-lg-mut">⭐ team's best bat · ⚡ 2nd · 💤 sleeper (by grade) · MATCH=overall · KHR=pitch-arsenal · FORM=L10 vs season</span></div><div class="mg-grid">${hdr}${body}</div>`;
+    return `<div class="mg-r${r.platoonAdv?" mg-plat":""}" data-g="${g.gamePk}" data-b="${r.b.id}" style="grid-template-columns:${cols}">
+      <span class="mg-star">${starHTML(g.gamePk,r.b.id,"hr",isWatched(g.gamePk,r.b.id,"hr"))}</span>
+      <span class="mg-nm" data-open="1">${rankEmoji(r.b)}${r.b.name} <small>${r.b.bats||""}${r.platoonAdv?" ↔":""}</small></span>
+      <span class="mg-v ${m.cls}" title="${m.l}" data-open="1">${m.e}</span>${cells}</div>`;}).join("");
+  wrap.innerHTML=head+scout+`<div class="mg-legend"><span class="mg-lg-g">green = strong for the hitter</span><span class="mg-lg-r">red = weak</span><span class="mg-lg-mut">tap a column to sort · ☆ add to Targets · EDGE = hitter power vs this pitcher's ISO-allowed to that hand · ↔ platoon advantage · ⭐⚡💤 team's best/2nd/sleeper</span></div><div class="mg-grid">${hdr}${body}</div>`;
 }
 
 // ===================== STAR GROUPS — auto-built cross-game parlays =====================
@@ -6413,7 +6455,14 @@ el("liveWrap")&&el("liveWrap").addEventListener("click",async e=>{
 });
 el("atkSel")&&el("atkSel").addEventListener("change",e=>{ATK_PID=e.target.value;if(MODEL)renderAttack(MODEL);});
 el("mgSel")&&el("mgSel").addEventListener("change",e=>{MG_PID=e.target.value;if(MODEL)renderMatchupGrid(MODEL);});
-el("mgWrap")&&el("mgWrap").addEventListener("click",e=>{const r=e.target.closest(".mg-r");if(!r)return;ARS_GAME=r.dataset.g;ARS_BAT=r.dataset.b;setView("arsenal");});
+el("mgWrap")&&el("mgWrap").addEventListener("click",e=>{
+  const sortEl=e.target.closest("[data-sort]");
+  if(sortEl){MG_SORT=sortEl.dataset.sort;if(MODEL)renderMatchupGrid(MODEL);return;}
+  if(e.target.closest(".wstar"))return;                 // star handled globally
+  const open=e.target.closest("[data-open]");
+  const r=e.target.closest(".mg-r");
+  if(r&&open){ARS_GAME=r.dataset.g;ARS_BAT=r.dataset.b;setView("arsenal");}
+});
 el("atkWrap")&&el("atkWrap").addEventListener("click",e=>{const r=e.target.closest(".atk-r");if(!r)return;ARS_GAME=r.dataset.g;ARS_BAT=r.dataset.b;setView("arsenal");});
 el("cmpSelA")&&el("cmpSelA").addEventListener("change",e=>{CMP_A=e.target.value;if(MODEL)renderCompare(MODEL);});
 el("cmpSelB")&&el("cmpSelB").addEventListener("change",e=>{CMP_B=e.target.value;if(MODEL)renderCompare(MODEL);});
