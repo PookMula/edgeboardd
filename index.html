@@ -2,7 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#060E1A" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Edge Board" />
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzBGMjAzNiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzA2MEUxQSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTE1IiBmaWxsPSJ1cmwoI2JnKSIvPgo8ZyBvcGFjaXR5PSIwLjA1IiBmaWxsPSIjRkZGRkZGIj4KPHJlY3QgeD0iMCIgeT0iMTYwIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjMiLz48cmVjdCB4PSIwIiB5PSIyMjQiIHdpZHRoPSI1MTIiIGhlaWdodD0iMyIvPgo8cmVjdCB4PSIwIiB5PSIyODgiIHdpZHRoPSI1MTIiIGhlaWdodD0iMyIvPjxyZWN0IHg9IjAiIHk9IjM1MiIgd2lkdGg9IjUxMiIgaGVpZ2h0PSIzIi8+PC9nPgo8IS0tIGhvbWUgcGxhdGUsIGNlbnRlcmVkIC0tPgo8cGF0aCBkPSJNMTM2IDE1MCBoMjQwIHYxMjAgbC0xMjAgOTIgLTEyMCAtOTIgWiIgZmlsbD0iIzBBMTgyOCIgc3Ryb2tlPSIjMDBBM0UwIiBzdHJva2Utd2lkdGg9IjciLz4KPCEtLSBFQiB3b3JkbWFyayAtLT4KPHRleHQgeD0iMjU2IiB5PSIyNTgiIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjaywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iMTMyIiBmaWxsPSIjRkZGRkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iNCI+RUI8L3RleHQ+CjwhLS0gYW1iZXIga2V5bGluZSBzaWduYXR1cmUgKyBsYWJlbCAtLT4KPHJlY3QgeD0iMTc2IiB5PSIzOTgiIHdpZHRoPSI2IiBoZWlnaHQ9IjQwIiBmaWxsPSIjRkZCODFDIi8+Cjx0ZXh0IHg9IjIwMCIgeT0iNDMwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNGRkZGRkYiIHRleHQtYW5jaG9yPSJzdGFydCIgbGV0dGVyLXNwYWNpbmc9IjYiPkVER0U8L3RleHQ+Cjwvc3ZnPg==" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+CjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzBGMjAzNiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzA2MEUxQSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTE1IiBmaWxsPSJ1cmwoI2JnKSIvPgo8ZyBvcGFjaXR5PSIwLjA1IiBmaWxsPSIjRkZGRkZGIj4KPHJlY3QgeD0iMCIgeT0iMTYwIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjMiLz48cmVjdCB4PSIwIiB5PSIyMjQiIHdpZHRoPSI1MTIiIGhlaWdodD0iMyIvPgo8cmVjdCB4PSIwIiB5PSIyODgiIHdpZHRoPSI1MTIiIGhlaWdodD0iMyIvPjxyZWN0IHg9IjAiIHk9IjM1MiIgd2lkdGg9IjUxMiIgaGVpZ2h0PSIzIi8+PC9nPgo8IS0tIGhvbWUgcGxhdGUsIGNlbnRlcmVkIC0tPgo8cGF0aCBkPSJNMTM2IDE1MCBoMjQwIHYxMjAgbC0xMjAgOTIgLTEyMCAtOTIgWiIgZmlsbD0iIzBBMTgyOCIgc3Ryb2tlPSIjMDBBM0UwIiBzdHJva2Utd2lkdGg9IjciLz4KPCEtLSBFQiB3b3JkbWFyayAtLT4KPHRleHQgeD0iMjU2IiB5PSIyNTgiIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjaywgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iMTMyIiBmaWxsPSIjRkZGRkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iNCI+RUI8L3RleHQ+CjwhLS0gYW1iZXIga2V5bGluZSBzaWduYXR1cmUgKyBsYWJlbCAtLT4KPHJlY3QgeD0iMTc2IiB5PSIzOTgiIHdpZHRoPSI2IiBoZWlnaHQ9IjQwIiBmaWxsPSIjRkZCODFDIi8+Cjx0ZXh0IHg9IjIwMCIgeT0iNDMwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iNDAiIGZpbGw9IiNGRkZGRkYiIHRleHQtYW5jaG9yPSJzdGFydCIgbGV0dGVyLXNwYWNpbmc9IjYiPkVER0U8L3RleHQ+Cjwvc3ZnPg==" />
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkVkZ2UgQm9hcmQiLCAic2hvcnRfbmFtZSI6ICJFZGdlIEJvYXJkIiwgInN0YXJ0X3VybCI6ICIuLyIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDYwRTFBIiwgInRoZW1lX2NvbG9yIjogIiMwNjBFMUEiLCAiaWNvbnMiOiBbeyJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sO2Jhc2U2NCxQSE4yWnlCNGJXeHVjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01DOXpkbWNpSUhkcFpIUm9QU0kxTVRJaUlHaGxhV2RvZEQwaU5URXlJaUIyYVdWM1FtOTRQU0l3SURBZ05URXlJRFV4TWlJK0NqeGtaV1p6UGdvOGJHbHVaV0Z5UjNKaFpHbGxiblFnYVdROUltSm5JaUI0TVQwaU1DSWdlVEU5SWpBaUlIZ3lQU0l4SWlCNU1qMGlNU0krQ2p4emRHOXdJRzltWm5ObGREMGlNQ0lnYzNSdmNDMWpiMnh2Y2owaUl6QkdNakF6TmlJdlBqeHpkRzl3SUc5bVpuTmxkRDBpTVNJZ2MzUnZjQzFqYjJ4dmNqMGlJekEyTUVVeFFTSXZQZ284TDJ4cGJtVmhja2R5WVdScFpXNTBQZ284TDJSbFpuTStDanh5WldOMElIZHBaSFJvUFNJMU1USWlJR2hsYVdkb2REMGlOVEV5SWlCeWVEMGlNVEUxSWlCbWFXeHNQU0oxY213b0kySm5LU0l2UGdvOFp5QnZjR0ZqYVhSNVBTSXdMakExSWlCbWFXeHNQU0lqUmtaR1JrWkdJajRLUEhKbFkzUWdlRDBpTUNJZ2VUMGlNVFl3SWlCM2FXUjBhRDBpTlRFeUlpQm9aV2xuYUhROUlqTWlMejQ4Y21WamRDQjRQU0l3SWlCNVBTSXlNalFpSUhkcFpIUm9QU0kxTVRJaUlHaGxhV2RvZEQwaU15SXZQZ284Y21WamRDQjRQU0l3SWlCNVBTSXlPRGdpSUhkcFpIUm9QU0kxTVRJaUlHaGxhV2RvZEQwaU15SXZQanh5WldOMElIZzlJakFpSUhrOUlqTTFNaUlnZDJsa2RHZzlJalV4TWlJZ2FHVnBaMmgwUFNJeklpOCtQQzluUGdvOElTMHRJR2h2YldVZ2NHeGhkR1VzSUdObGJuUmxjbVZrSUMwdFBnbzhjR0YwYUNCa1BTSk5NVE0ySURFMU1DQm9NalF3SUhZeE1qQWdiQzB4TWpBZ09USWdMVEV5TUNBdE9USWdXaUlnWm1sc2JEMGlJekJCTVRneU9DSWdjM1J5YjJ0bFBTSWpNREJCTTBVd0lpQnpkSEp2YTJVdGQybGtkR2c5SWpjaUx6NEtQQ0V0TFNCRlFpQjNiM0prYldGeWF5QXRMVDRLUEhSbGVIUWdlRDBpTWpVMklpQjVQU0l5TlRnaUlHWnZiblF0Wm1GdGFXeDVQU0pCY21saGJDQkNiR0ZqYXl3Z1FYSnBZV3dzSUhOaGJuTXRjMlZ5YVdZaUlHWnZiblF0ZDJWcFoyaDBQU0k1TURBaUlHWnZiblF0YzJsNlpUMGlNVE15SWlCbWFXeHNQU0lqUmtaR1JrWkdJaUIwWlhoMExXRnVZMmh2Y2owaWJXbGtaR3hsSWlCc1pYUjBaWEl0YzNCaFkybHVaejBpTkNJK1JVSThMM1JsZUhRK0Nqd2hMUzBnWVcxaVpYSWdhMlY1YkdsdVpTQnphV2R1WVhSMWNtVWdLeUJzWVdKbGJDQXRMVDRLUEhKbFkzUWdlRDBpTVRjMklpQjVQU0l6T1RnaUlIZHBaSFJvUFNJMklpQm9aV2xuYUhROUlqUXdJaUJtYVd4c1BTSWpSa1pDT0RGRElpOCtDangwWlhoMElIZzlJakl3TUNJZ2VUMGlORE13SWlCbWIyNTBMV1poYldsc2VUMGlRWEpwWVd3c0lITmhibk10YzJWeWFXWWlJR1p2Ym5RdGQyVnBaMmgwUFNJM01EQWlJR1p2Ym5RdGMybDZaVDBpTkRBaUlHWnBiR3c5SWlOR1JrWkdSa1lpSUhSbGVIUXRZVzVqYUc5eVBTSnpkR0Z5ZENJZ2JHVjBkR1Z5TFhOd1lXTnBibWM5SWpZaVBrVkVSMFU4TDNSbGVIUStDand2YzNablBnPT0iLCAic2l6ZXMiOiAiYW55IiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIsICJwdXJwb3NlIjogImFueSBtYXNrYWJsZSJ9XX0=" />
 <title>Edge Board — MLB Batter vs Pitcher Matchups</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -196,7 +204,7 @@
   .zlegend i{width:11px;height:11px;border-radius:2px;display:inline-block;margin-left:6px}
   .autorow input{accent-color:var(--good);cursor:pointer}
   .freshlbl{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2);white-space:nowrap}
-  .sidebar{position:fixed;top:0;left:0;width:236px;height:100vh;overflow-y:auto;background:var(--panel);border-right:1px solid var(--line);padding:18px 14px 40px;z-index:110;transition:transform .22s ease}
+  .sidebar{position:fixed;top:0;left:0;width:236px;height:100vh;overflow-y:auto;background:var(--panel);border-right:1px solid var(--line);padding:max(18px,env(safe-area-inset-top)) 14px 40px;z-index:110;transition:transform .22s ease}
   .sb-brand{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:24px;color:var(--chalk);letter-spacing:-.01em;margin:4px 8px 2px}
   .sb-build{font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted2);margin:0 8px 16px;letter-spacing:.04em}
   .sb-brand span{color:var(--amber)}
@@ -1064,7 +1072,7 @@
     }
     body.nav-open .tabbar{display:none}          /* the drawer owns the screen */
     .navToggle{display:none}                      /* "More" replaces the hamburger */
-    .wrap{padding-top:14px;padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+    .wrap{padding-top:calc(14px + env(safe-area-inset-top));padding-bottom:calc(74px + env(safe-area-inset-bottom))}
   }
   .tb-btn{
     flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;
@@ -1352,7 +1360,7 @@
   <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
-    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.07.20.4</div>
+    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.07.20.5</div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
       <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
