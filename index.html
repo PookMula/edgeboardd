@@ -969,6 +969,64 @@
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 
 
+  /* ===== ⚾ NRFI / YRFI ===== */
+  .nr-bar{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:12px}
+  .nr-stamp{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2)}
+  .nr-grid{border:1px solid var(--line);border-radius:2px;overflow-x:auto;background:var(--panel);max-width:var(--maxw)}
+  .nr-hdr,.nr-row{display:grid;grid-template-columns:minmax(130px,1.1fr) 78px 86px minmax(128px,1fr) minmax(128px,1fr) minmax(106px,.85fr) minmax(106px,.85fr) minmax(96px,.8fr);
+                  gap:13px;align-items:center;padding:9px 14px;min-width:1130px}
+  .nr-hdr{border-bottom:1px solid var(--teal);font-family:'Roboto Mono',monospace;font-size:8px;
+          letter-spacing:.04em;text-transform:uppercase;color:var(--muted2)}
+  .nr-hdr i{display:block;font-style:normal;font-size:7.5px;color:var(--muted2);opacity:.75;margin-top:1px;white-space:nowrap}
+  /* the record itself: NRFI green, YRFI red, so you never have to guess which is which */
+  .nr-rec{font-family:'Roboto Mono',monospace;font-weight:700;font-size:14px;white-space:nowrap;
+          display:inline-flex;align-items:baseline;flex:0 0 auto}
+  .nr-rec b{color:var(--good);font-weight:700;display:inline;font-family:inherit;font-size:inherit;margin:0}
+  .nr-rec i{color:var(--muted2);font-style:normal;margin:0 1px;display:inline}
+  .nr-rec u{color:var(--red);text-decoration:none;font-weight:700;display:inline}
+  .nr-cell{min-width:0}
+  .nr-cell > b{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--chalk);font-weight:600;
+             display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px}
+  .nr-cell small{font-family:'Roboto Mono',monospace;font-size:8.5px;color:var(--muted2);white-space:nowrap}
+  .nr-line{display:flex;align-items:baseline;gap:7px;white-space:nowrap}
+  .nr-topc{display:flex;flex-direction:column;gap:2px}
+  .nr-t2{display:flex;align-items:baseline;justify-content:space-between;gap:8px;white-space:nowrap}
+  .nr-t2 b{font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted2);font-weight:400;
+           display:inline;margin:0;letter-spacing:.03em}
+  .nr-t2 em{font-family:'Roboto Mono',monospace;font-style:normal;font-size:12px;font-weight:700;color:var(--chalk)}
+  .nr-t2 em.nr-thot{color:var(--red)}
+  .nr-t2 em.nr-tcold{color:var(--good)}
+  .nr-tbd{font-size:8.5px!important;font-weight:400!important;color:var(--muted2)!important}
+  .nr-none{font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted2)}
+  .nr-key{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted);line-height:1.9;
+          background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--teal);
+          border-radius:2px;padding:10px 13px;margin-bottom:12px;max-width:var(--maxw)}
+  .nr-key b{color:var(--chalk)}
+  .nr-key .nr-rec{font-size:12px;vertical-align:-1px}
+  .nr-key .nr-rec b{color:var(--good)}
+  .nr-kg{color:var(--good)} .nr-kr{color:var(--red)}
+  .nr-row{border-bottom:1px solid var(--line)}
+  .nr-row:last-child{border-bottom:none}
+  .nr-row.nr-strong{background:rgba(34,208,122,.06)}
+  .nr-row.nr-yes{background:rgba(255,90,110,.06)}
+  .nr-mu{min-width:0}
+  .nr-mu b{font-family:'Saira Condensed',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:15px;color:var(--chalk);display:block;
+           line-height:1.1;letter-spacing:.02em}
+  .nr-mu small{white-space:nowrap;font-family:'Roboto Mono',monospace;font-size:8.5px;color:var(--muted2);display:block;
+                                          white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nr-p{font-family:'Roboto Mono',monospace;font-weight:700;font-size:15px;color:var(--chalk);
+        text-align:center;border-radius:2px;padding:5px 2px}
+  .nr-p small{display:block;font-size:8px;font-weight:400;color:var(--chalk);opacity:.75}
+  .nr-f{font-family:'Roboto Mono',monospace;font-size:12px;color:var(--muted);text-align:right;white-space:nowrap}
+  .nr-f small{display:block;font-size:8.5px;color:var(--muted2)}
+  .nr-note{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);line-height:1.7;
+           margin-top:12px;max-width:var(--maxw)}
+  .nr-note b{color:var(--teal)}
+  @media(max-width:760px){
+    .nr-hdr,.nr-row{grid-template-columns:minmax(104px,1.1fr) 62px 70px minmax(96px,1fr) minmax(96px,1fr);min-width:600px}
+    .nr-hdr span:nth-child(n+6),.nr-row .nr-cell:nth-last-child(-n+3){display:none}
+  }
+
   /* ===== 📋 MATCHUP GRID ===== */
   .mg-scout{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-bottom:10px;max-width:1400px}
   .mg-hs{background:var(--panel);border:1px solid var(--line);border-radius:2px;padding:8px 11px}
@@ -1360,7 +1418,7 @@
   <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
-    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.07.20.5</div>
+    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.07.21.1</div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
       <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
@@ -1383,6 +1441,7 @@
       <a href="#/arsenal" data-view="arsenal" role="button">🎯 Arsenal Matchup</a>
       <a href="#/attack" data-view="attack" role="button">🥊 Attack the Arm</a>
       <a href="#/mgrid" data-view="mgrid" role="button">📋 Matchup Grid</a>
+      <a href="#/nrfi" data-view="nrfi" role="button">⚾ NRFI / YRFI</a>
       <a href="#/sims" data-view="sims" role="button">Game Sims</a>
       <a href="#/mlmodel" data-view="mlmodel" role="button">💯 Moneyline Model</a>
       <a href="#/wx" data-view="wx" role="button">Weather Impact</a>
@@ -1742,6 +1801,11 @@
   <section id="liveView" class="hide">
     <div class="sec-head"><h2>📺 Game Day</h2><span class="tag">your plays, sorted by who's still alive</span><span class="rule"></span></div>
     <div id="liveWrap"></div>
+  </section>
+
+  <section id="nrfiView" class="hide">
+    <div class="sec-head"><h2>⚾ NRFI / YRFI</h2><span class="tag">first-inning run model, built from real results</span><span class="rule"></span></div>
+    <div id="nrfiWrap"></div>
   </section>
 
   <section id="mgView" class="hide">
@@ -4287,6 +4351,238 @@ function renderTargets(model){
     `<div class="tg-note">Targets are saved on this device for <b>${date}</b>${older?` · ${older} from other dates hidden`:""}. They update live — price, edge and result fill in as odds load and games finish.${older?` <button class="tg-clear" id="tgClear">Clear older targets</button>`:""}</div>`;
 }
 
+// ===================== ⚾ NRFI / YRFI — first-inning run model =====================
+// Everything here is built from REAL first-inning results: schedule + linescore.innings[0].
+// No estimates — we count what actually happened, then regress small samples to league.
+const LS_NRFI="eb:nrfi";
+const NRFI_PRIOR_TEAM=40;     // games of league-average pull on a team's own rate
+const NRFI_PRIOR_PITCH=25;    // starts of pull on a pitcher's rate (samples are ~20, so this matters)
+let NRFI_DATA=null, NRFI_LOADING=false, NRFI_ERR="";
+
+function loadNrfiCache(season){
+  try{
+    const raw=JSON.parse(localStorage.getItem(LS_NRFI)||"null");
+    if(raw&&raw.season===season&&raw.thru)return raw;
+  }catch(e){}
+  return null;
+}
+function saveNrfiCache(d){try{localStorage.setItem(LS_NRFI,JSON.stringify(d));}catch(e){}}
+
+// Pull every regular-season game's first inning for the season, in monthly chunks.
+async function fetchFirstInning(season,onProg){
+  const today=todayStr();
+  const start=`${season}-03-01`;
+  const end=(today.slice(0,4)===String(season))?today:`${season}-11-01`;
+  // month chunks keep each payload sane
+  const chunks=[];
+  let cur=new Date(start+"T00:00:00Z");
+  const stop=new Date(end+"T00:00:00Z");
+  while(cur<=stop){
+    const a=new Date(cur);
+    const b=new Date(Date.UTC(a.getUTCFullYear(),a.getUTCMonth()+1,0));
+    const bb=b>stop?stop:b;
+    chunks.push([a.toISOString().slice(0,10),bb.toISOString().slice(0,10)]);
+    cur=new Date(Date.UTC(a.getUTCFullYear(),a.getUTCMonth()+1,1));
+  }
+  const teams={},pitchers={};
+  let games=0,gamesNrfi=0,halfRuns=0,halves=0;
+  for(let i=0;i<chunks.length;i++){
+    const [s,e]=chunks[i];
+    if(onProg)onProg(`Reading first innings… ${s.slice(5)} → ${e.slice(5)}`);
+    let data;
+    try{ data=await getJSON(`${API}/schedule?sportId=1&startDate=${s}&endDate=${e}&gameType=R&hydrate=linescore,probablePitcher,team`); }
+    catch(err){ continue; }
+    (data.dates||[]).forEach(d=>(d.games||[]).forEach(g=>{
+      const ls=g.linescore;
+      if(!ls||!Array.isArray(ls.innings)||!ls.innings.length)return;
+      const st=(g.status&&g.status.abstractGameState)||"";
+      if(st!=="Final")return;                              // only completed games count
+      const i1=ls.innings.find(x=>x.num===1)||ls.innings[0];
+      if(!i1||!i1.home||!i1.away)return;
+      const aR=Number(i1.away.runs)||0, hR=Number(i1.home.runs)||0;
+      const at=g.teams&&g.teams.away&&g.teams.away.team, ht=g.teams&&g.teams.home&&g.teams.home.team;
+      if(!at||!ht)return;
+      const aSP=g.teams.away.probablePitcher, hSP=g.teams.home.probablePitcher;
+      games++; halves+=2; halfRuns+=(aR>0?1:0)+(hR>0?1:0);
+      if(aR===0&&hR===0)gamesNrfi++;
+      const T=(id,nm)=>(teams[id]||(teams[id]={id,name:nm,g:0,scored:0,allowed:0,nrfi:0}));
+      const A=T(at.id,at.abbreviation||at.name), H=T(ht.id,ht.abbreviation||ht.name);
+      A.g++;H.g++;
+      if(aR>0)A.scored++; if(hR>0)H.scored++;
+      if(hR>0)A.allowed++; if(aR>0)H.allowed++;            // runs the other side put up in the 1st
+      if(aR===0&&hR===0){A.nrfi++;H.nrfi++;}
+      // starter attribution: away SP is on the mound for the HOME half, and vice versa
+      const P=(p)=>p&&p.id?(pitchers[p.id]||(pitchers[p.id]={id:p.id,name:p.fullName||"",gs:0,ra:0})):null;
+      const pa=P(aSP), ph=P(hSP);
+      if(pa){pa.gs++; if(hR>0)pa.ra++;}
+      if(ph){ph.gs++; if(aR>0)ph.ra++;}
+    }));
+  }
+  const lgHalf=halves>0?halfRuns/halves:0.27;              // league P(a team scores in its half of the 1st)
+  return {season,thru:today,built:Date.now(),teams,pitchers,
+          league:{games,gamesNrfi,lgHalf,nrfiPct:games>0?gamesNrfi/games:null}};
+}
+
+// --- Top of the order: the 1st is the only inning where the 1-2-3 hitters are guaranteed. ---
+const LG_TOP_OBP=0.330;   // a typical MLB 1-2-3 hitter's OBP (above the .315 league mark)
+const NRFI_TOP_W=1.3;     // how hard today's top 3 moves the odds (damped — the team's season rate already reflects its usual lineup)
+function obpOf(b){
+  if(!b||!b.cur)return null;
+  const ops=Number(b.cur.ops), slg=Number(b.cur.slg);
+  if(!isFinite(ops)||!isFinite(slg))return null;
+  const v=ops-slg;                                  // OPS = OBP + SLG, so this is exact
+  return (v>0.150&&v<0.600)?v:null;                 // sanity band; anything outside is bad data
+}
+function topOfOrder(bats){
+  const top=(bats||[]).filter(b=>b.slot>=1&&b.slot<=3).sort((a,b)=>a.slot-b.slot);
+  return top.length>=2?top:null;                    // need at least 2 of the 3 to be meaningful
+}
+function topFactor(bats){
+  const top=topOfOrder(bats);
+  if(!top)return null;
+  const vals=top.map(obpOf).filter(v=>v!=null);
+  if(vals.length<2)return null;
+  const mean=vals.reduce((s,v)=>s+v,0)/vals.length;
+  return {mean,n:vals.length,ratio:mean/LG_TOP_OBP,names:top.map(b=>b.name)};
+}
+
+
+function nrfiRegress(hits,n,lg,prior){
+  if(!n||n<=0)return lg;
+  return (hits+lg*prior)/(n+prior);
+}
+// Bill James log5: combine an offense rate and a pitcher rate against a league baseline.
+function log5(a,b,lg){
+  if(lg<=0||lg>=1)return a;
+  const num=(a*b)/lg, den=num+((1-a)*(1-b))/(1-lg);
+  return den>0?num/den:0;
+}
+// P(this team scores in its half of the 1st) vs this starter, park- and lineup-adjusted.
+function nrfiHalf(D,teamId,pitcherId,parkF,topF){
+  if(!D)return null;
+  const lg=D.league.lgHalf;
+  const t=D.teams[teamId];
+  const p=pitcherId?D.pitchers[pitcherId]:null;
+  const off=t?nrfiRegress(t.scored,t.g,lg,NRFI_PRIOR_TEAM):lg;
+  const pit=p?nrfiRegress(p.ra,p.gs,lg,NRFI_PRIOR_PITCH):lg;
+  let pr=log5(off,pit,lg);
+  let odds=pr/(1-pr);
+  // park: parkF is HR-oriented, so damp it hard before using it on run scoring
+  if(parkF&&isFinite(parkF))odds*=1+(parkF-1)*0.35;
+  // today's actual 1-2-3 hitters vs a typical top of the order
+  if(topF&&isFinite(topF.ratio))odds*=Math.pow(topF.ratio,NRFI_TOP_W);
+  pr=odds/(1+odds);
+  return Math.max(0.02,Math.min(0.85,pr));
+}
+// Full game NRFI read.
+function nrfiFor(g,D){
+  D=D||NRFI_DATA;
+  if(!D||!g)return null;
+  const parkF=g.parkF||1;
+  const aSP=g.away&&g.away.sp?g.away.sp:null, hSP=g.home&&g.home.sp?g.home.sp:null;
+  // today's actual 1-2-3 hitters, when the lineup has posted
+  const aTop=topFactor(g._awayBat), hTop=topFactor(g._homeBat);
+  // away bats vs the HOME starter; home bats vs the AWAY starter
+  const pAway=nrfiHalf(D,g.away.id,hSP?hSP.id:null,parkF,aTop);
+  const pHome=nrfiHalf(D,g.home.id,aSP?aSP.id:null,parkF,hTop);
+  if(pAway==null||pHome==null)return null;
+  const nrfi=(1-pAway)*(1-pHome);                          // halves are independent
+  const at=D.teams[g.away.id], ht=D.teams[g.home.id];
+  const ap=aSP?D.pitchers[aSP.id]:null, hp=hSP?D.pitchers[hSP.id]:null;
+  return {
+    nrfi, yrfi:1-nrfi, pAway, pHome,
+    fairNrfi:fairAmerican(nrfi), fairYrfi:fairAmerican(1-nrfi),
+    awayTeam:at, homeTeam:ht,            // the two clubs
+    awaySP:ap, homeSP:hp,                // each club's own starter (season first-inning record)
+    awaySPName:aSP?aSP.name:null, homeSPName:hSP?hSP.name:null,
+    awayTop:aTop, homeTop:hTop,          // today's 1-2-3 hitters (null until the lineup posts)
+    lineups:!!(aTop&&hTop),
+    thin:(!at||at.g<10)||(!ht||ht.g<10),
+    noSP:!aSP||!hSP
+  };
+}
+// Records, always written NRFI first then YRFI, so "17-3" = 17 clean first innings, 3 with a run.
+function spRec(p){ return (p&&p.gs)?{n:p.gs-p.ra,y:p.ra,gp:p.gs}:null; }   // pitcher: no run allowed vs run allowed
+function tmRec(t){ return (t&&t.g)?{n:t.nrfi,y:t.g-t.nrfi,gp:t.g}:null; }  // team: games with no 1st-inning run at all
+function recHTML(r,label){
+  if(!r)return `<small class="nr-none">no ${label} yet</small>`;
+  const pct=r.gp>0?r.n/r.gp:null;
+  // 17-3 already implies 20 starts, so no separate sample count is needed.
+  return `<span class="nr-line"><span class="nr-rec"><b>${r.n}</b><i>-</i><u>${r.y}</u></span><small>${pctStr(pct)}</small></span>`;
+}
+const pctStr=v=>v==null?"—":Math.round(v*100)+"%";
+function recStr(o){ // NRFI record as W-L (games with no 1st-inning run – games with one)
+  if(!o||!o.g)return "—";
+  return `${o.nrfi}-${o.g-o.nrfi}`;
+}
+function nrfiRows(model,D){
+  if(!model||!model.games)return [];
+  return model.games.map(g=>({g,n:nrfiFor(g,D)})).filter(x=>x.n)
+    .sort((a,b)=>b.n.nrfi-a.n.nrfi);
+}
+function renderNrfi(model){
+  const wrap=el("nrfiWrap");if(!wrap)return;
+  const bar=`<div class="nr-bar">
+    <button class="btn" id="nrfiLoad">${NRFI_DATA?"↻ Rebuild first-inning data":"⬇ Load first-inning data"}</button>
+    <span class="nr-stamp" id="nrfiStamp">${NRFI_LOADING?"working…":NRFI_DATA?`${NRFI_DATA.league.games.toLocaleString()} games read · league NRFI ${pctStr(NRFI_DATA.league.nrfiPct)} · built ${new Date(NRFI_DATA.built).toLocaleString()}`:(NRFI_ERR||"reads every completed game's first inning this season")}</span>
+  </div>`;
+  if(!NRFI_DATA){
+    wrap.innerHTML=bar+`<div class="empty"><b>No first-inning data yet</b>Tap <b>Load first-inning data</b>. Edge Board reads the actual first inning of every completed game this season — team scoring rates, and how often each starter has been scored on in the 1st. It's one-time (cached), then instant.</div>`;
+    return;
+  }
+  if(!model||!model.games||!model.games.length){wrap.innerHTML=bar+'<div class="empty">Load a slate to see today\'s NRFI board.</div>';return;}
+  const rows=nrfiRows(model,NRFI_DATA);
+  if(!rows.length){wrap.innerHTML=bar+'<div class="empty">No games with probable pitchers yet.</div>';return;}
+  const hdr=`<div class="nr-hdr">
+    <span>Matchup</span><span>NRFI</span><span>Fair price</span>
+    <span>Away starter<i>NRFI–YRFI</i></span><span>Home starter<i>NRFI–YRFI</i></span>
+    <span>Away team<i>NRFI–YRFI</i></span><span>Home team<i>NRFI–YRFI</i></span>
+    <span>Top 3 OBP<i>today's 1-2-3</i></span>
+  </div>`;
+  const body=rows.map(({g,n})=>{
+    const lean=n.nrfi>=0.60?"nr-strong":n.nrfi>=0.52?"nr-lean":n.nrfi<=0.40?"nr-yes":"";
+    const call=n.nrfi>=0.60?"NRFI":n.nrfi<=0.40?"YRFI":"—";
+    const t=Math.max(0,Math.min(1,(n.nrfi-0.35)/(0.70-0.35)));
+    const bg=`background:hsla(${(t*130).toFixed(0)},60%,26%,.45)`;
+    const spCell=(name,p)=>`<span class="nr-cell"><b>${name?shortName(name):"TBD"}</b>${recHTML(spRec(p),"starts")}</span>`;
+    const tmCell=(ab,t2)=>`<span class="nr-cell"><b>${ab}</b>${recHTML(tmRec(t2),"games")}</span>`;
+    const topLine=(ab,tf)=>{
+      if(!tf)return `<span class="nr-t2"><b>${ab}</b><em class="nr-tbd">lineup TBD</em></span>`;
+      const cls=tf.ratio>=1.06?"nr-thot":tf.ratio<=0.94?"nr-tcold":"";
+      return `<span class="nr-t2"><b>${ab}</b><em class="${cls}">${fmt3(tf.mean)}</em></span>`;
+    };
+    const topCell=(gg,nn)=>`<span class="nr-cell nr-topc">${topLine(gg.away.abbr||gg.away.short,nn.awayTop)}${topLine(gg.home.abbr||gg.home.short,nn.homeTop)}</span>`;
+    return `<div class="nr-row ${lean}">
+      <span class="nr-mu"><b>${g.away.abbr||g.away.short} @ ${g.home.abbr||g.home.short}</b><small>${g.time?new Date(g.time).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"}):""} · park ${(g.parkF||1).toFixed(2)}${n.thin?" · thin sample":""}</small></span>
+      <span class="nr-p" style="${bg}">${pctStr(n.nrfi)}<small>${call}</small></span>
+      <span class="nr-f">${amStr(n.fairNrfi)}<small>YRFI ${amStr(n.fairYrfi)}</small></span>
+      ${spCell(n.awaySPName,n.awaySP)}
+      ${spCell(n.homeSPName,n.homeSP)}
+      ${tmCell(g.away.abbr||g.away.short,n.awayTeam)}
+      ${tmCell(g.home.abbr||g.home.short,n.homeTeam)}
+      ${topCell(g,n)}
+    </div>`;}).join("");
+  wrap.innerHTML=bar+`<div class="nr-key"><b>Records read <span class="nr-rec"><b>NRFI</b><i>-</i><u>YRFI</u></span></b> — <span class="nr-kg">green = no run in the 1st</span>, <span class="nr-kr">red = a run scored</span>. A starter at <span class="nr-rec"><b>17</b><i>-</i><u>3</u></span> is 17 clean first innings in 20 starts. Team records count games where <b>neither</b> side scored.</div>`+
+    `<div class="nr-grid">${hdr}${body}</div>`+
+    `<div class="nr-note"><b>How this is built:</b> every completed game this season is read for whether a run actually scored in the 1st. A team's own rate and the opposing starter's rate are combined with the log5 formula against the league baseline (${pctStr(NRFI_DATA.league.lgHalf)} per half-inning), then small samples are pulled toward league — a pitcher with 6 starts doesn't get treated like one with 25, so the model's number will sit closer to average than his raw record looks. <b>Today's 1-2-3 hitters</b> are folded in once the lineup posts: the 1st is the only inning where those three are guaranteed to bat, so their on-base ability (OPS minus SLG, which is exactly OBP) shifts the estimate — damped, because the team's season rate already reflects its usual order. Park is applied at 35% strength because the park factor is home-run-oriented, not run-oriented. <b>Fair</b> is the break-even price at that probability; anything shorter than fair is a bad number. Bullpen games and late scratches can misattribute a start. Recent-form streaks (L5/L10) are deliberately <b>not</b> used — one binary result per game means five starts can't separate skill from luck.</div>`;
+}
+async function loadNrfiData(force){
+  if(NRFI_LOADING)return;
+  const season=MODEL&&MODEL.date?parseInt(MODEL.date.slice(0,4),10):new Date().getFullYear();
+  if(!force){
+    const c=loadNrfiCache(season);
+    if(c){NRFI_DATA=c;renderNrfi(MODEL);return;}
+  }
+  NRFI_LOADING=true;NRFI_ERR="";renderNrfi(MODEL);
+  const stamp=el("nrfiStamp");
+  try{
+    const d=await fetchFirstInning(season,msg=>{const s=el("nrfiStamp");if(s)s.textContent=msg;});
+    if(!d.league.games){NRFI_ERR="No completed games found for this season yet.";}
+    else {NRFI_DATA=d;saveNrfiCache(d);}
+  }catch(e){NRFI_ERR="Couldn't reach the schedule feed — try again.";}
+  NRFI_LOADING=false;renderNrfi(MODEL);
+}
+
 // ===================== 📋 MATCHUP GRID — full lineup, heat-mapped (Kasper-style) =====================
 // Every column here is backed by REAL data. Nothing is invented.
 // Heat scales are league-anchored [red edge, mid, green edge]; higher=greener unless inv:true.
@@ -6209,6 +6505,7 @@ function setView(v){
   el("targetsView").classList.toggle("hide",v!=="targets");
   el("attackView").classList.toggle("hide",v!=="attack");
   el("mgView").classList.toggle("hide",v!=="mgrid");
+  el("nrfiView").classList.toggle("hide",v!=="nrfi");
   el("compareView").classList.toggle("hide",v!=="compare");
   el("hrguideView").classList.toggle("hide",v!=="hrguide");
   el("propsView").classList.toggle("hide",v!=="props");
@@ -6238,6 +6535,7 @@ function setView(v){
     refreshLiveState().then(n=>{if(n&&VIEW==="live"){LIVE_STAMP=new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit",second:"2-digit"});try{captureClosing();}catch(_){}renderLive(MODEL);}});}
   if(v==="attack"&&MODEL) renderAttack(MODEL);
   if(v==="mgrid"&&MODEL) renderMatchupGrid(MODEL);
+  if(v==="nrfi"){ if(!NRFI_DATA){const c=loadNrfiCache(MODEL&&MODEL.date?parseInt(MODEL.date.slice(0,4),10):new Date().getFullYear()); if(c)NRFI_DATA=c;} renderNrfi(MODEL); }
   if(v==="compare"&&MODEL) renderCompare(MODEL);
   if(v==="align"&&MODEL) renderAlignment();
   if(v==="vuln"&&MODEL) renderVuln(MODEL);
@@ -6275,7 +6573,7 @@ async function run(){
 }
 function updateFreshLabel(){const e=el("freshLbl");if(e)e.textContent=freshText(LAST_REFRESH,Date.now());}
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
-const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",stargroups:"Star Groups — auto-built parlays",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",hrbuilder:"HR Group Builder",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",targets:"My Targets — players &amp; props you're on today",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",mgrid:"Matchup Grid — full lineup, every metric",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
+const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",stargroups:"Star Groups — auto-built parlays",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",hrbuilder:"HR Group Builder",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",targets:"My Targets — players &amp; props you're on today",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",mgrid:"Matchup Grid — full lineup, every metric",nrfi:"NRFI / YRFI — will anyone score in the 1st?",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
   const t=el("viewTitle");if(t)t.innerHTML=`<span>${VIEW_TITLE[v]||""}</span><a class="newtab-btn" href="#/${v}" target="_blank" rel="noopener" title="Open this page in a new browser tab">⧉ New tab</a>`;
@@ -6361,7 +6659,7 @@ el("trkSave").addEventListener("click",()=>{
 });
 el("trkGrade").addEventListener("click",()=>trackGradeAndRender());
 // ---- Backup / Restore: survives site updates, browser changes, and new devices ----
-const BACKUP_KEYS=["eb:preds","eb:gpreds","eb:odh","eb:watch","eb:calibOn","eb:scproxy","eb:okey"];
+const BACKUP_KEYS=["eb:preds","eb:gpreds","eb:odh","eb:watch","eb:nrfi","eb:calibOn","eb:scproxy","eb:okey"];
 el("trkExport")&&el("trkExport").addEventListener("click",()=>{
   try{
     const data={_app:"edge-board",_type:"tracking-backup",_version:1,_exported:new Date().toISOString(),store:{}};
@@ -6462,6 +6760,7 @@ el("liveWrap")&&el("liveWrap").addEventListener("click",async e=>{
   if(!n&&el("lvStamp"))el("lvStamp").textContent="couldn't reach the live feed — try again";
 });
 el("atkSel")&&el("atkSel").addEventListener("change",e=>{ATK_PID=e.target.value;if(MODEL)renderAttack(MODEL);});
+el("nrfiWrap")&&el("nrfiWrap").addEventListener("click",e=>{if(e.target.closest("#nrfiLoad"))loadNrfiData(!!NRFI_DATA);});
 el("mgSel")&&el("mgSel").addEventListener("change",e=>{MG_PID=e.target.value;if(MODEL)renderMatchupGrid(MODEL);});
 el("mgWrap")&&el("mgWrap").addEventListener("click",e=>{
   const sortEl=e.target.closest("[data-sort]");
