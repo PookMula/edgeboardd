@@ -12,21 +12,37 @@ on:
 permissions:
   contents: write            # lets the job commit arsenal.json back to the repo
 
+# If a previous run is still going (e.g. a slow Statcast pull), let the newest one win
+# cleanly instead of colliding. This prevents the confusing "all jobs were cancelled".
+concurrency:
+  group: arsenal-build
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Cache Statcast downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.pybaseball
+          key: pybaseball-cache-${{ github.run_id }}
+          restore-keys: pybaseball-cache-
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
 
       - name: Install dependencies
-        run: pip install --upgrade pybaseball pandas numpy
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade pybaseball pandas numpy || pip install --upgrade pybaseball pandas numpy
 
       - name: Build arsenal.json
         run: python build_arsenal.py
