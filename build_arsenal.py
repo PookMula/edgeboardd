@@ -12,10 +12,15 @@ matches them automatically. Drop arsenal.json next to edge-board.html.
 Run locally:  python build_arsenal.py
 (Needs: pip install pybaseball pandas numpy)
 """
-import json, sys, datetime as dt
+import json, sys, os, time, calendar, datetime as dt
 import numpy as np
 import pandas as pd
 from pybaseball import statcast
+try:
+    from pybaseball import cache
+    cache.enable()          # cache each chunk on disk so a re-run doesn't re-download everything
+except Exception:
+    pass
 
 SEASON = dt.date.today().year
 OPENER = f"{SEASON}-03-15"            # a little before opening day is fine
@@ -90,9 +95,47 @@ def agg_batter(d, ends=None):
     return o
 
 
+
+def _month_ranges(start_iso, end_iso):
+    """Split [start, end] into calendar-month chunks (smaller requests = far fewer timeouts)."""
+    start = dt.date.fromisoformat(start_iso)
+    end   = dt.date.fromisoformat(end_iso)
+    out, cur = [], start
+    while cur <= end:
+        last_day = calendar.monthrange(cur.year, cur.month)[1]
+        chunk_end = min(dt.date(cur.year, cur.month, last_day), end)
+        out.append((cur.isoformat(), chunk_end.isoformat()))
+        cur = chunk_end + dt.timedelta(days=1)
+    return out
+
+def fetch_statcast(start_iso, end_iso, retries=3):
+    """Pull Statcast one month at a time, retrying each chunk. One bad month won't kill the build."""
+    frames, failed = [], []
+    for s, e in _month_ranges(start_iso, end_iso):
+        got = None
+        for attempt in range(1, retries + 1):
+            try:
+                print(f"  {s} .. {e}  (try {attempt}/{retries})", flush=True)
+                part = statcast(start_dt=s, end_dt=e)
+                if part is not None and not part.empty:
+                    got = part
+                break
+            except Exception as ex:
+                print(f"    chunk failed: {ex}", flush=True)
+                time.sleep(5 * attempt)          # back off, then retry
+        if got is not None and not got.empty:
+            frames.append(got)
+        else:
+            failed.append((s, e))
+    if failed:
+        print(f"WARNING: {len(failed)} month(s) returned no data: {failed}", file=sys.stderr, flush=True)
+    if not frames:
+        return None
+    return pd.concat(frames, ignore_index=True)
+
 def main():
-    print(f"Pulling Statcast {OPENER} .. {TODAY} (this can take several minutes)...", flush=True)
-    df = statcast(start_dt=OPENER, end_dt=TODAY)
+    print(f"Pulling Statcast {OPENER} .. {TODAY} in monthly chunks...", flush=True)
+    df = fetch_statcast(OPENER, TODAY)
     if df is None or df.empty:
         print("No Statcast data returned.", file=sys.stderr)
         sys.exit(1)
