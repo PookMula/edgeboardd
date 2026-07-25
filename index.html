@@ -383,6 +383,11 @@
   .pl-markets button{font-family:'Saira Condensed',sans-serif;text-transform:uppercase;letter-spacing:.03em;font-size:12.5px;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--ink);color:var(--muted);cursor:pointer;transition:all .12s}
   .pl-markets button:hover{color:var(--chalk)}
   .pl-markets button.active{background:var(--amber);color:#031320;border-color:var(--amber);font-weight:700}
+  .pl-slots{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:5px}
+  .pl-slots button{font-family:'Roboto Mono',monospace;font-size:13px;font-weight:700;width:34px;height:34px;
+    padding:0;border-radius:2px;border:1px solid var(--line);background:var(--ink);color:var(--muted);cursor:pointer;transition:all .12s}
+  .pl-slots button:hover{color:var(--chalk);border-color:var(--teal)}
+  .pl-slots button.active{background:var(--teal);color:#031320;border-color:var(--teal)}
   .pc-check{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-family:'Roboto Mono',monospace;line-height:1.3}
   .pcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:12px;overflow:hidden}
   .pcard.ev{border-color:rgba(34,208,122,.45)}
@@ -504,7 +509,9 @@
   .bbev.pos{color:var(--good)}.bbev.neg{color:#C8102E}
   .bbwhy{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:5px;line-height:1.5;border-top:1px dashed var(--line);padding-top:5px}
   .bbwhy b{color:var(--amber)}
-  .corrflag{color:#C8102E}.corrok{color:var(--muted2)}
+  .corrflag{color:var(--red)}.corrok{color:var(--muted2)}
+  .stackflag{color:var(--amber);font-weight:700}
+  .medgeflag{color:var(--teal)}
   .homer-wrap{max-width:760px;margin:0 auto}
   .homer-chat{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:14px;min-height:300px;max-height:62vh;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
   .hmsg{display:flex;gap:9px;align-items:flex-start}
@@ -1418,7 +1425,7 @@
   <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
-    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.07.21.1</div>
+    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.07.25.2</div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
       <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
@@ -1921,8 +1928,19 @@
           <button data-f="era">vs 4+ ERA</button>
           <button data-f="vuln">Most vulnerable</button>
         </div></div>
+      <div class="pc" style="flex:1;min-width:260px"><label>Batting order — tap slots to include (off = all)</label>
+        <div class="pl-slots" id="plSlots">
+          <button data-slot="1">1</button><button data-slot="2">2</button><button data-slot="3">3</button>
+          <button data-slot="4">4</button><button data-slot="5">5</button><button data-slot="6">6</button>
+          <button data-slot="7">7</button><button data-slot="8">8</button><button data-slot="9">9</button>
+        </div>
+        <span style="color:var(--muted2);font-size:10px">Needs confirmed lineups. Hitters with no posted slot are excluded when any slot is selected.</span>
+      </div></div>
       <label class="pc-check"><input type="checkbox" id="plUpcoming" checked /> Upcoming games only<br><span style="color:var(--muted2);font-size:10px">(hides live &amp; final)</span></label>
       <label class="pc-check"><input type="checkbox" id="plEV" /> +EV legs only<br><span style="color:var(--muted2);font-size:10px">(needs odds)</span></label>
+      <label class="pc-check"><input type="checkbox" id="plMatchup" checked /> Weight by matchup<br><span style="color:var(--muted2);font-size:10px">(favor hitters with an edge vs the arm)</span></label>
+      <label class="pc-check"><input type="checkbox" id="plArsenal" /> Arsenal fit only<br><span style="color:var(--muted2);font-size:10px">(HR/TB: must punish his top pitch)</span></label>
+      <label class="pc-check"><input type="checkbox" id="plStack" /> Correlated stacks<br><span style="color:var(--muted2);font-size:10px">(group hitters vs one beatable arm)</span></label>
       <button class="btn" id="plGen">Generate</button>
     </div>
     <div id="parlayOut"><div class="empty"><b>Set your options and hit Generate</b>Pick legs, how many bats can come from one game, and one or more prop types.</div></div>
@@ -2147,6 +2165,32 @@ const PARLAY_MARKETS={
   tb:{label:"2+ Bases",om:"tb",line:1.5,mean:b=>b.proj.tb},
   rbi:{label:"1+ RBI",om:"rbi",line:0.5,mean:b=>b.proj.rbi}
 };
+// --- Parlay leg matchup strength: how much advantage does this leg have vs THE pitcher? ---
+// Returns 0..1 where higher = stronger matchup edge, plus a gate flag for arsenal fit.
+function legMatchupEdge(b){
+  // hrMatch.score (0-100) already fuses hitter power vs this pitcher's arsenal + park + form.
+  const ms=b.hrMatch&&b.hrMatch.score!=null?b.hrMatch.score/100:null;
+  // platoon advantage vs the starter
+  const plat=b.platoon&&b.platoon.badge==="ADV"?1:b.platoon&&b.platoon.badge==="DIS"?0:0.5;
+  // pitcher vulnerability (season) 0-100
+  const vuln=b.oppVuln!=null?Math.max(0,Math.min(1,b.oppVuln/100)):null;
+  // blend what's available; matchup score is the anchor
+  const parts=[];
+  if(ms!=null)parts.push([ms,0.6]);
+  parts.push([plat,0.2]);
+  if(vuln!=null)parts.push([vuln,0.2]);
+  const wsum=parts.reduce((s,p)=>s+p[1],0);
+  const val=wsum>0?parts.reduce((s,p)=>s+p[0]*p[1],0)/wsum:0.5;
+  return Math.max(0,Math.min(1,val));
+}
+// Arsenal fit: does the hitter actually punish the pitcher's most-used / most-dangerous pitch?
+// contrib[0] is the top pitch by usage*danger; bPow>=0.5 means he hits it above the mix midpoint.
+function legArsenalFit(b){
+  const c=b.hrMatch&&b.hrMatch.contrib;
+  if(!c||!c.length)return null;            // no arsenal data -> unknown, not a fail
+  const top=c[0];
+  return top&&top.bPow!=null?top.bPow>=0.52:null;
+}
 function legCandidate(b,mk,useBook){
   const M=PARLAY_MARKETS[mk];if(!M)return null;
   let line=M.line,prob,book=null,edge=null;
@@ -2206,10 +2250,19 @@ function generateParlays(cfg){
     if(cfg.fGrade&&!(b.grade&&GRADE_BAND.has(b.grade.letter)))return;
     if(cfg.fERA&&!(b.oppERA!=null&&b.oppERA>=4.0))return;
     if(cfg.fVuln&&!(b.oppVuln!=null&&b.oppVuln>=60))return;
+    if(cfg.slots&&!(b.slot!=null&&cfg.slots.has(b.slot)))return;   // batting-order filter
     playerMks.forEach(mk=>{
       const c=legCandidate(b,mk,useBook);if(!c)return;
       if(cfg.onlyEV&&useBook){if(c.edge==null||c.edge<=0)return;}
-      c.score=(useBook&&c.edge!=null)?c.edge:(c.prob-0.5);
+      // matchup advantage vs this pitcher (0..1) — attach to every player leg
+      c.medge=legMatchupEdge(b);
+      c.afit=legArsenalFit(b);
+      c.oppKey=b.game!=null&&b.oppPitcher?(b.game+"|"+b.oppPitcher):null;  // for correlated stacks
+      // arsenal-fit gate: if requested, only keep HR/TB legs where he punishes the top pitch
+      if(cfg.fArsenal&&(mk==="hr"||mk==="tb")&&c.afit===false)return;
+      // leg score: when matchup weighting is on, fold the matchup edge into the base score
+      const base=(useBook&&c.edge!=null)?c.edge:(c.prob-0.5);
+      c.score=cfg.wMatchup?(base*0.5+(c.medge-0.5)*0.6):base;
       cands.push(c);
     });
   });
@@ -2226,8 +2279,15 @@ function generateParlays(cfg){
     attempts++;
     const pool=[...cands];
     const picked=[],usedP=new Set(),perGame={},gameLine=new Set();
+    const oppCount={};   // how many legs already target each pitcher (for correlated stacks)
     while(picked.length<cfg.legs&&pool.length){
-      const weights=pool.map(c=>Math.exp((c.score||0)*6));
+      const weights=pool.map(c=>{
+        let w=Math.exp((c.score||0)*6);
+        // correlated stack: once a pitcher is targeted, boost more hitters facing that SAME arm.
+        // When he's getting hit, they cash together — real positive correlation, better true odds.
+        if(cfg.stack&&c.oppKey&&oppCount[c.oppKey]>0)w*=1+0.9*oppCount[c.oppKey];
+        return w;
+      });
       const idx=weightedPick(pool,weights);
       const c=pool.splice(idx,1)[0];
       const key=c.b?("p"+c.b.id):c.id;
@@ -2235,6 +2295,7 @@ function generateParlays(cfg){
       if(c.isGame&&gameLine.has(c.game))continue; // at most one game-line leg per game
       if((perGame[c.game]||0)>=cfg.maxPerGame)continue;
       picked.push(c);usedP.add(key);perGame[c.game]=(perGame[c.game]||0)+1;if(c.isGame)gameLine.add(c.game);
+      if(c.oppKey)oppCount[c.oppKey]=(oppCount[c.oppKey]||0)+1;
     }
     if(picked.length<cfg.legs)continue;
     const sig=picked.map(c=>c.id).sort().join("|");
@@ -2254,7 +2315,10 @@ function buildParlay(legs,useBook){
     const dec=legs.reduce((d,c)=>d*amToDec(c.book),1);
     bookAm=decToAm(dec);edge=trueProb-(1/dec);
   }
-  return {legs,prob,trueProb,corr,fairAm,bookAm,edge,games:new Set(legs.map(c=>c.game)).size};
+  const pEdges=legs.filter(l=>l.medge!=null).map(l=>l.medge);
+  const avgEdge=pEdges.length?pEdges.reduce((s,v)=>s+v,0)/pEdges.length:null;
+  return {legs,prob,trueProb,corr,fairAm,bookAm,edge,games:new Set(legs.map(c=>c.game)).size,
+          stack:parlayStack(legs),avgEdge};
 }
 
 const el=id=>document.getElementById(id);
@@ -3270,8 +3334,9 @@ function collectPlays(model){
 }
 // ===================== PARLAY CORRELATION (#7) =====================
 function parlayCorrelation(legs){
-  let score=0;const byGame={};
-  legs.forEach(l=>{(byGame[l.game]=byGame[l.game]||[]).push(l);});
+  let score=0;const byGame={},byOpp={};
+  legs.forEach(l=>{(byGame[l.game]=byGame[l.game]||[]).push(l);
+    if(l.oppKey)(byOpp[l.oppKey]=byOpp[l.oppKey]||[]).push(l);});
   Object.values(byGame).forEach(arr=>{
     for(let i=0;i<arr.length;i++)for(let j=i+1;j<arr.length;j++){
       const a=arr[i],b=arr[j];let c=16; // base: same game
@@ -3281,7 +3346,17 @@ function parlayCorrelation(legs){
       score+=c;
     }
   });
+  // hitters facing the SAME pitcher move together — when he's hit, they cash together
+  Object.values(byOpp).forEach(arr=>{if(arr.length>=2)score+=10*(arr.length-1);});
   return Math.min(100,score);
+}
+// Count the biggest same-pitcher stack in a parlay (for the ⚡ stack badge).
+function parlayStack(legs){
+  const byOpp={};
+  legs.forEach(l=>{if(l.oppKey&&l.b)(byOpp[l.oppKey]=byOpp[l.oppKey]||[]).push(l);});
+  let best=0,who=null;
+  Object.entries(byOpp).forEach(([k,arr])=>{if(arr.length>best){best=arr.length;who=arr[0].b?arr[0].b.oppPitcher:null;}});
+  return best>=2?{n:best,pitcher:who}:null;
 }
 function correlatedTrueProb(legs,naive){
   const corr=parlayCorrelation(legs)/100;if(corr<=0)return naive;
@@ -6296,7 +6371,8 @@ function renderParlays(){
   if(!MODEL||!MODEL.batters||!MODEL.batters.length){out.innerHTML='<div class="empty"><b>No slate loaded</b>Load a slate first.</div>';return;}
   const markets=readParlayMarkets();
   if(!markets.length){out.innerHTML='<div class="empty"><b>Pick at least one prop</b>Tap Home Run / 1+ Hit / 2+ Bases / 1+ RBI to choose, or several to mix &amp; match.</div>';return;}
-  const cfg={legs:+el("plLegs").value,maxPerGame:+el("plPerGame").value,count:+el("plCount").value,markets,onlyEV:el("plEV").checked};
+  const cfg={legs:+el("plLegs").value,maxPerGame:+el("plPerGame").value,count:+el("plCount").value,markets,onlyEV:el("plEV").checked,
+    wMatchup:el("plMatchup")?el("plMatchup").checked:true,fArsenal:el("plArsenal")?el("plArsenal").checked:false,stack:el("plStack")?el("plStack").checked:false};
   const upcomingOnly=el("plUpcoming")?el("plUpcoming").checked:false;
   if(upcomingOnly&&!(MODEL.games||[]).some(g=>gameStatusLabel(g)==="Scheduled")){
     out.innerHTML='<div class="empty"><b>No upcoming games</b>Every game on this slate has already started or finished. Uncheck <b>Upcoming games only</b> to include them, or load a future date.</div>';return;
@@ -6304,6 +6380,8 @@ function renderParlays(){
   const filters=new Set([...el("plFilters").querySelectorAll("button.active")].map(b=>b.dataset.f));
   cfg.fPlatoon=filters.has("platoon");cfg.fGrade=filters.has("grade");cfg.fERA=filters.has("era");cfg.fVuln=filters.has("vuln");
   cfg.fStar=filters.has("star");cfg.fBolt=filters.has("bolt");cfg.fSleeper=filters.has("sleeper");cfg.fHot=filters.has("hot");
+  const slots=new Set([...el("plSlots").querySelectorAll("button.active")].map(b=>+b.dataset.slot));
+  cfg.slots=slots.size?slots:null;
   cfg.upcomingOnly=upcomingOnly;
   const parlays=generateParlays(cfg);
   if(!parlays.length){out.innerHTML='<div class="empty"><b>Couldn\'t build that</b>Your filters may be too strict. Try fewer legs, allow more bats per game, add prop types, loosen the filters, turn off +EV-only, or uncheck Upcoming-only.</div>';return;}
@@ -6321,7 +6399,7 @@ function renderParlays(){
       return `<div class="pleg"><div class="pn">${rankEmoji(l.b)}${formEmoji(l.b)}${l.name} ${platPill(l.b)} ${weakPill(l.b)}<small>${l.label} · ${l.team} · ${l.game} · ${gbadge(l.b.grade)}</small></div><div class="pp">${Math.round(l.prob*100)}%</div><div class="po">${lo}</div></div>`;
     }).join("");
     return `<div class="pcard ${p.edge!=null&&p.edge>0?'ev':''}">
-      <div class="pchead"><div class="lbl">Parlay ${i+1} · ${p.legs.length} legs · ${p.games} game${p.games>1?'s':''}${p.corr>=25?` · <span class="corrflag">⚠ ${p.corr} corr</span>`:p.corr>0?` · <span class="corrok">${p.corr} corr</span>`:""}</div>
+      <div class="pchead"><div class="lbl">Parlay ${i+1} · ${p.legs.length} legs · ${p.games} game${p.games>1?'s':''}${p.stack?` · <span class="stackflag">⚡ ${p.stack.n}-stack${p.stack.pitcher?" vs "+shortName(p.stack.pitcher):""}</span>`:""}${p.avgEdge!=null?` · <span class="medgeflag" title="average matchup advantage of the legs vs their pitchers">◆ ${Math.round(p.avgEdge*100)} matchup</span>`:""}${p.corr>=25?` · <span class="corrflag">⚠ ${p.corr} corr</span>`:p.corr>0?` · <span class="corrok">${p.corr} corr</span>`:""}</div>
         <div class="meta"><div class="odds">${odds!=null?amStr(odds):"—"}</div>${oddsLbl} · ${(p.prob*100).toFixed(1)}% model${p.corr>0?` · ~${(p.trueProb*100).toFixed(1)}% adj`:""} ${edge}</div></div>
       ${legs}</div>`;
   }).join("");
@@ -6713,6 +6791,7 @@ el("trkReset").addEventListener("click",()=>{
 });
 el("plMarkets").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;b.classList.toggle("active");});
 el("plFilters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;b.classList.toggle("active");});
+el("plSlots")&&el("plSlots").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;b.classList.toggle("active");});
 el("plGen").addEventListener("click",()=>renderParlays());
 
 el("oddsTabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;ODDS_BOARD_MARKET=t.dataset.o;[...el("oddsTabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderOddsBoard(MODEL);});
