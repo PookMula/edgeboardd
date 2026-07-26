@@ -218,6 +218,10 @@
   body.nav-open .sb-backdrop{display:block}
   @media(min-width:1040px){
     .wrap{padding-left:236px}
+    /* these sections/results render as direct children of <body>, siblings of .wrap,
+       so they need the same offset or they slide under the fixed sidebar */
+    body > #parlayOut,
+    body > section{margin-left:236px}
     .navToggle{display:none}
     .sb-backdrop{display:none!important}
   }
@@ -1425,7 +1429,7 @@
   <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
-    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.07.25.2</div>
+    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.07.26.1</div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
       <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
@@ -4718,7 +4722,19 @@ function mgRows(K,g){
     return {
       b,v,iso,
       khr:b.hrMatch?b.hrMatch.score:null,          // pitch-arsenal HR score (0–100)
-      form, formTxt:(form==null?"—":`${(form*100>=0?"+":"")}${Math.round(form*100)}%${fs==="hot"?" 🔥":fs==="cold"?" 🧊":""}`),
+      form, formTxt:(()=>{
+        if(form==null)return "—";
+        const pct=Math.round(form*100), up=form>0.005, dn=form<-0.005;
+        // double arrow + emoji on a real hot/cold streak; single/hollow on mild drift; dash when flat
+        let arrow;
+        if(fs==="hot")arrow="⏫";
+        else if(fs==="cold")arrow="⏬";
+        else if(up)arrow="▲";
+        else if(dn)arrow="▽";
+        else arrow="–";
+        const emo=fs==="hot"?" 🔥":fs==="cold"?" 🧊":"";
+        return `${arrow} ${Math.abs(pct)}%${emo}`;
+      })(),
       pit:b.cur&&b.cur.pa!=null?b.cur.pa:null,      // sample sizes (real)
       bip:sc.bip!=null?sc.bip:(b._bip!=null?b._bip:null),
       xwoba:fx.xwoba!=null?fx.xwoba:(sc.xwoba!=null?sc.xwoba:null),
