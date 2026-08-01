@@ -980,6 +980,14 @@
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 
 
+  .tg-bulk{margin-top:12px;padding:12px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+  .tg-bulk>label{display:block;font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);margin-bottom:6px;line-height:1.5}
+  .tg-bulk textarea{width:100%;background:var(--ink);border:1px solid var(--line);border-radius:var(--radius);
+    color:var(--chalk);font-family:'Roboto Mono',monospace;font-size:12px;padding:8px;resize:vertical}
+  .tg-bulk-row{display:flex;align-items:flex-end;gap:10px;margin-top:8px;flex-wrap:wrap}
+  .tg-bulk-msg{margin-top:8px;font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted)}
+  .tg-ok{color:var(--good)} .tg-miss{color:var(--amber)}
+
   /* ===== ⚾ NRFI / YRFI ===== */
   .nr-bar{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:12px}
   .nr-stamp{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2)}
@@ -1429,7 +1437,7 @@
   <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
-    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.07.26.1</div>
+    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.07.26.2</div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
       <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
@@ -1941,6 +1949,7 @@
         <span style="color:var(--muted2);font-size:10px">Needs confirmed lineups. Hitters with no posted slot are excluded when any slot is selected.</span>
       </div></div>
       <label class="pc-check"><input type="checkbox" id="plUpcoming" checked /> Upcoming games only<br><span style="color:var(--muted2);font-size:10px">(hides live &amp; final)</span></label>
+      <label class="pc-check"><input type="checkbox" id="plWatch" /> My Targets only<br><span style="color:var(--muted2);font-size:10px">(only your saved players, each for the prop you starred)</span></label>
       <label class="pc-check"><input type="checkbox" id="plEV" /> +EV legs only<br><span style="color:var(--muted2);font-size:10px">(needs odds)</span></label>
       <label class="pc-check"><input type="checkbox" id="plMatchup" checked /> Weight by matchup<br><span style="color:var(--muted2);font-size:10px">(favor hitters with an edge vs the arm)</span></label>
       <label class="pc-check"><input type="checkbox" id="plArsenal" /> Arsenal fit only<br><span style="color:var(--muted2);font-size:10px">(HR/TB: must punish his top pitch)</span></label>
@@ -2247,6 +2256,18 @@ function generateParlays(cfg){
   const cands=[];
   const playerMks=cfg.markets.filter(m=>PARLAY_MARKETS[m]);
   const gameMks=cfg.markets.filter(m=>m==="ml"||m==="spread"||m==="total");
+  // "My Targets only": restrict legs to watched players, matched by the OUTCOME (om) they were
+  // saved for. Watch uses PROP_MARKETS keys (hit1, tb2, hr, rbi1...); the generator uses
+  // PARLAY_MARKETS keys (hits, tb, hr, rbi). Both share an `om` field, so we match on that.
+  let watchSet=null;
+  if(cfg.watchOnly){
+    watchSet=new Set();
+    loadWatch().forEach(w=>{
+      const pm=PROP_MARKETS[w.mk];
+      const om=pm?pm.om:w.mk;                 // fall back to raw if already an om
+      watchSet.add(w.id+"|"+om);
+    });
+  }
   MODEL.batters.forEach(b=>{
     if(cfg.upcomingOnly&&!b._upcoming)return;
     if(!batterPassesRankFilter(b,cfg))return;
@@ -2256,6 +2277,8 @@ function generateParlays(cfg){
     if(cfg.fVuln&&!(b.oppVuln!=null&&b.oppVuln>=60))return;
     if(cfg.slots&&!(b.slot!=null&&cfg.slots.has(b.slot)))return;   // batting-order filter
     playerMks.forEach(mk=>{
+      // My Targets only: skip unless THIS player was saved for THIS outcome (hr/hits/tb/rbi)
+      if(watchSet&&!watchSet.has(b.id+"|"+PARLAY_MARKETS[mk].om))return;
       const c=legCandidate(b,mk,useBook);if(!c)return;
       if(cfg.onlyEV&&useBook){if(c.edge==null||c.edge<=0)return;}
       // matchup advantage vs this pitcher (0..1) — attach to every player leg
@@ -4413,6 +4436,15 @@ function renderTargets(model){
       <div class="zsel"><label for="tgBat">Player</label><select id="tgBat">${bOpts}</select></div>
       <div class="zsel"><label for="tgMk">Market</label><select id="tgMk">${mOpts}</select></div>
       <button class="btn" id="tgAdd">+ Add target</button>
+    </div>
+    <div class="tg-bulk">
+      <label for="tgBulk">Bulk add — paste players from a screenshot list, one per line. Optional prop after a comma (e.g. "Aaron Judge, hr").</label>
+      <textarea id="tgBulk" rows="4" placeholder="Aaron Judge, hr&#10;Mookie Betts, 1+ hit&#10;Yordan Alvarez, 2+ tb&#10;Corey Seager"></textarea>
+      <div class="tg-bulk-row">
+        <div class="zsel"><label for="tgBulkMk">Default prop (for lines with no prop)</label><select id="tgBulkMk">${mOpts}</select></div>
+        <button class="btn" id="tgBulkAdd">+ Add all</button>
+      </div>
+      <div id="tgBulkMsg" class="tg-bulk-msg"></div>
     </div>`;
   }
 
@@ -4428,6 +4460,60 @@ function renderTargets(model){
     sec("Players",players,sumP,"Tap ☆ on any Go List row or Arsenal card to start a list of hitters you're targeting for home runs.")+
     sec("Props",props,sumR,"Add a player above with a market like 1+ Hit or 2+ Bases to track props separately.")+
     `<div class="tg-note">Targets are saved on this device for <b>${date}</b>${older?` · ${older} from other dates hidden`:""}. They update live — price, edge and result fill in as odds load and games finish.${older?` <button class="tg-clear" id="tgClear">Clear older targets</button>`:""}</div>`;
+}
+
+// --- Bulk add to Targets: parse pasted lines, match names to the loaded slate, add each. ---
+function normName(s){
+  return (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z\s]/g,"").replace(/\b(jr|sr|ii|iii|iv)\b/g,"").replace(/\s+/g," ").trim();
+}
+// Map free-text prop ("hr","1+ hit","2+ tb","home run"...) to a PROP_MARKETS key.
+function propTextToMk(txt){
+  const t=(txt||"").toLowerCase().replace(/\s+/g,"");
+  if(!t)return null;
+  if(/(^|[^0-9])hr|homer|homerun/.test(t))return "hr";
+  if(/2\+?h|2hit|2\+hits/.test(t))return "hit2";
+  if(/1\+?h|1hit|hit$|hits$|1\+hit/.test(t))return "hit1";
+  if(/3\+?(tb|base)/.test(t))return "tb3";
+  if(/2\+?(tb|base)|totalbase/.test(t))return "tb2";
+  if(/rbi/.test(t))return "rbi1";
+  return null;
+}
+function bulkAddTargets(){
+  const ta=el("tgBulk"),msg=el("tgBulkMsg");
+  if(!ta||!MODEL||!MODEL.games){if(msg)msg.textContent="Load a slate first.";return;}
+  const defMk=(el("tgBulkMk")&&el("tgBulkMk").value)||"hr";
+  // index every batter on the slate by normalized name
+  const idx={};
+  MODEL.games.forEach(g=>[...(g._awayBat||[]),...(g._homeBat||[])].forEach(b=>{
+    idx[normName(b.name)]={b,g};
+  }));
+  const names=Object.keys(idx);
+  const lines=ta.value.split("\n").map(l=>l.trim()).filter(Boolean);
+  let added=0,already=0;const misses=[];
+  lines.forEach(line=>{
+    const parts=line.split(",");
+    const rawName=parts[0];
+    const mk=propTextToMk(parts.slice(1).join(","))||defMk;
+    const nn=normName(rawName);
+    if(!nn)return;
+    // exact, then last-name / contains fallback
+    let hit=idx[nn];
+    if(!hit){
+      const cand=names.filter(n=>n===nn||n.endsWith(" "+nn)||n.includes(nn)||nn.includes(n));
+      if(cand.length===1)hit=idx[cand[0]];
+    }
+    if(!hit){misses.push(rawName.trim());return;}
+    const {b,g}=hit;
+    if(isWatched(g.gamePk,b.id,mk)){already++;return;}
+    toggleWatch(g.gamePk,b.id,mk,b.name,b.team||"",(MODEL&&MODEL.date)||todayStr());
+    added++;
+  });
+  if(msg){
+    msg.innerHTML=`<b class="tg-ok">Added ${added}</b>${already?` · ${already} already saved`:""}`+
+      (misses.length?` · <b class="tg-miss">couldn't match: ${misses.join(", ")}</b> (check spelling, or the player isn't in today's slate / lineup not posted)`:"");
+  }
+  if(added){ta.value="";renderTargets(MODEL);}
 }
 
 // ===================== ⚾ NRFI / YRFI — first-inning run model =====================
@@ -6399,6 +6485,7 @@ function renderParlays(){
   const slots=new Set([...el("plSlots").querySelectorAll("button.active")].map(b=>+b.dataset.slot));
   cfg.slots=slots.size?slots:null;
   cfg.upcomingOnly=upcomingOnly;
+  cfg.watchOnly=el("plWatch")?el("plWatch").checked:false;
   const parlays=generateParlays(cfg);
   if(!parlays.length){out.innerHTML='<div class="empty"><b>Couldn\'t build that</b>Your filters may be too strict. Try fewer legs, allow more bats per game, add prop types, loosen the filters, turn off +EV-only, or uncheck Upcoming-only.</div>';return;}
   const useBook=ODDS_LOADED;
@@ -6730,6 +6817,9 @@ el("tgWrap")&&el("tgWrap").addEventListener("click",e=>{
   if(e.target.closest("#tgClear")){
     const d=(MODEL&&MODEL.date)||todayStr();
     saveWatch(loadWatch().filter(w=>w.d===d));renderTargets(MODEL);return;
+  }
+  if(e.target.closest("#tgBulkAdd")){
+    bulkAddTargets();return;
   }
   const row=e.target.closest(".tg-row");
   if(row&&row.dataset.g&&!e.target.closest(".wstar")){ARS_GAME=row.dataset.g;ARS_BAT=row.dataset.b;setView("arsenal");}
