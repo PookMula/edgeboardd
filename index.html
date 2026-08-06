@@ -988,6 +988,41 @@
   .tg-bulk-msg{margin-top:8px;font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted)}
   .tg-ok{color:var(--good)} .tg-miss{color:var(--amber)}
 
+  /* ===== 📝 FAVORITE PLAYS ===== */
+  .fav-lock{background:linear-gradient(135deg,rgba(255,184,28,.18),var(--panel));border:1px solid var(--amber);
+            border-radius:3px;padding:15px 18px;margin-bottom:16px;max-width:var(--maxw)}
+  .fav-lock-badge{font-family:'Roboto Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;
+                  color:#031320;background:var(--amber);border-radius:2px;padding:3px 9px;display:inline-block;margin-bottom:9px}
+  .fav-lock-name{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:24px;color:var(--chalk);line-height:1.05}
+  .fav-lock-name span{font-family:'Roboto Mono',monospace;font-size:12px;color:var(--muted2);font-weight:400;margin-left:6px;letter-spacing:.02em}
+  .fav-lock-sum{font-size:13.5px;color:var(--muted);line-height:1.6;margin-top:8px}
+  .fav-lock-sum b,.fav-sum b{color:var(--chalk)}
+  .fav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;max-width:var(--maxw)}
+  .fav-card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:13px 15px}
+  .fav-game{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:16px;text-transform:uppercase;
+            letter-spacing:.03em;color:var(--chalk);padding-bottom:9px;border-bottom:1px solid var(--teal);margin-bottom:11px;
+            display:flex;justify-content:space-between;align-items:baseline}
+  .fav-game span{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);font-weight:400;letter-spacing:.02em}
+  .fav-play{margin-bottom:4px}
+  .fav-play.fav-run{margin-top:11px;padding-top:11px;border-top:1px dashed var(--line)}
+  .fav-ph{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:7px}
+  .fav-ph b{font-family:'Saira Condensed',sans-serif;font-weight:600;font-size:17px;color:var(--chalk);line-height:1}
+  .fav-tag{font-family:'Roboto Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:.06em;
+           color:#031320;background:var(--amber);border-radius:2px;padding:2px 7px}
+  .fav-tag2{color:var(--muted);background:var(--panel3)}
+  .fav-hand{font-family:'Roboto Mono',monospace;font-size:9.5px;color:var(--muted2)}
+  .fav-pct{margin-left:auto;font-family:'Roboto Mono',monospace;font-weight:700;font-size:16px;color:var(--amber)}
+  .fav-sum{font-size:12.5px;color:var(--muted);line-height:1.55;margin-bottom:9px}
+  .fav-why{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px}
+  .fav-why li{font-family:'Roboto Mono',monospace;font-size:10.5px;line-height:1.5;padding-left:2px}
+  .fav-pro{color:var(--muted)}.fav-pro::first-letter{}
+  .fav-pro{color:#9FDFC0}.fav-con{color:#F0A8B0}
+  .fav-thin{color:var(--muted2)!important;font-style:italic}
+  .fav-note{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted2);line-height:1.7;
+            margin-top:16px;max-width:var(--maxw);background:var(--panel);border:1px solid var(--line);
+            border-left:3px solid var(--teal);border-radius:2px;padding:11px 14px}
+  .fav-note b{color:var(--chalk)}
+
   /* ===== ⚾ NRFI / YRFI ===== */
   .nr-bar{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:12px}
   .nr-stamp{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2)}
@@ -1437,7 +1472,7 @@
   <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
-    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.07.26.2</div>
+    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.08.06.2</div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
       <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
@@ -1448,6 +1483,7 @@
       <a href="#/hrsim" data-view="hrsim" role="button">🎲 HR Simulator</a>
       <a href="#/homer" data-view="homer" role="button">🤖 Homer AI <span class="sb-beta">BETA</span></a>
       <a href="#/brief" data-view="brief" role="button">📝 Game Briefings</a>
+      <a href="#/fav" data-view="fav" role="button">📝 Favorite Plays</a>
       <a href="#/hr" data-view="hr" role="button">✅ Homers Today</a>
       <a href="#/props" data-view="props" role="button">Home Run &amp; Hit Props</a>
       <a href="#/align" data-view="align" role="button">Alignment Score</a>
@@ -1825,6 +1861,11 @@
   <section id="nrfiView" class="hide">
     <div class="sec-head"><h2>⚾ NRFI / YRFI</h2><span class="tag">first-inning run model, built from real results</span><span class="rule"></span></div>
     <div id="nrfiWrap"></div>
+  </section>
+
+  <section id="favView" class="hide">
+    <div class="sec-head"><h2>📝 Favorite Plays</h2><span class="tag">the best home run bet in each game — with the reasons why</span><span class="rule"></span></div>
+    <div id="favWrap"></div>
   </section>
 
   <section id="mgView" class="hide">
@@ -3063,6 +3104,7 @@ async function buildModel(date){
     const oppCtx=(bats,kobj)=>bats.forEach(b=>{
       b.oppERA=(kobj&&kobj.cur.era!=null)?pnum(kobj.cur.era):null;
       b.oppVuln=(kobj&&kobj.vuln)?kobj.vuln.score:null;
+      b.oppHr9=(kobj&&kobj.cur&&kobj.cur.hr9!=null)?kobj.cur.hr9:null; // pitcher HR/9 for the Favorite-Plays reasons
     });
     oppCtx(g._awayBat,g._homeK); // away batters face home SP
     oppCtx(g._homeBat,g._awayK);
@@ -4514,6 +4556,143 @@ function bulkAddTargets(){
       (misses.length?` · <b class="tg-miss">couldn't match: ${misses.join(", ")}</b> (check spelling, or the player isn't in today's slate / lineup not posted)`:"");
   }
   if(added){ta.value="";renderTargets(MODEL);}
+}
+
+// ===================== 📝 FAVORITE PLAYS — per-game HR write-ups =====================
+// Names the best HR bet in each game and explains WHY, using only real model fields.
+// Every reason traces to a number: arsenal fit, park, platoon, form, pitcher HR/9, vulnerability.
+// No invented narrative — where data is thin, it says so.
+
+// Build the ordered list of concrete reasons for one hitter's HR case.
+function hrReasons(b,g){
+  const R=[];
+  const sc=b.statcast||{};
+  // 1) Arsenal fit — the single most specific reason: the pitch he punishes that this guy throws a lot
+  const c=b.hrMatch&&b.hrMatch.contrib;
+  if(c&&c.length){
+    const top=c[0];
+    if(top&&top.bPow!=null&&top.usage!=null){
+      const pit=pitchName(top.type), use=Math.round(top.usage*100);
+      if(top.bPow>=0.62&&use>=18)
+        R.push({k:"arsenal",good:true,w:3.0,t:`Punishes the ${pit.toLowerCase()} — ${b.oppPitcher||"the starter"}'s most-used look (${use}% of pitches), and it's a pitch ${shortName(b.name)} drives hard.`});
+      else if(top.bPow>=0.55&&use>=15)
+        R.push({k:"arsenal",good:true,w:1.8,t:`Handles the ${pit.toLowerCase()} well (${use}% usage) — a real edge against this arm's main pitch.`});
+      else if(top.bPow<=0.42)
+        R.push({k:"arsenal",good:false,w:1.5,t:`The ${pit.toLowerCase()} (${use}%) has given ${shortName(b.name)} trouble — the arsenal doesn't set up cleanly here.`});
+    }
+  }
+  // 2) Pitcher HR/9 — is the arm homer-prone
+  const hr9=b.oppHr9!=null?b.oppHr9:(b._oppHr9!=null?b._oppHr9:null);
+  if(hr9!=null){
+    if(hr9>=1.5)R.push({k:"hr9",good:true,w:2.2,t:`${b.oppPitcher||"The starter"} is very homer-prone (${hr9.toFixed(2)} HR/9) — among the easiest arms to take deep.`});
+    else if(hr9>=1.25)R.push({k:"hr9",good:true,w:1.2,t:`${b.oppPitcher||"The starter"} gives up his share of homers (${hr9.toFixed(2)} HR/9).`});
+    else if(hr9<=0.85)R.push({k:"hr9",good:false,w:1.6,t:`${b.oppPitcher||"The starter"} suppresses the long ball (${hr9.toFixed(2)} HR/9) — a real strike against this play.`});
+  }
+  // 3) Platoon
+  if(b.platoon&&b.platoon.badge==="ADV")
+    R.push({k:"platoon",good:true,w:1.3,t:`Handedness edge — ${b.bats}HB vs a ${b.platoon.oppHand||"opposite"}-handed starter.`});
+  else if(b.platoon&&b.platoon.badge==="DIS")
+    R.push({k:"platoon",good:false,w:1.0,t:`Wrong side of the platoon here — the handedness matchup favors the pitcher.`});
+  // 4) Park
+  if(b._park!=null){
+    if(b._park>=1.10)R.push({k:"park",good:true,w:1.4,t:`Ballpark boosts home runs (park factor ${b._park.toFixed(2)}).`});
+    else if(b._park>=1.04)R.push({k:"park",good:true,w:0.8,t:`Slight park help for the long ball (${b._park.toFixed(2)}).`});
+    else if(b._park<=0.93)R.push({k:"park",good:false,w:1.1,t:`Park suppresses homers (${b._park.toFixed(2)}) — working against this one.`});
+  }
+  // 5) Weather (only if it clearly matters) — _wx.mult is the HR air/wind multiplier
+  if(b._wx&&b._wx.mult!=null){
+    const wd=(b._wx.outComponent>1.5?`wind out to ${b._wx.cardinal||"CF"}`:b._wx.tempF>=82?"warm air":"conditions carrying");
+    if(b._wx.mult>=1.08)R.push({k:"wx",good:true,w:0.9,t:`Weather is helping the ball fly — ${wd} (${b._wx.label||"hitter-friendly"}).`});
+    else if(b._wx.mult<=0.93)R.push({k:"wx",good:false,w:0.8,t:`Weather is a power headwind today (${b._wx.label||"heavy air / wind in"}).`});
+  }
+  // 6) Recent form
+  if(b.recentForm&&b.recentForm.state==="hot")
+    R.push({k:"form",good:true,w:1.0,t:`Locked in lately — form is trending up over his last 10.`});
+  else if(b.recentForm&&b.recentForm.state==="cold")
+    R.push({k:"form",good:false,w:0.9,t:`In a cold stretch — recent form is down vs his baseline.`});
+  // 7) Underlying power (barrels)
+  if(sc.barrel!=null){
+    if(sc.barrel>=14)R.push({k:"barrel",good:true,w:1.2,t:`Elite contact quality — ${sc.barrel.toFixed(0)}% barrel rate.`});
+    else if(sc.barrel>=11)R.push({k:"barrel",good:true,w:0.7,t:`Above-average barrels (${sc.barrel.toFixed(0)}%).`});
+    else if(sc.barrel<=6)R.push({k:"barrel",good:false,w:0.8,t:`Light on barrels (${sc.barrel.toFixed(0)}%) — power isn't loud right now.`});
+  }
+  // 8) BvP history — only when the sample isn't tiny
+  if(b.bvp&&b.bvp.ab>=8){
+    if(b.bvp.hr>=1)R.push({k:"bvp",good:true,w:0.9,t:`Has taken ${b.oppPitcher||"this pitcher"} deep before (${b.bvp.hr} HR in ${b.bvp.ab} career AB).`});
+    else if(b.bvp.ops<=0.550)R.push({k:"bvp",good:false,w:0.6,t:`Career ${fmt3(b.bvp.ops)} OPS vs this arm — hasn't solved him.`});
+  }
+  return R;
+}
+
+// Score a hitter's HR play (0-100) for ranking within a game.
+function hrPlayScore(b,g){
+  const v=hrVerdict(b,g);
+  const model=v.modelProb!=null?v.modelProb:0;
+  const ms=b.hrMatch&&b.hrMatch.score!=null?b.hrMatch.score/100:0.5;
+  const R=hrReasons(b,g);
+  const net=R.reduce((s,r)=>s+(r.good?r.w:-r.w),0);
+  // blend model probability, arsenal score, and net reason weight into one rankable number
+  return {score:Math.max(0,Math.min(100, model*100*1.6 + ms*30 + net*4)),
+          v, reasons:R, model, edge:v.edge};
+}
+
+// Pick best + runner-up HR play for a single game.
+function gameFavorite(g){
+  const bats=[...(g._awayBat||[]),...(g._homeBat||[])].filter(b=>b.proj&&b.proj.hr>0);
+  if(!bats.length)return null;
+  const scored=bats.map(b=>({b,...hrPlayScore(b,g)})).sort((a,b)=>b.score-a.score);
+  const best=scored[0], runner=scored[1]||null;
+  return {g,best,runner};
+}
+
+// One-line prose summary for a play, built from its top reasons.
+function playSummary(p){
+  const b=p.b, good=p.reasons.filter(r=>r.good).sort((a,b)=>b.w-a.w);
+  const lead=good[0];
+  const mp=Math.round(p.model*100);
+  if(!lead)return `${shortName(b.name)} to homer — a ${mp}% model shot; the case here is thin, treat it as a dart.`;
+  const second=good[1];
+  const edgeTxt=(p.edge!=null&&p.edge>0.02)?` The model sees value at the current price (+${Math.round(p.edge*100)}% edge).`:(p.edge!=null&&p.edge<-0.03)?` Note: the price is a touch short of the model here.`:"";
+  return `${shortName(b.name)} is the play — ${lead.t}${second?` ${second.t}`:""} Model puts him at ${mp}% to go deep.${edgeTxt}`;
+}
+
+let FAV_DATA=null;
+function renderFavorites(model){
+  const wrap=el("favWrap");if(!wrap)return;
+  if(!model||!model.games||!model.games.length){wrap.innerHTML='<div class="empty"><b>No slate loaded</b>Load a slate to see each game\'s best home run play with full reasoning.</div>';return;}
+  const favs=model.games.map(gameFavorite).filter(Boolean);
+  if(!favs.length){wrap.innerHTML='<div class="empty">No hitters with home run projections yet — load a slate with confirmed data.</div>';return;}
+  // lock of the day = highest-scoring best play across all games
+  const lock=favs.slice().sort((a,b)=>b.best.score-a.best.score)[0];
+  const lockCard=`<div class="fav-lock">
+    <div class="fav-lock-badge">🔒 LOCK OF THE DAY</div>
+    <div class="fav-lock-name">${lock.best.b.name} <span>HR · ${lock.g.away.abbr||lock.g.away.short} @ ${lock.g.home.abbr||lock.g.home.short}</span></div>
+    <div class="fav-lock-sum">${playSummary(lock.best)}</div>
+  </div>`;
+  const cards=favs.map(({g,best,runner})=>{
+    const rz=r=>`<li class="${r.good?"fav-pro":"fav-con"}">${r.good?"✓":"✕"} ${r.t}</li>`;
+    const bestBlock=`
+      <div class="fav-play">
+        <div class="fav-ph"><span class="fav-tag">FAVORITE</span><b>${best.b.name}</b>
+          <span class="fav-hand">${best.b.bats||"?"}HB vs ${best.b.oppPitcher?shortName(best.b.oppPitcher):"TBD"}</span>
+          <span class="fav-pct">${Math.round(best.model*100)}%</span></div>
+        <div class="fav-sum">${playSummary(best)}</div>
+        <ul class="fav-why">${best.reasons.length?best.reasons.map(rz).join(""):'<li class="fav-thin">Limited data on this matchup — model call only.</li>'}</ul>
+      </div>`;
+    const runBlock=runner?`
+      <div class="fav-play fav-run">
+        <div class="fav-ph"><span class="fav-tag fav-tag2">RUNNER-UP</span><b>${runner.b.name}</b>
+          <span class="fav-hand">${runner.b.bats||"?"}HB vs ${runner.b.oppPitcher?shortName(runner.b.oppPitcher):"TBD"}</span>
+          <span class="fav-pct">${Math.round(runner.model*100)}%</span></div>
+        <ul class="fav-why">${runner.reasons.slice(0,3).map(rz).join("")||'<li class="fav-thin">Thin case — secondary option.</li>'}</ul>
+      </div>`:"";
+    return `<div class="fav-card">
+      <div class="fav-game">${g.away.abbr||g.away.short} @ ${g.home.abbr||g.home.short}<span>park ${(g.parkF||1).toFixed(2)}</span></div>
+      ${bestBlock}${runBlock}
+    </div>`;
+  }).join("");
+  wrap.innerHTML=lockCard+`<div class="fav-grid">${cards}</div>`+
+    `<div class="fav-note"><b>How these are chosen:</b> every hitter's home run case is scored from real model inputs — arsenal fit (the exact pitch a starter throws most and how hard the batter hits it), pitcher HR/9, park, platoon, weather, recent form, barrel rate, and any batter-vs-pitcher history. The ✓/✕ lines are the actual reasons, each tied to a number. Nothing here is invented narrative; where a matchup is thin, it says so. <b>This is analysis, not a guarantee</b> — home runs are rare events and even the best play is usually against the odds to hit on any given night. 21+. If gambling stops being fun, call 1-800-GAMBLER.</div>`;
 }
 
 // ===================== ⚾ NRFI / YRFI — first-inning run model =====================
@@ -6687,6 +6866,7 @@ function setView(v){
   el("attackView").classList.toggle("hide",v!=="attack");
   el("mgView").classList.toggle("hide",v!=="mgrid");
   el("nrfiView").classList.toggle("hide",v!=="nrfi");
+  el("favView").classList.toggle("hide",v!=="fav");
   el("compareView").classList.toggle("hide",v!=="compare");
   el("hrguideView").classList.toggle("hide",v!=="hrguide");
   el("propsView").classList.toggle("hide",v!=="props");
@@ -6717,6 +6897,7 @@ function setView(v){
   if(v==="attack"&&MODEL) renderAttack(MODEL);
   if(v==="mgrid"&&MODEL) renderMatchupGrid(MODEL);
   if(v==="nrfi"){ if(!NRFI_DATA){const c=loadNrfiCache(MODEL&&MODEL.date?parseInt(MODEL.date.slice(0,4),10):new Date().getFullYear()); if(c)NRFI_DATA=c;} renderNrfi(MODEL); }
+  if(v==="fav"&&MODEL) renderFavorites(MODEL);
   if(v==="compare"&&MODEL) renderCompare(MODEL);
   if(v==="align"&&MODEL) renderAlignment();
   if(v==="vuln"&&MODEL) renderVuln(MODEL);
@@ -6754,7 +6935,7 @@ async function run(){
 }
 function updateFreshLabel(){const e=el("freshLbl");if(e)e.textContent=freshText(LAST_REFRESH,Date.now());}
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
-const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",stargroups:"Star Groups — auto-built parlays",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",hrbuilder:"HR Group Builder",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",targets:"My Targets — players &amp; props you're on today",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",mgrid:"Matchup Grid — full lineup, every metric",nrfi:"NRFI / YRFI — will anyone score in the 1st?",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
+const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",stargroups:"Star Groups — auto-built parlays",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",hrbuilder:"HR Group Builder",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",targets:"My Targets — players &amp; props you're on today",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",mgrid:"Matchup Grid — full lineup, every metric",nrfi:"NRFI / YRFI — will anyone score in the 1st?",fav:"Favorite Plays — best HR bet per game, with reasons",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
   const t=el("viewTitle");if(t)t.innerHTML=`<span>${VIEW_TITLE[v]||""}</span><a class="newtab-btn" href="#/${v}" target="_blank" rel="noopener" title="Open this page in a new browser tab">⧉ New tab</a>`;
