@@ -1487,7 +1487,7 @@
   <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
-    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.08.06.5</div>
+    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.08.06.6</div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
       <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
@@ -2213,7 +2213,9 @@ function generateParlays(cfg){
   let watchSet=null;
   if(cfg.watchOnly){
     watchSet=new Set();
+    const wDate=(MODEL&&MODEL.date)||todayStr();
     loadWatch().forEach(w=>{
+      if(w.d!==wDate)return;                  // only TODAY's targets — match the My Targets list exactly
       const pm=PROP_MARKETS[w.mk];
       const om=pm?pm.om:w.mk;                 // fall back to raw if already an om
       watchSet.add(w.id+"|"+om);
