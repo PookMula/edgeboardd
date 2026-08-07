@@ -995,9 +995,24 @@
                   color:#031320;background:var(--amber);border-radius:2px;padding:3px 9px;display:inline-block;margin-bottom:9px}
   .fav-lock-name{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:24px;color:var(--chalk);line-height:1.05}
   .fav-lock-name span{font-family:'Roboto Mono',monospace;font-size:12px;color:var(--muted2);font-weight:400;margin-left:6px;letter-spacing:.02em}
+  .fav-lock-name .wstar{font-size:20px;vertical-align:2px;margin-right:4px}
+  .fav-ph .wstar{font-size:16px}
   .fav-lock-sum{font-size:13.5px;color:var(--muted);line-height:1.6;margin-top:8px}
   .fav-lock-sum b,.fav-sum b{color:var(--chalk)}
-  .fav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;max-width:var(--maxw)}
+  .fav-lock-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .fav-repick{font-family:'Roboto Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+              color:var(--teal);background:transparent;border:1px solid rgba(0,163,224,.45);border-radius:2px;
+              padding:4px 9px;cursor:pointer;white-space:nowrap}
+  .fav-repick:hover{background:rgba(0,163,224,.12);color:var(--chalk)}
+  .fav-lockmsg{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);line-height:1.6;margin:9px 2px 15px;max-width:var(--maxw)}
+  .fav-lockmsg b{color:var(--teal)}
+  .fav-res{margin:1px 0 9px}
+  .fav-dd{margin-bottom:11px}
+  .fav-dd-p{font-size:13px;color:var(--muted);line-height:1.62;margin:0 0 8px}
+  .fav-dd-p:first-child{color:#C6D6E8}
+  .fav-why-h{font-family:'Roboto Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+             color:var(--muted2);margin:0 0 6px;padding-top:9px;border-top:1px solid var(--line)}
+  .fav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(460px,1fr));gap:14px;max-width:var(--maxw)}
   .fav-card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:13px 15px}
   .fav-game{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:16px;text-transform:uppercase;
             letter-spacing:.03em;color:var(--chalk);padding-bottom:9px;border-bottom:1px solid var(--teal);margin-bottom:11px;
@@ -1472,7 +1487,7 @@
   <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
-    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.08.06.2</div>
+    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.08.06.5</div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
       <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
@@ -1481,17 +1496,13 @@
       <a href="#/compare" data-view="compare" role="button">⚖️ Head to Head</a>
       <a href="#/hrmodel" data-view="hrmodel" role="button">💣 Home Runs Model</a>
       <a href="#/hrsim" data-view="hrsim" role="button">🎲 HR Simulator</a>
-      <a href="#/homer" data-view="homer" role="button">🤖 Homer AI <span class="sb-beta">BETA</span></a>
-      <a href="#/brief" data-view="brief" role="button">📝 Game Briefings</a>
       <a href="#/fav" data-view="fav" role="button">📝 Favorite Plays</a>
       <a href="#/hr" data-view="hr" role="button">✅ Homers Today</a>
       <a href="#/props" data-view="props" role="button">Home Run &amp; Hit Props</a>
       <a href="#/align" data-view="align" role="button">Alignment Score</a>
-      <a href="#/hrguide" data-view="hrguide" role="button">💣 How to Pick Homers</a>
     </div>
     <div class="sb-group"><div class="sb-h">Pitcher &amp; Matchup</div>
       <a href="#/vulnrep" data-view="vulnrep" role="button">Pitcher Vulnerability Report</a>
-      <a href="#/vuln" data-view="vuln" role="button">Pitcher Weak Spots</a>
       <a href="#/zones" data-view="zones" role="button">Zone Matchups</a>
       <a href="#/arsenal" data-view="arsenal" role="button">🎯 Arsenal Matchup</a>
       <a href="#/attack" data-view="attack" role="button">🥊 Attack the Arm</a>
@@ -1505,8 +1516,6 @@
     <div class="sb-group"><div class="sb-h">Betting Tools</div>
       <a href="#/odds" data-view="odds" role="button">Odds Comparison</a>
       <a href="#/parlay" data-view="parlay" role="button">Parlay Generator</a>
-      <a href="#/stargroups" data-view="stargroups" role="button">⭐ Star Groups</a>
-      <a href="#/hrbuilder" data-view="hrbuilder" role="button">🛠️ HR Group Builder</a>
       <a href="#/track" data-view="track" role="button">📊 Track &amp; Calibrate</a>
       <a href="#/trends" data-view="trends" role="button">Trends</a>
     </div>
@@ -1566,155 +1575,9 @@
     <div id="bestBoard"></div>
   </section>
 
-  <section id="briefView" class="hide">
-    <div class="sec-head"><h2>📝 Game Briefings</h2><span class="tag">auto-written analyst notes — sharper once lineups post</span><span class="rule"></span></div>
-    <div id="briefBoard"></div>
-  </section>
-
-  <section id="homerView" class="hide">
-    <div class="sec-head"><h2>🤖 Homer AI <span class="sb-beta">BETA</span></h2><span class="tag">analysis &amp; breakdowns of the day's slate, each game &amp; best matchups — all from model data</span><span class="rule"></span></div>
-    <div class="ws-controls">
-      <div class="ws-date"><button id="homerPrev" title="Previous day">←</button><span id="homerDateLbl">—</span><button id="homerNext" title="Next day">→</button><button id="homerToday" class="ws-today">Today</button></div>
-      <div class="ws-count" id="homerCount"></div>
-    </div>
-    <div class="ws-chips" id="homerGameChips"></div>
-    <div class="pvr-tabs" id="homerTabs">
-      <button data-t="slate" class="active">Slate Analysis</button>
-      <button data-t="matchups">Top Matchups</button>
-      <button data-t="ev">Top EV Matchups</button>
-      <button data-t="games">Game-by-Game</button>
-      <button data-t="chat">💬 Ask Homer</button>
-    </div>
-    <div id="homerContent"></div>
-    <div id="homerChatWrap" class="hide">
-      <div class="homer-wrap">
-        <div id="homerChat" class="homer-chat"></div>
-        <div class="homer-chips" id="homerChips">
-          <button data-q="Today's best HR bets">🔥 Best HR bets</button>
-          <button data-q="Build a 3-leg HR parlay">🎲 3-leg HR parlay</button>
-          <button data-q="Best HR park today">🏟️ Best HR parks</button>
-          <button data-q="Most vulnerable pitchers">🎯 Vulnerable arms</button>
-          <button data-q="How many home runs are projected today">💥 HRs projected today</button>
-          <button data-q="Who should I fade">❌ Who to fade</button>
-        </div>
-        <div class="homer-input">
-          <input type="text" id="homerInput" placeholder="Ask about today's homers… (e.g. ‘best bets’, ‘parlay’, a player name)" autocomplete="off" />
-          <button id="homerSendBtn">Send</button>
-        </div>
-        <div class="homer-llm">
-          <label><input type="checkbox" id="homerLLM" /> Free-form mode — use my own Claude API key</label>
-          <input type="password" id="homerKey" placeholder="sk-ant-… (optional, stays in your browser)" autocomplete="off" style="display:none" />
-          <div class="hint" id="homerLLMHint" style="display:none">Routes your question + today's HR data to Claude (Haiku) for open-ended answers. Your key is used in-browser only and never stored or sent anywhere but Anthropic. Costs apply to your key.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section id="hrView" class="hide">
     <div class="sec-head"><h2>✅ Homers Today</h2><span class="tag" id="hrTag">fills in automatically as batters go deep</span><span class="rule"></span></div>
     <div id="hrBoard"></div>
-  </section>
-
-  <section id="hrguideView" class="hide">
-    <div class="sec-head"><h2>💣 How to Pick Homers</h2><span class="tag">what to look for · straights &amp; parlays</span><span class="rule"></span></div>
-    <div class="guide">
-      <div class="gcard">
-        <h3>The big idea</h3>
-        <p>Home runs are <b>low-probability, high-variance</b> bets — even the very best spots are usually only <b>15–25%</b> to actually go deep, and most bats sit at 5–12%. You can't make a hitter homer; you can only <b>stack the conditions</b> that make it more likely, then bet when the model's number beats the book's. Think of it as repeatedly buying good <i>chances</i>, not predicting certainties.</p>
-      </div>
-
-      <div class="gcard">
-        <h3>Checklist for a strong straight (single) HR bet</h3>
-        <p>The more of these that line up on one hitter, the better the spot — Edge Board surfaces all of them:</p>
-        <div class="hrlist">
-          <div class="hritem"><span class="hk">🎯 Vulnerable pitcher</span><div class="hd">Target bats facing a high-vuln starter — especially <b>T1 / Prime Targets</b> on the Vulnerable tab. Read the pitcher's <b>vs-LHB / vs-RHB allowed</b> line: high <b>SLG, ISO, HR</b> against the batter's side is exactly what you want. A 🎯 <b>weak-spot</b> badge means that hitter specifically matches the side the pitcher gets hurt by.</div></div>
-          <div class="hritem"><span class="hk">⚖️ Platoon advantage</span><div class="hd">An <b>ADV</b> badge (lefty bat vs RHP, or righty vs LHP) is one of the most reliable HR signals. Downgrade or fade <b>DIS</b>.</div></div>
-          <div class="hritem"><span class="hk">🏟️ Park</span><div class="hd">Favor a <b>HR park ≥ ~1.10</b> (Coors, Cincinnati, Yankee Stadium, Great American). A pitcher's park can quietly add or erase a chunk of HR equity.</div></div>
-          <div class="hritem"><span class="hk">🌬️ Weather</span><div class="hd"><b>Wind blowing out</b> and <b>warm air (≈75°F+)</b> boost carry. The Weather tab flags HR-favorable games; a "Hitters +" chip is a green light, "Pitchers +" a caution.</div></div>
-          <div class="hritem"><span class="hk">🔥 Form &amp; power</span><div class="hd">A hot 🔥 L10 helps, but <b>don't overpay</b> for a heater. Underlying power (season <b>ISO / SLG</b>) is steadier than a 7-day streak.</div></div>
-          <div class="hritem"><span class="hk">⭐ Grade &amp; Edge Score</span><div class="hd">Lean on <b>A / A+</b> grades and high Edge Scores. ⭐ = the team's best bat that game, ⚡ = second, 💤 = the overlooked sleeper.</div></div>
-          <div class="hritem"><span class="hk">🔢 Lineup spot</span><div class="hd">Only bet <b>confirmed lineups</b>, and prefer hitters in the <b>top 5</b> — more plate appearances means more swings to hit one out.</div></div>
-          <div class="hritem"><span class="hk">💰 Value over the book</span><div class="hd">The single most important habit: compare the model's <b>HR %</b> to the book's <b>implied %</b> from the odds. Only fire when the model is clearly <b>above</b> implied — that's a <b>+EV</b> spot. A great matchup at a terrible price is still a bad bet.</div></div>
-        </div>
-      </div>
-
-      <div class="gcard">
-        <h3>Reading the Statcast line (contact quality)</h3>
-        <p>With a Savant proxy set, every hitter shows a <b>Statcast pill line</b> — their season quality-of-contact. It describes how well a batter <i>should</i> hit for power, stripped of luck. Higher is better on all of these except <b>xHR</b>, which is a signal:</p>
-        <div class="hrlist">
-          <div class="hritem"><span class="hk">EV · exit velocity</span><div class="hd">How hard he hits the ball. League ~88–89 mph · <b>good 90+</b> · <b>elite 92+</b>.</div></div>
-          <div class="hritem"><span class="hk">LA · launch angle</span><div class="hd">His average trajectory. Home runs live ~15–35°; the power sweet spot is <b>12–20°</b>. Too low (&lt;8°) = groundballs, too high (&gt;25° avg) = popups.</div></div>
-          <div class="hritem"><span class="hk">Barrel% · barrels per batted ball</span><div class="hd">The best single power stat — the EV+LA combo that becomes a HR most often. League ~7–8% · good 10%+ · strong 12–14% · <b>elite 15%+</b>.</div></div>
-          <div class="hritem"><span class="hk">HardHit% · 95+ mph contact</span><div class="hd">How consistently he squares it up. League ~38–40% · good 45%+ · <b>elite 50%+</b>.</div></div>
-          <div class="hritem"><span class="hk">Pull-air% · pulled balls in the air</span><div class="hd">Where home runs actually come from, and one of the most predictive marks. ~10% average · good 13%+ · <b>elite 16%+</b>.</div></div>
-          <div class="hritem"><span class="hk">xwOBA · expected value on contact</span><div class="hd">Overall quality-of-contact production. League ~.315–.320 · good .350+ · <b>elite .380+</b>. A high xwOBA means the results are real, not luck.</div></div>
-          <div class="hritem"><span class="hk">xHR · expected-HR signal (green / red)</span><div class="hd">Not "high = good" — it's a regression flag. <b style="color:var(--good)">Green +%</b> = his contact says he's homering <i>less</i> than he should be, so he's due to regress up (a buy-low). <b style="color:#C8102E">Red −%</b> = he's running hot on luck (fade or downgrade).</div></div>
-        </div>
-        <div class="gtip" style="margin-top:12px"><b>The ideal power profile to hunt:</b> Barrel <b>15%+</b>, HardHit <b>50%+</b>, Pull-air <b>16%+</b>, xwOBA <b>.380+</b>, LA <b>12–20°</b> — with a <b style="color:var(--good)">green xHR</b> as the tiebreaker. When several of these light up on a <b>confirmed</b> hitter facing a <b>vulnerable</b> starter in a good <b>park &amp; weather</b>, that's your strongest home-run spot. A great profile improves your odds — it's never a lock.</div>
-      </div>
-
-      <div class="gcard">
-        <h3>Pitcher home-run vulnerability checklist</h3>
-        <p>Flip the lens and grade the <b>pitcher</b> instead of the hitter. Target starters showing multiple of these red flags — the more that stack, the more his bats become live HR plays (and his opponent's team total / run line gets interesting):</p>
-        <ul class="vflags">
-          <li><b>HR/9 above 1.3</b></li>
-          <li><b>Barrel rate allowed above 9%</b></li>
-          <li><b>Hard-hit rate allowed above 40%</b></li>
-          <li><b>Fly-ball rate above 40%</b></li>
-          <li><b>xSLG allowed above .450</b></li>
-          <li><b>Fastball velocity down 1+ mph</b></li>
-          <li><b>Facing a power-heavy lineup</b> (high ISO / barrel%)</li>
-          <li><b>Poor splits</b> vs the opponent's handedness</li>
-          <li><b>Hitter-friendly park</b></li>
-          <li><b>Warm weather / wind blowing out</b></li>
-        </ul>
-        <div class="vscore">
-          <div class="vsbox"><h5>+2 points each</h5><ul>
-            <li><b>HR/9 &gt; 1.4</b></li>
-            <li><b>Barrel% &gt; 9%</b></li>
-          </ul></div>
-          <div class="vsbox"><h5>+1 point each</h5><ul>
-            <li>Hard-hit% &gt; 40%</li>
-            <li>Fly-ball% &gt; 40%</li>
-            <li>xSLG &gt; .450</li>
-            <li>Velocity down 1+ mph</li>
-            <li>Opponent top-10 in ISO vs that hand</li>
-            <li>Favorable HR weather / park</li>
-          </ul></div>
-        </div>
-        <div class="vbands">
-          <span class="vband lo">0–2 · Low HR risk</span>
-          <span class="vband mo">3–5 · Moderate HR risk</span>
-          <span class="vband hi">6+ · High HR target</span>
-        </div>
-        <div class="gtip" style="margin-top:12px"><b>Best HR-prop &amp; team-total targets:</b> pitchers with high HR/9, high barrel% and hard-hit% allowed, a high fly-ball rate, facing power lineups in warm weather and hitter-friendly parks.</div>
-        <p style="margin-top:10px;font-size:12px;color:var(--muted2)">Where to find these in Edge Board: <b>HR/9</b>, <b>vs-LHB/RHB splits</b> (incl. SLG &amp; ISO allowed), <b>park</b>, <b>weather</b>, opponent <b>ISO</b>, and the built-in <b>vuln score (1–99)</b> on the Vulnerable tab already fold most of this in. The Statcast-only pieces — <b>barrel%, hard-hit%, xSLG, fastball velocity</b> — aren't in the free data feed; check those on Baseball Savant and use them as tie-breakers.</p>
-      </div>
-
-      <div class="gcard">
-        <h3>Building HR parlays (pairing) the right way</h3>
-        <div class="hrlist">
-          <div class="hritem"><span class="hk">Spread across games</span><div class="hd">Pair bats from <b>different games</b> when you can. It keeps legs more independent — one rainout, tough park, or shaky weather read won't sink the whole ticket.</div></div>
-          <div class="hritem"><span class="hk">Cap legs per game</span><div class="hd">Set the Parlay builder's <b>"max bats from any one game"</b> low (1–2). Two HRs off the same pitcher is positively correlated, which the book usually <i>doesn't</i> pay you fairly for.</div></div>
-          <div class="hritem"><span class="hk">Keep it short</span><div class="hd">Each leg multiplies the variance. <b>2–4 legs</b> is far more realistic than chasing a 6-leg HR moonshot. Longer = lottery ticket.</div></div>
-          <div class="hritem"><span class="hk">Anchor + upside</span><div class="hd">Build around one or two <b>high-conviction A-grade ⭐</b> anchors, then add a ⚡ or 💤 <b>sleeper</b> for the payout bump — not the other way around.</div></div>
-          <div class="hritem"><span class="hk">Stack the filters</span><div class="hd">In the builder, turn on <b>platoon ADV</b>, the <b>A–B grade band</b>, <b>4+ ERA</b> starters or <b>most-vulnerable</b> pitchers, and the <b>+EV</b> checkbox so every leg already clears the bar.</div></div>
-          <div class="hritem"><span class="hk">Same-game, on purpose only</span><div class="hd">If you <i>do</i> stack two bats off one bad pitcher, know you're making a correlation play — bigger upside, but bigger bust risk, and the price rarely reflects it.</div></div>
-        </div>
-      </div>
-
-      <div class="gcard">
-        <h3>Quick gut-checks before you submit</h3>
-        <div class="hrlist">
-          <div class="hritem"><span class="hk">✅ Lineup confirmed?</span><div class="hd">Never bet a HR prop before the lineup posts — a rest day kills it instantly.</div></div>
-          <div class="hritem"><span class="hk">✅ Model % &gt; implied %?</span><div class="hd">If not, pass. No edge, no bet.</div></div>
-          <div class="hritem"><span class="hk">✅ Three or more green signals?</span><div class="hd">Vuln pitcher + platoon ADV + good park/weather is the classic recipe.</div></div>
-          <div class="hritem"><span class="hk">✅ Is the price sane?</span><div class="hd">Shop books on the Odds tab — a few cents of HR odds is a lot of long-run EV.</div></div>
-        </div>
-      </div>
-
-      <div class="gtip">Reality check: HR betting is variance-heavy entertainment, not income. Even a perfectly-built 4-leg HR parlay usually wins a minority of the time — that's the math, not bad luck. Bet amounts you're fine losing, and use the <b>Track</b> tab to see whether your spots actually beat their implied odds over time. <b>21+ · not financial advice · if gambling stops being fun, call 1-800-GAMBLER.</b></div>
-    </div>
   </section>
   <section id="alignView" class="hide">
     <div class="sec-head"><h2>Alignment Score</h2><span class="tag" id="alignTag">0–100 from 9 weighted factors</span><span class="rule"></span></div>
@@ -1738,23 +1601,6 @@
     <div class="sims" id="simsBoard"></div>
   </section>
 
-  <section id="hrbuilderView" class="hide">
-    <div class="sec-head"><h2>🛠️ HR Group Builder</h2><span class="tag">hand-build an HR lineup off the matchup board</span><span class="rule"></span></div>
-    <div class="hrb-top">
-      <div class="sg-cgroup" id="hrbLegs"><button data-l="2">2</button><button data-l="3">3</button><button data-l="4" class="active">4</button><button data-l="5">5</button><button data-l="6">6</button></div>
-      <button class="sg-regen" id="hrbAuto">🔀 Auto-fill</button>
-      <button class="sg-regen" id="hrbClear">Clear</button>
-    </div>
-    <div class="hrb-chips" id="hrbChips"></div>
-    <div class="hrb-filters">
-      <input type="text" id="hrbSearch" placeholder="Search players or team…" autocomplete="off" />
-      <label class="hrb-toggle"><input type="checkbox" id="hrbConf" /> Confirmed only</label>
-      <label class="hrb-toggle"><input type="checkbox" id="hrbStars" /> ⭐ Stars only</label>
-    </div>
-    <div class="hrb-list" id="hrbList"></div>
-    <div class="hrb-summary" id="hrbSummary"></div>
-  </section>
-
   <section id="hrsimView" class="hide">
     <div class="sec-head"><h2>🎲 Daily HR Simulator</h2><span class="tag">10,000 Monte Carlo sims per game — total simulated home runs by hitter</span><span class="rule"></span></div>
     <div class="ws-controls">
@@ -1772,33 +1618,6 @@
   <section id="mlmodelView" class="hide">
     <div class="sec-head"><h2>💯 Moneyline Model</h2><span class="tag">a 0–100 moneyline score per side from 10 weighted matchup factors</span><span class="rule"></span></div>
     <div id="mlBoard"></div>
-  </section>
-
-  <section id="stargroupsView" class="hide">
-    <div class="sec-head"><h2>⭐ Star Groups</h2><span class="tag">auto-built cross-game parlays — confirmed lineups, best matchups vs the starter</span><span class="rule"></span></div>
-    <div id="sgWins" class="sg-wins"></div>
-    <div class="sg-controls">
-      <div class="sg-cgroup" id="sgMarkets">
-        <button data-m="hr" class="active">HR</button>
-        <button data-m="tb">2+ Total Bases</button>
-        <button data-m="hits">1+ Hit</button>
-        <button data-m="rbi">1+ RBI</button>
-        <button data-m="ks">Pitcher Ks</button>
-      </div>
-      <div class="sg-cgroup" id="sgLegs">
-        <button data-l="1">1-Pick</button>
-        <button data-l="2" class="active">2-Pick</button>
-        <button data-l="3">3-Pick</button>
-        <button data-l="4">4-Pick</button>
-        <button data-l="5">5-Pick</button>
-        <button data-l="6">6-Pick</button>
-        <button data-l="8">8-Pick</button>
-        <button data-l="10">10-Pick</button>
-      </div>
-      <button class="sg-regen" id="sgRegen">🎲 Shuffle</button>
-    </div>
-    <div class="sg-meta" id="sgMeta"></div>
-    <div id="sgBoard"></div>
   </section>
 
   <section id="vulnrepView" class="hide">
@@ -1901,17 +1720,6 @@
       </div>
       <div id="arsCard"></div>
     </div>
-  </section>
-
-  <section id="vulnView" class="hide">
-    <div class="sec-head"><h2>Pitcher Weak Spots</h2><span class="tag">batters in the lineup slot where each pitcher is most vulnerable to a HR</span><span class="rule"></span></div>
-    <div class="ws-controls">
-      <div class="ws-date"><button id="wsPrev" title="Previous day">←</button><span id="wsDateLbl">—</span><button id="wsNext" title="Next day">→</button><button id="wsToday" class="ws-today">Today</button></div>
-      <div class="ws-count" id="wsCount"></div>
-    </div>
-    <div class="ws-chips" id="wsChips"></div>
-    <div class="ws-tablewrap"><table class="ws-table" id="wsTable"></table></div>
-    <div class="ws-note">Weak Spot = the batting-order slot where the model's HR-matchup engine rates this lineup most dangerous against the starter; the Target Batter is whoever hits in that slot. xSLG &amp; xwOBA are the MLB Stats API's expected stats (no proxy needed); OPS &amp; PA are season-to-date.</div>
   </section>
 
   <section id="wxView" class="hide">
@@ -2120,6 +1928,108 @@
         </div>
       </div>
 
+    </div>
+  
+  <div style="border-top:1px solid var(--line);margin:26px 0 4px"></div>
+
+    <div class="sec-head"><h2>💣 How to Pick Homers</h2><span class="tag">what to look for · straights &amp; parlays</span><span class="rule"></span></div>
+    <div class="guide">
+      <div class="gcard">
+        <h3>The big idea</h3>
+        <p>Home runs are <b>low-probability, high-variance</b> bets — even the very best spots are usually only <b>15–25%</b> to actually go deep, and most bats sit at 5–12%. You can't make a hitter homer; you can only <b>stack the conditions</b> that make it more likely, then bet when the model's number beats the book's. Think of it as repeatedly buying good <i>chances</i>, not predicting certainties.</p>
+      </div>
+
+      <div class="gcard">
+        <h3>Checklist for a strong straight (single) HR bet</h3>
+        <p>The more of these that line up on one hitter, the better the spot — Edge Board surfaces all of them:</p>
+        <div class="hrlist">
+          <div class="hritem"><span class="hk">🎯 Vulnerable pitcher</span><div class="hd">Target bats facing a high-vuln starter — especially <b>T1 / Prime Targets</b> on the Vulnerable tab. Read the pitcher's <b>vs-LHB / vs-RHB allowed</b> line: high <b>SLG, ISO, HR</b> against the batter's side is exactly what you want. A 🎯 <b>weak-spot</b> badge means that hitter specifically matches the side the pitcher gets hurt by.</div></div>
+          <div class="hritem"><span class="hk">⚖️ Platoon advantage</span><div class="hd">An <b>ADV</b> badge (lefty bat vs RHP, or righty vs LHP) is one of the most reliable HR signals. Downgrade or fade <b>DIS</b>.</div></div>
+          <div class="hritem"><span class="hk">🏟️ Park</span><div class="hd">Favor a <b>HR park ≥ ~1.10</b> (Coors, Cincinnati, Yankee Stadium, Great American). A pitcher's park can quietly add or erase a chunk of HR equity.</div></div>
+          <div class="hritem"><span class="hk">🌬️ Weather</span><div class="hd"><b>Wind blowing out</b> and <b>warm air (≈75°F+)</b> boost carry. The Weather tab flags HR-favorable games; a "Hitters +" chip is a green light, "Pitchers +" a caution.</div></div>
+          <div class="hritem"><span class="hk">🔥 Form &amp; power</span><div class="hd">A hot 🔥 L10 helps, but <b>don't overpay</b> for a heater. Underlying power (season <b>ISO / SLG</b>) is steadier than a 7-day streak.</div></div>
+          <div class="hritem"><span class="hk">⭐ Grade &amp; Edge Score</span><div class="hd">Lean on <b>A / A+</b> grades and high Edge Scores. ⭐ = the team's best bat that game, ⚡ = second, 💤 = the overlooked sleeper.</div></div>
+          <div class="hritem"><span class="hk">🔢 Lineup spot</span><div class="hd">Only bet <b>confirmed lineups</b>, and prefer hitters in the <b>top 5</b> — more plate appearances means more swings to hit one out.</div></div>
+          <div class="hritem"><span class="hk">💰 Value over the book</span><div class="hd">The single most important habit: compare the model's <b>HR %</b> to the book's <b>implied %</b> from the odds. Only fire when the model is clearly <b>above</b> implied — that's a <b>+EV</b> spot. A great matchup at a terrible price is still a bad bet.</div></div>
+        </div>
+      </div>
+
+      <div class="gcard">
+        <h3>Reading the Statcast line (contact quality)</h3>
+        <p>With a Savant proxy set, every hitter shows a <b>Statcast pill line</b> — their season quality-of-contact. It describes how well a batter <i>should</i> hit for power, stripped of luck. Higher is better on all of these except <b>xHR</b>, which is a signal:</p>
+        <div class="hrlist">
+          <div class="hritem"><span class="hk">EV · exit velocity</span><div class="hd">How hard he hits the ball. League ~88–89 mph · <b>good 90+</b> · <b>elite 92+</b>.</div></div>
+          <div class="hritem"><span class="hk">LA · launch angle</span><div class="hd">His average trajectory. Home runs live ~15–35°; the power sweet spot is <b>12–20°</b>. Too low (&lt;8°) = groundballs, too high (&gt;25° avg) = popups.</div></div>
+          <div class="hritem"><span class="hk">Barrel% · barrels per batted ball</span><div class="hd">The best single power stat — the EV+LA combo that becomes a HR most often. League ~7–8% · good 10%+ · strong 12–14% · <b>elite 15%+</b>.</div></div>
+          <div class="hritem"><span class="hk">HardHit% · 95+ mph contact</span><div class="hd">How consistently he squares it up. League ~38–40% · good 45%+ · <b>elite 50%+</b>.</div></div>
+          <div class="hritem"><span class="hk">Pull-air% · pulled balls in the air</span><div class="hd">Where home runs actually come from, and one of the most predictive marks. ~10% average · good 13%+ · <b>elite 16%+</b>.</div></div>
+          <div class="hritem"><span class="hk">xwOBA · expected value on contact</span><div class="hd">Overall quality-of-contact production. League ~.315–.320 · good .350+ · <b>elite .380+</b>. A high xwOBA means the results are real, not luck.</div></div>
+          <div class="hritem"><span class="hk">xHR · expected-HR signal (green / red)</span><div class="hd">Not "high = good" — it's a regression flag. <b style="color:var(--good)">Green +%</b> = his contact says he's homering <i>less</i> than he should be, so he's due to regress up (a buy-low). <b style="color:#C8102E">Red −%</b> = he's running hot on luck (fade or downgrade).</div></div>
+        </div>
+        <div class="gtip" style="margin-top:12px"><b>The ideal power profile to hunt:</b> Barrel <b>15%+</b>, HardHit <b>50%+</b>, Pull-air <b>16%+</b>, xwOBA <b>.380+</b>, LA <b>12–20°</b> — with a <b style="color:var(--good)">green xHR</b> as the tiebreaker. When several of these light up on a <b>confirmed</b> hitter facing a <b>vulnerable</b> starter in a good <b>park &amp; weather</b>, that's your strongest home-run spot. A great profile improves your odds — it's never a lock.</div>
+      </div>
+
+      <div class="gcard">
+        <h3>Pitcher home-run vulnerability checklist</h3>
+        <p>Flip the lens and grade the <b>pitcher</b> instead of the hitter. Target starters showing multiple of these red flags — the more that stack, the more his bats become live HR plays (and his opponent's team total / run line gets interesting):</p>
+        <ul class="vflags">
+          <li><b>HR/9 above 1.3</b></li>
+          <li><b>Barrel rate allowed above 9%</b></li>
+          <li><b>Hard-hit rate allowed above 40%</b></li>
+          <li><b>Fly-ball rate above 40%</b></li>
+          <li><b>xSLG allowed above .450</b></li>
+          <li><b>Fastball velocity down 1+ mph</b></li>
+          <li><b>Facing a power-heavy lineup</b> (high ISO / barrel%)</li>
+          <li><b>Poor splits</b> vs the opponent's handedness</li>
+          <li><b>Hitter-friendly park</b></li>
+          <li><b>Warm weather / wind blowing out</b></li>
+        </ul>
+        <div class="vscore">
+          <div class="vsbox"><h5>+2 points each</h5><ul>
+            <li><b>HR/9 &gt; 1.4</b></li>
+            <li><b>Barrel% &gt; 9%</b></li>
+          </ul></div>
+          <div class="vsbox"><h5>+1 point each</h5><ul>
+            <li>Hard-hit% &gt; 40%</li>
+            <li>Fly-ball% &gt; 40%</li>
+            <li>xSLG &gt; .450</li>
+            <li>Velocity down 1+ mph</li>
+            <li>Opponent top-10 in ISO vs that hand</li>
+            <li>Favorable HR weather / park</li>
+          </ul></div>
+        </div>
+        <div class="vbands">
+          <span class="vband lo">0–2 · Low HR risk</span>
+          <span class="vband mo">3–5 · Moderate HR risk</span>
+          <span class="vband hi">6+ · High HR target</span>
+        </div>
+        <div class="gtip" style="margin-top:12px"><b>Best HR-prop &amp; team-total targets:</b> pitchers with high HR/9, high barrel% and hard-hit% allowed, a high fly-ball rate, facing power lineups in warm weather and hitter-friendly parks.</div>
+        <p style="margin-top:10px;font-size:12px;color:var(--muted2)">Where to find these in Edge Board: <b>HR/9</b>, <b>vs-LHB/RHB splits</b> (incl. SLG &amp; ISO allowed), <b>park</b>, <b>weather</b>, opponent <b>ISO</b>, and the built-in <b>vuln score (1–99)</b> on the Vulnerable tab already fold most of this in. The Statcast-only pieces — <b>barrel%, hard-hit%, xSLG, fastball velocity</b> — aren't in the free data feed; check those on Baseball Savant and use them as tie-breakers.</p>
+      </div>
+
+      <div class="gcard">
+        <h3>Building HR parlays (pairing) the right way</h3>
+        <div class="hrlist">
+          <div class="hritem"><span class="hk">Spread across games</span><div class="hd">Pair bats from <b>different games</b> when you can. It keeps legs more independent — one rainout, tough park, or shaky weather read won't sink the whole ticket.</div></div>
+          <div class="hritem"><span class="hk">Cap legs per game</span><div class="hd">Set the Parlay builder's <b>"max bats from any one game"</b> low (1–2). Two HRs off the same pitcher is positively correlated, which the book usually <i>doesn't</i> pay you fairly for.</div></div>
+          <div class="hritem"><span class="hk">Keep it short</span><div class="hd">Each leg multiplies the variance. <b>2–4 legs</b> is far more realistic than chasing a 6-leg HR moonshot. Longer = lottery ticket.</div></div>
+          <div class="hritem"><span class="hk">Anchor + upside</span><div class="hd">Build around one or two <b>high-conviction A-grade ⭐</b> anchors, then add a ⚡ or 💤 <b>sleeper</b> for the payout bump — not the other way around.</div></div>
+          <div class="hritem"><span class="hk">Stack the filters</span><div class="hd">In the builder, turn on <b>platoon ADV</b>, the <b>A–B grade band</b>, <b>4+ ERA</b> starters or <b>most-vulnerable</b> pitchers, and the <b>+EV</b> checkbox so every leg already clears the bar.</div></div>
+          <div class="hritem"><span class="hk">Same-game, on purpose only</span><div class="hd">If you <i>do</i> stack two bats off one bad pitcher, know you're making a correlation play — bigger upside, but bigger bust risk, and the price rarely reflects it.</div></div>
+        </div>
+      </div>
+
+      <div class="gcard">
+        <h3>Quick gut-checks before you submit</h3>
+        <div class="hrlist">
+          <div class="hritem"><span class="hk">✅ Lineup confirmed?</span><div class="hd">Never bet a HR prop before the lineup posts — a rest day kills it instantly.</div></div>
+          <div class="hritem"><span class="hk">✅ Model % &gt; implied %?</span><div class="hd">If not, pass. No edge, no bet.</div></div>
+          <div class="hritem"><span class="hk">✅ Three or more green signals?</span><div class="hd">Vuln pitcher + platoon ADV + good park/weather is the classic recipe.</div></div>
+          <div class="hritem"><span class="hk">✅ Is the price sane?</span><div class="hd">Shop books on the Odds tab — a few cents of HR odds is a lot of long-run EV.</div></div>
+        </div>
+      </div>
+
+      <div class="gtip">Reality check: HR betting is variance-heavy entertainment, not income. Even a perfectly-built 4-leg HR parlay usually wins a minority of the time — that's the math, not bad luck. Bet amounts you're fine losing, and use the <b>Track</b> tab to see whether your spots actually beat their implied odds over time. <b>21+ · not financial advice · if gambling stops being fun, call 1-800-GAMBLER.</b></div>
     </div>
   </section>
 
@@ -3105,6 +3015,11 @@ async function buildModel(date){
       b.oppERA=(kobj&&kobj.cur.era!=null)?pnum(kobj.cur.era):null;
       b.oppVuln=(kobj&&kobj.vuln)?kobj.vuln.score:null;
       b.oppHr9=(kobj&&kobj.cur&&kobj.cur.hr9!=null)?kobj.cur.hr9:null; // pitcher HR/9 for the Favorite-Plays reasons
+      b.oppWhip=(kobj&&kobj.cur&&kobj.cur.whip!=null)?pnum(kobj.cur.whip):null;
+      b.oppK9=(kobj&&kobj.cur&&kobj.cur.k9!=null)?kobj.cur.k9:null;
+      b.oppVulnLabel=(kobj&&kobj.vuln)?kobj.vuln.label:null;
+      b.oppThrows=(kobj&&kobj.throws)?kobj.throws:null;
+      b.oppFormState=(kobj&&kobj.form)?kobj.form.state:null;
     });
     oppCtx(g._awayBat,g._homeK); // away batters face home SP
     oppCtx(g._homeBat,g._awayK);
@@ -4632,7 +4547,8 @@ function hrPlayScore(b,g){
   const R=hrReasons(b,g);
   const net=R.reduce((s,r)=>s+(r.good?r.w:-r.w),0);
   // blend model probability, arsenal score, and net reason weight into one rankable number
-  return {score:Math.max(0,Math.min(100, model*100*1.6 + ms*30 + net*4)),
+  // (internal ranking only — never displayed — so it's left uncapped at the top for resolution)
+  return {score:Math.max(0, model*100*1.6 + ms*30 + net*4),
           v, reasons:R, model, edge:v.edge};
 }
 
@@ -4656,34 +4572,172 @@ function playSummary(p){
   return `${shortName(b.name)} is the play — ${lead.t}${second?` ${second.t}`:""} Model puts him at ${mp}% to go deep.${edgeTxt}`;
 }
 
+// Persist the day's picks so they don't shift between renders/reloads.
+const LS_FAV="eb:fav";
+function loadFav(){try{return JSON.parse(localStorage.getItem(LS_FAV)||"null");}catch(e){return null;}}
+function saveFav(o){try{localStorage.setItem(LS_FAV,JSON.stringify(o));return true;}catch(e){return false;}}
+let FAV_REPICK=false;
+// Grammatical list join: ["a","b","c"] -> "a, b, and c"
+function ddJoin(a){a=a.filter(Boolean);return a.length<=1?(a[0]||""):a.length===2?`${a[0]} and ${a[1]}`:a.slice(0,-1).join(", ")+", and "+a[a.length-1];}
+
+// True when this batter has already homered in today's game (live/final result).
+function favHR(b){return !!(b&&b.result&&b.result.hr>0);}
+// A real deep-dive: several paragraphs of analysis, every clause tied to a live model field.
+// Nothing is invented — a sentence only appears when the number behind it exists.
+function deepDive(p,g){
+  const b=p.b, S=b.statcast||{}, paras=[];
+  const nm=shortName(b.name);
+  const iso=pnum(b.cur&&b.cur.iso);
+  const hrCt=b.cur&&b.cur.hr!=null?b.cur.hr:null, gms=b.cur&&b.cur.g!=null?b.cur.g:null;
+  const hrRate=b.cur&&b.cur.hrRate!=null?b.cur.hrRate:null;
+  // Para 1 — who he is as a power hitter
+  const s1=[`${b.name} is the bat to back for a home run in this one.`];
+  const pow=[];
+  if(iso!=null)pow.push(`a ${isoStr(iso)} isolated power`);
+  if(hrCt!=null&&gms!=null)pow.push(`${hrCt} home run${hrCt===1?"":"s"} across ${gms} games`);
+  if(hrRate!=null)pow.push(`a long ball in ${(hrRate*100).toFixed(1)}% of his plate appearances`);
+  if(pow.length)s1.push(`He carries ${ddJoin(pow)} into tonight.`);
+  const sc=[];
+  if(S.barrel!=null)sc.push(`a ${S.barrel.toFixed(0)}% barrel rate`);
+  if(S.ev!=null)sc.push(`${S.ev.toFixed(0)} mph average exit velocity`);
+  if(S.pullAir!=null)sc.push(`${S.pullAir.toFixed(0)}% of his air contact pulled`);
+  if(sc.length)s1.push(`The batted-ball data backs it up — ${ddJoin(sc)}${S.pullAir!=null?", the pull-side loft that turns into homers":""}.`);
+  paras.push(s1.join(" "));
+  // Para 2 — the mechanical edge: arsenal + platoon
+  const c=b.hrMatch&&b.hrMatch.contrib&&b.hrMatch.contrib[0];
+  const s2=[];
+  if(c&&c.usage!=null){
+    const pit=pitchName(c.type).toLowerCase(), use=Math.round(c.usage*100);
+    const fit=c.bPow>=0.62?`a pitch ${nm} punishes`:c.bPow>=0.5?`a pitch ${nm} handles well`:`a pitch ${nm} can turn on when he gets it`;
+    s2.push(`The matchup turns on the ${pit}: ${b.oppPitcher||"the starter"} goes to it ${use}% of the time, and it's ${fit}.`);
+  }
+  if(b.platoon&&b.platoon.badge==="ADV")s2.push(`He owns the platoon edge too — ${b.bats}HB against a ${b.oppThrows||b.platoon.oppHand||"opposite"}-handed starter${b.platoon.split!=null?`, a split in which he's posted a ${fmt3(pnum(b.platoon.split))} OPS`:""}.`);
+  else if(b.platoon&&b.platoon.badge==="DIS")s2.push(`The honest caution here: he's on the short side of the platoon, ${b.bats}HB versus a same-handed arm.`);
+  if(b.hrMatch&&b.hrMatch.score!=null)s2.push(`Blended together, the arsenal-fit model grades this matchup ${Math.round(b.hrMatch.score)} out of 100.`);
+  if(s2.length)paras.push(s2.join(" "));
+  // Para 3 — is the pitcher takeable
+  const s3=[];
+  if(b.oppHr9!=null){
+    const tag=b.oppHr9>=1.5?"a genuinely homer-prone arm":b.oppHr9>=1.25?"an arm that gives up his share of homers":b.oppHr9<=0.85?"a tougher, homer-suppressing arm":"a roughly league-average arm for power";
+    const arm=[`${b.oppPitcher||"The starter"} profiles as ${tag}, ${b.oppHr9.toFixed(2)} HR/9`];
+    const ex=[];
+    if(b.oppERA!=null)ex.push(`a ${b.oppERA.toFixed(2)} ERA`);
+    if(b.oppWhip!=null)ex.push(`${b.oppWhip.toFixed(2)} WHIP`);
+    if(b.oppK9!=null)ex.push(`${b.oppK9.toFixed(1)} K/9`);
+    if(ex.length)arm.push(`alongside ${ddJoin(ex)}`);
+    s3.push(arm.join(" ")+".");
+    if(b.oppVulnLabel)s3.push(`The vulnerability model files him under "${b.oppVulnLabel}".`);
+    if(b.oppFormState==="struggling")s3.push(`He's been scuffling across his recent starts, too.`);
+    else if(b.oppFormState==="sharp")s3.push(`One caveat: he's actually been sharp lately, so this isn't a soft spot.`);
+  }
+  if(s3.length)paras.push(s3.join(" "));
+  // Para 4 — park & sky
+  const s4=[];
+  if(b._park!=null){
+    if(b._park>=1.05)s4.push(`The ballpark is on his side, lifting home runs at a ${b._park.toFixed(2)} factor.`);
+    else if(b._park<=0.95)s4.push(`The park pushes back a little (${b._park.toFixed(2)} HR factor) — a real mark against the spot.`);
+    else s4.push(`The park plays roughly neutral for power (${b._park.toFixed(2)}).`);
+  }
+  if(b._wx){
+    const wx=[];
+    if(b._wx.tempF!=null)wx.push(`${Math.round(b._wx.tempF)}°F`);
+    if(b._wx.windMph!=null&&b._wx.cardinal){
+      const dir=b._wx.outComponent>1.5?`blowing out toward ${b._wx.cardinal}`:b._wx.outComponent<-1.5?`blowing in from ${b._wx.cardinal}`:`crosswind out of the ${b._wx.cardinal}`;
+      wx.push(`${Math.round(b._wx.windMph)} mph ${dir}`);
+    }
+    if(wx.length){
+      const v=b._wx.mult>=1.08?" — air that carries the ball":b._wx.mult<=0.92?" — a heavy, ball-smothering sky":"";
+      s4.push(`First-pitch conditions: ${ddJoin(wx)}${v} (${b._wx.label||"neutral"}).`);
+    }
+    if(b._wx.roof&&b._wx.roof!=="open")s4.push(`It's a ${b._wx.roof==="dome"?"domed":"retractable-roof"} park, so the weather read may be muted.`);
+  }
+  if(s4.length)paras.push(s4.join(" "));
+  // Para 5 — form & the head-to-head history
+  const s5=[], f=b.recentForm;
+  if(f&&f.l10&&f.l10.pa>=12){
+    const dir=f.state==="hot"?"locked in":f.state==="cold"?"in a cold patch":"steady";
+    let form=`Over his last 10 games he's ${dir}, slugging a ${fmt3(f.l10.ops)} OPS`;
+    if(f.delta)form+=` (${f.delta>=0?"+":""}${Math.round(f.delta*1000)} points against his season baseline)`;
+    if(f.l10.hr>0)form+=`, with ${f.l10.hr} homer${f.l10.hr===1?"":"s"} already in that window`;
+    s5.push(form+".");
+  }
+  if(b.bvp&&b.bvp.ab>=8){
+    if(b.bvp.hr>=1)s5.push(`He's gone deep off ${b.oppPitcher||"this pitcher"} before — ${b.bvp.hr} HR in ${b.bvp.ab} career at-bats${b.bvp.ops!=null?` (a ${fmt3(pnum(b.bvp.ops))} OPS)`:""}.`);
+    else if(b.bvp.ops!=null&&pnum(b.bvp.ops)<=0.6)s5.push(`For balance: he hasn't historically solved this arm (${fmt3(pnum(b.bvp.ops))} OPS in ${b.bvp.ab} career AB).`);
+  }
+  if(b.slot!=null&&b.slot<=5)s5.push(`Hitting ${ordinal(b.slot)} keeps him in line for a full set of swings.`);
+  if(s5.length)paras.push(s5.join(" "));
+  // Para 6 — bottom line
+  const mp=Math.round(p.model*100);
+  let bl=`Bottom line: the model puts ${nm} at ${mp}% to homer tonight`;
+  if(b.proj&&b.proj.hr!=null)bl+=`, projecting ${b.proj.hr.toFixed(2)} home runs`;
+  bl+=".";
+  const s6=[bl];
+  if(p.edge!=null&&p.edge>0.02)s6.push(`At the current price that reads as roughly a +${Math.round(p.edge*100)}% edge.`);
+  else if(p.edge!=null&&p.edge<-0.03)s6.push(`The current price is a touch short of the model, so it's worth shopping for a better number.`);
+  s6.push(`Even then, home runs are rare events — this is the sharpest swing on the card, not a sure thing.`);
+  paras.push(s6.join(" "));
+  return paras;
+}
+
 let FAV_DATA=null;
 function renderFavorites(model){
   const wrap=el("favWrap");if(!wrap)return;
-  if(!model||!model.games||!model.games.length){wrap.innerHTML='<div class="empty"><b>No slate loaded</b>Load a slate to see each game\'s best home run play with full reasoning.</div>';return;}
-  const favs=model.games.map(gameFavorite).filter(Boolean);
+  if(!model||!model.games||!model.games.length){wrap.innerHTML='<div class="empty"><b>No slate loaded</b>Load a slate to see each game\'s best home run play with a full deep-dive.</div>';return;}
+  let favs=model.games.map(gameFavorite).filter(Boolean);
   if(!favs.length){wrap.innerHTML='<div class="empty">No hitters with home run projections yet — load a slate with confirmed data.</div>';return;}
-  // lock of the day = highest-scoring best play across all games
-  const lock=favs.slice().sort((a,b)=>b.best.score-a.best.score)[0];
+  // ---- Stability: picks lock in for the date and stay put across renders/reloads ----
+  const saved=loadFav();
+  const persist=!!(saved&&saved.date===model.date&&!FAV_REPICK&&saved.picks);
+  if(persist){
+    favs.forEach(f=>{
+      const sp=saved.picks[String(f.g.gamePk)];if(!sp)return;
+      const bats=[...(f.g._awayBat||[]),...(f.g._homeBat||[])];
+      const bB=bats.find(x=>String(x.id)===String(sp.bestId));
+      const rB=sp.runnerId?bats.find(x=>String(x.id)===String(sp.runnerId)):null;
+      if(bB)f.best={b:bB,...hrPlayScore(bB,f.g)};
+      if(rB)f.runner={b:rB,...hrPlayScore(rB,f.g)};
+    });
+  }
+  // lock of the day = persisted choice if we have one, else highest-scoring best play
+  let lock=null;
+  if(persist&&saved.lockPk)lock=favs.find(f=>String(f.g.gamePk)===String(saved.lockPk));
+  if(!lock)lock=favs.slice().sort((a,b)=>b.best.score-a.best.score)[0];
+  // save the selection whenever it's a fresh pick or an explicit re-pick
+  if(!persist||FAV_REPICK){
+    const picks={};
+    favs.forEach(f=>{picks[String(f.g.gamePk)]={bestId:f.best.b.id,runnerId:f.runner?f.runner.b.id:null};});
+    saveFav({date:model.date,lockPk:String(lock.g.gamePk),picks});
+    FAV_REPICK=false;
+  }
+  FAV_DATA={favs,lock};
+  const rz=r=>`<li class="${r.good?"fav-pro":"fav-con"}">${r.good?"✓":"✕"} ${r.t}</li>`;
   const lockCard=`<div class="fav-lock">
-    <div class="fav-lock-badge">🔒 LOCK OF THE DAY</div>
-    <div class="fav-lock-name">${lock.best.b.name} <span>HR · ${lock.g.away.abbr||lock.g.away.short} @ ${lock.g.home.abbr||lock.g.home.short}</span></div>
+    <div class="fav-lock-top"><div class="fav-lock-badge">🔒 LOCK OF THE DAY</div>
+      <button id="favRepick" class="fav-repick" title="Re-pick from the latest lineups & data">↻ Re-pick</button></div>
+    <div class="fav-lock-name">${starHTML(lock.g.gamePk,lock.best.b.id,"hr",isWatched(lock.g.gamePk,lock.best.b.id,"hr"))}${favHR(lock.best.b)?"💣 ":""}${lock.best.b.name} <span>HR · ${lock.g.away.abbr||lock.g.away.short} @ ${lock.g.home.abbr||lock.g.home.short}</span></div>
+    ${lock.best.b.result?`<div class="fav-res">${resultChip(lock.best.b)}</div>`:""}
     <div class="fav-lock-sum">${playSummary(lock.best)}</div>
   </div>`;
   const cards=favs.map(({g,best,runner})=>{
-    const rz=r=>`<li class="${r.good?"fav-pro":"fav-con"}">${r.good?"✓":"✕"} ${r.t}</li>`;
+    const dd=deepDive(best,g).map(x=>`<p class="fav-dd-p">${x}</p>`).join("");
     const bestBlock=`
       <div class="fav-play">
-        <div class="fav-ph"><span class="fav-tag">FAVORITE</span><b>${best.b.name}</b>
+        <div class="fav-ph"><span class="fav-tag">FAVORITE</span>${starHTML(g.gamePk,best.b.id,"hr",isWatched(g.gamePk,best.b.id,"hr"))}<b>${favHR(best.b)?"💣 ":""}${best.b.name}</b>
           <span class="fav-hand">${best.b.bats||"?"}HB vs ${best.b.oppPitcher?shortName(best.b.oppPitcher):"TBD"}</span>
           <span class="fav-pct">${Math.round(best.model*100)}%</span></div>
-        <div class="fav-sum">${playSummary(best)}</div>
+        ${best.b.result?`<div class="fav-res">${resultChip(best.b)}</div>`:""}
+        <div class="fav-dd">${dd}</div>
+        <div class="fav-why-h">The case, point by point</div>
         <ul class="fav-why">${best.reasons.length?best.reasons.map(rz).join(""):'<li class="fav-thin">Limited data on this matchup — model call only.</li>'}</ul>
       </div>`;
     const runBlock=runner?`
       <div class="fav-play fav-run">
-        <div class="fav-ph"><span class="fav-tag fav-tag2">RUNNER-UP</span><b>${runner.b.name}</b>
+        <div class="fav-ph"><span class="fav-tag fav-tag2">RUNNER-UP</span>${starHTML(g.gamePk,runner.b.id,"hr",isWatched(g.gamePk,runner.b.id,"hr"))}<b>${favHR(runner.b)?"💣 ":""}${runner.b.name}</b>
           <span class="fav-hand">${runner.b.bats||"?"}HB vs ${runner.b.oppPitcher?shortName(runner.b.oppPitcher):"TBD"}</span>
           <span class="fav-pct">${Math.round(runner.model*100)}%</span></div>
+        ${runner.b.result?`<div class="fav-res">${resultChip(runner.b)}</div>`:""}
+        <div class="fav-sum">${playSummary(runner)}</div>
         <ul class="fav-why">${runner.reasons.slice(0,3).map(rz).join("")||'<li class="fav-thin">Thin case — secondary option.</li>'}</ul>
       </div>`:"";
     return `<div class="fav-card">
@@ -4691,8 +4745,10 @@ function renderFavorites(model){
       ${bestBlock}${runBlock}
     </div>`;
   }).join("");
-  wrap.innerHTML=lockCard+`<div class="fav-grid">${cards}</div>`+
-    `<div class="fav-note"><b>How these are chosen:</b> every hitter's home run case is scored from real model inputs — arsenal fit (the exact pitch a starter throws most and how hard the batter hits it), pitcher HR/9, park, platoon, weather, recent form, barrel rate, and any batter-vs-pitcher history. The ✓/✕ lines are the actual reasons, each tied to a number. Nothing here is invented narrative; where a matchup is thin, it says so. <b>This is analysis, not a guarantee</b> — home runs are rare events and even the best play is usually against the odds to hit on any given night. 21+. If gambling stops being fun, call 1-800-GAMBLER.</div>`;
+  wrap.innerHTML=lockCard+
+    `<div class="fav-lockmsg">Picks lock in when you first load today's slate and stay put — tap <b>↻ Re-pick</b> to refresh from the latest lineups & data.</div>`+
+    `<div class="fav-grid">${cards}</div>`+
+    `<div class="fav-note"><b>How these are built:</b> every hitter's home run case is scored from real model inputs — arsenal fit (the exact pitch a starter throws most and how hard the batter hits it), pitcher HR/9, ERA, WHIP, park, weather, platoon, recent form, barrel rate and exit velocity, and any batter-vs-pitcher history. The deep-dive and the ✓/✕ lines are assembled straight from those numbers — a sentence only appears when the stat behind it exists, so nothing here is invented narrative; where a matchup is thin, it says so. <b>This is analysis, not a guarantee</b> — home runs are rare events and even the best play is usually against the odds to hit on any given night. 21+. If gambling stops being fun, call 1-800-GAMBLER.</div>`;
 }
 
 // ===================== ⚾ NRFI / YRFI — first-inning run model =====================
@@ -6853,12 +6909,8 @@ function setView(v){
   el("bestView").classList.toggle("hide",v!=="best");
   el("hrmodelView").classList.toggle("hide",v!=="hrmodel");
   el("vulnrepView").classList.toggle("hide",v!=="vulnrep");
-  el("stargroupsView").classList.toggle("hide",v!=="stargroups");
   el("mlmodelView").classList.toggle("hide",v!=="mlmodel");
   el("hrsimView").classList.toggle("hide",v!=="hrsim");
-  el("hrbuilderView").classList.toggle("hide",v!=="hrbuilder");
-  el("homerView").classList.toggle("hide",v!=="homer");
-  el("briefView").classList.toggle("hide",v!=="brief");
   el("zonesView").classList.toggle("hide",v!=="zones");
   el("arsenalView").classList.toggle("hide",v!=="arsenal");
   el("liveView").classList.toggle("hide",v!=="live");
@@ -6868,11 +6920,9 @@ function setView(v){
   el("nrfiView").classList.toggle("hide",v!=="nrfi");
   el("favView").classList.toggle("hide",v!=="fav");
   el("compareView").classList.toggle("hide",v!=="compare");
-  el("hrguideView").classList.toggle("hide",v!=="hrguide");
   el("propsView").classList.toggle("hide",v!=="props");
   el("oddsView").classList.toggle("hide",v!=="odds");
   el("parlayView").classList.toggle("hide",v!=="parlay");
-  el("vulnView").classList.toggle("hide",v!=="vuln");
   el("wxView").classList.toggle("hide",v!=="wx");
   el("teamsView").classList.toggle("hide",v!=="teams");
   el("trendsView").classList.toggle("hide",v!=="trends");
@@ -6883,12 +6933,8 @@ function setView(v){
   if(v==="best"&&MODEL) renderBestBets(MODEL);
   if(v==="hrmodel"&&MODEL) renderHRModel(MODEL);
   if(v==="vulnrep"&&MODEL) renderVulnReport(MODEL);
-  if(v==="stargroups"&&MODEL) renderStarGroups(MODEL);
   if(v==="mlmodel"&&MODEL) renderMLModel(MODEL);
   if(v==="hrsim"&&MODEL) renderHRSim(MODEL);
-  if(v==="hrbuilder"&&MODEL) renderHRBuilder(MODEL);
-  if(v==="homer") renderHomerAI(MODEL);
-  if(v==="brief"&&MODEL) renderBriefings(MODEL);
   if(v==="zones"&&MODEL) renderZones(MODEL);
   if(v==="arsenal"&&MODEL) renderArsenal(MODEL);
   if(v==="targets") renderTargets(MODEL);
@@ -6900,7 +6946,6 @@ function setView(v){
   if(v==="fav"&&MODEL) renderFavorites(MODEL);
   if(v==="compare"&&MODEL) renderCompare(MODEL);
   if(v==="align"&&MODEL) renderAlignment();
-  if(v==="vuln"&&MODEL) renderVuln(MODEL);
   if(v==="wx"&&MODEL) renderWeather(MODEL);
   if(v==="props"&&MODEL) renderProps(MODEL);
   if(v==="odds"&&MODEL) renderOddsBoard(MODEL);
@@ -6935,7 +6980,7 @@ async function run(){
 }
 function updateFreshLabel(){const e=el("freshLbl");if(e)e.textContent=freshText(LAST_REFRESH,Date.now());}
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
-const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",stargroups:"Star Groups — auto-built parlays",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",hrbuilder:"HR Group Builder",homer:"Homer AI — your HR assistant",brief:"Game Briefings",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",targets:"My Targets — players &amp; props you're on today",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",mgrid:"Matchup Grid — full lineup, every metric",nrfi:"NRFI / YRFI — will anyone score in the 1st?",fav:"Favorite Plays — best HR bet per game, with reasons",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",hrguide:"How to Pick Homers",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",vuln:"Vulnerable Pitchers",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
+const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",targets:"My Targets — players &amp; props you're on today",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",mgrid:"Matchup Grid — full lineup, every metric",nrfi:"NRFI / YRFI — will anyone score in the 1st?",fav:"Favorite Plays — best HR bet per game, with reasons",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
   const t=el("viewTitle");if(t)t.innerHTML=`<span>${VIEW_TITLE[v]||""}</span><a class="newtab-btn" href="#/${v}" target="_blank" rel="noopener" title="Open this page in a new browser tab">⧉ New tab</a>`;
@@ -6979,6 +7024,9 @@ document.addEventListener("click",e=>{
   const on=toggleWatch(g,id,mk,nm,tm,(MODEL&&MODEL.date)||todayStr());
   s.classList.toggle("on",on);s.textContent=on?"★":"☆";
   if(VIEW==="targets")renderTargets(MODEL);
+});
+el("favWrap")&&el("favWrap").addEventListener("click",e=>{
+  if(e.target.closest("#favRepick")){FAV_REPICK=true;renderFavorites(MODEL);}
 });
 el("tgWrap")&&el("tgWrap").addEventListener("change",e=>{
   const t=e.target;
