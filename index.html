@@ -1038,6 +1038,61 @@
             border-left:3px solid var(--teal);border-radius:2px;padding:11px 14px}
   .fav-note b{color:var(--chalk)}
 
+  /* Prop Lab */
+  .pl-modes{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+  .pl-mode{font-family:'Saira Condensed',sans-serif;font-weight:600;font-size:13px;letter-spacing:.03em;text-transform:uppercase;
+           color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:2px;padding:7px 14px;cursor:pointer}
+  .pl-mode.on{color:var(--ink);background:var(--amber);border-color:var(--amber)}
+  .pl-mode:not(.on):hover{color:var(--chalk);border-color:var(--muted2)}
+  .pl-selectors{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 14px}
+  .pl-selectors label{font-family:'Roboto Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+                      color:var(--muted2);display:flex;flex-direction:column;gap:4px}
+  .pl-selectors select{font-family:'Inter',sans-serif;font-size:13px;color:var(--chalk);background:var(--panel2);
+                       border:1px solid var(--line);border-radius:2px;padding:7px 9px;min-width:190px}
+  .pl-player-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:11px}
+  .pl-player-head .wstar{font-size:16px}
+  .pl-player-head b{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:20px;color:var(--chalk)}
+  .pl-ph-meta{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted)}
+  .pl-table,.pl-slate{width:100%;border-collapse:collapse;max-width:var(--maxw)}
+  .pl-table th,.pl-slate th{font-family:'Roboto Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+                 color:var(--muted2);text-align:center;padding:6px 8px;border-bottom:1px solid var(--line)}
+  .pl-table th:first-child,.pl-slate th:nth-child(2){text-align:left}
+  .pl-table td,.pl-slate td{font-family:'Roboto Mono',monospace;font-size:12px;color:var(--chalk);text-align:center;padding:7px 8px;border-bottom:1px solid rgba(30,51,80,.5)}
+  .pl-table .pl-lbl{text-align:left;font-family:'Inter',sans-serif;font-size:13px}
+  .pl-row{cursor:pointer}
+  .pl-row:hover{background:var(--panel2)}
+  .pl-row-sel{background:rgba(0,163,224,.10)}
+  .pl-row-sel .pl-lbl{color:var(--teal)}
+  .pl-model{color:var(--muted)}
+  .pl-rate{display:inline-flex;flex-direction:column;line-height:1.1}
+  .pl-rate b{font-size:12px}
+  .pl-rate i{font-style:normal;font-size:9px;color:var(--muted2)}
+  .pl-rate.pl-hi b{color:var(--good)} .pl-rate.pl-mid b{color:var(--amber)} .pl-rate.pl-lo b{color:var(--muted)}
+  .pl-na{color:var(--muted2)}
+  .pl-chip{font-family:'Roboto Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.05em;padding:2px 7px;border-radius:2px;display:inline-block}
+  .pr-take{color:var(--ink);background:var(--good)} .pr-lean{color:var(--ink);background:var(--amber)} .pr-pass{color:var(--muted);background:var(--panel3)}
+  .pl-why-card{margin-top:16px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:2px;padding:12px 15px;max-width:900px}
+  .pl-why-head{font-family:'Saira Condensed',sans-serif;font-size:16px;color:var(--chalk);display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:9px}
+  .pl-why-sub{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);font-weight:400;letter-spacing:.02em}
+  .pl-why{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px}
+  .pl-why li{font-size:12.5px;line-height:1.5}
+  .pl-pro{color:#C6D6E8} .pl-con{color:var(--muted)}
+  .pl-pro::first-letter,.pl-con::first-letter{font-weight:700}
+  .pl-thin{color:var(--muted2)}
+  .pl-note-ls{margin-top:9px;font-family:'Roboto Mono',monospace;font-size:10px;color:var(--amber);line-height:1.55}
+  .pl-tip{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);margin:10px 2px 0}
+  .pl-slate-wrap{overflow-x:auto;max-width:var(--maxw)}
+  .pls-row{cursor:pointer}
+  .pls-row:hover{background:var(--panel2)}
+  .pls-star .wstar{font-size:15px}
+  .pls-name{text-align:left;font-family:'Inter',sans-serif;font-size:13px;color:var(--chalk);white-space:nowrap}
+  .pls-name span{font-family:'Roboto Mono',monospace;font-size:9px;color:var(--muted2);margin-left:6px}
+  .pls-sp{font-family:'Inter',sans-serif;font-size:12px;color:var(--muted);white-space:nowrap}
+  .pl-fit-y{color:var(--good);font-weight:700} .pl-fit-n{color:var(--red);font-weight:700} .pl-fit-o{color:var(--muted2)}
+  .pl-lab-note{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted2);line-height:1.7;margin-top:16px;max-width:var(--maxw);
+               background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:2px;padding:11px 14px}
+  .pl-lab-note b{color:var(--chalk)}
+
   /* ===== ⚾ NRFI / YRFI ===== */
   .nr-bar{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:12px}
   .nr-stamp{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2)}
@@ -1487,7 +1542,7 @@
   <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
-    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.08.06.6</div>
+    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.08.06.7</div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
       <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
@@ -1497,6 +1552,7 @@
       <a href="#/hrmodel" data-view="hrmodel" role="button">💣 Home Runs Model</a>
       <a href="#/hrsim" data-view="hrsim" role="button">🎲 HR Simulator</a>
       <a href="#/fav" data-view="fav" role="button">📝 Favorite Plays</a>
+      <a href="#/plab" data-view="plab" role="button">🔬 Prop Lab</a>
       <a href="#/hr" data-view="hr" role="button">✅ Homers Today</a>
       <a href="#/props" data-view="props" role="button">Home Run &amp; Hit Props</a>
       <a href="#/align" data-view="align" role="button">Alignment Score</a>
@@ -1685,6 +1741,11 @@
   <section id="favView" class="hide">
     <div class="sec-head"><h2>📝 Favorite Plays</h2><span class="tag">the best home run bet in each game — with the reasons why</span><span class="rule"></span></div>
     <div id="favWrap"></div>
+  </section>
+
+  <section id="plabView" class="hide">
+    <div class="sec-head"><h2>🔬 Prop Lab</h2><span class="tag">L5/L10 hit rates for every prop — and whether to take it, from BvP, ISO, barrel, arsenal fit &amp; more</span><span class="rule"></span></div>
+    <div id="plabWrap"></div>
   </section>
 
   <section id="mgView" class="hide">
@@ -2993,7 +3054,7 @@ async function buildModel(date){
   const displayBatterIds=[...new Set(displayBatters.map(b=>b.id))];
   const hitLogs=await fetchGameLogs(displayBatterIds,"hitting",season);
   const pitLogs=await fetchGameLogs(spIds,"pitching",season);
-  displayBatters.forEach(b=>{b.recentForm=hitterForm(hitLogs[b.id],b.cur.ops);});
+  displayBatters.forEach(b=>{b.recentForm=hitterForm(hitLogs[b.id],b.cur.ops);b._log=hitLogs[b.id]||[];});
   games.forEach(g=>{
     if(g._awayK&&g.away.sp)g._awayK.form=pitcherForm(pitLogs[g.away.sp.id]);
     if(g._homeK&&g.home.sp)g._homeK.form=pitcherForm(pitLogs[g.home.sp.id]);
@@ -4475,6 +4536,222 @@ function bulkAddTargets(){
   if(added){ta.value="";renderTargets(MODEL);}
 }
 
+// ===================== 🔬 PROP LAB — L5/L10 hit rates + take/pass verdicts =====================
+// Real per-game clear rates from each hitter's game log (b._log), plus a recommendation that blends
+// the recent clear rate with the model, BvP, ISO, barrel, AVG, arsenal fit, platoon, and park/weather.
+
+// Normalize one game-log split into the counting stats we need.
+function logGame(split){
+  const s=(split&&split.stat)||{};
+  const h=+s.hits||0,d2=+s.doubles||0,t3=+s.triples||0,hr=+s.homeRuns||0;
+  return {h,hr,rbi:+s.rbi||0,so:+s.strikeOuts||0,sb:+s.stolenBases||0,r:+s.runs||0,
+          ab:+s.atBats||0,pa:+s.plateAppearances||0,tb:h+d2+2*t3+3*hr,date:(split&&split.date)||""};
+}
+// The prop lines we grade.
+const PROP_LINES=[
+  {key:"hits1",fam:"Hits",short:"1+ H",label:"1+ Hits",line:0.5,om:"hits",val:g=>g.h},
+  {key:"hits2",fam:"Hits",short:"2+ H",label:"2+ Hits",line:1.5,om:"hits",val:g=>g.h},
+  {key:"tb2",fam:"Total Bases",short:"2+ TB",label:"2+ Total Bases",line:1.5,om:"tb",val:g=>g.tb},
+  {key:"tb3",fam:"Total Bases",short:"3+ TB",label:"3+ Total Bases",line:2.5,om:"tb",val:g=>g.tb},
+  {key:"hr1",fam:"Home Runs",short:"HR",label:"1+ Home Run",line:0.5,om:"hr",val:g=>g.hr},
+  {key:"rbi1",fam:"RBI",short:"1+ RBI",label:"1+ RBI",line:0.5,om:"rbi",val:g=>g.rbi},
+  {key:"rbi2",fam:"RBI",short:"2+ RBI",label:"2+ RBI",line:1.5,om:"rbi",val:g=>g.rbi},
+  {key:"k1",fam:"Strikeouts",short:"1+ K",label:"Over 0.5 Strikeouts",line:0.5,om:"k",val:g=>g.so},
+  {key:"k2",fam:"Strikeouts",short:"2+ K",label:"Over 1.5 Strikeouts",line:1.5,om:"k",val:g=>g.so},
+  {key:"sb1",fam:"Stolen Bases",short:"SB",label:"1+ Stolen Base",line:0.5,om:"sb",val:g=>g.sb},
+  {key:"runs1",fam:"Runs",short:"Run",label:"1+ Run",line:0.5,om:"r",val:g=>g.r}
+];
+const PROP_LINE_MAP=Object.fromEntries(PROP_LINES.map(p=>[p.key,p]));
+const PROP_REC_META={take:{l:"TAKE",cls:"pr-take"},lean:{l:"LEAN",cls:"pr-lean"},pass:{l:"PASS",cls:"pr-pass"}};
+
+// Clear rate over the last n games for one prop line.
+function propRate(log,line,n){
+  if(!log||!log.length)return {hit:0,n:0,pct:null};
+  const gs=log.slice(-n).map(logGame).filter(x=>x.pa>0);
+  if(!gs.length)return {hit:0,n:0,pct:null};
+  const hit=gs.filter(x=>line.val(x)>line.line).length;
+  return {hit,n:gs.length,pct:hit/gs.length};
+}
+// Model/season probability for a prop — the "expected" baseline beside recent form.
+function propModelProb(b,line){
+  const P={hits:b.proj&&b.proj.hits,tb:b.proj&&b.proj.tb,hr:b.proj&&b.proj.hr,rbi:b.proj&&b.proj.rbi}[line.om];
+  if(P!=null)return poissonOver(P,line.line);
+  if(!b._log||!b._log.length)return null;               // K/SB/Runs: use season per-game rate from the log
+  const gs=b._log.map(logGame).filter(x=>x.pa>0);
+  if(!gs.length)return null;
+  const mean=gs.reduce((s,x)=>s+line.val(x),0)/gs.length;
+  return poissonOver(mean,line.line);
+}
+// The reasons behind a prop call, tailored to the prop family. Every clause ties to a real field.
+function propReasons(b,g,line){
+  const R=[],sc=b.statcast||{},fam=line.om;
+  const l10=propRate(b._log,line,10),l5=propRate(b._log,line,5);
+  if(l10.pct!=null){
+    if(l10.pct>=0.7)R.push({good:true,w:3.0,t:`Hot on this number — cleared ${line.short} in ${l10.hit} of his last ${l10.n} games (${Math.round(l10.pct*100)}%).`});
+    else if(l10.pct>=0.55)R.push({good:true,w:1.6,t:`Solid recent rate — ${line.short} in ${l10.hit} of ${l10.n} (${Math.round(l10.pct*100)}%).`});
+    else if(l10.pct<=0.3)R.push({good:false,w:1.8,t:`Cold on this number — only ${l10.hit} of ${l10.n} (${Math.round(l10.pct*100)}%) lately.`});
+  }
+  if(l5.pct!=null&&l10.pct!=null&&l5.pct-l10.pct>=0.2)R.push({good:true,w:0.8,t:`Trending up — ${Math.round(l5.pct*100)}% over his last 5 vs ${Math.round(l10.pct*100)}% over 10.`});
+  if(fam==="hits"||fam==="tb"||fam==="hr"||fam==="rbi"){
+    const c=b.hrMatch&&b.hrMatch.contrib&&b.hrMatch.contrib[0];
+    if(c&&c.usage!=null&&c.bPow!=null){
+      const pit=pitchName(c.type).toLowerCase(),use=Math.round(c.usage*100);
+      if(c.bPow>=0.6&&use>=18)R.push({good:true,w:1.8,t:`Punishes the ${pit} — ${b.oppPitcher||"the starter"}'s top pitch (${use}%), which sets up extra contact and bases.`});
+      else if(c.bPow<=0.42)R.push({good:false,w:1.2,t:`The ${pit} (${use}%) has given him trouble — the arsenal doesn't fit cleanly.`});
+    }
+    if(fam==="hits"){
+      const avg=b.cur&&b.cur.avg!=null?pnum(b.cur.avg):null;
+      if(avg!=null&&avg>=0.285)R.push({good:true,w:1.2,t:`High-contact bat — ${fmt3(avg)} AVG this year.`});
+      else if(avg!=null&&avg<=0.235)R.push({good:false,w:1.0,t:`Lower average (${fmt3(avg)}) caps the hit floor.`});
+      if(sc.hardhit!=null&&sc.hardhit>=42)R.push({good:true,w:0.7,t:`Hits it hard often (${sc.hardhit.toFixed(0)}% hard-hit) — more balls find grass.`});
+    }
+    if(fam==="tb"||fam==="hr"){
+      const iso=b.cur&&b.cur.iso!=null?pnum(b.cur.iso):null;
+      if(iso!=null&&iso>=0.22)R.push({good:true,w:1.3,t:`Big power — ${isoStr(iso)} ISO drives the extra-base upside.`});
+      if(sc.barrel!=null&&sc.barrel>=12)R.push({good:true,w:1.1,t:`${sc.barrel.toFixed(0)}% barrel rate — quality contact for extra bases.`});
+      else if(sc.barrel!=null&&sc.barrel<=6)R.push({good:false,w:0.8,t:`Light barrels (${sc.barrel.toFixed(0)}%) — extra-base pop is muted.`});
+    }
+    if(b.oppWhip!=null&&b.oppWhip>=1.3)R.push({good:true,w:1.0,t:`${b.oppPitcher||"The starter"} runs a high ${b.oppWhip.toFixed(2)} WHIP — plenty of baserunners.`});
+    else if(b.oppWhip!=null&&b.oppWhip<=1.05)R.push({good:false,w:1.0,t:`${b.oppPitcher||"The starter"} limits traffic (${b.oppWhip.toFixed(2)} WHIP).`});
+    if((fam==="tb"||fam==="hr")&&b.oppHr9!=null&&b.oppHr9>=1.4)R.push({good:true,w:1.0,t:`Homer-prone arm (${b.oppHr9.toFixed(2)} HR/9) boosts the slugging path.`});
+    if(b.platoon&&b.platoon.badge==="ADV")R.push({good:true,w:1.0,t:`Platoon edge — ${b.bats}HB vs a ${b.oppThrows||b.platoon.oppHand||"opposite"}-handed starter.`});
+    else if(b.platoon&&b.platoon.badge==="DIS")R.push({good:false,w:0.8,t:`On the short side of the platoon here.`});
+    if(fam==="tb"||fam==="hr"){
+      if(b._park!=null&&b._park>=1.08)R.push({good:true,w:0.8,t:`Park boosts extra-base hits (${b._park.toFixed(2)}).`});
+      else if(b._park!=null&&b._park<=0.93)R.push({good:false,w:0.7,t:`Park suppresses power (${b._park.toFixed(2)}).`});
+      if(b._wx&&b._wx.mult!=null&&b._wx.mult>=1.08)R.push({good:true,w:0.6,t:`Weather helping the ball carry today.`});
+    }
+    if(b.bvp&&b.bvp.ab>=8){
+      if(fam==="hr"&&b.bvp.hr>=1)R.push({good:true,w:0.8,t:`Has homered off ${b.oppPitcher||"this arm"} (${b.bvp.hr} in ${b.bvp.ab} AB).`});
+      else if(b.bvp.ops!=null&&pnum(b.bvp.ops)>=0.85)R.push({good:true,w:0.8,t:`Owns this pitcher — ${fmt3(pnum(b.bvp.ops))} OPS in ${b.bvp.ab} career AB.`});
+      else if(b.bvp.ops!=null&&pnum(b.bvp.ops)<=0.55)R.push({good:false,w:0.7,t:`Struggles vs this arm (${fmt3(pnum(b.bvp.ops))} OPS, ${b.bvp.ab} AB).`});
+    }
+  }else if(fam==="k"){
+    if(b.oppK9!=null&&b.oppK9>=10)R.push({good:true,w:1.6,t:`${b.oppPitcher||"The starter"} misses bats (${b.oppK9.toFixed(1)} K/9) — strikeout upside.`});
+    else if(b.oppK9!=null&&b.oppK9<=7)R.push({good:false,w:1.0,t:`${b.oppPitcher||"The starter"} doesn't miss many bats (${b.oppK9.toFixed(1)} K/9).`});
+    const gl=(b._log||[]).map(logGame).filter(x=>x.pa>0);
+    if(gl.length){const kr=gl.reduce((s,x)=>s+x.so,0)/Math.max(1,gl.reduce((s,x)=>s+x.pa,0));
+      if(kr>=0.28)R.push({good:true,w:1.4,t:`Whiff-prone bat — strikes out in ${Math.round(kr*100)}% of plate appearances.`});
+      else if(kr<=0.15)R.push({good:false,w:1.2,t:`Rarely strikes out (${Math.round(kr*100)}% of PAs) — tough K bet.`});}
+    if(b.platoon&&b.platoon.badge==="DIS")R.push({good:true,w:0.6,t:`Wrong-side platoon — more swing-and-miss risk (helps the over).`});
+  }else if(fam==="sb"){
+    const gl=(b._log||[]).map(logGame).filter(x=>x.pa>0);
+    const sbTot=gl.reduce((s,x)=>s+x.sb,0),gN=gl.length;
+    if(gN){const per=sbTot/gN;
+      if(per>=0.3)R.push({good:true,w:2.2,t:`Active runner — ${sbTot} steals in his last ${gN} games.`});
+      else if(sbTot===0)R.push({good:false,w:2.0,t:`No steals in his last ${gN} games — not a running threat right now.`});
+      else R.push({good:true,w:0.6,t:`Occasional threat — ${sbTot} steals in ${gN} games.`});}
+    if(b.slot!=null&&b.slot<=2)R.push({good:true,w:0.6,t:`Top-of-order bat — more times on base to run.`});
+  }else if(fam==="r"){
+    const ob=(b.cur&&b.cur.ops!=null&&b.cur.slg!=null)?(pnum(b.cur.ops)-pnum(b.cur.slg)):null;
+    if(ob!=null&&ob>=0.35)R.push({good:true,w:1.4,t:`Gets on base a lot (~${fmt3(ob)} OBP) — the first step to scoring.`});
+    else if(ob!=null&&ob<=0.30)R.push({good:false,w:1.0,t:`Lower on-base (~${fmt3(ob)} OBP) limits run chances.`});
+    if(b.slot!=null&&b.slot<=3)R.push({good:true,w:1.2,t:`Bats ${ordinal(b.slot)} — driven in by the big bats behind him.`});
+    if(b.oppWhip!=null&&b.oppWhip>=1.3)R.push({good:true,w:0.8,t:`Facing a high-WHIP arm (${b.oppWhip.toFixed(2)}) — more rallies.`});
+  }
+  return R;
+}
+// The take/lean/pass call for one prop, blending recent clear rate with the model + reasons.
+function propVerdict(b,g,key){
+  const line=PROP_LINE_MAP[key];if(!line)return null;
+  const l5=propRate(b._log,line,5),l10=propRate(b._log,line,10),l15=propRate(b._log,line,15);
+  const model=propModelProb(b,line);
+  const R=propReasons(b,g,line);
+  const net=R.reduce((s,r)=>s+(r.good?r.w:-r.w),0);
+  const blend=(l10.pct!=null&&model!=null)?(l10.pct*0.55+model*0.45):(l10.pct!=null?l10.pct:(model||0));
+  const score=Math.max(0, blend*100*1.3 + net*4);
+  const haveRecent=l10.n>=5;           // need a real recent sample before a strong "take"
+  let rec="pass";
+  if(haveRecent&&blend>=0.62&&net>0.5)rec="take";
+  else if(blend>=0.5&&net>-1)rec="lean";
+  return {key,line,l5,l10,l15,model,reasons:R,net,score,rec,blend,haveRecent};
+}
+
+let PROPLAB_MODE="player",PL_GAME=null,PL_BAT=null,PL_PROP="tb2",PL_SLATE_PROP="tb2",PL_SORT="score";
+function plPctCell(rate){
+  if(rate.pct==null)return `<span class="pl-na">—</span>`;
+  const p=Math.round(rate.pct*100),cls=p>=65?"pl-hi":p>=45?"pl-mid":"pl-lo";
+  return `<span class="pl-rate ${cls}"><b>${rate.hit}/${rate.n}</b><i>${p}%</i></span>`;
+}
+function plChip(rec){const m=PROP_REC_META[rec];return `<span class="pl-chip ${m.cls}">${m.l}</span>`;}
+function plNote(){return `<div class="pl-lab-note"><b>How this works:</b> L5/L10/L15 are the share of a hitter's last 5, 10 and 15 games in which he actually cleared that line — real game-log results, not estimates. "Model" is the projection-based probability for tonight. The <b>Call</b> blends the recent clear rate with the model, then weighs arsenal fit, BvP, ISO, barrel rate, average, platoon and park/weather — a "take" needs both a strong recent rate and the matchup agreeing, and a thin recent sample never earns one. Longshot props (HR, 3+ TB) usually read pass/lean on likelihood alone — at plus-money they can still be fair value. <b>This is analysis, not a guarantee.</b> 21+. If gambling stops being fun, call 1-800-GAMBLER.</div>`;}
+function plPlayerCard(b,g){
+  const verds=PROP_LINES.map(l=>propVerdict(b,g,l.key)).filter(Boolean);
+  const rows=verds.map(v=>`<tr class="pl-row${v.key===PL_PROP?" pl-row-sel":""}" data-prop="${v.key}">
+      <td class="pl-lbl">${v.line.label}</td>
+      <td>${plPctCell(v.l5)}</td><td>${plPctCell(v.l10)}</td><td>${plPctCell(v.l15)}</td>
+      <td class="pl-model">${v.model!=null?Math.round(v.model*100)+"%":"—"}</td>
+      <td>${plChip(v.rec)}</td></tr>`).join("");
+  const selV=verds.find(v=>v.key===PL_PROP)||verds.slice().sort((a,b)=>b.score-a.score)[0];
+  const rz=r=>`<li class="${r.good?"pl-pro":"pl-con"}">${r.good?"✓":"✕"} ${r.t}</li>`;
+  const longshot=(selV.line.om==="hr"||selV.key==="tb3");
+  const why=`<div class="pl-why-card">
+    <div class="pl-why-head"><b>${selV.line.label}</b> ${plChip(selV.rec)}
+      <span class="pl-why-sub">recent ${selV.l10.pct!=null?Math.round(selV.l10.pct*100)+"% (L10)":"n/a"} · model ${selV.model!=null?Math.round(selV.model*100)+"%":"n/a"}</span></div>
+    <ul class="pl-why">${selV.reasons.length?selV.reasons.map(rz).join(""):'<li class="pl-thin">Not enough data on this matchup for a strong read.</li>'}</ul>
+    ${longshot?'<div class="pl-note-ls">Longshot prop — a pass/lean here is about raw likelihood, not price. At plus-money it can still be fair value.</div>':''}</div>`;
+  return `<div class="pl-player-head">${starHTML(g.gamePk,b.id,"hr",isWatched(g.gamePk,b.id,"hr"))}<b>${favHR(b)?"💣 ":""}${b.name}</b>
+      <span class="pl-ph-meta">${b.bats||"?"}HB vs ${b.oppPitcher?shortName(b.oppPitcher):"TBD"} · ${g.away.abbr||g.away.short}@${g.home.abbr||g.home.short}${b.slot?" · bats "+ordinal(b.slot):""}</span></div>
+    <table class="pl-table"><thead><tr><th>Prop</th><th>L5</th><th>L10</th><th>L15</th><th>Model</th><th>Call</th></tr></thead><tbody>${rows}</tbody></table>
+    ${why}<div class="pl-tip">Tap any prop row to see the full reasoning for that number.</div>`;
+}
+function plSlateTable(model){
+  const propOpts=PROP_LINES.map(l=>`<option value="${l.key}"${l.key===PL_SLATE_PROP?" selected":""}>${l.label}</option>`).join("");
+  const sortSel=`<select id="plSortSel">
+     <option value="score"${PL_SORT==="score"?" selected":""}>Best call</option>
+     <option value="l10"${PL_SORT==="l10"?" selected":""}>L10 rate</option>
+     <option value="l5"${PL_SORT==="l5"?" selected":""}>L5 rate</option>
+     <option value="model"${PL_SORT==="model"?" selected":""}>Model %</option></select>`;
+  let rows=[];
+  model.games.forEach(g=>[...(g._awayBat||[]),...(g._homeBat||[])].forEach(b=>{
+    if(!b._log||!b._log.length)return; rows.push({b,g,v:propVerdict(b,g,PL_SLATE_PROP)});}));
+  const sf={score:(a,b)=>b.v.score-a.v.score,l10:(a,b)=>(b.v.l10.pct||0)-(a.v.l10.pct||0),
+            l5:(a,b)=>(b.v.l5.pct||0)-(a.v.l5.pct||0),model:(a,b)=>(b.v.model||0)-(a.v.model||0)};
+  rows.sort(sf[PL_SORT]||sf.score); rows=rows.slice(0,150);
+  const tr=rows.map(({b,g,v})=>{
+    const fit=b.hrMatch&&b.hrMatch.contrib&&b.hrMatch.contrib[0];
+    const fitTxt=fit&&fit.bPow>=0.6?'<span class="pl-fit-y">✓</span>':fit&&fit.bPow<=0.42?'<span class="pl-fit-n">✕</span>':'<span class="pl-fit-o">·</span>';
+    const iso=b.cur&&b.cur.iso!=null?isoStr(pnum(b.cur.iso)):"—";
+    const bar=b.statcast&&b.statcast.barrel!=null?b.statcast.barrel.toFixed(0)+"%":"—";
+    return `<tr class="pls-row" data-game="${g.gamePk}" data-bat="${b.id}">
+      <td class="pls-star">${starHTML(g.gamePk,b.id,"hr",isWatched(g.gamePk,b.id,"hr"))}</td>
+      <td class="pls-name">${favHR(b)?"💣 ":""}${b.name}<span>${b.team||""}</span></td>
+      <td class="pls-sp">${b.oppPitcher?shortName(b.oppPitcher):"—"}</td>
+      <td>${plPctCell(v.l5)}</td><td>${plPctCell(v.l10)}</td>
+      <td class="pl-model">${v.model!=null?Math.round(v.model*100)+"%":"—"}</td>
+      <td>${iso}</td><td>${bar}</td><td class="pl-fit">${fitTxt}</td>
+      <td>${plChip(v.rec)}</td></tr>`;}).join("");
+  return `<div class="pl-selectors">
+      <label>Prop <select id="plSlateProp">${propOpts}</select></label>
+      <label>Sort ${sortSel}</label></div>
+    <div class="pl-slate-wrap"><table class="pl-slate"><thead><tr>
+      <th></th><th>Player</th><th>vs SP</th><th>L5</th><th>L10</th><th>Model</th><th>ISO</th><th>Barrel</th><th>Fit</th><th>Call</th>
+    </tr></thead><tbody>${tr||'<tr><td colspan="10" class="pl-na">No players with game logs yet — load a slate.</td></tr>'}</tbody></table></div>
+    <div class="pl-tip">Tap a row to open that player's full prop breakdown. Star to add to My Targets.</div>`;
+}
+function renderPropLab(model){
+  const wrap=el("plabWrap");if(!wrap)return;
+  if(!model||!model.games||!model.games.length){wrap.innerHTML='<div class="empty"><b>No slate loaded</b>Load a slate to analyze prop hit rates and take/pass calls.</div>';return;}
+  const modeBtns=`<div class="pl-modes">
+    <button class="pl-mode${PROPLAB_MODE==="player"?" on":""}" data-mode="player">Player deep view</button>
+    <button class="pl-mode${PROPLAB_MODE==="slate"?" on":""}" data-mode="slate">Slate table</button></div>`;
+  let body="";
+  if(PROPLAB_MODE==="player"){
+    const games=model.games;
+    if(!PL_GAME||!games.find(g=>String(g.gamePk)===String(PL_GAME)))PL_GAME=String(games[0].gamePk);
+    const g=games.find(x=>String(x.gamePk)===String(PL_GAME));
+    const bats=[...(g._awayBat||[]),...(g._homeBat||[])];
+    if(!PL_BAT||!bats.find(b=>String(b.id)===String(PL_BAT)))PL_BAT=bats.length?String(bats[0].id):null;
+    const b=bats.find(x=>String(x.id)===String(PL_BAT));
+    const gOpts=games.map(x=>`<option value="${x.gamePk}"${String(x.gamePk)===String(PL_GAME)?" selected":""}>${x.away.abbr||x.away.short} @ ${x.home.abbr||x.home.short}</option>`).join("");
+    const bOpts=bats.map(x=>`<option value="${x.id}"${String(x.id)===String(PL_BAT)?" selected":""}>${x.slot?x.slot+". ":""}${x.name}</option>`).join("");
+    body=`<div class="pl-selectors">
+      <label>Game <select id="plGameSel">${gOpts}</select></label>
+      <label>Player <select id="plBatSel">${bOpts}</select></label></div>
+      <div class="pl-player">${b?plPlayerCard(b,g):'<div class="empty">No batters in this game yet.</div>'}</div>`;
+  }else{body=plSlateTable(model);}
+  wrap.innerHTML=modeBtns+body+plNote();
+}
 // ===================== 📝 FAVORITE PLAYS — per-game HR write-ups =====================
 // Names the best HR bet in each game and explains WHY, using only real model fields.
 // Every reason traces to a number: arsenal fit, park, platoon, form, pitcher HR/9, vulnerability.
@@ -6921,6 +7198,7 @@ function setView(v){
   el("mgView").classList.toggle("hide",v!=="mgrid");
   el("nrfiView").classList.toggle("hide",v!=="nrfi");
   el("favView").classList.toggle("hide",v!=="fav");
+  el("plabView").classList.toggle("hide",v!=="plab");
   el("compareView").classList.toggle("hide",v!=="compare");
   el("propsView").classList.toggle("hide",v!=="props");
   el("oddsView").classList.toggle("hide",v!=="odds");
@@ -6946,6 +7224,7 @@ function setView(v){
   if(v==="mgrid"&&MODEL) renderMatchupGrid(MODEL);
   if(v==="nrfi"){ if(!NRFI_DATA){const c=loadNrfiCache(MODEL&&MODEL.date?parseInt(MODEL.date.slice(0,4),10):new Date().getFullYear()); if(c)NRFI_DATA=c;} renderNrfi(MODEL); }
   if(v==="fav"&&MODEL) renderFavorites(MODEL);
+  if(v==="plab"&&MODEL) renderPropLab(MODEL);
   if(v==="compare"&&MODEL) renderCompare(MODEL);
   if(v==="align"&&MODEL) renderAlignment();
   if(v==="wx"&&MODEL) renderWeather(MODEL);
@@ -6982,7 +7261,7 @@ async function run(){
 }
 function updateFreshLabel(){const e=el("freshLbl");if(e)e.textContent=freshText(LAST_REFRESH,Date.now());}
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
-const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",targets:"My Targets — players &amp; props you're on today",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",mgrid:"Matchup Grid — full lineup, every metric",nrfi:"NRFI / YRFI — will anyone score in the 1st?",fav:"Favorite Plays — best HR bet per game, with reasons",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
+const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",targets:"My Targets — players &amp; props you're on today",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",mgrid:"Matchup Grid — full lineup, every metric",nrfi:"NRFI / YRFI — will anyone score in the 1st?",fav:"Favorite Plays — best HR bet per game, with reasons",plab:"Prop Lab — L5/L10 hit rates &amp; take/pass calls",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
   const t=el("viewTitle");if(t)t.innerHTML=`<span>${VIEW_TITLE[v]||""}</span><a class="newtab-btn" href="#/${v}" target="_blank" rel="noopener" title="Open this page in a new browser tab">⧉ New tab</a>`;
@@ -7026,6 +7305,21 @@ document.addEventListener("click",e=>{
   const on=toggleWatch(g,id,mk,nm,tm,(MODEL&&MODEL.date)||todayStr());
   s.classList.toggle("on",on);s.textContent=on?"★":"☆";
   if(VIEW==="targets")renderTargets(MODEL);
+});
+el("plabWrap")&&el("plabWrap").addEventListener("click",e=>{
+  const mode=e.target.closest(".pl-mode");
+  if(mode){PROPLAB_MODE=mode.dataset.mode;renderPropLab(MODEL);return;}
+  const row=e.target.closest(".pl-row");
+  if(row){PL_PROP=row.dataset.prop;renderPropLab(MODEL);return;}
+  const srow=e.target.closest(".pls-row");
+  if(srow&&!e.target.closest(".wstar")){PROPLAB_MODE="player";PL_GAME=srow.dataset.game;PL_BAT=srow.dataset.bat;renderPropLab(MODEL);return;}
+});
+el("plabWrap")&&el("plabWrap").addEventListener("change",e=>{
+  const t=e.target;
+  if(t.id==="plGameSel"){PL_GAME=t.value;PL_BAT=null;renderPropLab(MODEL);}
+  else if(t.id==="plBatSel"){PL_BAT=t.value;renderPropLab(MODEL);}
+  else if(t.id==="plSlateProp"){PL_SLATE_PROP=t.value;renderPropLab(MODEL);}
+  else if(t.id==="plSortSel"){PL_SORT=t.value;renderPropLab(MODEL);}
 });
 el("favWrap")&&el("favWrap").addEventListener("click",e=>{
   if(e.target.closest("#favRepick")){FAV_REPICK=true;renderFavorites(MODEL);}
