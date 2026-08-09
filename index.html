@@ -1037,6 +1037,9 @@
             margin-top:16px;max-width:var(--maxw);background:var(--panel);border:1px solid var(--line);
             border-left:3px solid var(--teal);border-radius:2px;padding:11px 14px}
   .fav-note b{color:var(--chalk)}
+  .pform{font-family:'Roboto Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:2px;white-space:nowrap;vertical-align:2px}
+  .pform-hot{color:var(--clay);background:rgba(232,89,12,.14);border:1px solid rgba(232,89,12,.4)}
+  .pform-cold{color:var(--teal);background:rgba(0,163,224,.10);border:1px solid rgba(0,163,224,.35)}
 
   /* Prop Lab */
   .pl-modes{display:flex;gap:8px;margin:0 0 14px;flex-wrap:wrap}
@@ -1542,7 +1545,7 @@
   <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
-    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.08.06.7</div>
+    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.08.06.8</div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
       <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
@@ -3054,7 +3057,7 @@ async function buildModel(date){
   const displayBatterIds=[...new Set(displayBatters.map(b=>b.id))];
   const hitLogs=await fetchGameLogs(displayBatterIds,"hitting",season);
   const pitLogs=await fetchGameLogs(spIds,"pitching",season);
-  displayBatters.forEach(b=>{b.recentForm=hitterForm(hitLogs[b.id],b.cur.ops);b._log=hitLogs[b.id]||[];});
+  displayBatters.forEach(b=>{b.recentForm=hitterForm(hitLogs[b.id],b.cur.ops);b._log=hitLogs[b.id]||[];b.powerForm=powerForm(b);});
   games.forEach(g=>{
     if(g._awayK&&g.away.sp)g._awayK.form=pitcherForm(pitLogs[g.away.sp.id]);
     if(g._homeK&&g.home.sp)g._homeK.form=pitcherForm(pitLogs[g.home.sp.id]);
@@ -4544,8 +4547,41 @@ function bulkAddTargets(){
 function logGame(split){
   const s=(split&&split.stat)||{};
   const h=+s.hits||0,d2=+s.doubles||0,t3=+s.triples||0,hr=+s.homeRuns||0;
-  return {h,hr,rbi:+s.rbi||0,so:+s.strikeOuts||0,sb:+s.stolenBases||0,r:+s.runs||0,
-          ab:+s.atBats||0,pa:+s.plateAppearances||0,tb:h+d2+2*t3+3*hr,date:(split&&split.date)||""};
+  return {h,hr,d2,t3,rbi:+s.rbi||0,so:+s.strikeOuts||0,sb:+s.stolenBases||0,r:+s.runs||0,
+          ab:+s.atBats||0,pa:+s.plateAppearances||0,tb:h+d2+2*t3+3*hr,xbh:d2+t3+hr,date:(split&&split.date)||""};
+}
+// ---- Power form: is his POWER (ISO / slugging / XBH / HR) trending — not his OPS ----
+function powerAgg(log,n){
+  const gs=(log||[]).slice(-n).map(logGame).filter(x=>x.pa>0);
+  let ab=0,h=0,tb=0,hr=0,xbh=0;
+  gs.forEach(x=>{ab+=x.ab;h+=x.h;tb+=x.tb;hr+=x.hr;xbh+=x.xbh;});
+  return {g:gs.length,ab,h,tb,hr,xbh,iso:ab>0?(tb-h)/ab:null,slg:ab>0?tb/ab:null,
+          xbhRate:gs.length?xbh/gs.length:null,hrRate:gs.length?hr/gs.length:null};
+}
+function powerForm(b){
+  const log=b&&b._log; if(!log||!log.length)return null;
+  const l5=powerAgg(log,5),l10=powerAgg(log,10),l15=powerAgg(log,15);
+  const seasonISO=(b.cur&&b.cur.iso!=null)?pnum(b.cur.iso):null;
+  const isoDelta=(l10.iso!=null&&seasonISO!=null&&l10.ab>=25)?(l10.iso-seasonISO):null;
+  let state="steady";
+  if(l10.ab>=25){
+    if(isoDelta!=null&&isoDelta>=0.060)state="heating";
+    else if(isoDelta!=null&&isoDelta<=-0.060)state="cooling";
+    if(l10.hr>=3&&state!=="heating")state="heating";      // multi-HR recency overrides to heating
+  }
+  let gsHR=null,cnt=0;                                     // games since his last home run
+  for(let i=log.length-1;i>=0;i--){const x=logGame(log[i]);if(x.pa<=0)continue;if(x.hr>0){gsHR=cnt;break;}cnt++;}
+  return {l5,l10,l15,seasonISO,isoDelta,state,hrL10:l10.hr,hrL15:l15.hr,gamesSinceHR:gsHR,
+          barrelSeason:b.statcast?b.statcast.barrel:null,evSeason:b.statcast?b.statcast.ev:null};
+}
+function powerFormBadge(b){
+  const pf=b&&b.powerForm; if(!pf||pf.l10.ab<25)return "";
+  if(pf.state==="heating"){
+    const bits=[]; if(pf.hrL10)bits.push(`${pf.hrL10} HR in last 10`); if(pf.isoDelta!=null)bits.push(`ISO +${Math.round(pf.isoDelta*1000)} vs season`);
+    return `<span class="pform pform-hot" title="Power heating — ${bits.join(' · ')}">🔥 POWER</span>`;
+  }
+  if(pf.state==="cooling")return `<span class="pform pform-cold" title="Power cooling — ISO ${Math.round(pf.isoDelta*1000)} vs season baseline">🧊 COLD PWR</span>`;
+  return "";
 }
 // The prop lines we grade.
 const PROP_LINES=[
@@ -4608,6 +4644,8 @@ function propReasons(b,g,line){
     if(fam==="tb"||fam==="hr"){
       const iso=b.cur&&b.cur.iso!=null?pnum(b.cur.iso):null;
       if(iso!=null&&iso>=0.22)R.push({good:true,w:1.3,t:`Big power — ${isoStr(iso)} ISO drives the extra-base upside.`});
+      if(b.powerForm&&b.powerForm.state==="heating")R.push({good:true,w:1.3,t:`Power heating up — ${b.powerForm.hrL10?b.powerForm.hrL10+" HR in his last 10":"slugging above his baseline"}${b.powerForm.isoDelta!=null?`, ISO +${Math.round(b.powerForm.isoDelta*1000)} vs season`:""}.`});
+      else if(b.powerForm&&b.powerForm.state==="cooling")R.push({good:false,w:0.9,t:`Power cooling — slugging under his season baseline lately.`});
       if(sc.barrel!=null&&sc.barrel>=12)R.push({good:true,w:1.1,t:`${sc.barrel.toFixed(0)}% barrel rate — quality contact for extra bases.`});
       else if(sc.barrel!=null&&sc.barrel<=6)R.push({good:false,w:0.8,t:`Light barrels (${sc.barrel.toFixed(0)}%) — extra-base pop is muted.`});
     }
@@ -4690,7 +4728,7 @@ function plPlayerCard(b,g){
       <span class="pl-why-sub">recent ${selV.l10.pct!=null?Math.round(selV.l10.pct*100)+"% (L10)":"n/a"} · model ${selV.model!=null?Math.round(selV.model*100)+"%":"n/a"}</span></div>
     <ul class="pl-why">${selV.reasons.length?selV.reasons.map(rz).join(""):'<li class="pl-thin">Not enough data on this matchup for a strong read.</li>'}</ul>
     ${longshot?'<div class="pl-note-ls">Longshot prop — a pass/lean here is about raw likelihood, not price. At plus-money it can still be fair value.</div>':''}</div>`;
-  return `<div class="pl-player-head">${starHTML(g.gamePk,b.id,"hr",isWatched(g.gamePk,b.id,"hr"))}<b>${favHR(b)?"💣 ":""}${b.name}</b>
+  return `<div class="pl-player-head">${starHTML(g.gamePk,b.id,"hr",isWatched(g.gamePk,b.id,"hr"))}<b>${favHR(b)?"💣 ":""}${b.name}</b>${powerFormBadge(b)}
       <span class="pl-ph-meta">${b.bats||"?"}HB vs ${b.oppPitcher?shortName(b.oppPitcher):"TBD"} · ${g.away.abbr||g.away.short}@${g.home.abbr||g.home.short}${b.slot?" · bats "+ordinal(b.slot):""}</span></div>
     <table class="pl-table"><thead><tr><th>Prop</th><th>L5</th><th>L10</th><th>L15</th><th>Model</th><th>Call</th></tr></thead><tbody>${rows}</tbody></table>
     ${why}<div class="pl-tip">Tap any prop row to see the full reasoning for that number.</div>`;
@@ -4799,11 +4837,14 @@ function hrReasons(b,g){
     if(b._wx.mult>=1.08)R.push({k:"wx",good:true,w:0.9,t:`Weather is helping the ball fly — ${wd} (${b._wx.label||"hitter-friendly"}).`});
     else if(b._wx.mult<=0.93)R.push({k:"wx",good:false,w:0.8,t:`Weather is a power headwind today (${b._wx.label||"heavy air / wind in"}).`});
   }
-  // 6) Recent form
-  if(b.recentForm&&b.recentForm.state==="hot")
-    R.push({k:"form",good:true,w:1.0,t:`Locked in lately — form is trending up over his last 10.`});
-  else if(b.recentForm&&b.recentForm.state==="cold")
-    R.push({k:"form",good:false,w:0.9,t:`In a cold stretch — recent form is down vs his baseline.`});
+  // 6) Power form — is his POWER trending (ISO/HR), not just OPS
+  if(b.powerForm&&b.powerForm.state==="heating"){
+    const bits=[]; if(b.powerForm.hrL10)bits.push(`${b.powerForm.hrL10} HR in his last 10`); if(b.powerForm.isoDelta!=null)bits.push(`ISO up ${Math.round(b.powerForm.isoDelta*1000)} pts on his season`);
+    R.push({k:"form",good:true,w:1.4,t:`Power surging — ${bits.join(", ")||"slugging above his baseline lately"}.`});
+  }else if(b.powerForm&&b.powerForm.state==="cooling")
+    R.push({k:"form",good:false,w:1.0,t:`Power dipping — slugging below his season baseline over his last 10.`});
+  else if(b.recentForm&&b.recentForm.state==="hot")
+    R.push({k:"form",good:true,w:0.7,t:`Swinging a hot bat overall (OPS up recently), though the power hasn't spiked.`});
   // 7) Underlying power (barrels)
   if(sc.barrel!=null){
     if(sc.barrel>=14)R.push({k:"barrel",good:true,w:1.2,t:`Elite contact quality — ${sc.barrel.toFixed(0)}% barrel rate.`});
@@ -4932,7 +4973,13 @@ function deepDive(p,g){
   }
   if(s4.length)paras.push(s4.join(" "));
   // Para 5 — form & the head-to-head history
-  const s5=[], f=b.recentForm;
+  const s5=[], f=b.recentForm, pf=b.powerForm;
+  if(pf&&pf.l10.ab>=25&&pf.state!=="steady"){
+    if(pf.state==="heating")s5.push(`His power is trending up — ${pf.hrL10?`${pf.hrL10} homer${pf.hrL10===1?"":"s"} in his last 10`:"slugging above his baseline"}${pf.isoDelta!=null?`, a ${pf.isoDelta>=0?"+":""}${Math.round(pf.isoDelta*1000)}-point ISO swing over his season mark`:""}.`);
+    else s5.push(`One caution: his power has cooled lately${pf.isoDelta!=null?` (ISO ${Math.round(pf.isoDelta*1000)} pts under his season line)`:""}${pf.gamesSinceHR!=null&&pf.gamesSinceHR>=8?`, and he hasn't gone deep in ${pf.gamesSinceHR} games`:""}.`);
+  }else if(pf&&pf.gamesSinceHR!=null&&pf.gamesSinceHR<=1){
+    s5.push(`He went deep ${pf.gamesSinceHR===0?"in his last game":"just two games ago"} — the power stroke is right there.`);
+  }
   if(f&&f.l10&&f.l10.pa>=12){
     const dir=f.state==="hot"?"locked in":f.state==="cold"?"in a cold patch":"steady";
     let form=`Over his last 10 games he's ${dir}, slugging a ${fmt3(f.l10.ops)} OPS`;
@@ -5002,7 +5049,7 @@ function renderFavorites(model){
     const dd=deepDive(best,g).map(x=>`<p class="fav-dd-p">${x}</p>`).join("");
     const bestBlock=`
       <div class="fav-play">
-        <div class="fav-ph"><span class="fav-tag">FAVORITE</span>${starHTML(g.gamePk,best.b.id,"hr",isWatched(g.gamePk,best.b.id,"hr"))}<b>${favHR(best.b)?"💣 ":""}${best.b.name}</b>
+        <div class="fav-ph"><span class="fav-tag">FAVORITE</span>${starHTML(g.gamePk,best.b.id,"hr",isWatched(g.gamePk,best.b.id,"hr"))}<b>${favHR(best.b)?"💣 ":""}${best.b.name}</b>${powerFormBadge(best.b)}
           <span class="fav-hand">${best.b.bats||"?"}HB vs ${best.b.oppPitcher?shortName(best.b.oppPitcher):"TBD"}</span>
           <span class="fav-pct">${Math.round(best.model*100)}%</span></div>
         ${best.b.result?`<div class="fav-res">${resultChip(best.b)}</div>`:""}
@@ -5012,7 +5059,7 @@ function renderFavorites(model){
       </div>`;
     const runBlock=runner?`
       <div class="fav-play fav-run">
-        <div class="fav-ph"><span class="fav-tag fav-tag2">RUNNER-UP</span>${starHTML(g.gamePk,runner.b.id,"hr",isWatched(g.gamePk,runner.b.id,"hr"))}<b>${favHR(runner.b)?"💣 ":""}${runner.b.name}</b>
+        <div class="fav-ph"><span class="fav-tag fav-tag2">RUNNER-UP</span>${starHTML(g.gamePk,runner.b.id,"hr",isWatched(g.gamePk,runner.b.id,"hr"))}<b>${favHR(runner.b)?"💣 ":""}${runner.b.name}</b>${powerFormBadge(runner.b)}
           <span class="fav-hand">${runner.b.bats||"?"}HB vs ${runner.b.oppPitcher?shortName(runner.b.oppPitcher):"TBD"}</span>
           <span class="fav-pct">${Math.round(runner.model*100)}%</span></div>
         ${runner.b.result?`<div class="fav-res">${resultChip(runner.b)}</div>`:""}
