@@ -1545,7 +1545,7 @@
   <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
-    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.08.06.8</div>
+    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.08.06.10</div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
       <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
@@ -3465,9 +3465,15 @@ function hrMatchWhy(contrib,batter,pitcher){
 }
 function hrPitchMatchup(arsenal,byType,ctx){
   ctx=ctx||{};
+  // Only judge the batter on pitches the starter actually throws 15%+ of the time —
+  // a pitch he sees a handful of times a game shouldn't sway the read.
+  const MIN_USAGE=0.15;
+  const usable=((arsenal&&arsenal.pitches)||[]).filter(p=>byType&&byType[p.type]&&(p.usage||0)>0);
+  let pitches=usable.filter(p=>(p.usage||0)>=MIN_USAGE);
+  if(!pitches.length)pitches=usable;   // ultra-balanced arsenal with nothing over 15% — use what he does throw
   let wsum=0,danger=0;const contrib=[];
-  ((arsenal&&arsenal.pitches)||[]).forEach(p=>{
-    const b=byType&&byType[p.type];if(!b)return;const u=p.usage||0;if(u<=0)return;
+  pitches.forEach(p=>{
+    const b=byType[p.type];const u=p.usage||0;
     const bPow=avgDefined([[nz(b.iso,.100,.280),0.28],[nz(b.barrel,.04,.16),0.24],[nz(b.hardhit,.30,.52),0.20],[nz(b.ev,86,94),0.16],[laHRScore(b.la),0.12]]);
     const pVuln=avgDefined([[nz(p.slgAllowed,.350,.520),0.40],[nz(p.isoAllowed,.120,.260),0.30],[nz(p.barrelAllowed,.05,.13),0.18],[nz(p.hrAllowed,.01,.06),0.12]]);
     if(bPow==null&&pVuln==null)return;
@@ -4876,7 +4882,7 @@ function hrPlayScore(b,g){
 function gameFavorite(g){
   const bats=[...(g._awayBat||[]),...(g._homeBat||[])].filter(b=>b.proj&&b.proj.hr>0);
   if(!bats.length)return null;
-  const scored=bats.map(b=>({b,...hrPlayScore(b,g)})).sort((a,b)=>b.score-a.score);
+  const scored=bats.map(b=>({b,...hrPlayScore(b,g)})).sort((a,b)=>(b.score-a.score)||(String(a.b.id).localeCompare(String(b.b.id))));
   const best=scored[0], runner=scored[1]||null;
   return {g,best,runner};
 }
@@ -5012,35 +5018,14 @@ function renderFavorites(model){
   if(!model||!model.games||!model.games.length){wrap.innerHTML='<div class="empty"><b>No slate loaded</b>Load a slate to see each game\'s best home run play with a full deep-dive.</div>';return;}
   let favs=model.games.map(gameFavorite).filter(Boolean);
   if(!favs.length){wrap.innerHTML='<div class="empty">No hitters with home run projections yet — load a slate with confirmed data.</div>';return;}
-  // ---- Stability: picks lock in for the date and stay put across renders/reloads ----
-  const saved=loadFav();
-  const persist=!!(saved&&saved.date===model.date&&!FAV_REPICK&&saved.picks);
-  if(persist){
-    favs.forEach(f=>{
-      const sp=saved.picks[String(f.g.gamePk)];if(!sp)return;
-      const bats=[...(f.g._awayBat||[]),...(f.g._homeBat||[])];
-      const bB=bats.find(x=>String(x.id)===String(sp.bestId));
-      const rB=sp.runnerId?bats.find(x=>String(x.id)===String(sp.runnerId)):null;
-      if(bB)f.best={b:bB,...hrPlayScore(bB,f.g)};
-      if(rB)f.runner={b:rB,...hrPlayScore(rB,f.g)};
-    });
-  }
-  // lock of the day = persisted choice if we have one, else highest-scoring best play
-  let lock=null;
-  if(persist&&saved.lockPk)lock=favs.find(f=>String(f.g.gamePk)===String(saved.lockPk));
-  if(!lock)lock=favs.slice().sort((a,b)=>b.best.score-a.best.score)[0];
-  // save the selection whenever it's a fresh pick or an explicit re-pick
-  if(!persist||FAV_REPICK){
-    const picks={};
-    favs.forEach(f=>{picks[String(f.g.gamePk)]={bestId:f.best.b.id,runnerId:f.runner?f.runner.b.id:null};});
-    saveFav({date:model.date,lockPk:String(lock.g.gamePk),picks});
-    FAV_REPICK=false;
-  }
+  // Picks are a deterministic function of the slate — same data in, same picks out — so desktop and
+  // mobile always agree. No per-device saved state (that would freeze different snapshots per device).
+  // Lock of the day = highest-scoring best play, with a stable id tie-break so exact ties never reorder.
+  const lock=favs.slice().sort((a,b)=>(b.best.score-a.best.score)||(String(a.best.b.id).localeCompare(String(b.best.b.id))))[0];
   FAV_DATA={favs,lock};
   const rz=r=>`<li class="${r.good?"fav-pro":"fav-con"}">${r.good?"✓":"✕"} ${r.t}</li>`;
   const lockCard=`<div class="fav-lock">
-    <div class="fav-lock-top"><div class="fav-lock-badge">🔒 LOCK OF THE DAY</div>
-      <button id="favRepick" class="fav-repick" title="Re-pick from the latest lineups & data">↻ Re-pick</button></div>
+    <div class="fav-lock-top"><div class="fav-lock-badge">🔒 LOCK OF THE DAY</div></div>
     <div class="fav-lock-name">${starHTML(lock.g.gamePk,lock.best.b.id,"hr",isWatched(lock.g.gamePk,lock.best.b.id,"hr"))}${favHR(lock.best.b)?"💣 ":""}${lock.best.b.name} <span>HR · ${lock.g.away.abbr||lock.g.away.short} @ ${lock.g.home.abbr||lock.g.home.short}</span></div>
     ${lock.best.b.result?`<div class="fav-res">${resultChip(lock.best.b)}</div>`:""}
     <div class="fav-lock-sum">${playSummary(lock.best)}</div>
@@ -5072,7 +5057,7 @@ function renderFavorites(model){
     </div>`;
   }).join("");
   wrap.innerHTML=lockCard+
-    `<div class="fav-lockmsg">Picks lock in when you first load today's slate and stay put — tap <b>↻ Re-pick</b> to refresh from the latest lineups & data.</div>`+
+    `<div class="fav-lockmsg">These picks are computed straight from the day's slate, so they're <b>identical on every device</b> and update only when the underlying lineups, projections or park/weather actually change.</div>`+
     `<div class="fav-grid">${cards}</div>`+
     `<div class="fav-note"><b>How these are built:</b> every hitter's home run case is scored from real model inputs — arsenal fit (the exact pitch a starter throws most and how hard the batter hits it), pitcher HR/9, ERA, WHIP, park, weather, platoon, recent form, barrel rate and exit velocity, and any batter-vs-pitcher history. The deep-dive and the ✓/✕ lines are assembled straight from those numbers — a sentence only appears when the stat behind it exists, so nothing here is invented narrative; where a matchup is thin, it says so. <b>This is analysis, not a guarantee</b> — home runs are rare events and even the best play is usually against the odds to hit on any given night. 21+. If gambling stops being fun, call 1-800-GAMBLER.</div>`;
 }
@@ -7369,7 +7354,7 @@ el("plabWrap")&&el("plabWrap").addEventListener("change",e=>{
   else if(t.id==="plSortSel"){PL_SORT=t.value;renderPropLab(MODEL);}
 });
 el("favWrap")&&el("favWrap").addEventListener("click",e=>{
-  if(e.target.closest("#favRepick")){FAV_REPICK=true;renderFavorites(MODEL);}
+  const starBtn=e.target.closest(".wstar");if(starBtn)return; // stars handled globally
 });
 el("tgWrap")&&el("tgWrap").addEventListener("change",e=>{
   const t=e.target;
