@@ -1005,6 +1005,27 @@
               padding:4px 9px;cursor:pointer;white-space:nowrap}
   .fav-repick:hover{background:rgba(0,163,224,.12);color:var(--chalk)}
   .fav-lockmsg{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);line-height:1.6;margin:9px 2px 15px;max-width:var(--maxw)}
+  .plk-card{max-width:var(--maxw);background:linear-gradient(180deg,rgba(232,89,12,.10),rgba(13,27,46,0) 60%);
+            border:1px solid rgba(232,89,12,.5);border-radius:2px;padding:16px 18px;margin:12px 0 0}
+  .plk-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+  .plk-head .fav-lock-badge{background:var(--clay)}
+  .plk-legs-ct{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.05em}
+  .plk-sub{font-family:'Inter',sans-serif;font-size:12.5px;color:var(--muted);line-height:1.5;margin-bottom:14px;max-width:720px}
+  .plk-legs{display:flex;flex-direction:column;gap:9px;margin-bottom:16px}
+  .plk-leg{background:var(--panel2);border:1px solid var(--line);border-radius:2px;padding:9px 12px}
+  .plk-leg-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .plk-leg-top .wstar{font-size:14px}
+  .plk-leg-top b{font-family:'Saira Condensed',sans-serif;font-weight:600;font-size:15px;color:var(--chalk)}
+  .plk-leg-game{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted2)}
+  .plk-leg-pct{margin-left:auto;font-family:'Roboto Mono',monospace;font-size:14px;font-weight:700;color:var(--amber)}
+  .plk-leg-pct i{font-style:normal;font-size:10px;color:var(--muted2);margin-left:5px}
+  .plk-leg-why{font-size:12px;color:var(--muted);line-height:1.5;margin-top:4px}
+  .plk-price{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:11px}
+  .plk-price-block{background:var(--panel);border:1px solid var(--line);border-radius:2px;padding:9px 14px;text-align:center;flex:1;min-width:110px}
+  .plk-price-block b{display:block;font-family:'Roboto Mono',monospace;font-size:19px;font-weight:700;color:var(--chalk)}
+  .plk-price-block span{font-family:'Roboto Mono',monospace;font-size:8.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted2)}
+  .plk-edge-pos b{color:var(--good)} .plk-edge-neg b{color:var(--red)}
+  .plk-note{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);line-height:1.6}
   .fav-lockmsg b{color:var(--teal)}
   .fav-res{margin:1px 0 9px}
   .fav-dd{margin-bottom:11px}
@@ -1095,6 +1116,41 @@
   .pl-lab-note{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted2);line-height:1.7;margin-top:16px;max-width:var(--maxw);
                background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--teal);border-radius:2px;padding:11px 14px}
   .pl-lab-note b{color:var(--chalk)}
+
+  /* Pitcher Duel */
+  .pd-gamebar{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;
+              margin:0 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line);max-width:var(--maxw)}
+  .pd-gamebar b{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:19px;color:var(--chalk)}
+  .pd-gamebar span{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2)}
+  .pd-cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:var(--maxw)}
+  @media(max-width:900px){.pd-cols{grid-template-columns:1fr}}
+  .pd-col{background:var(--panel);border:1px solid var(--line);border-radius:2px;padding:14px 16px}
+  .pd-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:11px}
+  .pd-head b{font-family:'Saira Condensed',sans-serif;font-weight:700;font-size:18px;color:var(--chalk)}
+  .pd-throws{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted2)}
+  .pd-team{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--muted);width:100%}
+  .pd-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:16px}
+  .pd-stat{background:var(--panel2);border:1px solid var(--line);border-radius:2px;padding:8px 6px;text-align:center}
+  .pd-stat b{display:block;font-family:'Roboto Mono',monospace;font-size:16px;font-weight:700;color:var(--chalk)}
+  .pd-stat span{font-family:'Roboto Mono',monospace;font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted2)}
+  .pd-th-head{font-family:'Roboto Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+              color:var(--muted2);margin:0 0 10px;padding-top:6px}
+  .pd-threat{background:var(--panel2);border:1px solid var(--line);border-radius:2px;padding:10px 12px;margin-bottom:9px}
+  .pd-th-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .pd-th-top .wstar{font-size:14px}
+  .pd-th-top b{font-family:'Saira Condensed',sans-serif;font-weight:600;font-size:15px;color:var(--chalk)}
+  .pd-prob{margin-left:auto;font-family:'Roboto Mono',monospace;font-size:15px;font-weight:700;color:var(--amber)}
+  .pd-th-meta{font-family:'Roboto Mono',monospace;font-size:10px;color:var(--muted2);margin:3px 0 7px}
+  .pd-th-tags{display:flex;gap:5px;flex-wrap:wrap}
+  .pd-tag{font-family:'Roboto Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.03em;padding:2px 6px;border-radius:2px;white-space:nowrap}
+  .tg-hot{color:var(--clay);background:rgba(232,89,12,.15);border:1px solid rgba(232,89,12,.4)}
+  .tg-barrel{color:var(--teal);background:rgba(0,163,224,.12);border:1px solid rgba(0,163,224,.35)}
+  .tg-ev{color:var(--red);background:rgba(255,90,110,.12);border:1px solid rgba(255,90,110,.35)}
+  .tg-pull{color:var(--good);background:rgba(34,208,122,.12);border:1px solid rgba(34,208,122,.35)}
+  .tg-bat{color:var(--amber);background:rgba(255,184,28,.12);border:1px solid rgba(255,184,28,.35)}
+  .tg-wind{color:#9FD9F0;background:rgba(159,217,240,.10);border:1px solid rgba(159,217,240,.30)}
+  .tg-plat{color:var(--teal);background:rgba(0,163,224,.10);border:1px solid rgba(0,163,224,.30)}
+  .tg-arsenal{color:var(--chalk);background:var(--panel3);border:1px solid var(--muted2)}
 
   /* ===== ⚾ NRFI / YRFI ===== */
   .nr-bar{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:12px}
@@ -1545,7 +1601,7 @@
   <button class="navToggle" id="navToggle" aria-label="Menu">☰ Menu</button>
   <nav class="sidebar" id="nav">
     <div class="sb-brand">Edge <span>Board</span></div>
-    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.08.06.10</div>
+    <div class="sb-build" title="Build version — if this doesn't change after a GitHub update, your browser is showing a cached copy">build 2026.08.06.11</div>
     <div class="sb-group"><div class="sb-h">Hitter Tools</div>
       <a href="#/slate" data-view="slate" role="button">📊 Dashboard</a>
       <a href="#/targets" data-view="targets" role="button">⭐ My Targets</a>
@@ -1556,6 +1612,7 @@
       <a href="#/hrsim" data-view="hrsim" role="button">🎲 HR Simulator</a>
       <a href="#/fav" data-view="fav" role="button">📝 Favorite Plays</a>
       <a href="#/plab" data-view="plab" role="button">🔬 Prop Lab</a>
+      <a href="#/pd" data-view="pd" role="button">⚔️ Pitcher Duel</a>
       <a href="#/hr" data-view="hr" role="button">✅ Homers Today</a>
       <a href="#/props" data-view="props" role="button">Home Run &amp; Hit Props</a>
       <a href="#/align" data-view="align" role="button">Alignment Score</a>
@@ -1749,6 +1806,11 @@
   <section id="plabView" class="hide">
     <div class="sec-head"><h2>🔬 Prop Lab</h2><span class="tag">L5/L10 hit rates for every prop — and whether to take it, from BvP, ISO, barrel, arsenal fit &amp; more</span><span class="rule"></span></div>
     <div id="plabWrap"></div>
+  </section>
+
+  <section id="pdView" class="hide">
+    <div class="sec-head"><h2>⚔️ Pitcher Duel</h2><span class="tag">both starters, side by side — who's most likely to give up a homer, and to who</span><span class="rule"></span></div>
+    <div id="pdWrap"></div>
   </section>
 
   <section id="mgView" class="hide">
@@ -3132,7 +3194,7 @@ async function buildModel(date){
       games.forEach(g=>{
         if(g._awayK&&g.away.sp&&ars.pitchers[g.away.sp.id])g._awayK._arsenal=ars.pitchers[g.away.sp.id];
         if(g._homeK&&g.home.sp&&ars.pitchers[g.home.sp.id])g._homeK._arsenal=ars.pitchers[g.home.sp.id];
-        [...g._awayBat,...g._homeBat].forEach(b=>{const bd=ars.batters[b.id];if(bd&&bd.byPitch)b._pitchData=bd.byPitch;});
+        [...g._awayBat,...g._homeBat].forEach(b=>{const bd=ars.batters[b.id];if(bd&&bd.byPitch)b._pitchData=bd.byPitch;if(bd&&bd.batSpeed!=null){b.batSpeed=bd.batSpeed;b.fastSwingRate=bd.fastSwingRate!=null?bd.fastSwingRate:null;}});
       });
     }
   }catch(e){ARSENAL_OK=false;}
@@ -4581,7 +4643,7 @@ function powerForm(b){
           barrelSeason:b.statcast?b.statcast.barrel:null,evSeason:b.statcast?b.statcast.ev:null};
 }
 function powerFormBadge(b){
-  const pf=b&&b.powerForm; if(!pf||pf.l10.ab<25)return "";
+  const pf=b&&b.powerForm; if(!pf||!pf.l10||pf.l10.ab<25)return "";
   if(pf.state==="heating"){
     const bits=[]; if(pf.hrL10)bits.push(`${pf.hrL10} HR in last 10`); if(pf.isoDelta!=null)bits.push(`ISO +${Math.round(pf.isoDelta*1000)} vs season`);
     return `<span class="pform pform-hot" title="Power heating — ${bits.join(' · ')}">🔥 POWER</span>`;
@@ -4796,6 +4858,147 @@ function renderPropLab(model){
   }else{body=plSlateTable(model);}
   wrap.innerHTML=modeBtns+body+plNote();
 }
+// ===================== 🎰 HR PARLAY LOCK OF THE DAY — best 4 legs across the whole slate =====================
+// Ranks every qualifying batter slate-wide with the same deterministic scoring as Favorite Plays
+// (hrPlayScore), picks the top 4 (one per game by default, so it's a real slate-wide read rather
+// than stacking one hot game), then builds the combined parlay with the app's real correlation-
+// aware math (buildParlay/parlayCorrelation) — never a separate, invented probability.
+function hrParlayLock(model){
+  if(!model||!model.games||!model.games.length)return null;
+  const all=[];
+  model.games.forEach(g=>{
+    [...(g._awayBat||[]),...(g._homeBat||[])].filter(b=>b.proj&&b.proj.hr>0).forEach(b=>{
+      const leg=legCandidate(b,"hr",false);if(!leg)return;
+      leg.oppKey=b.game!=null&&b.oppPitcher?(b.game+"|"+b.oppPitcher):null;
+      if(ODDS_LOADED){const bp=bestHRPrice(b);if(bp&&bp.price!=null){leg.book=bp.price;leg.medge=(leg.prob-impliedProb(bp.price))||null;}}
+      all.push({leg,b,g,...hrPlayScore(b,g)});
+    });
+  });
+  if(!all.length)return null;
+  all.sort((a,b)=>(b.score-a.score)||(String(a.b.id).localeCompare(String(b.b.id))));
+  // one per game first, for real slate-wide breadth
+  const picked=[],usedGames=new Set();
+  for(const row of all){if(picked.length>=4)break;if(usedGames.has(row.g.gamePk))continue;picked.push(row);usedGames.add(row.g.gamePk);}
+  // not enough distinct games with a qualifying play — fill remaining slots from the next-best overall
+  if(picked.length<4){for(const row of all){if(picked.length>=4)break;if(picked.includes(row))continue;picked.push(row);}}
+  if(picked.length<2)return null; // need at least a 2-leg parlay to be worth showing
+  const legs=picked.map(p=>p.leg);
+  const built=buildParlay(legs,ODDS_LOADED);
+  return {picked,built,oneGameOnly:usedGames.size<picked.length};
+}
+
+// ===================== ⚔️ PITCHER DUEL — HR threats vs each starter, with tags =====================
+// Every tag is gated on a real field and only appears when that data exists. FAST BAT only shows
+// when Statcast bat-tracking data (avg bat speed) has actually been fetched — never estimated.
+const THREAT_TAGS=[
+  {key:"heat",label:"🔥 HEATING UP",cls:"tg-hot",
+   test:b=>b.powerForm&&b.powerForm.state==="heating"},
+  {key:"barrel",label:"🧱 BARREL MACHINE",cls:"tg-barrel",
+   test:b=>b.statcast&&b.statcast.barrel!=null&&b.statcast.barrel>=13},
+  {key:"ev",label:"⚡ SCORCHING EV",cls:"tg-ev",
+   test:b=>b.statcast&&b.statcast.ev!=null&&b.statcast.ev>=91},
+  {key:"pull",label:"🌀 PULL-AIR LOFT",cls:"tg-pull",
+   test:b=>b.statcast&&b.statcast.pullAir!=null&&b.statcast.pullAir>=18},
+  {key:"bat",label:"💨 FAST BAT",cls:"tg-bat",
+   test:b=>b.batSpeed!=null&&b.batSpeed>=74},                       // real Statcast bat-tracking data only
+  {key:"wind",label:"🌬️ WIND OUT",cls:"tg-wind",
+   test:b=>b._wx&&b._wx.outComponent!=null&&b._wx.outComponent>1.5},
+  {key:"platoon",label:"🔵 PLATOON EDGE",cls:"tg-plat",
+   test:b=>b.platoon&&b.platoon.badge==="ADV"},
+  {key:"arsenal",label:null,cls:"tg-arsenal",                        // dynamic label built below (shows the delta)
+   test:b=>b.hrMatch&&!b.hrMatch.approx&&b.hrMatch.contrib&&b.hrMatch.contrib.length>0&&(b.hrMatch.contrib[0].d-0.5)>=0.08}
+];
+function threatTags(b){
+  const out=THREAT_TAGS.filter(t=>t.test(b)).map(t=>{
+    if(t.key==="arsenal"){
+      const d=b.hrMatch.contrib[0].d-0.5;
+      return {key:t.key,cls:t.cls,label:`⚾ ARSENAL EDGE +${d.toFixed(2)}`};
+    }
+    return {key:t.key,cls:t.cls,label:t.label};
+  });
+  return out;
+}
+// Park-adjusted HR/9 — removes the home park's own HR lean from a pitcher's rate.
+function adjHr9(pitcherK,g,isHome){
+  if(!pitcherK||!pitcherK.cur||pitcherK.cur.hr9==null)return null;
+  const pf=(g&&g.parkF!=null)?g.parkF:1;
+  return pf>0?pitcherK.cur.hr9/pf:pitcherK.cur.hr9;
+}
+// Rank a pitcher's opposing lineup by HR threat level, with tags + a 0-100 heat score.
+function pitcherThreats(pitcherK,bats,g){
+  const rows=bats.filter(b=>b.proj&&b.proj.hr>0).map(b=>{
+    const v=hrVerdict(b,g),tags=threatTags(b);
+    const tagBoost=tags.length*3;
+    const heat=Math.max(0,Math.min(100,Math.round((v.modelProb||0)*140+tagBoost)));
+    return {b,prob:v.modelProb||0,tags,heat};
+  });
+  rows.sort((a,b)=>b.prob-a.prob);
+  return rows;
+}
+let PD_GAME=null;
+function pdArsenalBarrel(K){
+  if(!K||!K._arsenal||!K._arsenal.pitches||!K._arsenal.pitches.length)return null;
+  let wsum=0,acc=0;
+  K._arsenal.pitches.forEach(p=>{if(p.barrelAllowed==null)return;wsum+=p.usage||0;acc+=(p.usage||0)*p.barrelAllowed;});
+  return wsum>0?acc/wsum:null;
+}
+function pdStatBlock(K,g,isHome){
+  const era=K&&K.cur&&K.cur.era!=null?K.cur.era.toFixed(2):"—";
+  const hr9=K&&K.cur&&K.cur.hr9!=null?K.cur.hr9.toFixed(2):"—";
+  const adj=adjHr9(K,g,isHome); const adjTxt=adj!=null?adj.toFixed(2):"—";
+  const hrCt=K&&K.cur&&K.cur.hr!=null?K.cur.hr:"—";
+  const brl=pdArsenalBarrel(K); const brlTxt=brl!=null?Math.round(brl*100)+"%":"—";
+  const whip=K&&K.cur&&K.cur.whip!=null?K.cur.whip.toFixed(2):"—";
+  return `<div class="pd-stats">
+    <div class="pd-stat"><b>${era}</b><span>ERA</span></div>
+    <div class="pd-stat"><b>${hr9}</b><span>HR/9</span></div>
+    <div class="pd-stat"><b>${adjTxt}</b><span>ADJ HR/9</span></div>
+    <div class="pd-stat"><b>${hrCt}</b><span>HR</span></div>
+    <div class="pd-stat"><b>${brlTxt}</b><span>BRL%</span></div>
+    <div class="pd-stat"><b>${whip}</b><span>WHIP</span></div>
+  </div>`;
+}
+function pdThreatCard(row,g){
+  const {b,prob,tags,heat}=row;
+  const chips=tags.map(t=>`<span class="pd-tag ${t.cls}">${t.label}</span>`).join("");
+  const meta=[b.bats?b.bats+"HB":null, b.statcast&&b.statcast.barrel!=null?"Brl "+b.statcast.barrel.toFixed(0)+"%":null,
+              b.slot!=null?"PA slot "+b.slot:null].filter(Boolean).join(" · ");
+  return `<div class="pd-threat">
+    <div class="pd-th-top">${starHTML(g.gamePk,b.id,"hr",isWatched(g.gamePk,b.id,"hr"))}<b>${favHR(b)?"💣 ":""}${b.name}</b>${powerFormBadge(b)}<span class="pd-prob">${Math.round(prob*100)}%</span></div>
+    <div class="pd-th-meta">${meta}</div>
+    ${chips?`<div class="pd-th-tags">${chips}</div>`:""}
+  </div>`;
+}
+function pdColumn(K,bats,g,isHome,label){
+  if(!K)return `<div class="empty">No probable pitcher confirmed yet for ${label}.</div>`;
+  const wl=(K.cur&&K.cur.w!=null&&K.cur.l!=null)?`${K.cur.w}-${K.cur.l}`:null;
+  const rows=pitcherThreats(K,bats,g).slice(0,8);
+  return `<div class="pd-head"><b>${K.name||"TBD"}</b><span class="pd-throws">${K.throws?"("+K.throws+"HP)":""}</span>
+      <span class="pd-team">${label}${wl?" · "+wl+" (pitcher W-L)":""}</span></div>
+    ${pdStatBlock(K,g,isHome)}
+    <div class="pd-th-head">TOP HR THREATS FACING ${(K.name||"THIS PITCHER").toUpperCase()}</div>
+    ${rows.length?rows.map(r=>pdThreatCard(r,g)).join(""):'<div class="empty">No hitters projected for a home run yet.</div>'}`;
+}
+function renderPitcherDuel(model){
+  const wrap=el("pdWrap");if(!wrap)return;
+  if(!model||!model.games||!model.games.length){wrap.innerHTML='<div class="empty"><b>No slate loaded</b>Load a slate to see the HR-threat breakdown for each matchup.</div>';return;}
+  const games=model.games;
+  if(!PD_GAME||!games.find(g=>String(g.gamePk)===String(PD_GAME)))PD_GAME=String(games[0].gamePk);
+  const g=games.find(x=>String(x.gamePk)===String(PD_GAME));
+  const gOpts=games.map(x=>`<option value="${x.gamePk}"${String(x.gamePk)===String(PD_GAME)?" selected":""}>${x.away.abbr||x.away.short} @ ${x.home.abbr||x.home.short}</option>`).join("");
+  const wx=g._wx||{};
+  const wxLine=[wx.tempF!=null?Math.round(wx.tempF)+"°":null,
+    wx.outComponent!=null?(wx.outComponent>1.5?Math.round(wx.windMph||0)+" out to "+(wx.cardinal||"CF"):wx.outComponent<-1.5?Math.round(wx.windMph||0)+" in from "+(wx.cardinal||"CF"):"crosswind"):null,
+    g.parkF!=null?"Park "+Math.round(g.parkF*100):null].filter(Boolean).join(" · ");
+  wrap.innerHTML=`<div class="pl-selectors"><label>Game <select id="pdGameSel">${gOpts}</select></label></div>
+    <div class="pd-gamebar"><b>${g.away.abbr||g.away.short} @ ${g.home.abbr||g.home.short}</b><span>${wxLine}</span></div>
+    <div class="pd-cols">
+      <div class="pd-col">${pdColumn(g._awayK,g._homeBat||[],g,false,g.away.abbr||g.away.short)}</div>
+      <div class="pd-col">${pdColumn(g._homeK,g._awayBat||[],g,true,g.home.abbr||g.home.short)}</div>
+    </div>
+    <div class="fav-note"><b>How this works:</b> each hitter's spot on the list is his model probability to homer against that exact starter today. Tags are extra context, each gated on real data — <b>🔥 Heating Up</b> (power trending, not OPS), <b>🧱 Barrel Machine</b> / <b>⚡ Scorching EV</b> (season contact quality), <b>🌀 Pull-Air Loft</b> (spray profile), <b>💨 Fast Bat</b> (real Statcast bat-tracking data — only shown when that feed is available, never estimated), <b>🌬️ Wind Out</b>, <b>🔵 Platoon Edge</b>, and <b>⚾ Arsenal Edge</b> (exact pitch-type fit, 15%+ usage pitches only). ADJ HR/9 removes the home park's own HR lean from the raw rate. <b>This is analysis, not a guarantee</b> — home runs are rare events. 21+. If gambling stops being fun, call 1-800-GAMBLER.</div>`;
+}
+
 // ===================== 📝 FAVORITE PLAYS — per-game HR write-ups =====================
 // Names the best HR bet in each game and explains WHY, using only real model fields.
 // Every reason traces to a number: arsenal fit, park, platoon, form, pitcher HR/9, vulnerability.
@@ -5013,6 +5216,41 @@ function deepDive(p,g){
 }
 
 let FAV_DATA=null;
+// Compact "top good reason" for one leg — same lead-reason logic as playSummary, trimmed to a phrase.
+function legTopReason(row){
+  const good=row.reasons.filter(r=>r.good).sort((a,b)=>b.w-a.w);
+  return good.length?good[0].t:"Model call on a thinner matchup — still the best number on the board for this game.";
+}
+function parlayLockCard(pl){
+  if(!pl)return "";
+  const {picked,built,oneGameOnly}=pl;
+  const legRows=picked.map(p=>{
+    const bp=(ODDS_LOADED&&p.leg.book!=null)?amStr(p.leg.book):null;
+    return `<div class="plk-leg">
+      <div class="plk-leg-top">${starHTML(p.g.gamePk,p.b.id,"hr",isWatched(p.g.gamePk,p.b.id,"hr"))}${favHR(p.b)?"💣 ":""}<b>${p.b.name}</b>
+        <span class="plk-leg-game">${p.g.away.abbr||p.g.away.short}@${p.g.home.abbr||p.g.home.short} · vs ${p.b.oppPitcher?shortName(p.b.oppPitcher):"TBD"}</span>
+        <span class="plk-leg-pct">${Math.round(p.leg.prob*100)}%${bp?` <i>${bp}</i>`:""}</span></div>
+      <div class="plk-leg-why">${legTopReason(p)}</div>
+    </div>`;
+  }).join("");
+  const combTxt=built.fairAm!=null?amStr(built.fairAm):"—";
+  const bookTxt=(ODDS_LOADED&&built.bookAm!=null)?amStr(built.bookAm):null;
+  const edgeTxt=(ODDS_LOADED&&built.edge!=null)?(built.edge>=0?`+${Math.round(built.edge*100)}%`:`${Math.round(built.edge*100)}%`):null;
+  const trueProbTxt=built.trueProb>=0.01?Math.round(built.trueProb*100)+"%":(built.trueProb*100).toFixed(1)+"%";
+  return `<div class="plk-card">
+    <div class="plk-head"><div class="fav-lock-badge">🎰 HR PARLAY LOCK OF THE DAY</div>
+      <span class="plk-legs-ct">${picked.length}-leg${oneGameOnly?"":" · one per game"}</span></div>
+    <div class="plk-sub">The single best home run play from ${picked.length===4?"four different games":picked.length+" game"+(picked.length===1?"":"s")}, combined into one parlay — ranked by the same matchup scoring as the Lock of the Day above.</div>
+    <div class="plk-legs">${legRows}</div>
+    <div class="plk-price">
+      <div class="plk-price-block"><b>${trueProbTxt}</b><span>true combined odds${built.corr>=20?" (correlation-adjusted)":""}</span></div>
+      <div class="plk-price-block"><b>${combTxt}</b><span>fair price</span></div>
+      ${bookTxt?`<div class="plk-price-block"><b>${bookTxt}</b><span>best book price</span></div>`:""}
+      ${edgeTxt?`<div class="plk-price-block plk-edge-${built.edge>=0?"pos":"neg"}"><b>${edgeTxt}</b><span>edge vs book</span></div>`:""}
+    </div>
+    <div class="plk-note">A 4-leg parlay needs every leg to hit — the combined odds above are the honest price of that, not a discount. Shown for the play, not as an expected outcome. 21+. If gambling stops being fun, call 1-800-GAMBLER.</div>
+  </div>`;
+}
 function renderFavorites(model){
   const wrap=el("favWrap");if(!wrap)return;
   if(!model||!model.games||!model.games.length){wrap.innerHTML='<div class="empty"><b>No slate loaded</b>Load a slate to see each game\'s best home run play with a full deep-dive.</div>';return;}
@@ -5030,6 +5268,7 @@ function renderFavorites(model){
     ${lock.best.b.result?`<div class="fav-res">${resultChip(lock.best.b)}</div>`:""}
     <div class="fav-lock-sum">${playSummary(lock.best)}</div>
   </div>`;
+  const parlayLock=parlayLockCard(hrParlayLock(model));
   const cards=favs.map(({g,best,runner})=>{
     const dd=deepDive(best,g).map(x=>`<p class="fav-dd-p">${x}</p>`).join("");
     const bestBlock=`
@@ -5056,7 +5295,7 @@ function renderFavorites(model){
       ${bestBlock}${runBlock}
     </div>`;
   }).join("");
-  wrap.innerHTML=lockCard+
+  wrap.innerHTML=lockCard+parlayLock+
     `<div class="fav-lockmsg">These picks are computed straight from the day's slate, so they're <b>identical on every device</b> and update only when the underlying lineups, projections or park/weather actually change.</div>`+
     `<div class="fav-grid">${cards}</div>`+
     `<div class="fav-note"><b>How these are built:</b> every hitter's home run case is scored from real model inputs — arsenal fit (the exact pitch a starter throws most and how hard the batter hits it), pitcher HR/9, ERA, WHIP, park, weather, platoon, recent form, barrel rate and exit velocity, and any batter-vs-pitcher history. The deep-dive and the ✓/✕ lines are assembled straight from those numbers — a sentence only appears when the stat behind it exists, so nothing here is invented narrative; where a matchup is thin, it says so. <b>This is analysis, not a guarantee</b> — home runs are rare events and even the best play is usually against the odds to hit on any given night. 21+. If gambling stops being fun, call 1-800-GAMBLER.</div>`;
@@ -7231,6 +7470,7 @@ function setView(v){
   el("nrfiView").classList.toggle("hide",v!=="nrfi");
   el("favView").classList.toggle("hide",v!=="fav");
   el("plabView").classList.toggle("hide",v!=="plab");
+  el("pdView").classList.toggle("hide",v!=="pd");
   el("compareView").classList.toggle("hide",v!=="compare");
   el("propsView").classList.toggle("hide",v!=="props");
   el("oddsView").classList.toggle("hide",v!=="odds");
@@ -7257,6 +7497,7 @@ function setView(v){
   if(v==="nrfi"){ if(!NRFI_DATA){const c=loadNrfiCache(MODEL&&MODEL.date?parseInt(MODEL.date.slice(0,4),10):new Date().getFullYear()); if(c)NRFI_DATA=c;} renderNrfi(MODEL); }
   if(v==="fav"&&MODEL) renderFavorites(MODEL);
   if(v==="plab"&&MODEL) renderPropLab(MODEL);
+  if(v==="pd"&&MODEL) renderPitcherDuel(MODEL);
   if(v==="compare"&&MODEL) renderCompare(MODEL);
   if(v==="align"&&MODEL) renderAlignment();
   if(v==="wx"&&MODEL) renderWeather(MODEL);
@@ -7293,7 +7534,7 @@ async function run(){
 }
 function updateFreshLabel(){const e=el("freshLbl");if(e)e.textContent=freshText(LAST_REFRESH,Date.now());}
 el("tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(!t)return;CURRENT_MARKET=t.dataset.m;BOARD_LIMIT=30;[...el("tabs").children].forEach(c=>c.classList.toggle("active",c===t));if(MODEL)renderBoard(MODEL,CURRENT_MARKET);});
-const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",targets:"My Targets — players &amp; props you're on today",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",mgrid:"Matchup Grid — full lineup, every metric",nrfi:"NRFI / YRFI — will anyone score in the 1st?",fav:"Favorite Plays — best HR bet per game, with reasons",plab:"Prop Lab — L5/L10 hit rates &amp; take/pass calls",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
+const VIEW_TITLE={slate:"Today's Slate",best:"Best Bets — Edge Board Master Score",hrmodel:"Home Runs Model",vulnrep:"Pitcher Vulnerability Report",mlmodel:"Moneyline Model — 0–100 score",hrsim:"Daily HR Simulator",zones:"Zone Matchups — batter power × pitcher usage",arsenal:"Arsenal Matchup — pitch-level HR profile",targets:"My Targets — players &amp; props you're on today",live:"Game Day — your plays, live",attack:"Attack the Arm — one pitcher, the whole lineup",mgrid:"Matchup Grid — full lineup, every metric",nrfi:"NRFI / YRFI — will anyone score in the 1st?",fav:"Favorite Plays — best HR bet per game, with reasons",plab:"Prop Lab — L5/L10 hit rates &amp; take/pass calls",pd:"Pitcher Duel — HR threats vs each starter",compare:"Head to Head — two plays, one bankroll",hr:"Homers Today",align:"Alignment Score — 0–100 from 9 weighted factors",props:"Player Props",parlay:"Parlay Builder",odds:"Odds Comparison",sims:"Game Simulations",wx:"Weather Impact on Home Runs",teams:"Team Browser",trends:"Trends",track:"Track & Calibrate",guide:"How to Use Edge Board"};
 function updateNavActive(v){
   document.querySelectorAll("#nav [data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
   const t=el("viewTitle");if(t)t.innerHTML=`<span>${VIEW_TITLE[v]||""}</span><a class="newtab-btn" href="#/${v}" target="_blank" rel="noopener" title="Open this page in a new browser tab">⧉ New tab</a>`;
@@ -7337,6 +7578,9 @@ document.addEventListener("click",e=>{
   const on=toggleWatch(g,id,mk,nm,tm,(MODEL&&MODEL.date)||todayStr());
   s.classList.toggle("on",on);s.textContent=on?"★":"☆";
   if(VIEW==="targets")renderTargets(MODEL);
+});
+el("pdWrap")&&el("pdWrap").addEventListener("change",e=>{
+  if(e.target.id==="pdGameSel"){PD_GAME=e.target.value;renderPitcherDuel(MODEL);}
 });
 el("plabWrap")&&el("plabWrap").addEventListener("click",e=>{
   const mode=e.target.closest(".pl-mode");
